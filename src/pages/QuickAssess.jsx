@@ -98,6 +98,11 @@ function Landing({ onStart }) {
           onMouseOver={e => e.target.style.background = "#1d4ed8"} onMouseOut={e => e.target.style.background = "#2563eb"}>
           Start quick assessment
         </button>
+
+        <div style={{ marginTop: 32, display: "flex", flexDirection: "column", gap: 12, alignItems: "flex-start" }}>
+          <a href="/assess/full" style={{ fontSize: 14, color: "#5b9bd5", fontWeight: 500 }}>Already have an access code? Take the full assessment →</a>
+          <a href="/assess/full" style={{ fontSize: 14, color: "#64748b" }}>Want the full 67-control assessment? View pricing →</a>
+        </div>
       </div>
     </div>
   );
@@ -292,11 +297,38 @@ function Results({ answers }) {
           </div>
         </div>
 
-        {/* CTA: email capture or access full */}
+        {/* Pricing tiers */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 32 }}>
+          <div style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 12, padding: 24 }}>
+            <div style={{ fontSize: 12, fontWeight: 600, color: "#2563eb", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>Self-Assessment</div>
+            <div style={{ fontSize: 32, fontWeight: 700, color: "#0f172a", marginBottom: 4 }}>$149</div>
+            <div style={{ fontSize: 13, color: "#64748b", marginBottom: 16 }}>One-time payment</div>
+            {["Full 67-control assessment", "Remediation roadmap", "Audit-grade report", "Email delivery"].map(t => (
+              <div key={t} style={{ fontSize: 13, color: "#475569", marginBottom: 6, display: "flex", gap: 6 }}>
+                <span style={{ color: "#059669", fontWeight: 700 }}>✓</span> {t}
+              </div>
+            ))}
+            <a href="https://buy.stripe.com/fZu6oI8BXb7herYgNucIE01" style={{ display: "block", textAlign: "center", background: "#2563eb", color: "#fff", padding: "12px 20px", borderRadius: 8, fontSize: 14, fontWeight: 600, textDecoration: "none", marginTop: 16 }}>Get started</a>
+          </div>
+          <div style={{ background: "#fff", border: "2px solid #2563eb", borderRadius: 12, padding: 24, position: "relative" }}>
+            <div style={{ position: "absolute", top: -10, left: "50%", transform: "translateX(-50%)", background: "#2563eb", color: "#fff", padding: "3px 12px", borderRadius: 10, fontSize: 11, fontWeight: 600 }}>Recommended</div>
+            <div style={{ fontSize: 12, fontWeight: 600, color: "#2563eb", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>Guided Assessment</div>
+            <div style={{ fontSize: 32, fontWeight: 700, color: "#0f172a", marginBottom: 4 }}>$2,500</div>
+            <div style={{ fontSize: 13, color: "#64748b", marginBottom: 16 }}>Expert-guided engagement</div>
+            {["Everything in Self-Assessment", "Expert-guided walkthrough", "Executive presentation", "30-day follow-up review"].map(t => (
+              <div key={t} style={{ fontSize: 13, color: "#475569", marginBottom: 6, display: "flex", gap: 6 }}>
+                <span style={{ color: "#2563eb", fontWeight: 700 }}>✓</span> {t}
+              </div>
+            ))}
+            <a href="https://buy.stripe.com/9B65kEf0lcbl5Vs9l2cIE00" style={{ display: "block", textAlign: "center", background: "#0f172a", color: "#fff", padding: "12px 20px", borderRadius: 8, fontSize: 14, fontWeight: 600, textDecoration: "none", marginTop: 16 }}>Book consultation</a>
+          </div>
+        </div>
+
+        {/* Email capture */}
         {!submitted ? (
-          <div style={{ background: "#fff", border: "2px solid #2563eb", borderRadius: 12, padding: 32, textAlign: "center" }}>
-            <h3 style={{ margin: "0 0 8px", fontSize: 20, fontWeight: 700, color: "#0f172a" }}>Get the full assessment</h3>
-            <p style={{ fontSize: 14, color: "#64748b", marginBottom: 20 }}>Enter your information below. We'll send your quick assessment summary and notify you when the full 67-control assessment is available.</p>
+          <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 12, padding: 28, textAlign: "center", marginBottom: 24 }}>
+            <h3 style={{ margin: "0 0 8px", fontSize: 18, fontWeight: 600, color: "#0f172a" }}>Get your quick assessment results emailed</h3>
+            <p style={{ fontSize: 14, color: "#64748b", marginBottom: 16 }}>We'll send your results summary with next steps.</p>
             <div style={{ display: "flex", flexDirection: "column", gap: 10, maxWidth: 400, margin: "0 auto" }}>
               <input type="text" placeholder="Your name" value={name} onChange={e => setName(e.target.value)}
                 style={{ padding: "12px 16px", borderRadius: 8, border: "1px solid #e2e8f0", fontSize: 14, outline: "none" }} />
@@ -306,24 +338,21 @@ function Results({ answers }) {
                 style={{ padding: "12px 16px", borderRadius: 8, border: "1px solid #e2e8f0", fontSize: 14, outline: "none" }} />
               <button onClick={handleSubmit} disabled={!email || !name || sending}
                 style={{ padding: "14px", borderRadius: 8, border: "none", background: email && name ? "#2563eb" : "#94a3b8", color: "#fff", fontSize: 15, fontWeight: 600, cursor: email && name ? "pointer" : "default", marginTop: 4 }}>
-                {sending ? "Sending..." : "Send my results & get full access"}
+                {sending ? "Sending..." : "Send my results"}
               </button>
             </div>
             <div style={{ fontSize: 12, color: "#94a3b8", marginTop: 12 }}>No spam. Your data stays yours.</div>
           </div>
         ) : (
-          <div style={{ background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: 12, padding: 32, textAlign: "center" }}>
+          <div style={{ background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: 12, padding: 28, textAlign: "center", marginBottom: 24 }}>
             <div style={{ fontSize: 24, marginBottom: 8 }}>✓</div>
             <h3 style={{ margin: "0 0 8px", fontSize: 18, fontWeight: 600, color: "#166534" }}>Results sent</h3>
-            <p style={{ fontSize: 14, color: "#15803d", margin: "0 0 16px" }}>Check your inbox at {email}.</p>
-            <a href="/assess/full" style={{ display: "inline-block", background: "#2563eb", color: "#fff", padding: "12px 28px", borderRadius: 8, fontSize: 14, fontWeight: 600, textDecoration: "none" }}>
-              Take the full 67-control assessment →
-            </a>
+            <p style={{ fontSize: 14, color: "#15803d", margin: 0 }}>Check your inbox at {email}.</p>
           </div>
         )}
 
         {/* Have a code */}
-        <div style={{ textAlign: "center", marginTop: 24 }}>
+        <div style={{ textAlign: "center", marginTop: 16 }}>
           <a href="/assess/full" style={{ fontSize: 14, color: "#2563eb", fontWeight: 500 }}>Already have an access code? Take the full assessment →</a>
         </div>
 
