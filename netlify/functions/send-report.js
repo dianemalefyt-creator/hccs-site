@@ -57,13 +57,45 @@ tr:nth-child(even) td{background:#f8fafc}
 <tr><td style="font-weight:600">Significant Gaps (SHOULD)</td><td style="color:#d97706;font-weight:600">${shouldGaps.length}</td></tr>
 </table>
 
+<!-- Visual Overall Score -->
+<div style="text-align:center;margin:24px 0;padding:24px;background:#f8fafc;border-radius:12px;border:1px solid #e2e8f0">
+<div style="font-size:13px;color:#64748b;text-transform:uppercase;letter-spacing:0.15em;margin-bottom:8px">Overall Maturity Level</div>
+<div style="font-size:48px;font-weight:700;color:${overallLevel === 0 ? '#dc2626' : overallLevel <= 2 ? '#185FA5' : overallLevel === 3 ? '#0F6E56' : '#534AB7'}">Level ${overallLevel}</div>
+<div style="font-size:18px;font-weight:600;color:#475569;margin-bottom:12px">${LEVEL_NAMES[overallLevel]}</div>
+<table style="width:300px;margin:0 auto;border-collapse:collapse"><tr>
+${[1,2,3,4,5].map(l => `<td style="width:20%;height:8px;background:${l <= overallLevel ? '#2563eb' : '#e2e8f0'};padding:0;border:none;${l===1?'border-radius:4px 0 0 4px;':''}${l===5?'border-radius:0 4px 4px 0;':''}">&nbsp;</td>`).join('')}
+</tr></table>
+<div style="display:flex;justify-content:space-between;width:300px;margin:4px auto 0;font-size:10px;color:#94a3b8">
+<span>L1</span><span>L2</span><span>L3</span><span>L4</span><span>L5</span>
+</div>
+</div>
+
 <div class="quote">
 "If the organization cannot reconstruct how a decision was made, what evidence it relied on, and whether standards were applied consistently, the process must be treated as unreliable."
 <div style="margin-top:8px;font-style:normal;color:#475569;font-size:12px">HCCS-1.0, Governing Principle</div>
 </div>
 
 <h1>Domain Maturity Scores</h1>
-<table>
+
+<table style="width:100%;border-collapse:collapse;margin:16px 0">
+${domainScores.map(d => {
+  const colors = {RG:'#185FA5',EI:'#0F6E56',DG:'#534AB7',AG:'#993C1D',PI:'#854F0B',CG:'#3B6D11',ER:'#993556'};
+  const col = colors[d.domain] || '#475569';
+  const pct = Math.round((d.level/5)*100);
+  return `<tr>
+<td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;width:36px;font-weight:700;font-size:13px;color:${col}">${d.domain}</td>
+<td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;width:160px;font-size:13px">${d.name}</td>
+<td style="padding:10px 12px;border-bottom:1px solid #e2e8f0">
+<table style="width:100%;border-collapse:collapse"><tr>
+<td style="width:${pct}%;background:${col};height:20px;border-radius:4px 0 0 4px;padding:0;border:none;font-size:0">&nbsp;</td>
+<td style="width:${100-pct}%;background:#f1f5f9;height:20px;border-radius:0 4px 4px 0;padding:0;border:none;font-size:0">&nbsp;</td>
+</tr></table>
+</td>
+<td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;width:100px;font-weight:600;font-size:13px;white-space:nowrap">L${d.level}: ${LEVEL_NAMES[d.level]}</td>
+</tr>`;}).join('')}
+</table>
+
+<table style="width:100%;border-collapse:collapse;margin:16px 0">
 <tr><th>Domain</th><th>Name</th><th>Level</th><th>In Place</th><th>Partial</th><th>Gaps</th></tr>
 ${domainScores.map(d => `<tr><td><strong>${d.domain}</strong></td><td>${d.name}</td><td><strong>Level ${d.level}: ${LEVEL_NAMES[d.level]}</strong></td><td>${d.met}/${d.total}</td><td>${d.partial}</td><td>${d.gaps}</td></tr>`).join('')}
 </table>

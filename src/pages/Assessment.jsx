@@ -98,6 +98,21 @@ const date=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',da
 const allControls=D.flatMap(d=>d.controls.map(c=>({...c,domainCode:d.code,domainName:d.name,domainColor:d.color})));
 const statusLabel=v=>v==='yes'?'In Place':v==='partial'?'Partial':'Not in Place';
 const statusColor=v=>v==='yes'?'#059669':v==='partial'?'#d97706':'#dc2626';
+
+// Pre-compute SVG radar chart
+const radarGrids=[1,2,3,4,5].map(lv=>{const pts=ds.map((_,i)=>{const a=(2*Math.PI*i/7)-Math.PI/2;return(200+lv*30*Math.cos(a))+","+(200+lv*30*Math.sin(a));}).join(' ');return '<polygon points="'+pts+'" fill="none" stroke="#e2e8f0" stroke-width="1"/>';}).join('');
+const radarAxes=ds.map((_,i)=>{const a=(2*Math.PI*i/7)-Math.PI/2;return '<line x1="200" y1="200" x2="'+(200+150*Math.cos(a))+'" y2="'+(200+150*Math.sin(a))+'" stroke="#e2e8f0" stroke-width="1"/>';}).join('');
+const radarData=ds.map((d,i)=>{const a=(2*Math.PI*i/7)-Math.PI/2;return(200+d.level*30*Math.cos(a))+","+(200+d.level*30*Math.sin(a));}).join(' ');
+const radarDots=ds.map((d,i)=>{const a=(2*Math.PI*i/7)-Math.PI/2;const x=200+d.level*30*Math.cos(a);const y=200+d.level*30*Math.sin(a);return '<circle cx="'+x+'" cy="'+y+'" r="4" fill="#2563eb"/>';}).join('');
+const radarLabels=ds.map((d,i)=>{const a=(2*Math.PI*i/7)-Math.PI/2;const x=200+170*Math.cos(a);const y=200+170*Math.sin(a);return '<text x="'+x+'" y="'+y+'" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#475569">'+d.domain+'</text>';}).join('');
+const radarSvg='<svg width="320" height="320" viewBox="0 0 400 400">'+radarGrids+radarAxes+'<polygon points="'+radarData+'" fill="rgba(37,99,235,0.15)" stroke="#2563eb" stroke-width="2.5"/>'+radarDots+radarLabels+'</svg>';
+
+// Pre-compute bar chart HTML
+const barChart=ds.map(d=>'<div style="display:flex;align-items:center;gap:12px;margin-bottom:10px"><div style="width:28px;font-size:12px;font-weight:600;color:#475569">'+d.domain+'</div><div style="flex:1;height:24px;background:#f1f5f9;border-radius:4px;overflow:hidden"><div style="height:100%;width:'+((d.level/5)*100)+'%;background:'+d.color+';border-radius:4px"></div></div><div style="width:80px;font-size:12px;color:#475569">L'+d.level+' '+LN[d.level]+'</div></div>').join('');
+
+// Pre-compute domain cards
+const domainCards=ds.map(d=>'<div style="border:1px solid #e2e8f0;border-left:4px solid '+d.color+';border-radius:8px;padding:14px 16px;break-inside:avoid"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-weight:600;font-size:13px">'+d.domain+': '+d.name+'</span><span style="font-weight:600;color:'+d.color+';font-size:13px">L'+d.level+'</span></div><div style="font-size:12px;color:#64748b">'+d.met+'/'+d.total+' in place'+(d.partial>0?', '+d.partial+' partial':'')+' | '+d.gaps.length+' gaps</div><div style="height:5px;background:#f1f5f9;border-radius:3px;margin-top:6px;overflow:hidden"><div style="height:100%;background:'+d.color+';width:'+((d.met/d.total)*100)+'%;border-radius:3px"></div></div></div>').join('');
+const domainTable=ds.map(d=>'<tr><td><strong>'+d.domain+'</strong></td><td>'+d.name+'</td><td><strong>Level '+d.level+': '+LN[d.level]+'</strong></td><td>'+d.met+'/'+d.total+'</td><td>'+d.partial+'</td><td>'+d.gaps.length+'</td><td>'+TL[d.level]+'</td></tr>').join('');
 const html=`<!DOCTYPE html><html><head><meta charset="utf-8"><title>HCCS Assessment Report - ${user?.org||'Organization'}</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400&display=swap');
@@ -176,9 +191,33 @@ tr:nth-child(even) td{background:#f8fafc}
 <div class="page-break"></div>
 <div class="section">
 <h2>Domain Maturity Scores</h2>
+
+<div style="display:flex;gap:32px;margin:24px 0 32px;flex-wrap:wrap;justify-content:center">
+
+<!-- Radar Chart -->
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:24px;text-align:center">
+<div style="font-size:14px;font-weight:600;margin-bottom:12px">Maturity Profile</div>
+${radarSvg}
+</div>
+
+<!-- Bar Chart -->
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:24px;flex:1;min-width:300px">
+<div style="font-size:14px;font-weight:600;margin-bottom:16px">Level by Domain</div>
+${barChart}
+<div style="display:flex;justify-content:space-between;margin-top:12px;font-size:11px;color:#94a3b8;border-top:1px solid #e2e8f0;padding-top:8px">
+<span>L0</span><span>L1</span><span>L2</span><span>L3</span><span>L4</span><span>L5</span>
+</div>
+</div>
+</div>
+
+<!-- Domain Summary Cards -->
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px">
+${domainCards}
+</div>
+
 <table>
 <tr><th>Domain</th><th>Name</th><th>Level</th><th>In Place</th><th>Partial</th><th>Gaps</th><th>Compliance</th></tr>
-${ds.map(d=>`<tr><td><strong>${d.domain}</strong></td><td>${d.name}</td><td><strong>Level ${d.level}: ${LN[d.level]}</strong></td><td>${d.met}/${d.total}</td><td>${d.partial}</td><td>${d.gaps.length}</td><td>${TL[d.level]}</td></tr>`).join('')}
+${domainTable}
 </table>
 </div>
 
