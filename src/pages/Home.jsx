@@ -31,6 +31,9 @@ export default function Home() {
               <Link to="/documents" style={{ border: '1px solid rgba(255,255,255,0.2)', color: '#cbd5e1', padding: '14px 32px', borderRadius: 8, fontSize: 16, fontWeight: 500, display: 'inline-block' }}>
                 Read the standard
               </Link>
+              <Link to="/rights" style={{ border: '1px solid rgba(255,255,255,0.2)', color: '#cbd5e1', padding: '14px 32px', borderRadius: 8, fontSize: 16, fontWeight: 500, display: 'inline-block' }}>
+                Applicant's Bill of Rights
+              </Link>
             </div>
           </div>
         </div>
