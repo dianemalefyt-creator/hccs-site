@@ -24,14 +24,14 @@ export default function Home() {
             <p style={{ fontSize: 17, lineHeight: 1.65, color: '#64748b', margin: '0 0 40px', maxWidth: 520 }}>
               HCCS™ is the first governance and audit standard for how companies define roles, evaluate candidates, make hiring decisions, and align compensation to the actual scope of work.
             </p>
-            <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-              <Link to="/assess" style={{ background: '#2563eb', color: '#fff', padding: '14px 32px', borderRadius: 8, fontSize: 16, fontWeight: 600, display: 'inline-block' }}>
+            <div style={{ display: 'flex', gap: 12, flexWrap: 'nowrap' }}>
+              <Link to="/assess" style={{ background: '#2563eb', color: '#fff', padding: '14px 28px', borderRadius: 8, fontSize: 15, fontWeight: 600, display: 'inline-block', whiteSpace: 'nowrap' }}>
                 Assess your organization
               </Link>
-              <Link to="/documents" style={{ border: '1px solid rgba(255,255,255,0.2)', color: '#cbd5e1', padding: '14px 32px', borderRadius: 8, fontSize: 16, fontWeight: 500, display: 'inline-block' }}>
+              <Link to="/documents" style={{ border: '1px solid rgba(255,255,255,0.2)', color: '#cbd5e1', padding: '14px 28px', borderRadius: 8, fontSize: 15, fontWeight: 500, display: 'inline-block', whiteSpace: 'nowrap' }}>
                 Read the standard
               </Link>
-              <Link to="/rights" style={{ border: '1px solid rgba(255,255,255,0.2)', color: '#cbd5e1', padding: '14px 32px', borderRadius: 8, fontSize: 16, fontWeight: 500, display: 'inline-block' }}>
+              <Link to="/rights" style={{ border: '1px solid rgba(255,255,255,0.2)', color: '#cbd5e1', padding: '14px 28px', borderRadius: 8, fontSize: 15, fontWeight: 500, display: 'inline-block', whiteSpace: 'nowrap' }}>
                 Applicant's Bill of Rights
               </Link>
             </div>
@@ -179,8 +179,9 @@ export default function Home() {
           <Link to="/assess" style={{ background: '#2563eb', color: '#fff', padding: '16px 40px', borderRadius: 8, fontSize: 16, fontWeight: 600, display: 'inline-block' }}>
             Start your assessment
           </Link>
-          <div style={{ marginTop: 16 }}>
-            <Link to="/rights" style={{ fontSize: 14, color: '#2563eb', fontWeight: 500 }}>Read the Applicant's Bill of Rights →</Link>
+          <div style={{ marginTop: 16, display: 'flex', gap: 20, justifyContent: 'center' }}>
+            <Link to="/rights" style={{ fontSize: 14, color: '#2563eb', fontWeight: 500 }}>Applicant's Bill of Rights →</Link>
+            <Link to="/org-rights" style={{ fontSize: 14, color: '#2563eb', fontWeight: 500 }}>Organization's Bill of Rights →</Link>
           </div>
         </div>
       </section>

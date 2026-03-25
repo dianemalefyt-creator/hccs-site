@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const RIGHTS = [
   { num: 1, title: 'The Right to Respect', text: 'Every applicant has the right to be treated with professionalism, courtesy, and dignity throughout the hiring process, regardless of outcome.' },
@@ -122,6 +123,20 @@ export default function BillOfRights() {
               An organization aligned to the HCCS™ Standard affirms that applicants will be evaluated through processes designed to be transparent, job-relevant, accountable, and subject to human oversight. The organization further affirms that candidate data, decision criteria, and enabling technologies will be managed in a manner consistent with fairness, privacy, and responsible governance.
             </p>
             <a href="/assess" style={{ display: 'inline-block', background: '#2563eb', color: '#fff', padding: '12px 28px', borderRadius: 8, fontSize: 14, fontWeight: 600, textDecoration: 'none' }}>Assess your organization</a>
+          </div>
+        </div>
+      </section>
+
+      {/* Cross-link */}
+      <section style={{ padding: '0 24px 48px' }}>
+        <div style={{ maxWidth: 800, margin: '0 auto' }}>
+          <div style={{ background: '#0f172a', borderRadius: 14, padding: 28, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24 }}>
+            <div>
+              <div style={{ fontSize: 13, color: '#5b9bd5', fontWeight: 600, marginBottom: 4 }}>The other side of the table</div>
+              <div style={{ fontSize: 18, fontWeight: 700, color: '#fff', marginBottom: 4 }}>Organization's Bill of Rights</div>
+              <div style={{ fontSize: 14, color: '#94a3b8' }}>Governance doesn't just protect candidates. It protects the organizations that hire them.</div>
+            </div>
+            <Link to="/org-rights" style={{ background: '#2563eb', color: '#fff', padding: '12px 24px', borderRadius: 8, fontSize: 14, fontWeight: 600, textDecoration: 'none', whiteSpace: 'nowrap', flexShrink: 0 }}>Read it →</Link>
           </div>
         </div>
       </section>

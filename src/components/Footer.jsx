@@ -35,6 +35,7 @@ export default function Footer() {
             <Link to="/about" style={{ fontSize: 14, color: '#94a3b8' }}>About HCCS™</Link>
             <Link to="/contact" style={{ fontSize: 14, color: '#94a3b8' }}>Contact</Link>
             <Link to="/rights" style={{ fontSize: 14, color: '#94a3b8' }}>Applicant's Bill of Rights</Link>
+            <Link to="/org-rights" style={{ fontSize: 14, color: '#94a3b8' }}>Organization's Bill of Rights</Link>
             <a href="https://www.linkedin.com/in/dianemalefyt/" target="_blank" rel="noopener" style={{ fontSize: 14, color: '#94a3b8' }}>LinkedIn</a>
           </div>
         </div>

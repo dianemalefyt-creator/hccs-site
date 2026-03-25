@@ -94,9 +94,10 @@ export default function About() {
                 <p style={{ fontSize: 15, lineHeight: 1.7, color: '#94a3b8' }}>
                   Her core conviction: AI's greatest underestimated risk is the systematic erosion of human dignity and purpose. HCCS™ exists to ensure that consequential decisions about people are made with governance, evidence, and accountability.
                 </p>
-                <div style={{ display: 'flex', gap: 20, marginTop: 20 }}>
+                <div style={{ display: 'flex', gap: 20, marginTop: 20, flexWrap: 'wrap' }}>
                   <a href="https://www.linkedin.com/in/dianemalefyt/" target="_blank" rel="noopener" style={{ fontSize: 14, color: '#5b9bd5', fontWeight: 500 }}>Connect on LinkedIn &rarr;</a>
                   <Link to="/rights" style={{ fontSize: 14, color: '#5b9bd5', fontWeight: 500 }}>Applicant's Bill of Rights &rarr;</Link>
+                  <Link to="/org-rights" style={{ fontSize: 14, color: '#5b9bd5', fontWeight: 500 }}>Organization's Bill of Rights &rarr;</Link>
                 </div>
               </div>
             </div>
