@@ -176,6 +176,9 @@ export default function Home() {
           <Link to="/assess" style={{ background: '#2563eb', color: '#fff', padding: '16px 40px', borderRadius: 8, fontSize: 16, fontWeight: 600, display: 'inline-block' }}>
             Start your assessment
           </Link>
+          <div style={{ marginTop: 16 }}>
+            <Link to="/rights" style={{ fontSize: 14, color: '#2563eb', fontWeight: 500 }}>Read the Applicant's Bill of Rights →</Link>
+          </div>
         </div>
       </section>
     </div>

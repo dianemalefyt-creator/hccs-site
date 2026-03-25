@@ -167,7 +167,7 @@ ${noted.map(c => `<tr><td><code>${c.id}</code></td><td>${c.domainCode}</td><td c
 
 <div class="footer">
 <div>HCCS™ Maturity Assessment Report | ${user.org} | ${date}</div>
-<div style="margin-top:4px">Generated at hccsstandard.com | HCCS™-1.0 | &copy; 2026 Diane Malefyt</div>
+<div style="margin-top:4px">Generated at hccsstandard.com | HCCS™-1.0 | &copy; 2026 IngenuityCo LLC</div>
 <div style="margin-top:8px;color:#cbd5e1">This report is generated from a self-assessment and does not constitute certified compliance.</div>
 </div>
 </body></html>`;
@@ -242,27 +242,35 @@ function buildTeaserEmailHTML(user, domainScores, overallLevel, answers, gaps) {
     '<div style="font-size:22px;font-weight:700;margin-bottom:16px">Get your complete maturity assessment</div>' +
 
     '<table style="width:100%;border-collapse:collapse;margin:16px 0"><tr>' +
-    '<td style="width:50%;vertical-align:top;padding:12px">' +
-    '<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:20px">' +
-    '<div style="font-size:12px;color:#5b9bd5;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px">Self-Assessment</div>' +
-    '<div style="font-size:28px;font-weight:700;color:#fff;margin-bottom:8px">$149</div>' +
-    '<div style="font-size:13px;color:#94a3b8;margin-bottom:16px;line-height:1.5">67 controls, remediation roadmap, full report. Take it at your own pace.</div>' +
-    '<a href="' + STRIPE_SELF + '" style="display:block;text-align:center;background:#2563eb;color:#fff;padding:10px 20px;border-radius:6px;font-weight:600;font-size:14px;text-decoration:none">Get started</a>' +
+    '<td style="width:33%;vertical-align:top;padding:8px">' +
+    '<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:16px">' +
+    '<div style="font-size:11px;color:#5b9bd5;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px">Self-Assessment</div>' +
+    '<div style="font-size:24px;font-weight:700;color:#fff;margin-bottom:6px">$149</div>' +
+    '<div style="font-size:12px;color:#94a3b8;margin-bottom:12px;line-height:1.4">67 controls, remediation roadmap, full report.</div>' +
+    '<a href="' + STRIPE_SELF + '" style="display:block;text-align:center;background:#2563eb;color:#fff;padding:8px 16px;border-radius:6px;font-weight:600;font-size:13px;text-decoration:none">Get started</a>' +
     '</div></td>' +
 
-    '<td style="width:50%;vertical-align:top;padding:12px">' +
-    '<div style="background:rgba(255,255,255,0.05);border:2px solid #2563eb;border-radius:12px;padding:20px">' +
-    '<div style="font-size:12px;color:#2563eb;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px">Guided Assessment</div>' +
-    '<div style="font-size:28px;font-weight:700;color:#fff;margin-bottom:8px">$2,500</div>' +
-    '<div style="font-size:13px;color:#94a3b8;margin-bottom:16px;line-height:1.5">Expert-guided with exec presentation. Validated results for leadership.</div>' +
-    '<a href="' + STRIPE_GUIDED + '" style="display:block;text-align:center;background:#fff;color:#0f172a;padding:10px 20px;border-radius:6px;font-weight:600;font-size:14px;text-decoration:none">Book consultation</a>' +
+    '<td style="width:33%;vertical-align:top;padding:8px">' +
+    '<div style="background:rgba(255,255,255,0.05);border:2px solid #2563eb;border-radius:12px;padding:16px">' +
+    '<div style="font-size:11px;color:#2563eb;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px">Guided</div>' +
+    '<div style="font-size:24px;font-weight:700;color:#fff;margin-bottom:6px">$2,500</div>' +
+    '<div style="font-size:12px;color:#94a3b8;margin-bottom:12px;line-height:1.4">Expert-guided with exec presentation.</div>' +
+    '<a href="' + STRIPE_GUIDED + '" style="display:block;text-align:center;background:#fff;color:#0f172a;padding:8px 16px;border-radius:6px;font-weight:600;font-size:13px;text-decoration:none">Book guided</a>' +
+    '</div></td>' +
+
+    '<td style="width:33%;vertical-align:top;padding:8px">' +
+    '<div style="background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.3);border-radius:12px;padding:16px">' +
+    '<div style="font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px">Enterprise</div>' +
+    '<div style="font-size:24px;font-weight:700;color:#fff;margin-bottom:6px">Custom</div>' +
+    '<div style="font-size:12px;color:#94a3b8;margin-bottom:12px;line-height:1.4">Validated audit, attestation, board-ready.</div>' +
+    '<a href="https://hccsstandard.com/contact" style="display:block;text-align:center;background:rgba(255,255,255,0.1);color:#fff;padding:8px 16px;border-radius:6px;font-weight:600;font-size:13px;text-decoration:none;border:1px solid rgba(255,255,255,0.2)">Contact us</a>' +
     '</div></td>' +
     '</tr></table>' +
     '</div>' +
 
     '<div style="text-align:center;font-size:11px;color:#94a3b8;padding:24px 0;border-top:1px solid #e2e8f0;margin-top:32px">' +
     '<div>HCCS™ Quick Assessment | ' + date + ' | hccsstandard.com</div>' +
-    '<div style="margin-top:4px">&copy; 2026 Diane Malefyt. All rights reserved.</div>' +
+    '<div style="margin-top:4px">&copy; 2026 IngenuityCo LLC. All rights reserved.</div>' +
     '</div></body></html>';
 }
 

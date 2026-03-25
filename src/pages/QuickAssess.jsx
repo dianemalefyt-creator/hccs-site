@@ -298,29 +298,40 @@ function Results({ answers }) {
         </div>
 
         {/* Pricing tiers */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 32 }}>
-          <div style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 12, padding: 24 }}>
-            <div style={{ fontSize: 12, fontWeight: 600, color: "#2563eb", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>Self-Assessment</div>
-            <div style={{ fontSize: 32, fontWeight: 700, color: "#0f172a", marginBottom: 4 }}>$149</div>
-            <div style={{ fontSize: 13, color: "#64748b", marginBottom: 16 }}>One-time payment</div>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 14, marginBottom: 32 }}>
+          <div style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 12, padding: 20 }}>
+            <div style={{ fontSize: 11, fontWeight: 600, color: "#2563eb", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>Self-Assessment</div>
+            <div style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", marginBottom: 4 }}>$149</div>
+            <div style={{ fontSize: 12, color: "#64748b", marginBottom: 14 }}>One-time payment</div>
             {["Full 67-control assessment", "Remediation roadmap", "Audit-grade report", "Email delivery"].map(t => (
-              <div key={t} style={{ fontSize: 13, color: "#475569", marginBottom: 6, display: "flex", gap: 6 }}>
+              <div key={t} style={{ fontSize: 12, color: "#475569", marginBottom: 5, display: "flex", gap: 6 }}>
                 <span style={{ color: "#059669", fontWeight: 700 }}>✓</span> {t}
               </div>
             ))}
-            <a href="https://buy.stripe.com/fZu6oI8BXb7herYgNucIE01" style={{ display: "block", textAlign: "center", background: "#2563eb", color: "#fff", padding: "12px 20px", borderRadius: 8, fontSize: 14, fontWeight: 600, textDecoration: "none", marginTop: 16 }}>Get started</a>
+            <a href="https://buy.stripe.com/fZu6oI8BXb7herYgNucIE01" style={{ display: "block", textAlign: "center", background: "#2563eb", color: "#fff", padding: "10px 16px", borderRadius: 8, fontSize: 13, fontWeight: 600, textDecoration: "none", marginTop: 14 }}>Get started</a>
           </div>
-          <div style={{ background: "#fff", border: "2px solid #2563eb", borderRadius: 12, padding: 24, position: "relative" }}>
-            <div style={{ position: "absolute", top: -10, left: "50%", transform: "translateX(-50%)", background: "#2563eb", color: "#fff", padding: "3px 12px", borderRadius: 10, fontSize: 11, fontWeight: 600 }}>Recommended</div>
-            <div style={{ fontSize: 12, fontWeight: 600, color: "#2563eb", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>Guided Assessment</div>
-            <div style={{ fontSize: 32, fontWeight: 700, color: "#0f172a", marginBottom: 4 }}>$2,500</div>
-            <div style={{ fontSize: 13, color: "#64748b", marginBottom: 16 }}>Expert-guided engagement</div>
-            {["Everything in Self-Assessment", "Expert-guided walkthrough", "Executive presentation", "30-day follow-up review"].map(t => (
-              <div key={t} style={{ fontSize: 13, color: "#475569", marginBottom: 6, display: "flex", gap: 6 }}>
+          <div style={{ background: "#fff", border: "2px solid #2563eb", borderRadius: 12, padding: 20, position: "relative" }}>
+            <div style={{ position: "absolute", top: -10, left: "50%", transform: "translateX(-50%)", background: "#2563eb", color: "#fff", padding: "3px 12px", borderRadius: 10, fontSize: 10, fontWeight: 600 }}>Recommended</div>
+            <div style={{ fontSize: 11, fontWeight: 600, color: "#2563eb", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>Guided Assessment</div>
+            <div style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", marginBottom: 4 }}>$2,500</div>
+            <div style={{ fontSize: 12, color: "#64748b", marginBottom: 14 }}>Expert-guided</div>
+            {["Everything in Self-Assessment", "Expert-guided walkthrough", "Executive presentation", "30-day follow-up"].map(t => (
+              <div key={t} style={{ fontSize: 12, color: "#475569", marginBottom: 5, display: "flex", gap: 6 }}>
                 <span style={{ color: "#2563eb", fontWeight: 700 }}>✓</span> {t}
               </div>
             ))}
-            <a href="https://buy.stripe.com/9B65kEf0lcbl5Vs9l2cIE00" style={{ display: "block", textAlign: "center", background: "#0f172a", color: "#fff", padding: "12px 20px", borderRadius: 8, fontSize: 14, fontWeight: 600, textDecoration: "none", marginTop: 16 }}>Book consultation</a>
+            <a href="https://buy.stripe.com/9B65kEf0lcbl5Vs9l2cIE00" style={{ display: "block", textAlign: "center", background: "#0f172a", color: "#fff", padding: "10px 16px", borderRadius: 8, fontSize: 13, fontWeight: 600, textDecoration: "none", marginTop: 14 }}>Book guided</a>
+          </div>
+          <div style={{ background: "#fff", border: "2px solid #0f172a", borderRadius: 12, padding: 20 }}>
+            <div style={{ fontSize: 11, fontWeight: 600, color: "#0f172a", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>Enterprise</div>
+            <div style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", marginBottom: 4 }}>Custom</div>
+            <div style={{ fontSize: 12, color: "#64748b", marginBottom: 14 }}>Validated audit</div>
+            {["Everything in Guided", "Third-party validation", "Attestation letter", "Board-ready report"].map(t => (
+              <div key={t} style={{ fontSize: 12, color: "#475569", marginBottom: 5, display: "flex", gap: 6 }}>
+                <span style={{ color: "#0f172a", fontWeight: 700 }}>✓</span> {t}
+              </div>
+            ))}
+            <a href="/contact" style={{ display: "block", textAlign: "center", background: "#0f172a", color: "#fff", padding: "10px 16px", borderRadius: 8, fontSize: 13, fontWeight: 600, textDecoration: "none", marginTop: 14 }}>Book consultation</a>
           </div>
         </div>
 
@@ -357,7 +368,7 @@ function Results({ answers }) {
         </div>
 
         <div style={{ textAlign: "center", marginTop: 48, paddingTop: 24, borderTop: "1px solid #e2e8f0" }}>
-          <span style={{ fontSize: 12, color: "#94a3b8" }}>HCCS-1.0 | © 2026 Diane Malefyt. All rights reserved.</span>
+          <span style={{ fontSize: 12, color: "#94a3b8" }}>HCCS-1.0 | © 2026 IngenuityCo LLC. All rights reserved.</span>
         </div>
       </div>
     </div>

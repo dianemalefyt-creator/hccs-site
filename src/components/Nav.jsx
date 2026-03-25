@@ -12,6 +12,7 @@ export default function Nav() {
     { to: '/controls', label: 'Controls' },
     { to: '/documents', label: 'Documents' },
     { to: '/about', label: 'About' },
+    { to: '/contact', label: 'Contact' },
   ]
 
   return (

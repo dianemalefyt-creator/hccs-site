@@ -33,12 +33,17 @@ export default function Footer() {
           <div style={{ fontSize: 12, fontWeight: 600, color: '#5b9bd5', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 16 }}>Connect</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             <Link to="/about" style={{ fontSize: 14, color: '#94a3b8' }}>About HCCS™</Link>
+            <Link to="/contact" style={{ fontSize: 14, color: '#94a3b8' }}>Contact</Link>
+            <Link to="/rights" style={{ fontSize: 14, color: '#94a3b8' }}>Applicant's Bill of Rights</Link>
             <a href="https://www.linkedin.com/in/dianemalefyt/" target="_blank" rel="noopener" style={{ fontSize: 14, color: '#94a3b8' }}>LinkedIn</a>
           </div>
         </div>
       </div>
       <div style={{ maxWidth: 1100, margin: '40px auto 0', paddingTop: 24, borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <span style={{ fontSize: 13, color: '#475569' }}>&copy; 2026 Diane Malefyt. All rights reserved.</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <img src="/ingenuityco-logo.jpg" alt="IngenuityCo" style={{ height: 28, borderRadius: 4 }} />
+          <span style={{ fontSize: 13, color: '#475569' }}>&copy; 2026 IngenuityCo LLC. All rights reserved.</span>
+        </div>
         <span style={{ fontSize: 13, color: '#475569' }}>HCCS-1.0 | hccsstandard.com</span>
       </div>
     </footer>

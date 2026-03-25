@@ -36,7 +36,7 @@ function Landing({onStart}){return(
 onMouseOver={e=>e.target.style.background="#1d4ed8"} onMouseOut={e=>e.target.style.background="#2563eb"}>Start assessment</button>
 <div style={{marginTop:64,paddingTop:32,borderTop:"1px solid rgba(255,255,255,0.06)",fontSize:13,color:"#475569"}}>
 <div>HCCS-1.0 | Aligned to SOX, NIST AI RMF, and ISO governance standards</div>
-<div style={{marginTop:4}}>© 2026 Diane Malefyt. All rights reserved.</div></div></div></div>);}
+<div style={{marginTop:4}}>© 2026 IngenuityCo LLC. All rights reserved.</div></div></div></div>);}
 
 function Assess({onComplete}){
 const[di,setDi]=useState(0);const[ans,setAns]=useState({});const[notes,setNotes]=useState({});const[exp,setExp]=useState({});const ref=useRef(null);
@@ -289,7 +289,7 @@ ${noted.map(c=>`<tr><td><code>${c.id}</code></td><td>${c.domainCode}</td><td cla
 
 <div class="footer">
 <div>HCCS Maturity Assessment Report | ${user?.org||'Organization'} | ${date}</div>
-<div style="margin-top:4px">Generated at hccsstandard.com | HCCS-1.0 | &copy; 2026 Diane Malefyt. All rights reserved.</div>
+<div style="margin-top:4px">Generated at hccsstandard.com | HCCS-1.0 | &copy; 2026 IngenuityCo LLC. All rights reserved.</div>
 <div style="margin-top:8px;color:#cbd5e1">This report is generated from a self-assessment. It does not constitute certified compliance. For validated assessment (Level 3+), engage a qualified HCCS™ assessor.</div>
 </div>
 </body></html>`;
@@ -411,7 +411,7 @@ disabled={sending} style={{padding:"10px 24px",borderRadius:6,border:"none",back
 </div>)}
 
 <div style={{display:"flex",justifyContent:"space-between",marginTop:48,paddingTop:24,borderTop:"1px solid #e2e8f0"}}>
-<span style={{fontSize:12,color:"#94a3b8"}}>HCCS-1.0 | © 2026 Diane Malefyt</span>
+<span style={{fontSize:12,color:"#94a3b8"}}>HCCS-1.0 | © 2026 IngenuityCo LLC</span>
 <button onClick={onRestart} style={{padding:"8px 20px",borderRadius:6,border:"1px solid #e2e8f0",background:"#fff",color:"#64748b",fontSize:13,cursor:"pointer"}}>Retake assessment</button></div>
 </div></div>);}
 
@@ -518,35 +518,49 @@ return (
 </div>
 
 {/* Pricing cards */}
-<div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:24,marginBottom:40}}>
+<div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:20,marginBottom:40}}>
 
 {/* Self-Assessment */}
-<div style={{background:'#fff',borderRadius:16,padding:'36px 28px',border:'2px solid #e2e8f0',display:'flex',flexDirection:'column'}}>
+<div style={{background:'#fff',borderRadius:16,padding:'32px 24px',border:'2px solid #e2e8f0',display:'flex',flexDirection:'column'}}>
 <div style={{fontSize:13,fontWeight:600,color:'#2563eb',textTransform:'uppercase',letterSpacing:'0.1em',marginBottom:8}}>Self-Assessment</div>
 <div style={{fontSize:36,fontWeight:700,color:'#0f172a',marginBottom:4}}>$149</div>
 <div style={{fontSize:14,color:'#64748b',marginBottom:20}}>One-time payment</div>
 <div style={{flex:1}}>
-{['Full 67-control assessment across 7 domains','Definition, example, and remediation for every control','Notes capture throughout the assessment','Per-domain maturity scoring (L0-L5)','Priority gap analysis with MUST/SHOULD breakdown','Phased remediation roadmap to Level 3','Downloadable audit-grade report','Email delivery of complete results'].map(t=>
-<div key={t} style={{fontSize:14,color:'#475569',marginBottom:10,display:'flex',gap:8,lineHeight:1.5}}>
-<span style={{color:'#059669',fontWeight:700,marginTop:1}}>&#10003;</span><span>{t}</span></div>)}
+{['Full 67-control assessment','Definition, example, remediation per control','Notes capture throughout','Per-domain maturity scoring (L0-L5)','Gap analysis (MUST/SHOULD)','Remediation roadmap to Level 3','Downloadable audit-grade report','Email delivery of results'].map(t=>
+<div key={t} style={{fontSize:13,color:'#475569',marginBottom:8,display:'flex',gap:8,lineHeight:1.45}}>
+<span style={{color:'#059669',fontWeight:700,marginTop:1,flexShrink:0}}>&#10003;</span><span>{t}</span></div>)}
 </div>
-<div style={{fontSize:13,color:'#64748b',fontStyle:'italic',marginBottom:20}}>Best for: HR leaders, TA managers, People Ops who want to assess and build a remediation plan independently.</div>
-<a href={STRIPE_SELF} style={{display:'block',textAlign:'center',background:'#2563eb',color:'#fff',padding:'14px 24px',borderRadius:8,fontSize:15,fontWeight:600,textDecoration:'none'}}>Get started</a>
+<div style={{fontSize:12,color:'#64748b',fontStyle:'italic',marginBottom:16}}>Best for: HR leaders, TA managers, People Ops assessing independently.</div>
+<a href={STRIPE_SELF} style={{display:'block',textAlign:'center',background:'#2563eb',color:'#fff',padding:'14px 20px',borderRadius:8,fontSize:15,fontWeight:600,textDecoration:'none'}}>Get started</a>
 </div>
 
 {/* Guided Assessment */}
-<div style={{background:'#fff',borderRadius:16,padding:'36px 28px',border:'2px solid #2563eb',position:'relative',display:'flex',flexDirection:'column'}}>
+<div style={{background:'#fff',borderRadius:16,padding:'32px 24px',border:'2px solid #2563eb',position:'relative',display:'flex',flexDirection:'column'}}>
 <div style={{position:'absolute',top:-12,left:'50%',transform:'translateX(-50%)',background:'#2563eb',color:'#fff',padding:'4px 16px',borderRadius:12,fontSize:12,fontWeight:600}}>Recommended</div>
 <div style={{fontSize:13,fontWeight:600,color:'#2563eb',textTransform:'uppercase',letterSpacing:'0.1em',marginBottom:8}}>Guided Assessment</div>
 <div style={{fontSize:36,fontWeight:700,color:'#0f172a',marginBottom:4}}>$2,500</div>
 <div style={{fontSize:14,color:'#64748b',marginBottom:20}}>Expert-guided engagement</div>
 <div style={{flex:1}}>
-{['Everything in Self-Assessment, plus:','Expert-guided walkthrough of all 67 controls','Accurate scoring based on evidence review','Interpreted findings for executive stakeholders','Executive presentation deck of results','Strategic remediation prioritization','30-day follow-up review','Direct access to HCCS author for questions'].map((t,i)=>
-<div key={t} style={{fontSize:14,color:i===0?'#0f172a':'#475569',fontWeight:i===0?600:400,marginBottom:10,display:'flex',gap:8,lineHeight:1.5}}>
-{i>0&&<span style={{color:'#2563eb',fontWeight:700,marginTop:1}}>&#10003;</span>}<span>{t}</span></div>)}
+{['Everything in Self-Assessment, plus:','Expert-guided walkthrough of all 67 controls','Scoring based on evidence review','Interpreted findings for executives','Executive presentation deck','Strategic remediation prioritization','30-day follow-up review','Direct access to HCCS™ author'].map((t,i)=>
+<div key={t} style={{fontSize:13,color:i===0?'#0f172a':'#475569',fontWeight:i===0?600:400,marginBottom:8,display:'flex',gap:8,lineHeight:1.45}}>
+{i>0&&<span style={{color:'#2563eb',fontWeight:700,marginTop:1,flexShrink:0}}>&#10003;</span>}<span>{t}</span></div>)}
 </div>
-<div style={{fontSize:13,color:'#64748b',fontStyle:'italic',marginBottom:20}}>Best for: CHROs, VPs of People, organizations that need validated results for leadership or board reporting.</div>
-<a href={STRIPE_GUIDED} style={{display:'block',textAlign:'center',background:'#0f172a',color:'#fff',padding:'14px 24px',borderRadius:8,fontSize:15,fontWeight:600,textDecoration:'none'}}>Book guided assessment</a>
+<div style={{fontSize:12,color:'#64748b',fontStyle:'italic',marginBottom:16}}>Best for: CHROs, VPs of People needing validated results for leadership.</div>
+<a href={STRIPE_GUIDED} style={{display:'block',textAlign:'center',background:'#0f172a',color:'#fff',padding:'14px 20px',borderRadius:8,fontSize:15,fontWeight:600,textDecoration:'none'}}>Book guided assessment</a>
+</div>
+
+{/* Enterprise */}
+<div style={{background:'#fff',borderRadius:16,padding:'32px 24px',border:'2px solid #0f172a',display:'flex',flexDirection:'column'}}>
+<div style={{fontSize:13,fontWeight:600,color:'#0f172a',textTransform:'uppercase',letterSpacing:'0.1em',marginBottom:8}}>Enterprise</div>
+<div style={{fontSize:36,fontWeight:700,color:'#0f172a',marginBottom:4}}>Custom</div>
+<div style={{fontSize:14,color:'#64748b',marginBottom:20}}>Validated audit engagement</div>
+<div style={{flex:1}}>
+{['Everything in Guided, plus:','Third-party validated assessment','Full evidence review and verification','Formal attestation letter','Board-ready compliance report','Multi-department or org-wide scope','Ongoing compliance monitoring plan','Priority support and advisory'].map((t,i)=>
+<div key={t} style={{fontSize:13,color:i===0?'#0f172a':'#475569',fontWeight:i===0?600:400,marginBottom:8,display:'flex',gap:8,lineHeight:1.45}}>
+{i>0&&<span style={{color:'#0f172a',fontWeight:700,marginTop:1,flexShrink:0}}>&#10003;</span>}<span>{t}</span></div>)}
+</div>
+<div style={{fontSize:12,color:'#64748b',fontStyle:'italic',marginBottom:16}}>Best for: General Counsel, boards, orgs making public claims about hiring practices.</div>
+<a href="/contact" style={{display:'block',textAlign:'center',background:'#0f172a',color:'#fff',padding:'14px 20px',borderRadius:8,fontSize:15,fontWeight:600,textDecoration:'none'}}>Book a consultation</a>
 </div>
 </div>
 
