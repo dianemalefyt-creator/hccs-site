@@ -257,7 +257,7 @@ ${noted.map(c=>`<tr><td><code>${c.id}</code></td><td>${c.domainCode}</td><td cla
 const w=window.open('','_blank');w.document.write(html);w.document.close();}
 
 function Results({answers,notes,user,onRestart}){
-const[done,setDone]=useState(false);
+const[done,setDone]=useState(false);const[sending,setSending]=useState(false);const[emailErr,setEmailErr]=useState('');
 const ds=D.map(d=>({domain:d.code,name:d.name,color:d.color,level:calcLv(answers,d),total:d.controls.length,met:d.controls.filter(c=>answers[c.id]==="yes").length,partial:d.controls.filter(c=>answers[c.id]==="partial").length,gaps:getGaps(answers,d)}));
 const ov=Math.min(...ds.map(d=>d.level));const ag=sortG(ds.flatMap(d=>d.gaps));const mg=ag.filter(g=>g.level==="MUST"),sg=ag.filter(g=>g.level==="SHOULD");
 const rd=ds.map(d=>({domain:d.domain,level:d.level,fullMark:5}));
@@ -338,19 +338,28 @@ return(<div key={c.id} style={{marginBottom:10,paddingLeft:12,borderLeft:`2px so
 <h3 style={{margin:"0 0 8px",fontSize:20,fontWeight:600}}>Your HCCS Assessment Report</h3>
 <p style={{fontSize:14,color:"#64748b",marginBottom:24}}>Full control-by-control record with your notes, gap analysis, remediation recommendations, and implementation roadmap.</p>
 <div style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap"}}>
-<button onClick={()=>{genReport(user,ds,ov,answers,notes,mg,sg,ag,ph);setDone(true);}}
-style={{padding:"14px 32px",borderRadius:8,border:"none",background:"#2563eb",color:"#fff",fontSize:15,fontWeight:600,cursor:"pointer"}}>Download Full Report</button>
+<button onClick={()=>{genReport(user,ds,ov,answers,notes,mg,sg,ag,ph);}}
+style={{padding:"14px 28px",borderRadius:8,border:"1px solid #e2e8f0",background:"#fff",color:"#334155",fontSize:14,fontWeight:600,cursor:"pointer"}}>Open Report in Browser</button>
+<button onClick={async()=>{setSending(true);setEmailErr('');try{
+const payload={user,domainScores:ds.map(d=>({domain:d.domain,name:d.name,level:d.level,met:d.met,total:d.total,partial:d.partial,gaps:d.gaps.length})),
+overallLevel:ov,controls:D.map(d=>({code:d.code,name:d.name,color:d.color,controls:d.controls})),answers,notes,
+mustGaps:mg,shouldGaps:sg,allGaps:ag};
+const res=await fetch('/.netlify/functions/send-report',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+const result=await res.json();if(res.ok){setDone(true);}else{setEmailErr(result.error||'Failed to send. Try downloading instead.');}}catch(e){setEmailErr('Network error. Try downloading instead.');}finally{setSending(false);}}}
+disabled={sending} style={{padding:"14px 28px",borderRadius:8,border:"none",background:sending?"#94a3b8":"#2563eb",color:"#fff",fontSize:14,fontWeight:600,cursor:sending?"default":"pointer"}}>
+{sending?"Sending...":"Email Report to Me"}</button>
 </div>
-<div style={{fontSize:13,color:"#64748b",marginTop:16}}>Opens in a new tab. Use your browser's Save as PDF or Print to save.</div>
-{user&&<div style={{fontSize:12,color:"#94a3b8",marginTop:8}}>Report prepared for: {user.name}, {user.org}</div>}
+{emailErr&&<div style={{fontSize:13,color:"#dc2626",marginTop:12}}>{emailErr}</div>}
+{user&&<div style={{fontSize:13,color:"#64748b",marginTop:16}}>Report will be emailed to: <strong>{user.email}</strong></div>}
 </div>):(
 <div style={{background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:12,padding:32,textAlign:"center"}}>
 <div style={{fontSize:24,marginBottom:8}}>✓</div>
-<h3 style={{margin:"0 0 8px",fontSize:18,fontWeight:600,color:"#166534"}}>Report generated</h3>
-<p style={{fontSize:14,color:"#15803d",margin:"0 0 16px"}}>Your report opened in a new tab. Save it as PDF from your browser.</p>
+<h3 style={{margin:"0 0 8px",fontSize:18,fontWeight:600,color:"#166534"}}>Report sent</h3>
+<p style={{fontSize:14,color:"#15803d",margin:"0 0 16px"}}>Your full HCCS assessment report has been emailed to {user?.email}.</p>
+<div style={{display:"flex",gap:12,justifyContent:"center"}}>
 <button onClick={()=>genReport(user,ds,ov,answers,notes,mg,sg,ag,ph)}
-style={{padding:"10px 24px",borderRadius:6,border:"1px solid #e2e8f0",background:"#fff",color:"#475569",fontSize:13,fontWeight:500,cursor:"pointer"}}>Generate again</button>
-</div>)}
+style={{padding:"10px 24px",borderRadius:6,border:"1px solid #e2e8f0",background:"#fff",color:"#475569",fontSize:13,fontWeight:500,cursor:"pointer"}}>Also open in browser</button>
+</div></div>)}
 
 <div style={{display:"flex",justifyContent:"space-between",marginTop:48,paddingTop:24,borderTop:"1px solid #e2e8f0"}}>
 <span style={{fontSize:12,color:"#94a3b8"}}>HCCS-1.0 | © 2026 Diane Malefyt</span>
@@ -358,6 +367,7 @@ style={{padding:"10px 24px",borderRadius:6,border:"1px solid #e2e8f0",background
 </div></div>);}
 
 const FREE_DOMAINS = ['gmail.com','yahoo.com','hotmail.com','outlook.com','aol.com','icloud.com','mail.com','protonmail.com','zoho.com','yandex.com','gmx.com','live.com','msn.com','me.com','inbox.com','fastmail.com','hushmail.com','mailfence.com','tutanota.com','proton.me'];
+const ADMIN_EMAILS = ['diane.malefyt@gmail.com'];
 const SIZES = ['1-50','51-200','201-500','501-1,000','1,001-5,000','5,001-10,000','10,000+'];
 
 function Gate({onComplete}){
@@ -372,7 +382,7 @@ if(!f.name.trim())e.name='Required';
 if(!f.email.trim())e.email='Required';
 else{const domain=f.email.split('@')[1]?.toLowerCase();
 if(!domain||!domain.includes('.'))e.email='Enter a valid email';
-else if(FREE_DOMAINS.includes(domain))e.email='Please use your work email';}
+else if(FREE_DOMAINS.includes(domain)&&!ADMIN_EMAILS.includes(f.email.toLowerCase()))e.email='Please use your work email';}
 if(!f.org.trim())e.org='Required';
 if(!f.title.trim())e.title='Required';
 if(!f.size)e.size='Required';

@@ -92,7 +92,7 @@ export default function About() {
               Her core conviction: AI's greatest underestimated risk is the systematic erosion of human dignity and purpose. HCCS exists to ensure that consequential decisions about people are made with governance, evidence, and accountability.
             </p>
             <div style={{ marginTop: 20 }}>
-              <a href="https://linkedin.com/in/dimalefyt" target="_blank" rel="noopener" style={{ fontSize: 14, color: '#5b9bd5', fontWeight: 500 }}>Connect on LinkedIn &rarr;</a>
+              <a href="https://www.linkedin.com/in/dianemalefyt/" target="_blank" rel="noopener" style={{ fontSize: 14, color: '#5b9bd5', fontWeight: 500 }}>Connect on LinkedIn &rarr;</a>
             </div>
           </div>
 

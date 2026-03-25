@@ -33,7 +33,7 @@ export default function Footer() {
           <div style={{ fontSize: 12, fontWeight: 600, color: '#5b9bd5', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 16 }}>Connect</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             <Link to="/about" style={{ fontSize: 14, color: '#94a3b8' }}>About HCCS</Link>
-            <a href="https://linkedin.com/in/dimalefyt" target="_blank" rel="noopener" style={{ fontSize: 14, color: '#94a3b8' }}>LinkedIn</a>
+            <a href="https://www.linkedin.com/in/dianemalefyt/" target="_blank" rel="noopener" style={{ fontSize: 14, color: '#94a3b8' }}>LinkedIn</a>
           </div>
         </div>
       </div>

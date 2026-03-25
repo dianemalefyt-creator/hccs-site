@@ -89,6 +89,32 @@ npm run build
 # Output in dist/
 ```
 
+## Email Report Setup (Resend)
+
+The assessment can email the full report to users. This requires a Resend account (free: 100 emails/day).
+
+### Setup (5 minutes):
+
+1. Go to https://resend.com and create a free account
+2. Add your domain: Domains → Add Domain → `hccsstandard.com`
+3. Resend gives you DNS records (DKIM, SPF). Add them in Namecheap Advanced DNS
+4. Once verified, create an API key: API Keys → Create
+5. In Netlify: Site Settings → Environment Variables → Add:
+   - Key: `RESEND_API_KEY`
+   - Value: your Resend API key
+6. Redeploy the site (Deploys → Trigger Deploy)
+
+That's it. The "Email Report to Me" button on the results page will now send the full HTML report to the user's email.
+
+### How it works:
+- User clicks "Email Report to Me"
+- Frontend POSTs assessment data to `/.netlify/functions/send-report`
+- Netlify serverless function builds the HTML report and sends via Resend API
+- User receives formatted report in their inbox with all scores, notes, gaps, and remediation
+
+### From address:
+Reports are sent from `reports@hccsstandard.com`. You can change this in `netlify/functions/send-report.js`.
+
 ## Lead Capture
 
 The assessment tool has an email capture form on the results page. Currently it stores nothing (frontend only). To capture leads:
