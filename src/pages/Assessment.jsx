@@ -296,7 +296,7 @@ ${noted.map(c=>`<tr><td><code>${c.id}</code></td><td>${c.domainCode}</td><td cla
 const w=window.open('','_blank');w.document.write(html);w.document.close();}
 
 function Results({answers,notes,user,onRestart}){
-const[done,setDone]=useState(false);const[sending,setSending]=useState(false);const[emailErr,setEmailErr]=useState('');
+const[done,setDone]=useState(false);const[sending,setSending]=useState(false);const[emailErr,setEmailErr]=useState('');const[resent,setResent]=useState(false);
 const ds=D.map(d=>({domain:d.code,name:d.name,color:d.color,level:calcLv(answers,d),total:d.controls.length,met:d.controls.filter(c=>answers[c.id]==="yes").length,partial:d.controls.filter(c=>answers[c.id]==="partial").length,gaps:getGaps(answers,d)}));
 const ov=Math.min(...ds.map(d=>d.level));const ag=sortG(ds.flatMap(d=>d.gaps));const mg=ag.filter(g=>g.level==="MUST"),sg=ag.filter(g=>g.level==="SHOULD");
 const rd=ds.map(d=>({domain:d.domain,level:d.level,fullMark:5}));
@@ -395,10 +395,20 @@ disabled={sending} style={{padding:"14px 28px",borderRadius:8,border:"none",back
 <div style={{fontSize:24,marginBottom:8}}>✓</div>
 <h3 style={{margin:"0 0 8px",fontSize:18,fontWeight:600,color:"#166534"}}>Report sent</h3>
 <p style={{fontSize:14,color:"#15803d",margin:"0 0 16px"}}>Your full HCCS assessment report has been emailed to {user?.email}.</p>
-<div style={{display:"flex",gap:12,justifyContent:"center"}}>
+<div style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap"}}>
 <button onClick={()=>genReport(user,ds,ov,answers,notes,mg,sg,ag,ph)}
-style={{padding:"10px 24px",borderRadius:6,border:"1px solid #e2e8f0",background:"#fff",color:"#475569",fontSize:13,fontWeight:500,cursor:"pointer"}}>Also open in browser</button>
-</div></div>)}
+style={{padding:"10px 24px",borderRadius:6,border:"1px solid #e2e8f0",background:"#fff",color:"#475569",fontSize:13,fontWeight:500,cursor:"pointer"}}>Open in browser</button>
+<button onClick={async()=>{setSending(true);setEmailErr('');try{
+const payload={user,domainScores:ds.map(d=>({domain:d.domain,name:d.name,level:d.level,met:d.met,total:d.total,partial:d.partial,gaps:d.gaps.length})),
+overallLevel:ov,controls:D.map(d=>({code:d.code,name:d.name,color:d.color,controls:d.controls})),answers,notes,
+mustGaps:mg,shouldGaps:sg,allGaps:ag};
+const res=await fetch('/.netlify/functions/send-report',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+const result=await res.json();if(res.ok){setResent(true);setTimeout(()=>setResent(false),3000);}else{setEmailErr(result.error||'Failed to resend.');}}catch(e){setEmailErr('Network error.');}finally{setSending(false);}}}
+disabled={sending} style={{padding:"10px 24px",borderRadius:6,border:"none",background:sending?"#94a3b8":"#2563eb",color:"#fff",fontSize:13,fontWeight:500,cursor:sending?"default":"pointer"}}>
+{sending?"Sending...":resent?"Sent ✓":"Resend email"}</button>
+</div>
+{emailErr&&<div style={{fontSize:13,color:"#dc2626",marginTop:8}}>{emailErr}</div>}
+</div>)}
 
 <div style={{display:"flex",justifyContent:"space-between",marginTop:48,paddingTop:24,borderTop:"1px solid #e2e8f0"}}>
 <span style={{fontSize:12,color:"#94a3b8"}}>HCCS-1.0 | © 2026 Diane Malefyt</span>
