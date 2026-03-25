@@ -2,8 +2,8 @@
 // Sends HCCS assessment report via Resend email API
 // Requires RESEND_API_KEY environment variable set in Netlify dashboard
 
-const LEVEL_NAMES = ["", "Initial", "Developing", "Defined", "Managed", "Optimizing"];
-const TIER_LABELS = ["", "Self-Attest", "Self-Attest", "Validated", "Audited", "Audited"];
+const LEVEL_NAMES = ["Not Established", "Initial", "Developing", "Defined", "Managed", "Optimizing"];
+const TIER_LABELS = ["None", "Self-Attest", "Self-Attest", "Validated", "Audited", "Audited"];
 
 function buildReportHTML(user, domainScores, overallLevel, controls, answers, notes, mustGaps, shouldGaps, allGaps) {
   const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
