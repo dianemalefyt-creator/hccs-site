@@ -4,7 +4,7 @@ import { useState } from 'react'
 export default function Nav() {
   const { pathname } = useLocation()
   const [open, setOpen] = useState(false)
-  const isAssess = pathname === '/assess'
+  const isAssess = pathname.startsWith('/assess')
 
   const links = [
     { to: '/', label: 'Home' },

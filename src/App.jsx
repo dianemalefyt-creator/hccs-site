@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import Nav from './components/Nav'
 import Footer from './components/Footer'
 import Home from './pages/Home'
+import QuickAssess from './pages/QuickAssess'
 import Assessment from './pages/Assessment'
 import Documents from './pages/Documents'
 import About from './pages/About'
@@ -20,7 +21,8 @@ export default function App() {
       <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/assess" element={<Assessment />} />
+        <Route path="/assess" element={<QuickAssess />} />
+        <Route path="/assess/full" element={<Assessment />} />
         <Route path="/documents" element={<Documents />} />
         <Route path="/about" element={<About />} />
       </Routes>

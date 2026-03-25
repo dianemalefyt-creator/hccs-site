@@ -496,8 +496,32 @@ style={{width:'100%',padding:'14px',borderRadius:8,border:'none',background:sub?
 </div>
 </div>);}
 
+// Access codes - add new codes here as needed
+const ACCESS_CODES = ['HCCS2026', 'LAUNCH', 'PILOT', 'DIMALEFYT'];
+
+function CodeGate({onUnlock}) {
+const [code, setCode] = useState('');
+const [err, setErr] = useState('');
+return (
+<div style={{minHeight:'80vh',background:'linear-gradient(165deg,#0a1628,#1a2d4a,#0f3460)',display:'flex',alignItems:'center',justifyContent:'center',padding:24}}>
+<div style={{background:'#fff',borderRadius:16,maxWidth:480,width:'100%',padding:'40px 32px',textAlign:'center',boxShadow:'0 24px 48px rgba(0,0,0,0.2)'}}>
+<div style={{fontSize:32,fontWeight:700,color:'#0f172a',marginBottom:8}}>Full HCCS Assessment</div>
+<div style={{fontSize:15,color:'#64748b',marginBottom:4}}>67 controls across 7 governance domains</div>
+<p style={{fontSize:14,color:'#94a3b8',marginBottom:28,lineHeight:1.5}}>The full assessment requires an access code. Complete the <a href="/assess" style={{color:'#2563eb',fontWeight:500}}>quick assessment</a> to request one, or enter your code below.</p>
+<input type="text" value={code} onChange={e=>{setCode(e.target.value.toUpperCase());setErr('');}} placeholder="Enter access code"
+style={{width:'100%',padding:'14px 16px',borderRadius:8,border:'1px solid '+(err?'#fca5a5':'#e2e8f0'),fontSize:16,outline:'none',textAlign:'center',letterSpacing:'0.1em',fontWeight:600,boxSizing:'border-box',textTransform:'uppercase'}}
+onKeyDown={e=>{if(e.key==='Enter'){if(ACCESS_CODES.includes(code.trim().toUpperCase()))onUnlock();else setErr('Invalid code');}}}/>
+{err&&<div style={{fontSize:13,color:'#dc2626',marginTop:8}}>{err}</div>}
+<button onClick={()=>{if(ACCESS_CODES.includes(code.trim().toUpperCase()))onUnlock();else setErr('Invalid access code. Contact us for access.');}}
+style={{width:'100%',marginTop:16,padding:'14px',borderRadius:8,border:'none',background:'#2563eb',color:'#fff',fontSize:15,fontWeight:600,cursor:'pointer'}}>Unlock assessment</button>
+<div style={{marginTop:24,paddingTop:20,borderTop:'1px solid #e2e8f0'}}>
+<div style={{fontSize:13,color:'#94a3b8'}}>Need a code? <a href="/assess" style={{color:'#2563eb',fontWeight:500}}>Take the quick assessment first</a></div>
+</div>
+</div>
+</div>);}
+
 export default function HCCSAssessment(){
-const[phase,setPhase]=useState("landing");const[answers,setAnswers]=useState({});const[notes,setNotes]=useState({});const[user,setUser]=useState(null);
+const[phase,setPhase]=useState("code");const[answers,setAnswers]=useState({});const[notes,setNotes]=useState({});const[user,setUser]=useState(null);
 
 // Admin test mode: add ?test=1 to URL to skip everything and go straight to results
 useEffect(()=>{
@@ -507,7 +531,6 @@ const testUser={name:'Diane Malefyt (Test)',email:'diane.malefyt@gmail.com',org:
 const testAnswers={};const testNotes={};
 const options=['yes','partial','no'];
 D.forEach(d=>{d.controls.forEach((c,i)=>{
-// Realistic mix: MUSTs mostly yes, SHOULDs mixed, MAYs mostly no
 if(c.level==='MUST')testAnswers[c.id]=i%3===0?'partial':'yes';
 else if(c.level==='SHOULD')testAnswers[c.id]=options[i%3];
 else testAnswers[c.id]=i%2===0?'no':'partial';
@@ -515,8 +538,12 @@ if(testAnswers[c.id]!=='yes')testNotes[c.id]='Test note for '+c.id;
 });});
 setUser(testUser);setAnswers(testAnswers);setNotes(testNotes);setPhase("results");
 }
+// Allow code in URL: ?code=HCCS2026
+const urlCode = params.get('code');
+if(urlCode && ACCESS_CODES.includes(urlCode.toUpperCase())) setPhase("landing");
 },[]);
 
+if(phase==="code")return<CodeGate onUnlock={()=>setPhase("landing")}/>;
 if(phase==="landing")return<Landing onStart={()=>setPhase("gate")}/>;
 if(phase==="gate")return<><Landing onStart={()=>{}}/><Gate onComplete={(u)=>{setUser(u);setPhase("assess");}}/></>;
 if(phase==="assess")return<Assess onComplete={(a,n)=>{setAnswers(a);setNotes(n);setPhase("results");window.scrollTo(0,0);}}/>;
