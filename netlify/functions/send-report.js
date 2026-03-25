@@ -223,6 +223,7 @@ exports.handler = async function(event) {
     }
 
     // Store in Airtable (non-blocking, don't fail the request if Airtable fails)
+    console.log('Airtable check: API_KEY exists:', !!AIRTABLE_API_KEY, 'BASE_ID exists:', !!AIRTABLE_BASE_ID);
     if (AIRTABLE_API_KEY && AIRTABLE_BASE_ID) {
       try {
         const domainLevels = {};
@@ -256,7 +257,11 @@ exports.handler = async function(event) {
           }]
         };
 
-        await fetch('https://api.airtable.com/v0/' + AIRTABLE_BASE_ID + '/Submissions', {
+        const airtableUrl = 'https://api.airtable.com/v0/' + AIRTABLE_BASE_ID + '/Submissions';
+        console.log('Airtable URL:', airtableUrl);
+        console.log('Airtable payload fields:', Object.keys(airtablePayload.records[0].fields).join(', '));
+
+        const airtableResponse = await fetch(airtableUrl, {
           method: 'POST',
           headers: {
             'Authorization': 'Bearer ' + AIRTABLE_API_KEY,
@@ -264,9 +269,21 @@ exports.handler = async function(event) {
           },
           body: JSON.stringify(airtablePayload),
         });
+
+        const airtableResult = await airtableResponse.json();
+        console.log('Airtable response status:', airtableResponse.status);
+        console.log('Airtable response body:', JSON.stringify(airtableResult));
+
+        if (!airtableResponse.ok) {
+          console.error('Airtable FAILED:', airtableResponse.status, JSON.stringify(airtableResult));
+        } else {
+          console.log('Airtable SUCCESS: record created');
+        }
       } catch (airtableErr) {
         console.error('Airtable error (non-fatal):', airtableErr.message);
       }
+    } else {
+      console.log('Airtable SKIPPED: missing env vars');
     }
 
     return {
