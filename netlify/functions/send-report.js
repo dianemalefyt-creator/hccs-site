@@ -34,6 +34,10 @@ tr:nth-child(even) td{background:#f8fafc}
 .header h1{color:#fff;border:none;margin:0 0 8px;font-size:32px}
 </style></head><body>
 
+<div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:12px;color:#64748b">
+<strong>Assessment by:</strong> ${user.name || 'Unknown'} | ${user.email || ''} | ${user.org || ''}${user.title ? ' | ' + user.title : ''}
+</div>
+
 <div class="header">
 <div style="letter-spacing:0.2em;font-size:12px;color:#5b9bd5;margin-bottom:12px">HUMAN CAPITAL CONTROL STANDARD</div>
 <h1>HCCS Maturity Assessment Report</h1>
@@ -107,7 +111,7 @@ ${controls.map(d => `
 <tr><th style="width:80px">Control</th><th style="width:60px">Level</th><th>Requirement</th><th style="width:85px">Status</th></tr>
 ${d.controls.map(c => {
   const s = answers[c.id]; const n = notes[c.id];
-  return `<tr><td><code>${c.id}</code></td><td><span class="badge ${c.level.toLowerCase()}">${c.level}</span></td><td>${c.text}</td><td class="${s}">${statusLabel(s)}</td></tr>
+  return `<tr><td><code>${c.id}</code></td><td><span class="badge ${(c.level||'MUST').toLowerCase()}">${c.level||'MUST'}</span></td><td>${c.text}</td><td class="${s}">${statusLabel(s)}</td></tr>
 ${n ? `<tr><td colspan="4"><div class="note"><strong>Note:</strong> ${n.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div></td></tr>` : ''}
 ${s !== 'yes' && c.remediation ? `<tr><td colspan="4"><div class="remediation"><strong>Remediation:</strong> ${c.remediation}</div></td></tr>` : ''}`;
 }).join('')}
@@ -185,6 +189,10 @@ function buildTeaserEmailHTML(user, domainScores, overallLevel, answers, gaps) {
     'tr:nth-child(even) td{background:#f8fafc}' +
     '.yes{color:#059669;font-weight:600}.partial{color:#d97706;font-weight:600}.no{color:#dc2626;font-weight:600}' +
     '</style></head><body>' +
+
+    '<div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:12px;color:#64748b">' +
+    '<strong>Assessment by:</strong> ' + (user.name || 'Unknown') + ' | ' + (user.email || '') + (user.org && user.org !== 'N/A' ? ' | ' + user.org : '') +
+    '</div>' +
 
     '<div style="background:linear-gradient(135deg,#0a1628,#1a2d4a);color:#fff;padding:40px;border-radius:12px;text-align:center;margin-bottom:24px">' +
     '<div style="letter-spacing:0.2em;font-size:12px;color:#5b9bd5;margin-bottom:8px">HCCS QUICK ASSESSMENT</div>' +
@@ -265,9 +273,10 @@ exports.handler = async function(event) {
     // Build appropriate email
     var html;
     var subject;
+    console.log('isTeaser:', isTeaser, 'user:', user.name, user.email);
     if (isTeaser) {
       html = buildTeaserEmailHTML(user, domainScores, overallLevel, answers, mustGaps);
-      subject = 'HCCS Quick Assessment Results - Estimated Level ' + overallLevel + ': ' + LEVEL_NAMES[overallLevel];
+      subject = 'HCCS Quick Assessment Results - ' + (user.name || 'Assessment') + ' - Estimated Level ' + overallLevel + ': ' + LEVEL_NAMES[overallLevel];
     } else {
       html = buildReportHTML(user, domainScores, overallLevel, controls, answers, notes, mustGaps, shouldGaps, allGaps);
       subject = 'HCCS Maturity Assessment Report - ' + user.org + ' - Level ' + overallLevel + ': ' + LEVEL_NAMES[overallLevel];
@@ -279,12 +288,17 @@ exports.handler = async function(event) {
     const partial = allControls.filter(c => answers[c.id] === 'partial').length;
     const notInPlace = allControls.filter(c => answers[c.id] === 'no').length;
 
+    // Add recipient banner to top of email (visible to both recipient and BCC)
+    var sentTo = '<div style="font-size:11px;color:#94a3b8;text-align:right;padding:8px 16px 0">Sent to: ' + user.name + ' (' + user.email + ')' + (user.org ? ' | ' + user.org : '') + '</div>';
+    html = html.replace('<body>', '<body>' + sentTo);
+
     // Send email with BCC
+    var emailSubject = subject + ' [' + user.name + ']';
     const emailPayload = {
       from: 'HCCS Assessment <reports@hccsstandard.com>',
       to: [user.email],
       bcc: [BCC_EMAIL],
-      subject: subject,
+      subject: emailSubject,
       html: html,
     };
 
