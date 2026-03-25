@@ -24,15 +24,18 @@ export default function Home() {
             <p style={{ fontSize: 17, lineHeight: 1.65, color: '#64748b', margin: '0 0 40px', maxWidth: 520 }}>
               HCCS™ is the first governance and audit standard for how companies define roles, evaluate candidates, make hiring decisions, and align compensation to the actual scope of work.
             </p>
-            <div style={{ display: 'flex', gap: 12, flexWrap: 'nowrap' }}>
-              <Link to="/assess" style={{ background: '#2563eb', color: '#fff', padding: '14px 28px', borderRadius: 8, fontSize: 15, fontWeight: 600, display: 'inline-block', whiteSpace: 'nowrap' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, maxWidth: 520 }}>
+              <Link to="/assess" style={{ background: '#2563eb', color: '#fff', padding: '14px 24px', borderRadius: 8, fontSize: 15, fontWeight: 600, textAlign: 'center', textDecoration: 'none' }}>
                 Assess your organization
               </Link>
-              <Link to="/documents" style={{ border: '1px solid rgba(255,255,255,0.2)', color: '#cbd5e1', padding: '14px 28px', borderRadius: 8, fontSize: 15, fontWeight: 500, display: 'inline-block', whiteSpace: 'nowrap' }}>
+              <Link to="/documents" style={{ border: '1px solid rgba(255,255,255,0.2)', color: '#cbd5e1', padding: '14px 24px', borderRadius: 8, fontSize: 15, fontWeight: 500, textAlign: 'center', textDecoration: 'none' }}>
                 Read the standard
               </Link>
-              <Link to="/rights" style={{ border: '1px solid rgba(255,255,255,0.2)', color: '#cbd5e1', padding: '14px 28px', borderRadius: 8, fontSize: 15, fontWeight: 500, display: 'inline-block', whiteSpace: 'nowrap' }}>
+              <Link to="/rights" style={{ border: '1px solid rgba(255,255,255,0.2)', color: '#cbd5e1', padding: '14px 24px', borderRadius: 8, fontSize: 15, fontWeight: 500, textAlign: 'center', textDecoration: 'none' }}>
                 Applicant's Bill of Rights
+              </Link>
+              <Link to="/org-rights" style={{ border: '1px solid rgba(255,255,255,0.2)', color: '#cbd5e1', padding: '14px 24px', borderRadius: 8, fontSize: 15, fontWeight: 500, textAlign: 'center', textDecoration: 'none' }}>
+                Organization's Bill of Rights
               </Link>
             </div>
           </div>
