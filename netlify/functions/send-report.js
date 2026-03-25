@@ -173,6 +173,10 @@ exports.handler = async function(event) {
   }
 
   const RESEND_API_KEY = process.env.RESEND_API_KEY;
+  const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
+  const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
+  const BCC_EMAIL = process.env.BCC_EMAIL || 'diane.malefyt@gmail.com';
+
   if (!RESEND_API_KEY) {
     return { statusCode: 500, body: JSON.stringify({ error: 'Email service not configured' }) };
   }
@@ -187,30 +191,87 @@ exports.handler = async function(event) {
 
     const html = buildReportHTML(user, domainScores, overallLevel, controls, answers, notes, mustGaps, shouldGaps, allGaps);
 
-    const response = await fetch('https://api.resend.com/emails', {
+    // Count controls by status
+    const allControls = controls.flatMap(d => d.controls);
+    const inPlace = allControls.filter(c => answers[c.id] === 'yes').length;
+    const partial = allControls.filter(c => answers[c.id] === 'partial').length;
+    const notInPlace = allControls.filter(c => answers[c.id] === 'no').length;
+
+    // Send email with BCC
+    const emailPayload = {
+      from: 'HCCS Assessment <reports@hccsstandard.com>',
+      to: [user.email],
+      bcc: [BCC_EMAIL],
+      subject: 'HCCS Maturity Assessment Report - ' + user.org + ' - Level ' + overallLevel + ': ' + LEVEL_NAMES[overallLevel],
+      html: html,
+    };
+
+    const emailResponse = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${RESEND_API_KEY}`,
+        'Authorization': 'Bearer ' + RESEND_API_KEY,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        from: 'HCCS Assessment <reports@hccsstandard.com>',
-        to: [user.email],
-        subject: `HCCS Maturity Assessment Report - ${user.org} - Level ${overallLevel}: ${LEVEL_NAMES[overallLevel]}`,
-        html: html,
-      }),
+      body: JSON.stringify(emailPayload),
     });
 
-    const result = await response.json();
+    const emailResult = await emailResponse.json();
 
-    if (!response.ok) {
-      console.error('Resend error:', result);
-      return { statusCode: 500, body: JSON.stringify({ error: 'Failed to send email', detail: result }) };
+    if (!emailResponse.ok) {
+      console.error('Resend error:', emailResult);
+      return { statusCode: 500, body: JSON.stringify({ error: 'Failed to send email', detail: emailResult }) };
+    }
+
+    // Store in Airtable (non-blocking, don't fail the request if Airtable fails)
+    if (AIRTABLE_API_KEY && AIRTABLE_BASE_ID) {
+      try {
+        const domainLevels = {};
+        domainScores.forEach(d => { domainLevels[d.domain + ' Level'] = d.level; });
+
+        const airtablePayload = {
+          records: [{
+            fields: {
+              'Name': user.name || '',
+              'Email': user.email || '',
+              'Organization': user.org || '',
+              'Title': user.title || '',
+              'Company Size': user.size || '',
+              'LinkedIn': user.linkedin || '',
+              'Overall Level': overallLevel,
+              'Overall Label': LEVEL_NAMES[overallLevel],
+              'RG Level': domainLevels['RG Level'] || 0,
+              'EI Level': domainLevels['EI Level'] || 0,
+              'DG Level': domainLevels['DG Level'] || 0,
+              'AG Level': domainLevels['AG Level'] || 0,
+              'PI Level': domainLevels['PI Level'] || 0,
+              'CG Level': domainLevels['CG Level'] || 0,
+              'ER Level': domainLevels['ER Level'] || 0,
+              'Controls In Place': inPlace,
+              'Controls Partial': partial,
+              'Controls Not In Place': notInPlace,
+              'MUST Gaps': mustGaps.length,
+              'SHOULD Gaps': shouldGaps.length,
+              'Submitted': new Date().toISOString(),
+            }
+          }]
+        };
+
+        await fetch('https://api.airtable.com/v0/' + AIRTABLE_BASE_ID + '/Submissions', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer ' + AIRTABLE_API_KEY,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(airtablePayload),
+        });
+      } catch (airtableErr) {
+        console.error('Airtable error (non-fatal):', airtableErr.message);
+      }
     }
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ success: true, message: `Report sent to ${user.email}` }),
+      body: JSON.stringify({ success: true, message: 'Report sent to ' + user.email }),
     };
   } catch (err) {
     console.error('Function error:', err);
