@@ -9,6 +9,7 @@ import Controls from './pages/Controls'
 import Contact from './pages/Contact'
 import BillOfRights from './pages/BillOfRights'
 import OrgBillOfRights from './pages/OrgBillOfRights'
+import Templates from './pages/Templates'
 import Documents from './pages/Documents'
 import About from './pages/About'
 
@@ -31,6 +32,7 @@ export default function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/rights" element={<BillOfRights />} />
         <Route path="/org-rights" element={<OrgBillOfRights />} />
+        <Route path="/templates" element={<Templates />} />
         <Route path="/documents" element={<Documents />} />
         <Route path="/about" element={<About />} />
       </Routes>

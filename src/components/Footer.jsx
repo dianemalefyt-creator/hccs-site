@@ -19,6 +19,7 @@ export default function Footer() {
             <Link to="/documents" style={{ fontSize: 14, color: '#94a3b8' }}>Core Standard</Link>
             <Link to="/documents" style={{ fontSize: 14, color: '#94a3b8' }}>Implementation Guide</Link>
             <Link to="/documents" style={{ fontSize: 14, color: '#94a3b8' }}>Template Library</Link>
+            <Link to="/templates" style={{ fontSize: 14, color: '#94a3b8' }}>Fillable Templates</Link>
           </div>
         </div>
         <div>

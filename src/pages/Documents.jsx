@@ -98,6 +98,9 @@ export default function Documents() {
             <p style={{ fontSize: 14, color: '#64748b', marginTop: 16 }}>
               Control ID HCCS-RG-001 appears in the standard (requirement), the guide (how to implement and audit), and the template (the form you fill in).
             </p>
+            <Link to="/templates" style={{ display: 'inline-block', marginTop: 20, background: '#2563eb', color: '#fff', padding: '12px 28px', borderRadius: 8, fontSize: 14, fontWeight: 600, textDecoration: 'none' }}>
+              Fill templates online →
+            </Link>
           </div>
         </div>
       </section>
