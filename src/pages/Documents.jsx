@@ -60,9 +60,16 @@ export default function Documents() {
                   <div style={{ fontSize: 13, fontWeight: 600, color: d.color, letterSpacing: '0.05em', marginBottom: 4 }}>{d.subtitle}</div>
                   <h2 style={{ fontSize: 24, fontWeight: 700, color: '#0f172a', margin: 0 }}>{d.title}</h2>
                 </div>
-                <a href={d.file} download style={{ background: d.color, color: '#fff', padding: '10px 24px', borderRadius: 8, fontSize: 14, fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: 8, whiteSpace: 'nowrap' }}>
-                  Download {d.format === 'pdf' ? '.pdf' : '.docx'}
-                </a>
+                <div style={{ display: 'flex', gap: 8 }}>
+                  {d.format === 'pdf' && (
+                    <a href={d.file} target="_blank" rel="noopener" style={{ background: '#fff', color: d.color, border: `2px solid ${d.color}`, padding: '10px 20px', borderRadius: 8, fontSize: 14, fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: 8, whiteSpace: 'nowrap', textDecoration: 'none' }}>
+                      Read online
+                    </a>
+                  )}
+                  <a href={d.file} download style={{ background: d.color, color: '#fff', padding: '10px 20px', borderRadius: 8, fontSize: 14, fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: 8, whiteSpace: 'nowrap', textDecoration: 'none' }}>
+                    Download {d.format === 'pdf' ? '.pdf' : '.docx'}
+                  </a>
+                </div>
               </div>
               <p style={{ fontSize: 15, lineHeight: 1.65, color: '#475569', marginBottom: 20 }}>{d.desc}</p>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 8 }}>

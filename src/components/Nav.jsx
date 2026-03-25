@@ -9,6 +9,7 @@ export default function Nav() {
   const links = [
     { to: '/', label: 'Home' },
     { to: '/assess', label: 'Assessment' },
+    { to: '/controls', label: 'Controls' },
     { to: '/documents', label: 'Documents' },
     { to: '/about', label: 'About' },
   ]
