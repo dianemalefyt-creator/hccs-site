@@ -81,18 +81,24 @@ export default function About() {
 
           {/* Author */}
           <div style={{ background: '#0f172a', borderRadius: 14, padding: 32 }}>
-            <h3 style={{ fontSize: 20, fontWeight: 600, color: '#fff', marginBottom: 12 }}>About the author</h3>
-            <p style={{ fontSize: 15, lineHeight: 1.7, color: '#94a3b8', marginBottom: 12 }}>
-              HCCS™ was developed by Diane Malefyt, a senior B2B SaaS executive with 15+ years across GTM strategy, revenue operations, pre-sales leadership, and AI governance.
-            </p>
-            <p style={{ fontSize: 15, lineHeight: 1.7, color: '#94a3b8', marginBottom: 12 }}>
-              Diane holds dual B.S. degrees in Psychology and Computer Science, completed Harvard Professional Education, and is pursuing an M.S. in Forensic and Organizational Psychology at Arizona State University. Her academic research on AI trust and human agency in decision-making directly informs the HCCS™ framework.
-            </p>
-            <p style={{ fontSize: 15, lineHeight: 1.7, color: '#94a3b8' }}>
-              Her core conviction: AI's greatest underestimated risk is the systematic erosion of human dignity and purpose. HCCS™ exists to ensure that consequential decisions about people are made with governance, evidence, and accountability.
-            </p>
-            <div style={{ marginTop: 20 }}>
-              <a href="https://www.linkedin.com/in/dianemalefyt/" target="_blank" rel="noopener" style={{ fontSize: 14, color: '#5b9bd5', fontWeight: 500 }}>Connect on LinkedIn &rarr;</a>
+            <div style={{ display: 'flex', gap: 24, alignItems: 'flex-start' }}>
+              <img src="/di-malefyt.png" alt="Diane Malefyt" style={{ width: 110, height: 110, borderRadius: '50%', objectFit: 'cover', flexShrink: 0, border: '3px solid #2563eb' }} />
+              <div>
+                <h3 style={{ fontSize: 20, fontWeight: 600, color: '#fff', margin: '0 0 12px' }}>About the author</h3>
+                <p style={{ fontSize: 15, lineHeight: 1.7, color: '#94a3b8', marginBottom: 12 }}>
+                  HCCS™ was developed by Diane Malefyt, a senior B2B SaaS executive with 15+ years across GTM strategy, revenue operations, pre-sales leadership, and AI governance.
+                </p>
+                <p style={{ fontSize: 15, lineHeight: 1.7, color: '#94a3b8', marginBottom: 12 }}>
+                  Diane holds dual B.S. degrees in Psychology and Computer Science, completed Harvard Professional Education, and is pursuing an M.S. in Forensic and Organizational Psychology at Arizona State University. Her academic research on AI trust and human agency in decision-making directly informs the HCCS™ framework.
+                </p>
+                <p style={{ fontSize: 15, lineHeight: 1.7, color: '#94a3b8' }}>
+                  Her core conviction: AI's greatest underestimated risk is the systematic erosion of human dignity and purpose. HCCS™ exists to ensure that consequential decisions about people are made with governance, evidence, and accountability.
+                </p>
+                <div style={{ display: 'flex', gap: 20, marginTop: 20 }}>
+                  <a href="https://www.linkedin.com/in/dianemalefyt/" target="_blank" rel="noopener" style={{ fontSize: 14, color: '#5b9bd5', fontWeight: 500 }}>Connect on LinkedIn &rarr;</a>
+                  <Link to="/rights" style={{ fontSize: 14, color: '#5b9bd5', fontWeight: 500 }}>Applicant's Bill of Rights &rarr;</Link>
+                </div>
+              </div>
             </div>
           </div>
 

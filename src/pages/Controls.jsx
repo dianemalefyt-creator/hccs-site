@@ -102,7 +102,7 @@ export default function Controls() {
                 </div>
 
                 {/* Controls grid */}
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(460px, 1fr))', gap: 12 }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(460px, 1fr))', gap: 12, alignItems: 'start' }}>
                   {d.controls.map(c => {
                     const isExpanded = expandedControl === c.id
                     return (
