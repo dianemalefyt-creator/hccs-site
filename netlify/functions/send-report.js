@@ -167,6 +167,79 @@ ${noted.map(c => `<tr><td><code>${c.id}</code></td><td>${c.domainCode}</td><td c
 </body></html>`;
 }
 
+function buildTeaserEmailHTML(user, domainScores, overallLevel, answers, gaps) {
+  const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  const total = 10;
+  const yes = Object.values(answers).filter(v => v === 'yes').length;
+  const partial = Object.values(answers).filter(v => v === 'partial').length;
+  const score = Math.round(((yes + partial * 0.5) / total) * 100);
+  const domainColors = {RG:'#185FA5',EI:'#0F6E56',DG:'#534AB7',AG:'#993C1D',PI:'#854F0B',CG:'#3B6D11',ER:'#993556'};
+
+  return '<!DOCTYPE html><html><head><meta charset="utf-8"><style>' +
+    'body{font-family:Helvetica,Arial,sans-serif;color:#1e293b;line-height:1.6;font-size:14px;max-width:700px;margin:0 auto;padding:0}' +
+    'h1{font-size:24px;font-weight:700;color:#0f172a;margin:24px 0 12px}' +
+    'h2{font-size:18px;font-weight:600;color:#1e3a5f;margin:20px 0 8px}' +
+    'table{width:100%;border-collapse:collapse;margin:12px 0}' +
+    'th{background:#1B2A4A;color:#fff;padding:8px 12px;text-align:left;font-size:12px}' +
+    'td{padding:8px 12px;border-bottom:1px solid #e2e8f0;font-size:13px}' +
+    'tr:nth-child(even) td{background:#f8fafc}' +
+    '.yes{color:#059669;font-weight:600}.partial{color:#d97706;font-weight:600}.no{color:#dc2626;font-weight:600}' +
+    '</style></head><body>' +
+
+    '<div style="background:linear-gradient(135deg,#0a1628,#1a2d4a);color:#fff;padding:40px;border-radius:12px;text-align:center;margin-bottom:24px">' +
+    '<div style="letter-spacing:0.2em;font-size:12px;color:#5b9bd5;margin-bottom:8px">HCCS QUICK ASSESSMENT</div>' +
+    '<div style="font-size:28px;font-weight:700;margin-bottom:4px">Your Results</div>' +
+    '<div style="color:#94a3b8;font-size:14px">' + (user.org || '') + ' | ' + date + '</div>' +
+    '</div>' +
+
+    '<h1>Estimated Maturity: Level ' + overallLevel + ' - ' + LEVEL_NAMES[overallLevel] + '</h1>' +
+    '<p style="color:#64748b">Based on 10 of 67 HCCS controls. This is an estimate, not a validated score.</p>' +
+
+    '<div style="text-align:center;padding:20px;background:#f8fafc;border-radius:12px;border:1px solid #e2e8f0;margin:16px 0">' +
+    '<div style="font-size:48px;font-weight:700;color:' + (overallLevel === 0 ? '#dc2626' : overallLevel <= 2 ? '#185FA5' : '#0F6E56') + '">' + score + '%</div>' +
+    '<div style="font-size:14px;color:#64748b">Readiness Score</div>' +
+    '<table style="width:300px;margin:12px auto;border-collapse:collapse"><tr>' +
+    [1,2,3,4,5].map(function(l) { return '<td style="width:20%;height:8px;background:' + (l <= overallLevel ? '#2563eb' : '#e2e8f0') + ';padding:0;border:none;' + (l===1?'border-radius:4px 0 0 4px;':'') + (l===5?'border-radius:0 4px 4px 0;':'') + '">&nbsp;</td>'; }).join('') +
+    '</tr></table>' +
+    '</div>' +
+
+    '<h2>Domain Snapshot</h2>' +
+    '<table>' +
+    domainScores.map(function(d) {
+      var col = domainColors[d.domain] || '#475569';
+      var pct = d.total > 0 ? Math.round((d.met + d.partial * 0.5) / d.total * 100) : 0;
+      return '<tr><td style="width:36px;font-weight:700;color:' + col + '">' + d.domain + '</td><td>' + d.name + '</td>' +
+        '<td><table style="width:100%;border-collapse:collapse"><tr>' +
+        '<td style="width:' + pct + '%;background:' + col + ';height:16px;border-radius:3px 0 0 3px;padding:0;border:none">&nbsp;</td>' +
+        '<td style="width:' + (100-pct) + '%;background:#f1f5f9;height:16px;border-radius:0 3px 3px 0;padding:0;border:none">&nbsp;</td>' +
+        '</tr></table></td>' +
+        '<td style="width:60px;text-align:right">' + pct + '%</td></tr>';
+    }).join('') +
+    '</table>' +
+
+    (gaps.length > 0 ?
+      '<h2 style="color:#991b1b">Controls Not Fully In Place (' + gaps.length + ')</h2>' +
+      '<table><tr><th>Control</th><th>Requirement</th><th>Status</th></tr>' +
+      gaps.map(function(g) {
+        var s = answers[g.id];
+        var sl = s === 'partial' ? 'Partial' : 'Not in Place';
+        return '<tr><td><code>' + g.id + '</code></td><td>' + g.text + '</td><td class="' + s + '">' + sl + '</td></tr>';
+      }).join('') +
+      '</table>' : '') +
+
+    '<div style="background:#0f172a;border-radius:12px;padding:28px;margin:32px 0;text-align:center;color:#fff">' +
+    '<div style="font-size:13px;color:#5b9bd5;text-transform:uppercase;letter-spacing:0.15em;margin-bottom:8px">This was 10 of 67 controls</div>' +
+    '<div style="font-size:20px;font-weight:700;margin-bottom:12px">Ready for the full assessment?</div>' +
+    '<div style="font-size:14px;color:#94a3b8;margin-bottom:16px">67 controls, per-control remediation, phased roadmap, full audit-grade report.</div>' +
+    '<a href="https://hccsstandard.com/assess/full" style="display:inline-block;background:#2563eb;color:#fff;padding:12px 28px;border-radius:8px;font-weight:600;text-decoration:none">Take the full assessment</a>' +
+    '</div>' +
+
+    '<div style="text-align:center;font-size:11px;color:#94a3b8;padding:24px 0;border-top:1px solid #e2e8f0;margin-top:32px">' +
+    '<div>HCCS Quick Assessment | ' + date + ' | hccsstandard.com</div>' +
+    '<div style="margin-top:4px">&copy; 2026 Diane Malefyt. All rights reserved.</div>' +
+    '</div></body></html>';
+}
+
 exports.handler = async function(event) {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method not allowed' };
@@ -183,13 +256,22 @@ exports.handler = async function(event) {
 
   try {
     const data = JSON.parse(event.body);
-    const { user, domainScores, overallLevel, controls, answers, notes, mustGaps, shouldGaps, allGaps } = data;
+    const { user, domainScores, overallLevel, controls, answers, notes, mustGaps, shouldGaps, allGaps, isTeaser } = data;
 
     if (!user || !user.email) {
       return { statusCode: 400, body: JSON.stringify({ error: 'Missing user email' }) };
     }
 
-    const html = buildReportHTML(user, domainScores, overallLevel, controls, answers, notes, mustGaps, shouldGaps, allGaps);
+    // Build appropriate email
+    var html;
+    var subject;
+    if (isTeaser) {
+      html = buildTeaserEmailHTML(user, domainScores, overallLevel, answers, mustGaps);
+      subject = 'HCCS Quick Assessment Results - Estimated Level ' + overallLevel + ': ' + LEVEL_NAMES[overallLevel];
+    } else {
+      html = buildReportHTML(user, domainScores, overallLevel, controls, answers, notes, mustGaps, shouldGaps, allGaps);
+      subject = 'HCCS Maturity Assessment Report - ' + user.org + ' - Level ' + overallLevel + ': ' + LEVEL_NAMES[overallLevel];
+    }
 
     // Count controls by status
     const allControls = controls.flatMap(d => d.controls);
@@ -202,7 +284,7 @@ exports.handler = async function(event) {
       from: 'HCCS Assessment <reports@hccsstandard.com>',
       to: [user.email],
       bcc: [BCC_EMAIL],
-      subject: 'HCCS Maturity Assessment Report - ' + user.org + ' - Level ' + overallLevel + ': ' + LEVEL_NAMES[overallLevel],
+      subject: subject,
       html: html,
     };
 
@@ -222,62 +304,78 @@ exports.handler = async function(event) {
       return { statusCode: 500, body: JSON.stringify({ error: 'Failed to send email', detail: emailResult }) };
     }
 
-    // Store in Airtable (non-blocking, don't fail the request if Airtable fails)
-    console.log('Airtable check: API_KEY exists:', !!AIRTABLE_API_KEY, 'BASE_ID exists:', !!AIRTABLE_BASE_ID);
+    // Store in Airtable
+    console.log('Airtable check: API_KEY exists:', !!AIRTABLE_API_KEY, 'BASE_ID exists:', !!AIRTABLE_BASE_ID, 'isTeaser:', !!isTeaser);
     if (AIRTABLE_API_KEY && AIRTABLE_BASE_ID) {
       try {
-        const domainLevels = {};
-        domainScores.forEach(d => { domainLevels[d.domain + ' Level'] = d.level; });
+        var airtableTable;
+        var airtableFields;
 
-        const airtablePayload = {
-          records: [{
-            fields: {
-              'Name': user.name || '',
-              'Email': user.email || '',
-              'Organization': user.org || '',
-              'Title': user.title || '',
-              'Company Size': user.size || '',
-              'LinkedIn': user.linkedin || '',
-              'Overall Level': overallLevel,
-              'Overall Label': LEVEL_NAMES[overallLevel],
-              'RG Level': domainLevels['RG Level'] || 0,
-              'EI Level': domainLevels['EI Level'] || 0,
-              'DG Level': domainLevels['DG Level'] || 0,
-              'AG Level': domainLevels['AG Level'] || 0,
-              'PI Level': domainLevels['PI Level'] || 0,
-              'CG Level': domainLevels['CG Level'] || 0,
-              'ER Level': domainLevels['ER Level'] || 0,
-              'Controls In Place': inPlace,
-              'Controls Partial': partial,
-              'Controls Not In Place': notInPlace,
-              'MUST Gaps': mustGaps.length,
-              'SHOULD Gaps': shouldGaps.length,
-              'Submitted': new Date().toISOString(),
-            }
-          }]
-        };
+        if (isTeaser) {
+          airtableTable = 'Leads';
+          airtableFields = {
+            'Name': user.name || '',
+            'Email': user.email || '',
+            'Organization': user.org || '',
+            'Estimated Level': overallLevel,
+            'Estimated Label': LEVEL_NAMES[overallLevel],
+            'Readiness Score': Math.round(((inPlace + partial * 0.5) / 10) * 100),
+            'Controls In Place': inPlace,
+            'Controls Partial': partial,
+            'Gaps': notInPlace,
+            'Source': 'Quick Assessment',
+            'Submitted': new Date().toISOString(),
+          };
+        } else {
+          airtableTable = 'Submissions';
+          var domainLevels = {};
+          domainScores.forEach(function(d) { domainLevels[d.domain + ' Level'] = d.level; });
+          airtableFields = {
+            'Name': user.name || '',
+            'Email': user.email || '',
+            'Organization': user.org || '',
+            'Title': user.title || '',
+            'Company Size': user.size || '',
+            'LinkedIn': user.linkedin || '',
+            'Overall Level': overallLevel,
+            'Overall Label': LEVEL_NAMES[overallLevel],
+            'RG Level': domainLevels['RG Level'] || 0,
+            'EI Level': domainLevels['EI Level'] || 0,
+            'DG Level': domainLevels['DG Level'] || 0,
+            'AG Level': domainLevels['AG Level'] || 0,
+            'PI Level': domainLevels['PI Level'] || 0,
+            'CG Level': domainLevels['CG Level'] || 0,
+            'ER Level': domainLevels['ER Level'] || 0,
+            'Controls In Place': inPlace,
+            'Controls Partial': partial,
+            'Controls Not In Place': notInPlace,
+            'MUST Gaps': mustGaps.length,
+            'SHOULD Gaps': shouldGaps.length,
+            'Submitted': new Date().toISOString(),
+          };
+        }
 
-        const airtableUrl = 'https://api.airtable.com/v0/' + AIRTABLE_BASE_ID + '/Submissions';
+        var airtableUrl = 'https://api.airtable.com/v0/' + AIRTABLE_BASE_ID + '/' + encodeURIComponent(airtableTable);
         console.log('Airtable URL:', airtableUrl);
-        console.log('Airtable payload fields:', Object.keys(airtablePayload.records[0].fields).join(', '));
+        console.log('Airtable table:', airtableTable);
 
-        const airtableResponse = await fetch(airtableUrl, {
+        var airtableResponse = await fetch(airtableUrl, {
           method: 'POST',
           headers: {
             'Authorization': 'Bearer ' + AIRTABLE_API_KEY,
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(airtablePayload),
+          body: JSON.stringify({ records: [{ fields: airtableFields }] }),
         });
 
-        const airtableResult = await airtableResponse.json();
+        var airtableResult = await airtableResponse.json();
         console.log('Airtable response status:', airtableResponse.status);
         console.log('Airtable response body:', JSON.stringify(airtableResult));
 
         if (!airtableResponse.ok) {
           console.error('Airtable FAILED:', airtableResponse.status, JSON.stringify(airtableResult));
         } else {
-          console.log('Airtable SUCCESS: record created');
+          console.log('Airtable SUCCESS: record created in', airtableTable);
         }
       } catch (airtableErr) {
         console.error('Airtable error (non-fatal):', airtableErr.message);
