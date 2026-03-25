@@ -4,6 +4,8 @@
 
 const LEVEL_NAMES = ["Not Established", "Initial", "Developing", "Defined", "Managed", "Optimizing"];
 const TIER_LABELS = ["None", "Self-Attest", "Self-Attest", "Validated", "Audited", "Audited"];
+const STRIPE_SELF = 'https://buy.stripe.com/fZu6oI8BXb7herYgNucIE01';
+const STRIPE_GUIDED = 'https://buy.stripe.com/9B65kEf0lcbl5Vs9l2cIE00';
 
 function buildReportHTML(user, domainScores, overallLevel, controls, answers, notes, mustGaps, shouldGaps, allGaps) {
   const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
@@ -235,11 +237,27 @@ function buildTeaserEmailHTML(user, domainScores, overallLevel, answers, gaps) {
       }).join('') +
       '</table>' : '') +
 
-    '<div style="background:#0f172a;border-radius:12px;padding:28px;margin:32px 0;text-align:center;color:#fff">' +
+    '<div style="background:#0f172a;border-radius:12px;padding:32px;margin:32px 0;text-align:center;color:#fff">' +
     '<div style="font-size:13px;color:#5b9bd5;text-transform:uppercase;letter-spacing:0.15em;margin-bottom:8px">This was 10 of 67 controls</div>' +
-    '<div style="font-size:20px;font-weight:700;margin-bottom:12px">Ready for the full assessment?</div>' +
-    '<div style="font-size:14px;color:#94a3b8;margin-bottom:16px">67 controls, per-control remediation, phased roadmap, full audit-grade report.</div>' +
-    '<a href="https://hccsstandard.com/assess/full" style="display:inline-block;background:#2563eb;color:#fff;padding:12px 28px;border-radius:8px;font-weight:600;text-decoration:none">Take the full assessment</a>' +
+    '<div style="font-size:22px;font-weight:700;margin-bottom:16px">Get your complete maturity assessment</div>' +
+
+    '<table style="width:100%;border-collapse:collapse;margin:16px 0"><tr>' +
+    '<td style="width:50%;vertical-align:top;padding:12px">' +
+    '<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:20px">' +
+    '<div style="font-size:12px;color:#5b9bd5;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px">Self-Assessment</div>' +
+    '<div style="font-size:28px;font-weight:700;color:#fff;margin-bottom:8px">$149</div>' +
+    '<div style="font-size:13px;color:#94a3b8;margin-bottom:16px;line-height:1.5">67 controls, remediation roadmap, full report. Take it at your own pace.</div>' +
+    '<a href="' + STRIPE_SELF + '" style="display:block;text-align:center;background:#2563eb;color:#fff;padding:10px 20px;border-radius:6px;font-weight:600;font-size:14px;text-decoration:none">Get started</a>' +
+    '</div></td>' +
+
+    '<td style="width:50%;vertical-align:top;padding:12px">' +
+    '<div style="background:rgba(255,255,255,0.05);border:2px solid #2563eb;border-radius:12px;padding:20px">' +
+    '<div style="font-size:12px;color:#2563eb;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px">Guided Assessment</div>' +
+    '<div style="font-size:28px;font-weight:700;color:#fff;margin-bottom:8px">$2,500</div>' +
+    '<div style="font-size:13px;color:#94a3b8;margin-bottom:16px;line-height:1.5">Expert-guided with exec presentation. Validated results for leadership.</div>' +
+    '<a href="' + STRIPE_GUIDED + '" style="display:block;text-align:center;background:#fff;color:#0f172a;padding:10px 20px;border-radius:6px;font-weight:600;font-size:14px;text-decoration:none">Book consultation</a>' +
+    '</div></td>' +
+    '</tr></table>' +
     '</div>' +
 
     '<div style="text-align:center;font-size:11px;color:#94a3b8;padding:24px 0;border-top:1px solid #e2e8f0;margin-top:32px">' +

@@ -497,28 +497,90 @@ style={{width:'100%',padding:'14px',borderRadius:8,border:'none',background:sub?
 </div>);}
 
 // Access codes - add new codes here as needed
-const ACCESS_CODES = ['HCCS2026', 'LAUNCH', 'PILOT', 'DIMALEFYT'];
+const ACCESS_CODES = ['HCCS2026', 'LAUNCH', 'PILOT', 'DIMALEFYT', 'PURCHASED'];
+
+const STRIPE_SELF = 'https://buy.stripe.com/fZu6oI8BXb7herYgNucIE01';
+const STRIPE_GUIDED = 'https://buy.stripe.com/9B65kEf0lcbl5Vs9l2cIE00';
 
 function CodeGate({onUnlock}) {
 const [code, setCode] = useState('');
 const [err, setErr] = useState('');
+const [showCode, setShowCode] = useState(false);
 return (
-<div style={{minHeight:'80vh',background:'linear-gradient(165deg,#0a1628,#1a2d4a,#0f3460)',display:'flex',alignItems:'center',justifyContent:'center',padding:24}}>
-<div style={{background:'#fff',borderRadius:16,maxWidth:480,width:'100%',padding:'40px 32px',textAlign:'center',boxShadow:'0 24px 48px rgba(0,0,0,0.2)'}}>
-<div style={{fontSize:32,fontWeight:700,color:'#0f172a',marginBottom:8}}>Full HCCS Assessment</div>
-<div style={{fontSize:15,color:'#64748b',marginBottom:4}}>67 controls across 7 governance domains</div>
-<p style={{fontSize:14,color:'#94a3b8',marginBottom:28,lineHeight:1.5}}>The full assessment requires an access code. Complete the <a href="/assess" style={{color:'#2563eb',fontWeight:500}}>quick assessment</a> to request one, or enter your code below.</p>
-<input type="text" value={code} onChange={e=>{setCode(e.target.value.toUpperCase());setErr('');}} placeholder="Enter access code"
-style={{width:'100%',padding:'14px 16px',borderRadius:8,border:'1px solid '+(err?'#fca5a5':'#e2e8f0'),fontSize:16,outline:'none',textAlign:'center',letterSpacing:'0.1em',fontWeight:600,boxSizing:'border-box',textTransform:'uppercase'}}
-onKeyDown={e=>{if(e.key==='Enter'){if(ACCESS_CODES.includes(code.trim().toUpperCase()))onUnlock();else setErr('Invalid code');}}}/>
-{err&&<div style={{fontSize:13,color:'#dc2626',marginTop:8}}>{err}</div>}
-<button onClick={()=>{if(ACCESS_CODES.includes(code.trim().toUpperCase()))onUnlock();else setErr('Invalid access code. Contact us for access.');}}
-style={{width:'100%',marginTop:16,padding:'14px',borderRadius:8,border:'none',background:'#2563eb',color:'#fff',fontSize:15,fontWeight:600,cursor:'pointer'}}>Unlock assessment</button>
-<div style={{marginTop:24,paddingTop:20,borderTop:'1px solid #e2e8f0'}}>
-<div style={{fontSize:13,color:'#94a3b8'}}>Need a code? <a href="/assess" style={{color:'#2563eb',fontWeight:500}}>Take the quick assessment first</a></div>
+<div style={{minHeight:'80vh',background:'linear-gradient(165deg,#0a1628 0%,#1a2d4a 40%,#0f3460 100%)',padding:'60px 24px 80px'}}>
+<div style={{maxWidth:900,margin:'0 auto'}}>
+
+{/* Header */}
+<div style={{textAlign:'center',marginBottom:48}}>
+<div style={{letterSpacing:'0.25em',fontSize:12,textTransform:'uppercase',color:'#5b9bd5',marginBottom:12,fontWeight:500}}>Full HCCS Assessment</div>
+<h1 style={{fontSize:40,fontWeight:700,color:'#fff',margin:'0 0 12px'}}>67 controls. 7 domains. Your complete maturity score.</h1>
+<p style={{fontSize:17,color:'#94a3b8',maxWidth:560,margin:'0 auto',lineHeight:1.6}}>Choose the assessment path that fits your organization. Both include the full 67-control assessment, gap analysis, remediation roadmap, and audit-grade report.</p>
 </div>
+
+{/* Pricing cards */}
+<div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:24,marginBottom:40}}>
+
+{/* Self-Assessment */}
+<div style={{background:'#fff',borderRadius:16,padding:'36px 28px',border:'2px solid #e2e8f0',display:'flex',flexDirection:'column'}}>
+<div style={{fontSize:13,fontWeight:600,color:'#2563eb',textTransform:'uppercase',letterSpacing:'0.1em',marginBottom:8}}>Self-Assessment</div>
+<div style={{fontSize:36,fontWeight:700,color:'#0f172a',marginBottom:4}}>$149</div>
+<div style={{fontSize:14,color:'#64748b',marginBottom:20}}>One-time payment</div>
+<div style={{flex:1}}>
+{['Full 67-control assessment across 7 domains','Definition, example, and remediation for every control','Notes capture throughout the assessment','Per-domain maturity scoring (L0-L5)','Priority gap analysis with MUST/SHOULD breakdown','Phased remediation roadmap to Level 3','Downloadable audit-grade report','Email delivery of complete results'].map(t=>
+<div key={t} style={{fontSize:14,color:'#475569',marginBottom:10,display:'flex',gap:8,lineHeight:1.5}}>
+<span style={{color:'#059669',fontWeight:700,marginTop:1}}>&#10003;</span><span>{t}</span></div>)}
+</div>
+<div style={{fontSize:13,color:'#64748b',fontStyle:'italic',marginBottom:20}}>Best for: HR leaders, TA managers, People Ops who want to assess and build a remediation plan independently.</div>
+<a href={STRIPE_SELF} style={{display:'block',textAlign:'center',background:'#2563eb',color:'#fff',padding:'14px 24px',borderRadius:8,fontSize:15,fontWeight:600,textDecoration:'none'}}>Get started</a>
+</div>
+
+{/* Guided Assessment */}
+<div style={{background:'#fff',borderRadius:16,padding:'36px 28px',border:'2px solid #2563eb',position:'relative',display:'flex',flexDirection:'column'}}>
+<div style={{position:'absolute',top:-12,left:'50%',transform:'translateX(-50%)',background:'#2563eb',color:'#fff',padding:'4px 16px',borderRadius:12,fontSize:12,fontWeight:600}}>Recommended</div>
+<div style={{fontSize:13,fontWeight:600,color:'#2563eb',textTransform:'uppercase',letterSpacing:'0.1em',marginBottom:8}}>Guided Assessment</div>
+<div style={{fontSize:36,fontWeight:700,color:'#0f172a',marginBottom:4}}>$2,500</div>
+<div style={{fontSize:14,color:'#64748b',marginBottom:20}}>Expert-guided engagement</div>
+<div style={{flex:1}}>
+{['Everything in Self-Assessment, plus:','Expert-guided walkthrough of all 67 controls','Accurate scoring based on evidence review','Interpreted findings for executive stakeholders','Executive presentation deck of results','Strategic remediation prioritization','30-day follow-up review','Direct access to HCCS author for questions'].map((t,i)=>
+<div key={t} style={{fontSize:14,color:i===0?'#0f172a':'#475569',fontWeight:i===0?600:400,marginBottom:10,display:'flex',gap:8,lineHeight:1.5}}>
+{i>0&&<span style={{color:'#2563eb',fontWeight:700,marginTop:1}}>&#10003;</span>}<span>{t}</span></div>)}
+</div>
+<div style={{fontSize:13,color:'#64748b',fontStyle:'italic',marginBottom:20}}>Best for: CHROs, VPs of People, organizations that need validated results for leadership or board reporting.</div>
+<a href={STRIPE_GUIDED} style={{display:'block',textAlign:'center',background:'#0f172a',color:'#fff',padding:'14px 24px',borderRadius:8,fontSize:15,fontWeight:600,textDecoration:'none'}}>Book guided assessment</a>
+</div>
+</div>
+
+{/* Access code section */}
+<div style={{textAlign:'center'}}>
+{!showCode ? (
+<button onClick={()=>setShowCode(true)} style={{background:'none',border:'none',fontSize:14,color:'#5b9bd5',cursor:'pointer',fontWeight:500}}>Already have an access code?</button>
+) : (
+<div style={{background:'rgba(255,255,255,0.05)',border:'1px solid rgba(255,255,255,0.1)',borderRadius:12,padding:24,maxWidth:400,margin:'0 auto'}}>
+<div style={{fontSize:15,fontWeight:600,color:'#fff',marginBottom:12}}>Enter access code</div>
+<input type="text" value={code} onChange={e=>{setCode(e.target.value.toUpperCase());setErr('');}} placeholder="YOUR CODE"
+style={{width:'100%',padding:'12px 16px',borderRadius:8,border:'1px solid '+(err?'#fca5a5':'rgba(255,255,255,0.2)'),fontSize:16,outline:'none',textAlign:'center',letterSpacing:'0.15em',fontWeight:600,boxSizing:'border-box',textTransform:'uppercase',background:'rgba(255,255,255,0.05)',color:'#fff'}}
+onKeyDown={e=>{if(e.key==='Enter'){if(ACCESS_CODES.includes(code.trim().toUpperCase()))onUnlock();else setErr('Invalid code');}}}/>
+{err&&<div style={{fontSize:13,color:'#fca5a5',marginTop:8}}>{err}</div>}
+<button onClick={()=>{if(ACCESS_CODES.includes(code.trim().toUpperCase()))onUnlock();else setErr('Invalid access code');}}
+style={{width:'100%',marginTop:12,padding:'12px',borderRadius:8,border:'1px solid rgba(255,255,255,0.2)',background:'transparent',color:'#fff',fontSize:14,fontWeight:600,cursor:'pointer'}}>Unlock</button>
+</div>
+)}
+</div>
+
+{/* Not ready? */}
+<div style={{textAlign:'center',marginTop:32}}>
+<p style={{fontSize:14,color:'#64748b'}}>Not ready for the full assessment? <a href="/assess" style={{color:'#5b9bd5',fontWeight:500}}>Take the free quick assessment first</a></p>
+</div>
+
+{/* Trust signals */}
+<div style={{display:'flex',justifyContent:'center',gap:32,marginTop:40,paddingTop:32,borderTop:'1px solid rgba(255,255,255,0.06)'}}>
+{['67 auditable controls','Grounded in 60+ years of research','SOX/NIST/ISO aligned'].map(t=>
+<div key={t} style={{fontSize:13,color:'#64748b',display:'flex',alignItems:'center',gap:6}}><span style={{color:'#5b9bd5'}}>&#10003;</span>{t}</div>)}
+</div>
+
 </div>
 </div>);}
+
 
 export default function HCCSAssessment(){
 const[phase,setPhase]=useState("code");const[answers,setAnswers]=useState({});const[notes,setNotes]=useState({});const[user,setUser]=useState(null);
