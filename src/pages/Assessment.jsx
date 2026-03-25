@@ -17,7 +17,7 @@ function sortG(g){const o={MUST:0,SHOULD:1,MAY:2};return[...g].sort((a,b)=>o[a.l
 function Landing({onStart}){return(
 <div style={{minHeight:"100vh",background:"linear-gradient(165deg,#0a1628 0%,#1a2d4a 40%,#0f3460 100%)",color:"#e2e8f0",fontFamily:"'IBM Plex Sans',system-ui,sans-serif"}}>
 <div style={{maxWidth:760,margin:"0 auto",padding:"80px 24px 60px"}}>
-<div style={{letterSpacing:"0.25em",fontSize:12,textTransform:"uppercase",color:"#5b9bd5",marginBottom:16,fontWeight:500}}>Human Capital Control Standard</div>
+<div style={{letterSpacing:"0.25em",fontSize:12,textTransform:"uppercase",color:"#5b9bd5",marginBottom:16,fontWeight:500}}>Human Capital Control Standard™</div>
 <h1 style={{fontSize:44,fontWeight:700,lineHeight:1.15,margin:"0 0 20px",color:"#fff"}}>Is your hiring process<br/>audit-ready?</h1>
 <p style={{fontSize:18,lineHeight:1.65,color:"#94a3b8",maxWidth:560,margin:"0 0 40px"}}>Most organizations have process steps for hiring. Few have enforceable controls. HCCS™ is the first governance and audit standard for human capital decisions.</p>
 <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:16,marginBottom:48}}>

@@ -5,9 +5,9 @@ export default function Footer() {
     <footer style={{ background: '#0a1628', borderTop: '1px solid rgba(255,255,255,0.06)', padding: '48px 24px' }}>
       <div style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 40 }}>
         <div>
-          <div style={{ fontSize: 20, fontWeight: 700, color: '#fff', letterSpacing: '0.05em', marginBottom: 12 }}>HCCS Standard<span style={{ fontSize: 10, position: 'relative', top: -8, color: '#5b9bd5' }}>™</span></div>
+          <div style={{ fontSize: 20, fontWeight: 700, letterSpacing: '0.05em', marginBottom: 12 }}><span style={{ color: '#fff' }}>HCCS</span> <span style={{ color: '#5b9bd5' }}>Standard</span><span style={{ fontSize: 10, position: 'relative', top: -8, color: '#5b9bd5' }}>™</span></div>
           <p style={{ fontSize: 14, color: '#64748b', lineHeight: 1.6, maxWidth: 320 }}>
-            The Human Capital Control Standard. A governance and audit framework for human capital decisions.
+            The Human Capital Control Standard™. A governance and audit framework for human capital decisions.
           </p>
           <p style={{ fontSize: 13, color: '#475569', marginTop: 16 }}>
             Aligned to SOX, NIST AI RMF, and ISO governance standards.

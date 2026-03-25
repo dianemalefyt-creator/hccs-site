@@ -14,7 +14,7 @@ export default function Home() {
       <section style={S.hero}>
         <div style={S.wrap}>
           <div style={{ maxWidth: 640 }}>
-            <div style={{ letterSpacing: '0.25em', fontSize: 12, textTransform: 'uppercase', color: '#5b9bd5', marginBottom: 20, fontWeight: 500 }}>Human Capital Control Standard</div>
+            <div style={{ letterSpacing: '0.25em', fontSize: 12, textTransform: 'uppercase', color: '#5b9bd5', marginBottom: 20, fontWeight: 500 }}>Human Capital Control Standard™</div>
             <h1 style={{ fontSize: 52, fontWeight: 700, lineHeight: 1.12, margin: '0 0 24px', color: '#fff' }}>
               Human capital decisions are not discretionary activities.
             </h1>
