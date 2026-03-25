@@ -79,7 +79,7 @@ function Landing({ onStart }) {
         <div style={{ letterSpacing: "0.25em", fontSize: 12, textTransform: "uppercase", color: "#5b9bd5", marginBottom: 16, fontWeight: 500 }}>Quick Assessment</div>
         <h1 style={{ fontSize: 40, fontWeight: 700, lineHeight: 1.15, margin: "0 0 20px", color: "#fff" }}>How audit-ready is your hiring process?</h1>
         <p style={{ fontSize: 18, lineHeight: 1.65, color: "#94a3b8", maxWidth: 540, margin: "0 0 32px" }}>
-          10 questions. 3 minutes. Find out where your organization stands across the 7 HCCS governance domains.
+          10 questions. 3 minutes. Find out where your organization stands across the 7 HCCS™ governance domains.
         </p>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12, marginBottom: 40 }}>
           {[["10", "critical controls"], ["7", "domains covered"], ["3 min", "to complete"]].map(([n, l]) => (
@@ -91,7 +91,7 @@ function Landing({ onStart }) {
         </div>
         <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 12, padding: 24, marginBottom: 40 }}>
           <div style={{ fontSize: 14, color: "#94a3b8", lineHeight: 1.6 }}>
-            This quick assessment samples the most revealing controls from the full 67-control HCCS Standard. Each question includes a definition and example so you know exactly what "in place" means. No login required.
+            This quick assessment samples the most revealing controls from the full 67-control HCCS™ Standard™. Each question includes a definition and example so you know exactly what "in place" means. No login required.
           </div>
         </div>
         <button onClick={onStart} style={{ background: "#2563eb", color: "#fff", border: "none", borderRadius: 8, padding: "16px 40px", fontSize: 16, fontWeight: 600, cursor: "pointer" }}
@@ -280,7 +280,7 @@ function Results({ answers }) {
         {/* What you're missing */}
         <div style={{ background: "#0f172a", borderRadius: 12, padding: 28, marginBottom: 32, textAlign: "center" }}>
           <div style={{ fontSize: 13, color: "#5b9bd5", textTransform: "uppercase", letterSpacing: "0.15em", marginBottom: 12, fontWeight: 600 }}>This was 10 of 67 controls</div>
-          <h3 style={{ fontSize: 22, fontWeight: 700, color: "#fff", margin: "0 0 12px" }}>The full HCCS assessment covers:</h3>
+          <h3 style={{ fontSize: 22, fontWeight: 700, color: "#fff", margin: "0 0 12px" }}>The full HCCS™ assessment covers:</h3>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, maxWidth: 480, margin: "0 auto", textAlign: "left" }}>
             {[
               "67 auditable controls across 7 domains",

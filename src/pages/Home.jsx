@@ -22,7 +22,7 @@ export default function Home() {
               They are controlled processes subject to audit.
             </p>
             <p style={{ fontSize: 17, lineHeight: 1.65, color: '#64748b', margin: '0 0 40px', maxWidth: 520 }}>
-              HCCS is the first governance and audit standard for how companies define roles, evaluate candidates, make hiring decisions, and align compensation to the actual scope of work.
+              HCCS™ is the first governance and audit standard for how companies define roles, evaluate candidates, make hiring decisions, and align compensation to the actual scope of work.
             </p>
             <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
               <Link to="/assess" style={{ background: '#2563eb', color: '#fff', padding: '14px 32px', borderRadius: 8, fontSize: 16, fontWeight: 600, display: 'inline-block' }}>
@@ -137,7 +137,7 @@ export default function Home() {
               Grounded in 60+ years of forensic and organizational psychology
             </h2>
             <p style={{ fontSize: 17, lineHeight: 1.7, color: '#475569', marginBottom: 24 }}>
-              HCCS is not opinion-based. It is grounded in replicated research demonstrating that structured, actuarial methods consistently outperform clinical judgment in personnel selection, risk assessment, and classification decisions.
+              HCCS™ is not opinion-based. It is grounded in replicated research demonstrating that structured, actuarial methods consistently outperform clinical judgment in personnel selection, risk assessment, and classification decisions.
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
               {[
@@ -171,7 +171,7 @@ export default function Home() {
         <div style={S.wrap}>
           <h2 style={{ fontSize: 32, fontWeight: 700, color: '#0f172a', marginBottom: 12 }}>Is your hiring process audit-ready?</h2>
           <p style={{ fontSize: 17, color: '#64748b', marginBottom: 32, maxWidth: 520, margin: '0 auto 32px' }}>
-            The HCCS Maturity Assessment scores your organization across all 67 controls, identifies gaps, and generates a remediation roadmap. Takes 10-15 minutes.
+            The HCCS™ Maturity Assessment scores your organization across all 67 controls, identifies gaps, and generates a remediation roadmap. Takes 10-15 minutes.
           </p>
           <Link to="/assess" style={{ background: '#2563eb', color: '#fff', padding: '16px 40px', borderRadius: 8, fontSize: 16, fontWeight: 600, display: 'inline-block' }}>
             Start your assessment

@@ -41,8 +41,8 @@ tr:nth-child(even) td{background:#f8fafc}
 </div>
 
 <div class="header">
-<div style="letter-spacing:0.2em;font-size:12px;color:#5b9bd5;margin-bottom:12px">HUMAN CAPITAL CONTROL STANDARD</div>
-<h1>HCCS Maturity Assessment Report</h1>
+<div style="letter-spacing:0.2em;font-size:12px;color:#5b9bd5;margin-bottom:12px">HUMAN CAPITAL CONTROL STANDARD™</div>
+<h1>HCCS™ Maturity Assessment Report</h1>
 <div style="font-size:20px;margin:12px 0">${user.org}</div>
 <div style="color:#94a3b8">${date}</div>
 <div style="color:#64748b;margin-top:8px;font-size:13px">Prepared for: ${user.name}${user.title ? ', ' + user.title : ''}</div>
@@ -166,8 +166,8 @@ ${noted.map(c => `<tr><td><code>${c.id}</code></td><td>${c.domainCode}</td><td c
 })()}
 
 <div class="footer">
-<div>HCCS Maturity Assessment Report | ${user.org} | ${date}</div>
-<div style="margin-top:4px">Generated at hccsstandard.com | HCCS-1.0 | &copy; 2026 Diane Malefyt</div>
+<div>HCCS™ Maturity Assessment Report | ${user.org} | ${date}</div>
+<div style="margin-top:4px">Generated at hccsstandard.com | HCCS™-1.0 | &copy; 2026 Diane Malefyt</div>
 <div style="margin-top:8px;color:#cbd5e1">This report is generated from a self-assessment and does not constitute certified compliance.</div>
 </div>
 </body></html>`;
@@ -197,7 +197,7 @@ function buildTeaserEmailHTML(user, domainScores, overallLevel, answers, gaps) {
     '</div>' +
 
     '<div style="background:linear-gradient(135deg,#0a1628,#1a2d4a);color:#fff;padding:40px;border-radius:12px;text-align:center;margin-bottom:24px">' +
-    '<div style="letter-spacing:0.2em;font-size:12px;color:#5b9bd5;margin-bottom:8px">HCCS QUICK ASSESSMENT</div>' +
+    '<div style="letter-spacing:0.2em;font-size:12px;color:#5b9bd5;margin-bottom:8px">HCCS™ QUICK ASSESSMENT</div>' +
     '<div style="font-size:28px;font-weight:700;margin-bottom:4px">Your Results</div>' +
     '<div style="color:#94a3b8;font-size:14px">' + (user.org || '') + ' | ' + date + '</div>' +
     '</div>' +
@@ -261,7 +261,7 @@ function buildTeaserEmailHTML(user, domainScores, overallLevel, answers, gaps) {
     '</div>' +
 
     '<div style="text-align:center;font-size:11px;color:#94a3b8;padding:24px 0;border-top:1px solid #e2e8f0;margin-top:32px">' +
-    '<div>HCCS Quick Assessment | ' + date + ' | hccsstandard.com</div>' +
+    '<div>HCCS™ Quick Assessment | ' + date + ' | hccsstandard.com</div>' +
     '<div style="margin-top:4px">&copy; 2026 Diane Malefyt. All rights reserved.</div>' +
     '</div></body></html>';
 }
@@ -294,10 +294,10 @@ exports.handler = async function(event) {
     console.log('isTeaser:', isTeaser, 'user:', user.name, user.email);
     if (isTeaser) {
       html = buildTeaserEmailHTML(user, domainScores, overallLevel, answers, mustGaps);
-      subject = 'HCCS Quick Assessment Results - ' + (user.name || 'Assessment') + ' - Estimated Level ' + overallLevel + ': ' + LEVEL_NAMES[overallLevel];
+      subject = 'HCCS™ Quick Assessment Results - ' + (user.name || 'Assessment') + ' - Estimated Level ' + overallLevel + ': ' + LEVEL_NAMES[overallLevel];
     } else {
       html = buildReportHTML(user, domainScores, overallLevel, controls, answers, notes, mustGaps, shouldGaps, allGaps);
-      subject = 'HCCS Maturity Assessment Report - ' + user.org + ' - Level ' + overallLevel + ': ' + LEVEL_NAMES[overallLevel];
+      subject = 'HCCS™ Maturity Assessment Report - ' + user.org + ' - Level ' + overallLevel + ': ' + LEVEL_NAMES[overallLevel];
     }
 
     // Count controls by status
@@ -313,7 +313,7 @@ exports.handler = async function(event) {
     // Send email with BCC
     var emailSubject = subject + ' [' + user.name + ']';
     const emailPayload = {
-      from: 'HCCS Assessment <reports@hccsstandard.com>',
+      from: 'HCCS™ Assessment <reports@hccsstandard.com>',
       to: [user.email],
       bcc: [BCC_EMAIL],
       subject: emailSubject,

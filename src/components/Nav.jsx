@@ -17,7 +17,7 @@ export default function Nav() {
     <nav style={{ background: '#0a1628', borderBottom: '1px solid rgba(255,255,255,0.06)', position: 'sticky', top: 0, zIndex: 50 }}>
       <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: 64 }}>
         <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <span style={{ fontSize: 20, fontWeight: 700, color: '#fff', letterSpacing: '0.08em' }}>HCCS</span>
+          <span style={{ fontSize: 20, fontWeight: 700, color: '#fff', letterSpacing: '0.08em' }}>HCCS™</span>
           <span style={{ fontSize: 12, color: '#5b9bd5', fontWeight: 500, letterSpacing: '0.04em' }}>STANDARD</span>
         </Link>
 

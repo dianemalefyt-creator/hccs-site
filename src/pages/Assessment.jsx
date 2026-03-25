@@ -19,7 +19,7 @@ function Landing({onStart}){return(
 <div style={{maxWidth:760,margin:"0 auto",padding:"80px 24px 60px"}}>
 <div style={{letterSpacing:"0.25em",fontSize:12,textTransform:"uppercase",color:"#5b9bd5",marginBottom:16,fontWeight:500}}>Human Capital Control Standard</div>
 <h1 style={{fontSize:44,fontWeight:700,lineHeight:1.15,margin:"0 0 20px",color:"#fff"}}>Is your hiring process<br/>audit-ready?</h1>
-<p style={{fontSize:18,lineHeight:1.65,color:"#94a3b8",maxWidth:560,margin:"0 0 40px"}}>Most organizations have process steps for hiring. Few have enforceable controls. HCCS is the first governance and audit standard for human capital decisions.</p>
+<p style={{fontSize:18,lineHeight:1.65,color:"#94a3b8",maxWidth:560,margin:"0 0 40px"}}>Most organizations have process steps for hiring. Few have enforceable controls. HCCS™ is the first governance and audit standard for human capital decisions.</p>
 <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:16,marginBottom:48}}>
 {[["67","auditable controls"],["7","governance domains"],["5","maturity levels"]].map(([n,l])=>(
 <div key={l} style={{background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:10,padding:"20px 16px",textAlign:"center"}}>
@@ -113,7 +113,7 @@ const barChart=ds.map(d=>'<div style="display:flex;align-items:center;gap:12px;m
 // Pre-compute domain cards
 const domainCards=ds.map(d=>'<div style="border:1px solid #e2e8f0;border-left:4px solid '+d.color+';border-radius:8px;padding:14px 16px;break-inside:avoid"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-weight:600;font-size:13px">'+d.domain+': '+d.name+'</span><span style="font-weight:600;color:'+d.color+';font-size:13px">L'+d.level+'</span></div><div style="font-size:12px;color:#64748b">'+d.met+'/'+d.total+' in place'+(d.partial>0?', '+d.partial+' partial':'')+' | '+d.gaps.length+' gaps</div><div style="height:5px;background:#f1f5f9;border-radius:3px;margin-top:6px;overflow:hidden"><div style="height:100%;background:'+d.color+';width:'+((d.met/d.total)*100)+'%;border-radius:3px"></div></div></div>').join('');
 const domainTable=ds.map(d=>'<tr><td><strong>'+d.domain+'</strong></td><td>'+d.name+'</td><td><strong>Level '+d.level+': '+LN[d.level]+'</strong></td><td>'+d.met+'/'+d.total+'</td><td>'+d.partial+'</td><td>'+d.gaps.length+'</td><td>'+TL[d.level]+'</td></tr>').join('');
-const html=`<!DOCTYPE html><html><head><meta charset="utf-8"><title>HCCS Assessment Report - ${user?.org||'Organization'}</title>
+const html=`<!DOCTYPE html><html><head><meta charset="utf-8"><title>HCCS™ Assessment Report - ${user?.org||'Organization'}</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
@@ -153,7 +153,7 @@ tr:nth-child(even) td{background:#f8fafc}
 
 <div class="cover">
 <div style="letter-spacing:0.2em;font-size:14px;color:#5b9bd5;margin-bottom:24px">HUMAN CAPITAL CONTROL STANDARD</div>
-<h1>HCCS</h1>
+<h1>HCCS™</h1>
 <div class="sub">Maturity Assessment Report</div>
 <div class="org">${user?.org||'Organization'}</div>
 <div class="date">${date}</div>
@@ -290,7 +290,7 @@ ${noted.map(c=>`<tr><td><code>${c.id}</code></td><td>${c.domainCode}</td><td cla
 <div class="footer">
 <div>HCCS Maturity Assessment Report | ${user?.org||'Organization'} | ${date}</div>
 <div style="margin-top:4px">Generated at hccsstandard.com | HCCS-1.0 | &copy; 2026 Diane Malefyt. All rights reserved.</div>
-<div style="margin-top:8px;color:#cbd5e1">This report is generated from a self-assessment. It does not constitute certified compliance. For validated assessment (Level 3+), engage a qualified HCCS assessor.</div>
+<div style="margin-top:8px;color:#cbd5e1">This report is generated from a self-assessment. It does not constitute certified compliance. For validated assessment (Level 3+), engage a qualified HCCS™ assessor.</div>
 </div>
 </body></html>`;
 const w=window.open('','_blank');w.document.write(html);w.document.close();}
@@ -305,7 +305,7 @@ return(
 <div style={{minHeight:"100vh",background:"#f8fafc",fontFamily:"'IBM Plex Sans',system-ui,sans-serif"}}>
 <div style={{maxWidth:860,margin:"0 auto",padding:"48px 24px 80px"}}>
 <div style={{textAlign:"center",marginBottom:48}}>
-<div style={{letterSpacing:"0.2em",fontSize:12,textTransform:"uppercase",color:"#64748b",marginBottom:12}}>HCCS Maturity Assessment Results</div>
+<div style={{letterSpacing:"0.2em",fontSize:12,textTransform:"uppercase",color:"#64748b",marginBottom:12}}>HCCS™ Maturity Assessment Results</div>
 <h1 style={{fontSize:36,fontWeight:700,color:"#0f172a",margin:"0 0 8px"}}>Overall Maturity: Level {ov}</h1>
 <div style={{display:"inline-block",padding:"6px 20px",borderRadius:20,background:LC[ov]+"15",color:LC[ov],fontWeight:600,fontSize:16,border:`1px solid ${LC[ov]}30`}}>{LN[ov]}</div>
 <div style={{fontSize:14,color:"#64748b",marginTop:12}}>Compliance tier: {TL[ov]} | {ov<3?`${3-ov} level${3-ov>1?"s":""} below credibility threshold`:"Meets or exceeds credibility threshold"}</div></div>
@@ -374,7 +374,7 @@ return(<div key={c.id} style={{marginBottom:10,paddingLeft:12,borderLeft:`2px so
 <p style={{margin:"12px 0 0",fontSize:13,color:"#475569"}}>HCCS-1.0, Governing Principle</p></div>
 
 {!done?(<div style={{background:"#fff",border:"1px solid #e2e8f0",borderRadius:12,padding:32,textAlign:"center"}}>
-<h3 style={{margin:"0 0 8px",fontSize:20,fontWeight:600}}>Your HCCS Assessment Report</h3>
+<h3 style={{margin:"0 0 8px",fontSize:20,fontWeight:600}}>Your HCCS™ Assessment Report</h3>
 <p style={{fontSize:14,color:"#64748b",marginBottom:24}}>Full control-by-control record with your notes, gap analysis, remediation recommendations, and implementation roadmap.</p>
 <div style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap"}}>
 <button onClick={()=>{genReport(user,ds,ov,answers,notes,mg,sg,ag,ph);}}
@@ -394,7 +394,7 @@ disabled={sending} style={{padding:"14px 28px",borderRadius:8,border:"none",back
 <div style={{background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:12,padding:32,textAlign:"center"}}>
 <div style={{fontSize:24,marginBottom:8}}>✓</div>
 <h3 style={{margin:"0 0 8px",fontSize:18,fontWeight:600,color:"#166534"}}>Report sent</h3>
-<p style={{fontSize:14,color:"#15803d",margin:"0 0 16px"}}>Your full HCCS assessment report has been emailed to {user?.email}.</p>
+<p style={{fontSize:14,color:"#15803d",margin:"0 0 16px"}}>Your full HCCS™ assessment report has been emailed to {user?.email}.</p>
 <div style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap"}}>
 <button onClick={()=>genReport(user,ds,ov,answers,notes,mg,sg,ag,ph)}
 style={{padding:"10px 24px",borderRadius:6,border:"1px solid #e2e8f0",background:"#fff",color:"#475569",fontSize:13,fontWeight:500,cursor:"pointer"}}>Open in browser</button>
@@ -456,7 +456,7 @@ return(
 <div style={{position:'fixed',inset:0,zIndex:100,display:'flex',alignItems:'center',justifyContent:'center',background:'rgba(10,22,40,0.85)',backdropFilter:'blur(4px)',padding:24}}>
 <div style={{background:'#fff',borderRadius:16,maxWidth:520,width:'100%',maxHeight:'90vh',overflow:'auto',padding:'36px 32px',boxShadow:'0 24px 48px rgba(0,0,0,0.2)'}}>
 <div style={{textAlign:'center',marginBottom:28}}>
-<div style={{fontSize:28,fontWeight:700,color:'#0f172a',marginBottom:8}}>Access the HCCS Assessment</div>
+<div style={{fontSize:28,fontWeight:700,color:'#0f172a',marginBottom:8}}>Access the HCCS™ Assessment</div>
 <p style={{fontSize:15,color:'#64748b',margin:0,lineHeight:1.5}}>Score your organization across 67 auditable controls. Enter your information to begin.</p>
 </div>
 
@@ -512,7 +512,7 @@ return (
 
 {/* Header */}
 <div style={{textAlign:'center',marginBottom:48}}>
-<div style={{letterSpacing:'0.25em',fontSize:12,textTransform:'uppercase',color:'#5b9bd5',marginBottom:12,fontWeight:500}}>Full HCCS Assessment</div>
+<div style={{letterSpacing:'0.25em',fontSize:12,textTransform:'uppercase',color:'#5b9bd5',marginBottom:12,fontWeight:500}}>Full HCCS™ Assessment</div>
 <h1 style={{fontSize:40,fontWeight:700,color:'#fff',margin:'0 0 12px'}}>67 controls. 7 domains. Your complete maturity score.</h1>
 <p style={{fontSize:17,color:'#94a3b8',maxWidth:560,margin:'0 auto',lineHeight:1.6}}>Choose the assessment path that fits your organization. Both include the full 67-control assessment, gap analysis, remediation roadmap, and audit-grade report.</p>
 </div>
@@ -589,7 +589,7 @@ const[phase,setPhase]=useState("code");const[answers,setAnswers]=useState({});co
 useEffect(()=>{
 const params=new URLSearchParams(window.location.search);
 if(params.get('test')==='1'){
-const testUser={name:'Diane Malefyt (Test)',email:'diane.malefyt@gmail.com',org:'HCCS Test',title:'Admin',size:'1-50',linkedin:'https://www.linkedin.com/in/dianemalefyt/'};
+const testUser={name:'Diane Malefyt (Test)',email:'diane.malefyt@gmail.com',org:'HCCS™ Test',title:'Admin',size:'1-50',linkedin:'https://www.linkedin.com/in/dianemalefyt/'};
 const testAnswers={};const testNotes={};
 const options=['yes','partial','no'];
 D.forEach(d=>{d.controls.forEach((c,i)=>{
