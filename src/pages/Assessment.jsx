@@ -692,6 +692,16 @@ return (
 </div>
 </div>
 
+{/* Need budget approval */}
+<div style={{background:'linear-gradient(135deg, #064e3b, #065f46)',border:'2px solid #059669',borderRadius:12,padding:'24px 28px',marginBottom:32,display:'flex',alignItems:'center',justifyContent:'space-between',gap:20,flexWrap:'wrap'}}>
+<div>
+<div style={{fontSize:13,color:'#6ee7b7',fontWeight:600,marginBottom:4}}>Need to get this approved?</div>
+<div style={{fontSize:18,fontWeight:700,color:'#fff',marginBottom:4}}>Build a business case for your leadership</div>
+<div style={{fontSize:14,color:'#a7f3d0'}}>ROI calculator, cost of inaction data, and stakeholder-ready talking points.</div>
+</div>
+<a href="/business-case" style={{background:'#059669',color:'#fff',padding:'12px 24px',borderRadius:8,fontSize:14,fontWeight:600,textDecoration:'none',whiteSpace:'nowrap',flexShrink:0}}>See the business case →</a>
+</div>
+
 {/* Access code section */}
 <div style={{textAlign:'center'}}>
 {!showCode ? (

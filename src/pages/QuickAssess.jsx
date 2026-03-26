@@ -336,11 +336,11 @@ function Results({ answers }) {
         </div>
 
         {/* Business case generator */}
-        <div style={{ background: '#0f172a', borderRadius: 12, padding: 28, marginBottom: 24, textAlign: 'center' }}>
-          <div style={{ fontSize: 13, color: '#5b9bd5', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 8, fontWeight: 600 }}>Need budget approval?</div>
-          <h3 style={{ fontSize: 20, fontWeight: 700, color: '#fff', margin: '0 0 8px' }}>Generate a business case to share with leadership</h3>
-          <p style={{ fontSize: 14, color: '#94a3b8', marginBottom: 20, maxWidth: 480, margin: '0 auto 20px' }}>
-            Based on your assessment results, we'll generate a one-page executive brief with your risk profile, cost of inaction, and ROI justification. Ready to print or email to your CFO.
+        <div style={{ background: 'linear-gradient(135deg, #064e3b, #065f46)', border: '2px solid #059669', borderRadius: 12, padding: 28, marginBottom: 24, textAlign: 'center' }}>
+          <div style={{ fontSize: 13, color: '#6ee7b7', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 8, fontWeight: 600 }}>Need budget approval?</div>
+          <h3 style={{ fontSize: 22, fontWeight: 700, color: '#fff', margin: '0 0 8px' }}>Generate a business case to share with leadership</h3>
+          <p style={{ fontSize: 14, color: '#a7f3d0', marginBottom: 20, maxWidth: 480, margin: '0 auto 20px' }}>
+            A one-page executive brief with your risk profile, cost of inaction, and ROI justification. Personalized from your results. Ready to print or email to your CFO.
           </p>
           <button onClick={() => {
             const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
@@ -431,7 +431,10 @@ ${gaps.length > 0 ? `<div class="r"><strong style="color:#991b1b">Controls not f
           style={{ padding: '14px 28px', borderRadius: 8, border: 'none', background: '#059669', color: '#fff', fontSize: 15, fontWeight: 600, cursor: 'pointer' }}>
             Generate budget request document
           </button>
-          <div style={{ fontSize: 12, color: '#64748b', marginTop: 10 }}>Opens in a new tab. Print or save as PDF to share with your leadership team.</div>
+          <div style={{ fontSize: 12, color: '#a7f3d0', marginTop: 10 }}>Opens in a new tab. Print or save as PDF to share with your leadership team.</div>
+          <div style={{ marginTop: 14 }}>
+            <a href="/business-case" style={{ fontSize: 13, color: '#6ee7b7', fontWeight: 500 }}>See the full ROI analysis and cost of inaction data →</a>
+          </div>
         </div>
 
         {/* Email capture */}
