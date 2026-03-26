@@ -297,44 +297,6 @@ function Results({ answers }) {
           </div>
         </div>
 
-        {/* Pricing tiers */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 14, marginBottom: 32 }}>
-          <div style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 12, padding: 20 }}>
-            <div style={{ fontSize: 11, fontWeight: 600, color: "#2563eb", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>Self-Assessment</div>
-            <div style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", marginBottom: 4 }}>$149</div>
-            <div style={{ fontSize: 12, color: "#64748b", marginBottom: 14 }}>One-time payment</div>
-            {["Full 67-control assessment", "Remediation roadmap", "Audit-grade report", "Email delivery"].map(t => (
-              <div key={t} style={{ fontSize: 12, color: "#475569", marginBottom: 5, display: "flex", gap: 6 }}>
-                <span style={{ color: "#059669", fontWeight: 700 }}>✓</span> {t}
-              </div>
-            ))}
-            <a href="https://buy.stripe.com/fZu6oI8BXb7herYgNucIE01" style={{ display: "block", textAlign: "center", background: "#2563eb", color: "#fff", padding: "10px 16px", borderRadius: 8, fontSize: 13, fontWeight: 600, textDecoration: "none", marginTop: 14 }}>Get started</a>
-          </div>
-          <div style={{ background: "#fff", border: "2px solid #2563eb", borderRadius: 12, padding: 20, position: "relative" }}>
-            <div style={{ position: "absolute", top: -10, left: "50%", transform: "translateX(-50%)", background: "#2563eb", color: "#fff", padding: "3px 12px", borderRadius: 10, fontSize: 10, fontWeight: 600 }}>Recommended</div>
-            <div style={{ fontSize: 11, fontWeight: 600, color: "#2563eb", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>Guided Assessment</div>
-            <div style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", marginBottom: 4 }}>$2,500</div>
-            <div style={{ fontSize: 12, color: "#64748b", marginBottom: 14 }}>Expert-guided</div>
-            {["Everything in Self-Assessment", "Expert-guided walkthrough", "Executive presentation", "30-day follow-up"].map(t => (
-              <div key={t} style={{ fontSize: 12, color: "#475569", marginBottom: 5, display: "flex", gap: 6 }}>
-                <span style={{ color: "#2563eb", fontWeight: 700 }}>✓</span> {t}
-              </div>
-            ))}
-            <a href="https://buy.stripe.com/9B65kEf0lcbl5Vs9l2cIE00" style={{ display: "block", textAlign: "center", background: "#0f172a", color: "#fff", padding: "10px 16px", borderRadius: 8, fontSize: 13, fontWeight: 600, textDecoration: "none", marginTop: 14 }}>Book guided</a>
-          </div>
-          <div style={{ background: "#fff", border: "2px solid #0f172a", borderRadius: 12, padding: 20 }}>
-            <div style={{ fontSize: 11, fontWeight: 600, color: "#0f172a", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>Enterprise</div>
-            <div style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", marginBottom: 4 }}>Custom</div>
-            <div style={{ fontSize: 12, color: "#64748b", marginBottom: 14 }}>Validated audit</div>
-            {["Everything in Guided", "Third-party validation", "Attestation letter", "Board-ready report"].map(t => (
-              <div key={t} style={{ fontSize: 12, color: "#475569", marginBottom: 5, display: "flex", gap: 6 }}>
-                <span style={{ color: "#0f172a", fontWeight: 700 }}>✓</span> {t}
-              </div>
-            ))}
-            <a href="/contact" style={{ display: "block", textAlign: "center", background: "#0f172a", color: "#fff", padding: "10px 16px", borderRadius: 8, fontSize: 13, fontWeight: 600, textDecoration: "none", marginTop: 14 }}>Book consultation</a>
-          </div>
-        </div>
-
         {/* Business case generator */}
         <div style={{ background: 'linear-gradient(135deg, #064e3b, #065f46)', border: '2px solid #059669', borderRadius: 12, padding: 28, marginBottom: 24, textAlign: 'center' }}>
           <div style={{ fontSize: 13, color: '#6ee7b7', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 8, fontWeight: 600 }}>Need budget approval?</div>
@@ -434,6 +396,45 @@ ${gaps.length > 0 ? `<div class="r"><strong style="color:#991b1b">Controls not f
           <div style={{ fontSize: 12, color: '#a7f3d0', marginTop: 10 }}>Opens in a new tab. Print or save as PDF to share with your leadership team.</div>
           <div style={{ marginTop: 14 }}>
             <a href="/business-case" style={{ fontSize: 13, color: '#6ee7b7', fontWeight: 500 }}>See the full ROI analysis and cost of inaction data →</a>
+          </div>
+        </div>
+
+
+        {/* Pricing tiers */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 14, marginBottom: 32 }}>
+          <div style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 12, padding: 20 }}>
+            <div style={{ fontSize: 11, fontWeight: 600, color: "#2563eb", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>Self-Assessment</div>
+            <div style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", marginBottom: 4 }}>$149</div>
+            <div style={{ fontSize: 12, color: "#64748b", marginBottom: 14 }}>One-time payment</div>
+            {["Full 67-control assessment", "Remediation roadmap", "Audit-grade report", "Email delivery"].map(t => (
+              <div key={t} style={{ fontSize: 12, color: "#475569", marginBottom: 5, display: "flex", gap: 6 }}>
+                <span style={{ color: "#059669", fontWeight: 700 }}>✓</span> {t}
+              </div>
+            ))}
+            <a href="https://buy.stripe.com/fZu6oI8BXb7herYgNucIE01" style={{ display: "block", textAlign: "center", background: "#2563eb", color: "#fff", padding: "10px 16px", borderRadius: 8, fontSize: 13, fontWeight: 600, textDecoration: "none", marginTop: 14 }}>Get started</a>
+          </div>
+          <div style={{ background: "#fff", border: "2px solid #2563eb", borderRadius: 12, padding: 20, position: "relative" }}>
+            <div style={{ position: "absolute", top: -10, left: "50%", transform: "translateX(-50%)", background: "#2563eb", color: "#fff", padding: "3px 12px", borderRadius: 10, fontSize: 10, fontWeight: 600 }}>Recommended</div>
+            <div style={{ fontSize: 11, fontWeight: 600, color: "#2563eb", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>Guided Assessment</div>
+            <div style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", marginBottom: 4 }}>$2,500</div>
+            <div style={{ fontSize: 12, color: "#64748b", marginBottom: 14 }}>Expert-guided</div>
+            {["Everything in Self-Assessment", "Expert-guided walkthrough", "Executive presentation", "30-day follow-up"].map(t => (
+              <div key={t} style={{ fontSize: 12, color: "#475569", marginBottom: 5, display: "flex", gap: 6 }}>
+                <span style={{ color: "#2563eb", fontWeight: 700 }}>✓</span> {t}
+              </div>
+            ))}
+            <a href="https://buy.stripe.com/9B65kEf0lcbl5Vs9l2cIE00" style={{ display: "block", textAlign: "center", background: "#0f172a", color: "#fff", padding: "10px 16px", borderRadius: 8, fontSize: 13, fontWeight: 600, textDecoration: "none", marginTop: 14 }}>Book guided</a>
+          </div>
+          <div style={{ background: "#fff", border: "2px solid #0f172a", borderRadius: 12, padding: 20 }}>
+            <div style={{ fontSize: 11, fontWeight: 600, color: "#0f172a", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>Enterprise</div>
+            <div style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", marginBottom: 4 }}>Custom</div>
+            <div style={{ fontSize: 12, color: "#64748b", marginBottom: 14 }}>Validated audit</div>
+            {["Everything in Guided", "Third-party validation", "Attestation letter", "Board-ready report"].map(t => (
+              <div key={t} style={{ fontSize: 12, color: "#475569", marginBottom: 5, display: "flex", gap: 6 }}>
+                <span style={{ color: "#0f172a", fontWeight: 700 }}>✓</span> {t}
+              </div>
+            ))}
+            <a href="/contact" style={{ display: "block", textAlign: "center", background: "#0f172a", color: "#fff", padding: "10px 16px", borderRadius: 8, fontSize: 13, fontWeight: 600, textDecoration: "none", marginTop: 14 }}>Book consultation</a>
           </div>
         </div>
 

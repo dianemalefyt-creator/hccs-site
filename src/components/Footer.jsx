@@ -43,12 +43,16 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div style={{ maxWidth: 1100, margin: '40px auto 0', paddingTop: 24, borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div style={{ maxWidth: 1100, margin: '40px auto 0', paddingTop: 24, borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <img src="/ingenuityco-logo.jpg" alt="IngenuityCo" style={{ height: 28, borderRadius: 4 }} />
           <span style={{ fontSize: 13, color: '#475569' }}>&copy; 2026 IngenuityCo LLC. All rights reserved.</span>
         </div>
-        <span style={{ fontSize: 13, color: '#475569' }}>HCCS-1.0 | hccsstandard.com</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+          <Link to="/privacy" style={{ fontSize: 13, color: '#475569' }}>Privacy Policy</Link>
+          <Link to="/terms" style={{ fontSize: 13, color: '#475569' }}>Terms of Use</Link>
+          <span style={{ fontSize: 13, color: '#475569' }}>HCCS-1.0</span>
+        </div>
       </div>
     </footer>
   )
