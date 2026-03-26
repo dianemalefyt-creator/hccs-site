@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
-import { POSTS } from '../data/blog'
-import { getAllPosts } from './Admin'
+import { getAllPosts } from '../lib/blog'
 
 function renderBody(text, navigate) {
   if (!text) return <p style={{ color: '#94a3b8', fontStyle: 'italic' }}>No content.</p>

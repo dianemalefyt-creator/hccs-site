@@ -1,28 +1,7 @@
 import { useState, useEffect } from 'react'
-import { POSTS as STATIC_POSTS } from '../data/blog'
+import { getAllPosts, getDynamicPosts, saveDynamicPosts, STATIC_POSTS } from '../lib/blog'
 
 const ADMIN_PASS = 'hccsadmin2026'
-const BLOG_STORAGE_KEY = 'hccs_blog_posts'
-
-// Get all posts: static + localStorage
-// showAll = true for admin, false for public blog
-export function getAllPosts(showAll = false) {
-  const dynamic = getDynamicPosts()
-  const staticFiltered = STATIC_POSTS.filter(sp => !dynamic.find(dp => dp.slug === sp.slug))
-  // Static posts without explicit status are treated as published
-  const all = [...dynamic, ...staticFiltered.map(p => ({ ...p, status: p.status || 'published' }))]
-    .sort((a, b) => new Date(b.date) - new Date(a.date))
-  if (showAll) return all
-  return all.filter(p => (p.status || 'published') === 'published')
-}
-
-function getDynamicPosts() {
-  try { return JSON.parse(localStorage.getItem(BLOG_STORAGE_KEY) || '[]') } catch { return [] }
-}
-
-function saveDynamicPosts(posts) {
-  localStorage.setItem(BLOG_STORAGE_KEY, JSON.stringify(posts))
-}
 
 const CATEGORIES = ['Governance', 'AI & Hiring', 'Research', 'Compliance', 'Tools', 'Case Studies', 'Opinion']
 
