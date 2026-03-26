@@ -9,7 +9,7 @@ export default function Tools() {
   const [active, setActive] = useState(null)
 
   const tools = [
-    { id: 'jd', title: 'Job Description Builder', desc: 'Generate both an internal role definition (audit artifact) and a public job posting from the same data. Outcomes, decision rights, scope.', controls: 'RG-001 to RG-007', color: '#185FA5', component: <JDBuilder /> },
+    { id: 'jd', title: 'Role Design System', desc: 'v2: Why the role exists, what\'s broken, outcomes with baselines, boundaries, team scope, risk, milestones. Internal artifact + public posting.', controls: 'RG-001 to RG-007', color: '#185FA5', component: <JDBuilder /> },
     { id: 'scorecard', title: 'Interview Scorecard Generator', desc: 'Build criteria-based scorecards from your role definition. Structured evaluation in 2 minutes.', controls: 'EI-001 to EI-004', color: '#0F6E56', component: <ScorecardGenerator /> },
     { id: 'bias', title: 'Bias Language Checker', desc: 'Paste a job posting or evaluation criteria. Flags proxy language, inflated requirements, and bias patterns.', controls: 'EI-003, DG-005', color: '#534AB7', component: <BiasChecker /> },
     { id: 'comp', title: 'Compensable Factor Calculator', desc: 'Score 5 factors, get a scope-based compensation framework. Replaces title-matching with factor analysis.', controls: 'CG-001 to CG-003', color: '#3B6D11', component: <CompCalculator /> },
@@ -94,251 +94,375 @@ export default function Tools() {
 }
 
 function JDBuilder() {
-  const defaultJD = { title: '', dept: '', reportsTo: '', outcome1: '', outcome2: '', outcome3: '', decidesAlone: '', decidesConsult: '', needsApproval: '', budget: '', required: '', learnable: '', directs: '', indirects: '', geoSpan: '', stakeholders: '', ambiguity: '', antiReqs: '' }
+  const defaultJD = { title:'',dept:'',reportsTo:'',roleType:'',whyNow:'',currentState:'',outcome1:'',baseline1:'',target1:'',outcome2:'',baseline2:'',target2:'',outcome3:'',baseline3:'',target3:'',steadyState:'',d90:'',d180:'',d365:'',decidesAlone:'',decidesConsult:'',needsApproval:'',vetoAuthority:'',accountableTo:'',budget:'',notOwned:'',partnerTeams:'',influencedMetrics:'',required:'',learnable:'',antiReqs:'',evidencePrompts:'',directs:'',directRoles:'',directLevels:'',teamMandate:'',openReqs:'',indirects:'',geoSpan:'',stakeholders:'',ambiguity:'',companyStage:'',structure:'',environment:'',travel:'',workModel:'',systemFragmentation:'',scale:'',riskReduces:'',failureImpact:'' }
   const [d, setD] = useState(() => {
-    try { const saved = localStorage.getItem('hccs_jd'); return saved ? JSON.parse(saved) : defaultJD } catch { return defaultJD }
+    try { const saved = localStorage.getItem('hccs_jd'); return saved ? { ...defaultJD, ...JSON.parse(saved) } : defaultJD } catch { return defaultJD }
   })
   const set = (k, v) => setD(p => { const next = { ...p, [k]: v }; localStorage.setItem('hccs_jd', JSON.stringify(next)); return next })
 
+  // Smart warnings
+  const warnings = []
+  if (d.outcome1 && !d.baseline1) warnings.push('Outcome 1 has no baseline. Without a starting point, the outcome cannot be audited.')
+  if (d.outcome2 && !d.baseline2) warnings.push('Outcome 2 has no baseline.')
+  if (d.ambiguity?.includes('High') && !d.decidesAlone) warnings.push('High ambiguity with no independent decision authority. This role will be paralyzed.')
+  if (d.directs && !d.directRoles) warnings.push('Direct reports listed but team composition undefined. A Director of 6 recruiters is a different role than a Director of 6 regional leads.')
+  if (d.stakeholders?.toLowerCase().includes('board') && !d.budget) warnings.push('Board-level stakeholder exposure with no budget authority defined.')
+  if (d.geoSpan?.includes('EU') && !d.environment) warnings.push('EMEA scope defined but no regulatory/legal complexity noted.')
+  if (!d.notOwned && d.title) warnings.push('No role boundaries defined. Without explicit edges, scope expands by assumption.')
+  if (!d.whyNow && d.title) warnings.push('No context for why this role exists now. Outcomes without context become abstract or inflated.')
+  if (d.required && !d.evidencePrompts) warnings.push('Required capabilities listed but no evidence prompts defined. Interviewers won\'t know what to look for.')
+  if (!d.d90 && d.title) warnings.push('No 90-day milestone. Without near-term expectations, onboarding drifts.')
+
   const generate = () => {
     localStorage.setItem('hccs_jd', JSON.stringify(d))
-    const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
-    const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Role Definition - ${d.title}</title>
+    const date = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})
+    const html=`<!DOCTYPE html><html><head><meta charset="utf-8"><title>Role Definition - ${d.title}</title>
 <style>
 @media print{body{margin:0}.no-print{display:none!important}}
-body{font-family:Helvetica,Arial,sans-serif;color:#1e293b;line-height:1.6;max-width:780px;margin:0 auto;padding:40px;font-size:14px}
-h1{font-size:24px;margin:0 0 4px}h2{font-size:16px;color:#185FA5;margin:28px 0 10px;padding-bottom:5px;border-bottom:2px solid #185FA520}
-.hdr{background:linear-gradient(135deg,#0a1628,#1a2d4a);color:#fff;padding:28px 32px;border-radius:12px;margin-bottom:24px}
-.hdr h1{color:#fff}.hdr .s{color:#94a3b8;font-size:13px;margin-top:4px}
-.field{margin-bottom:14px}.label{font-size:12px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:2px}
-.val{font-size:14px;color:#1e293b;white-space:pre-wrap}
-.val:empty::after{content:'Not specified';color:#cbd5e1;font-style:italic}
-table{width:100%;border-collapse:collapse;margin:12px 0}td{padding:8px 12px;border:1px solid #e2e8f0;font-size:13px;vertical-align:top}
-td:first-child{font-weight:600;width:40%;background:#f8fafc}
-.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;margin-right:4px}
+body{font-family:Helvetica,Arial,sans-serif;color:#1e293b;line-height:1.6;max-width:780px;margin:0 auto;padding:40px;font-size:13px}
+h1{font-size:24px;margin:0 0 4px}h2{font-size:15px;color:#185FA5;margin:24px 0 8px;padding-bottom:4px;border-bottom:2px solid #185FA520}
+.hdr{background:linear-gradient(135deg,#0a1628,#1a2d4a);color:#fff;padding:28px 32px;border-radius:12px;margin-bottom:20px}
+.hdr h1{color:#fff}.hdr .s{color:#94a3b8;font-size:12px;margin-top:4px}
+table{width:100%;border-collapse:collapse;margin:8px 0}td{padding:7px 10px;border:1px solid #e2e8f0;font-size:12px;vertical-align:top}
+td:first-child{font-weight:600;width:35%;background:#f8fafc}
+.badge{display:inline-block;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700;margin-left:4px}
 .must{background:#fef2f2;color:#991b1b;border:1px solid #fecaca}.should{background:#fefce8;color:#854d0e;border:1px solid #fde68a}
-.controls{font-size:11px;color:#94a3b8;margin-top:4px}
-.toolbar{display:flex;gap:10px;padding:16px 0;margin-bottom:16px;border-bottom:1px solid #e2e8f0}
-.toolbar button{padding:10px 20px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;border:none;background:#2563eb;color:#fff}
-.ft{margin-top:36px;padding-top:14px;border-top:1px solid #e2e8f0;font-size:11px;color:#94a3b8;text-align:center}
+.warn{background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:12px;margin:12px 0;font-size:12px;color:#991b1b}
+.ctrls{font-size:10px;color:#94a3b8}
+.toolbar{display:flex;gap:8px;padding:12px 0;margin-bottom:12px;border-bottom:1px solid #e2e8f0}
+.toolbar button{padding:8px 16px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;border:none;background:#2563eb;color:#fff}
+.ft{margin-top:28px;padding-top:12px;border-top:1px solid #e2e8f0;font-size:10px;color:#94a3b8;text-align:center}
 </style></head><body>
 <div class="no-print toolbar"><button onclick="window.print()">Save as PDF</button></div>
 <div class="hdr">
-<div style="font-size:11px;color:#5b9bd5;letter-spacing:0.15em;margin-bottom:4px">HCCS™ ROLE DEFINITION WORKSHEET</div>
-<h1>${d.title || 'Role Title'}</h1>
-<div class="s">${d.dept || 'Department'} | Reports to: ${d.reportsTo || 'TBD'} | Defined: ${date}</div>
-<div class="s">Satisfies: RG-001, RG-002, RG-003, RG-004, RG-005</div>
+<div style="font-size:10px;color:#5b9bd5;letter-spacing:0.15em;margin-bottom:4px">HCCS\u2122 ROLE DEFINITION WORKSHEET v2</div>
+<h1>${d.title||'Role Title'}</h1>
+<div class="s">${d.dept||'Department'} | Reports to: ${d.reportsTo||'TBD'} | ${d.roleType||'New role'} | Defined: ${date}</div>
+<div class="s">Controls satisfied: RG-001 through RG-007</div>
 </div>
 
-<h2>Business outcomes <span class="badge must">MUST</span> <span class="controls">RG-002</span></h2>
-<p style="font-size:12px;color:#64748b;margin:0 0 8px">What this role delivers or changes. Measurable results, not activities.</p>
+<h2>Current state & role origin <span class="badge must">MUST</span></h2>
 <table>
-<tr><td>Primary outcome</td><td>${d.outcome1 || ''}</td></tr>
-<tr><td>Secondary outcome</td><td>${d.outcome2 || ''}</td></tr>
-${d.outcome3 ? `<tr><td>Tertiary outcome</td><td>${d.outcome3}</td></tr>` : ''}
+<tr><td>Role type</td><td>${d.roleType||'Not specified'}</td></tr>
+<tr><td>Why this role exists now</td><td>${d.whyNow||'Not specified'}</td></tr>
+<tr><td>Current state / what is broken</td><td>${d.currentState||'Not specified'}</td></tr>
 </table>
 
-<h2>Decision rights & accountability <span class="badge must">MUST</span> <span class="controls">RG-004</span></h2>
+<h2>Business outcomes with baselines <span class="badge must">MUST</span> <span class="ctrls">RG-002</span></h2>
 <table>
-<tr><td>Decides independently</td><td>${d.decidesAlone || ''}</td></tr>
-<tr><td>Decides with consultation</td><td>${d.decidesConsult || ''}</td></tr>
-<tr><td>Requires approval</td><td>${d.needsApproval || ''}</td></tr>
-<tr><td>Budget authority</td><td>${d.budget || ''}</td></tr>
+<tr style="background:#f1f5f9"><td colspan="2" style="font-weight:600">Primary outcome</td></tr>
+<tr><td>Outcome</td><td>${d.outcome1||''}</td></tr>
+<tr><td>Current baseline</td><td>${d.baseline1||'Not defined'}</td></tr>
+<tr><td>Target state</td><td>${d.target1||'Not defined'}</td></tr>
+${d.outcome2?`<tr style="background:#f1f5f9"><td colspan="2" style="font-weight:600">Secondary outcome</td></tr>
+<tr><td>Outcome</td><td>${d.outcome2}</td></tr>
+<tr><td>Current baseline</td><td>${d.baseline2||'Not defined'}</td></tr>
+<tr><td>Target state</td><td>${d.target2||'Not defined'}</td></tr>`:''}
+${d.outcome3?`<tr style="background:#f1f5f9"><td colspan="2" style="font-weight:600">Tertiary outcome</td></tr>
+<tr><td>Outcome</td><td>${d.outcome3}</td></tr>
+<tr><td>Baseline / Target</td><td>${d.baseline3||''} \u2192 ${d.target3||''}</td></tr>`:''}
 </table>
 
-<h2>Required vs. learnable capabilities <span class="badge must">MUST</span> <span class="controls">RG-003</span></h2>
-<p style="font-size:12px;color:#64748b;margin:0 0 8px">Required: would reject an otherwise strong candidate without this. Learnable: can develop in 6-12 months.</p>
+<h2>Steady state vs. transformation mandate</h2>
 <table>
-<tr><td>Required at hire</td><td>${d.required || ''}</td></tr>
-<tr><td>Learnable post-hire</td><td>${d.learnable || ''}</td></tr>
+<tr><td>Ongoing purpose (steady state)</td><td>${d.steadyState||'Not specified'}</td></tr>
+<tr><td>90-day milestone</td><td>${d.d90||'Not specified'}</td></tr>
+<tr><td>6-month milestone</td><td>${d.d180||'Not specified'}</td></tr>
+<tr><td>12-month milestone</td><td>${d.d365||'Not specified'}</td></tr>
 </table>
-${d.antiReqs ? `<div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:14px;margin:12px 0"><div style="font-size:12px;font-weight:600;color:#991b1b;margin-bottom:4px">Explicitly NOT required</div><div style="font-size:13px;color:#7f1d1d">${d.antiReqs}</div></div>` : ''}
 
-<h2>Scope indicators <span class="badge should">SHOULD</span> <span class="controls">RG-005</span></h2>
+<h2>Decision rights & accountability <span class="badge must">MUST</span> <span class="ctrls">RG-004</span></h2>
 <table>
-<tr><td>Direct reports</td><td>${d.directs || 'N/A'}</td></tr>
-<tr><td>Indirect / cross-functional</td><td>${d.indirects || 'N/A'}</td></tr>
-<tr><td>Geographic span</td><td>${d.geoSpan || 'N/A'}</td></tr>
-<tr><td>Stakeholder exposure</td><td>${d.stakeholders || 'N/A'}</td></tr>
-<tr><td>Ambiguity level</td><td>${d.ambiguity || 'N/A'}</td></tr>
+<tr><td>Decides independently</td><td>${d.decidesAlone||''}</td></tr>
+<tr><td>Decides with consultation</td><td>${d.decidesConsult||''}</td></tr>
+<tr><td>Requires approval</td><td>${d.needsApproval||''}</td></tr>
+<tr><td>Budget authority</td><td>${d.budget||''}</td></tr>
+<tr><td>Veto authority</td><td>${d.vetoAuthority||'None defined'}</td></tr>
+<tr><td>Accountable to (if this fails)</td><td>${d.accountableTo||'Not specified'}</td></tr>
 </table>
+
+<h2>Role boundaries: what this role does NOT own</h2>
+<table>
+<tr><td>Out of scope responsibilities</td><td>${d.notOwned||'Not defined'}</td></tr>
+<tr><td>Partner teams (not owned)</td><td>${d.partnerTeams||'Not defined'}</td></tr>
+<tr><td>Influenced but not owned metrics</td><td>${d.influencedMetrics||'Not defined'}</td></tr>
+</table>
+
+<h2>Required vs. learnable capabilities <span class="badge must">MUST</span> <span class="ctrls">RG-003</span></h2>
+<table>
+<tr><td>Required at hire</td><td>${d.required||''}</td></tr>
+<tr><td>Learnable post-hire</td><td>${d.learnable||''}</td></tr>
+<tr><td>Evidence prompts</td><td>${d.evidencePrompts||'Not defined'}</td></tr>
+</table>
+${d.antiReqs?`<div style="background:#fef2f2;border:1px solid #fecaca;border-radius:6px;padding:10px;margin:8px 0;font-size:12px"><strong style="color:#991b1b">Explicitly NOT required:</strong> ${d.antiReqs}</div>`:''}
+
+<h2>Team scope <span class="badge should">SHOULD</span> <span class="ctrls">RG-005</span></h2>
+<table>
+<tr><td>Direct reports</td><td>${d.directs||'N/A'}</td></tr>
+<tr><td>Team composition</td><td>${d.directRoles||'Not specified'}</td></tr>
+<tr><td>Report levels</td><td>${d.directLevels||'Not specified'}</td></tr>
+<tr><td>Team mandate</td><td>${d.teamMandate||'Not specified'}</td></tr>
+<tr><td>Open reqs on team</td><td>${d.openReqs||'Not specified'}</td></tr>
+<tr><td>Indirect / cross-functional</td><td>${d.indirects||'N/A'}</td></tr>
+<tr><td>Geographic span</td><td>${d.geoSpan||'N/A'}</td></tr>
+<tr><td>Stakeholder exposure</td><td>${d.stakeholders||'N/A'}</td></tr>
+<tr><td>Ambiguity level</td><td>${d.ambiguity||'N/A'}</td></tr>
+</table>
+
+<h2>Operating environment</h2>
+<table>
+<tr><td>Company stage / maturity</td><td>${d.companyStage||'Not specified'}</td></tr>
+<tr><td>Centralized vs decentralized</td><td>${d.structure||'Not specified'}</td></tr>
+<tr><td>Regulatory / legal complexity</td><td>${d.environment||'Not specified'}</td></tr>
+<tr><td>Travel / work model</td><td>${[d.workModel,d.travel].filter(Boolean).join('. ')||'Not specified'}</td></tr>
+<tr><td>System / tool fragmentation</td><td>${d.systemFragmentation||'Not specified'}</td></tr>
+<tr><td>Volume / scale</td><td>${d.scale||'Not specified'}</td></tr>
+</table>
+
+<h2>Risk & failure modes</h2>
+<table>
+<tr><td>Risks this role reduces</td><td>${d.riskReduces||'Not specified'}</td></tr>
+<tr><td>Impact if role underperforms</td><td>${d.failureImpact||'Not specified'}</td></tr>
+</table>
+
+${warnings.length>0?`<div class="warn"><strong>Tool-generated warnings (${warnings.length}):</strong><ul style="margin:6px 0 0;padding-left:18px">${warnings.map(w=>`<li>${w}</li>`).join('')}</ul></div>`:''}
 
 <div class="ft">
-<div>HCCS™ Role Definition Worksheet | Generated: ${date}</div>
-<div style="margin-top:4px">This document satisfies RG-001 (definition exists), RG-002 (outcomes), RG-003 (required vs learnable), RG-004 (decision rights), RG-005 (scope).</div>
-<div style="margin-top:4px">© 2026 IngenuityCo LLC | hccsstandard.com</div>
-</div>
-</body></html>`
-    const w = window.open('', '_blank'); w.document.write(html); w.document.close()
+<div>HCCS\u2122 Role Definition Worksheet v2 | ${date}</div>
+<div style="margin-top:3px">Controls: RG-001 (exists), RG-002 (outcomes + baselines), RG-003 (required vs learnable), RG-004 (decision rights + accountability), RG-005 (scope + team + environment)</div>
+<div style="margin-top:3px">\u00A9 2026 IngenuityCo LLC | hccsstandard.com</div>
+</div></body></html>`
+    const w=window.open('','_blank');w.document.write(html);w.document.close()
   }
 
   const generatePosting = () => {
-    const reqList = (d.required || '').split('\n').filter(Boolean).map(r => `<li>${r.trim()}</li>`).join('')
-    const learnList = (d.learnable || '').split('\n').filter(Boolean).map(r => `<li>${r.trim()}</li>`).join('')
-    const antiList = (d.antiReqs || '').split('\n').filter(Boolean)
-    const outcomes = [d.outcome1, d.outcome2, d.outcome3].filter(Boolean)
-
-    const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${d.title || 'Job Posting'} - Job Description</title>
+    const reqList=(d.required||'').split('\n').filter(Boolean).map(r=>`<li>${r.trim()}</li>`).join('')
+    const learnList=(d.learnable||'').split('\n').filter(Boolean).map(r=>`<li>${r.trim()}</li>`).join('')
+    const antiList=(d.antiReqs||'').split('\n').filter(Boolean)
+    const outcomes=[d.outcome1,d.outcome2,d.outcome3].filter(Boolean)
+    const milestones=[d.d90?{t:'90 days',v:d.d90}:null,d.d180?{t:'6 months',v:d.d180}:null,d.d365?{t:'12 months',v:d.d365}:null].filter(Boolean)
+    const html=`<!DOCTYPE html><html><head><meta charset="utf-8"><title>${d.title||'Job Posting'}</title>
 <style>
 @media print{body{margin:0}.no-print{display:none!important}}
 body{font-family:Helvetica,Arial,sans-serif;color:#1e293b;line-height:1.7;max-width:720px;margin:0 auto;padding:40px;font-size:15px}
-h1{font-size:28px;color:#0f172a;margin:0 0 8px}
-h2{font-size:18px;color:#0f172a;margin:32px 0 12px}
-h3{font-size:15px;color:#475569;margin:20px 0 8px}
-ul{margin:8px 0 16px;padding-left:24px}
-li{margin-bottom:6px}
+h1{font-size:28px;color:#0f172a;margin:0 0 8px}h2{font-size:18px;color:#0f172a;margin:28px 0 10px}h3{font-size:15px;color:#475569;margin:18px 0 8px}
+ul{margin:8px 0 14px;padding-left:24px}li{margin-bottom:5px}
 .dept{font-size:16px;color:#475569;margin-bottom:4px}
-.tags{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 24px}
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 20px}
 .tag{padding:4px 12px;border-radius:16px;font-size:13px;font-weight:500;background:#f1f5f9;color:#475569}
-.note{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:16px;margin:24px 0;font-size:14px;color:#065f46;line-height:1.6}
-.note strong{color:#064e3b}
-.apply{display:inline-block;background:#2563eb;color:#fff;padding:14px 32px;border-radius:8px;font-size:16px;font-weight:600;text-decoration:none;margin:24px 0}
-.toolbar{display:flex;gap:10px;padding:16px 0;margin-bottom:16px;border-bottom:1px solid #e2e8f0}
-.toolbar button{padding:10px 20px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;border:none;background:#2563eb;color:#fff}
+.note{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:14px;margin:20px 0;font-size:14px;color:#065f46;line-height:1.6}
+.milestone{background:#f8fafc;border-left:3px solid #2563eb;padding:10px 14px;margin:6px 0;border-radius:0 6px 6px 0;font-size:14px}
+.milestone strong{color:#1e3a5f}
+.apply{display:inline-block;background:#2563eb;color:#fff;padding:14px 32px;border-radius:8px;font-size:16px;font-weight:600;text-decoration:none;margin:20px 0}
+.toolbar{display:flex;gap:8px;padding:12px 0;margin-bottom:12px;border-bottom:1px solid #e2e8f0}
+.toolbar button{padding:8px 16px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;border:none;background:#2563eb;color:#fff}
 .toolbar .sec{background:#fff;color:#334155;border:1px solid #e2e8f0}
 .copy-msg{font-size:13px;color:#059669;font-weight:600;margin-left:8px}
-.ft{margin-top:40px;padding-top:16px;border-top:1px solid #e2e8f0;font-size:12px;color:#94a3b8;text-align:center}
+.ft{margin-top:32px;padding-top:14px;border-top:1px solid #e2e8f0;font-size:12px;color:#94a3b8;text-align:center}
 </style></head><body>
 <div class="no-print toolbar">
 <button onclick="window.print()">Save as PDF</button>
 <button class="sec" onclick="copyText()">Copy as text</button>
-<span id="copyMsg"></span>
+<span id="cm"></span>
 </div>
-<script>
-function copyText(){
-var b=document.querySelector('.jd-content');
-var range=document.createRange();range.selectNodeContents(b);
-var sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);
-document.execCommand('copy');sel.removeAllRanges();
-document.getElementById('copyMsg').textContent='Copied to clipboard!';
-document.getElementById('copyMsg').className='copy-msg';
-setTimeout(()=>{document.getElementById('copyMsg').textContent='';},3000);
-}
-</script>
-
-<div class="jd-content">
-<h1>${d.title || 'Role Title'}</h1>
-<div class="dept">${d.dept || 'Department'}${d.reportsTo ? ' · Reports to ' + d.reportsTo : ''}</div>
-
+<script>function copyText(){var b=document.querySelector('.jd');var r=document.createRange();r.selectNodeContents(b);var s=window.getSelection();s.removeAllRanges();s.addRange(r);document.execCommand('copy');s.removeAllRanges();document.getElementById('cm').textContent='Copied!';document.getElementById('cm').className='copy-msg';}</script>
+<div class="jd">
+<h1>${d.title||'Role Title'}</h1>
+<div class="dept">${d.dept||'Department'}${d.reportsTo?' \u00B7 Reports to '+d.reportsTo:''}</div>
 <div class="tags">
-${d.directs ? `<span class="tag">${d.directs} direct reports</span>` : ''}
-${d.geoSpan ? `<span class="tag">${d.geoSpan}</span>` : ''}
-${d.ambiguity ? `<span class="tag">${d.ambiguity.split(' - ')[0]} ambiguity</span>` : ''}
-${d.budget ? `<span class="tag">Budget: ${d.budget}</span>` : ''}
+${d.directs?`<span class="tag">${d.directs} direct reports</span>`:''}
+${d.geoSpan?`<span class="tag">${d.geoSpan}</span>`:''}
+${d.workModel?`<span class="tag">${d.workModel}</span>`:''}
+${d.companyStage?`<span class="tag">${d.companyStage}</span>`:''}
 </div>
 
-<h2>About the role</h2>
-<p>This role exists to deliver measurable outcomes, not to perform a list of tasks. Here is what success looks like:</p>
-<ul>
-${outcomes.map(o => `<li><strong>${o}</strong></li>`).join('')}
-</ul>
+${d.whyNow?`<h2>Why this role, why now</h2><p>${d.whyNow}${d.currentState?' '+d.currentState:''}</p>`:''}
+
+<h2>What success looks like</h2>
+<p>This role exists to deliver measurable outcomes, not perform activities:</p>
+<ul>${outcomes.map(o=>`<li><strong>${o}</strong></li>`).join('')}</ul>
+
+${milestones.length>0?`<h3>What we expect by when</h3>${milestones.map(m=>`<div class="milestone"><strong>${m.t}:</strong> ${m.v}</div>`).join('')}`:''}
 
 <h2>What you'll own</h2>
 <p>This role has real decision-making authority:</p>
 <ul>
-${d.decidesAlone ? `<li><strong>You decide:</strong> ${d.decidesAlone}</li>` : ''}
-${d.decidesConsult ? `<li><strong>You influence:</strong> ${d.decidesConsult}</li>` : ''}
-${d.needsApproval ? `<li><strong>You escalate:</strong> ${d.needsApproval}</li>` : ''}
+${d.decidesAlone?`<li><strong>You decide:</strong> ${d.decidesAlone}</li>`:''}
+${d.decidesConsult?`<li><strong>You influence:</strong> ${d.decidesConsult}</li>`:''}
+${d.needsApproval?`<li><strong>You escalate:</strong> ${d.needsApproval}</li>`:''}
 </ul>
+${d.notOwned?`<h3>What this role does not own</h3><p>${d.notOwned}${d.partnerTeams?'. Partner teams: '+d.partnerTeams:''}</p>`:''}
 
-${d.stakeholders ? `<h3>Stakeholder landscape</h3><p>${d.stakeholders}${d.indirects ? '. Cross-functional reach: ' + d.indirects : ''}.</p>` : ''}
+${d.directRoles||d.teamMandate?`<h3>The team</h3><p>${d.directs?d.directs+' direct reports. ':''}${d.directRoles||''}${d.teamMandate?' '+d.teamMandate:''}${d.openReqs?' Open reqs: '+d.openReqs:''}</p>`:''}
 
 <h2>What we're looking for</h2>
-<p>These are the capabilities required to succeed in this role from day one:</p>
-${reqList ? `<ul>${reqList}</ul>` : ''}
+<p>Capabilities required to succeed from day one:</p>
+${reqList?`<ul>${reqList}</ul>`:''}
 
-${learnList ? `<h3>What you'll learn here</h3><p>We don't expect you to know everything on day one. These are capabilities you'll develop in the first 6-12 months:</p><ul>${learnList}</ul>` : ''}
+${learnList?`<h3>What you'll learn here</h3><p>We don't expect you to know everything. These you'll develop in the first 6-12 months:</p><ul>${learnList}</ul>`:''}
 
-${antiList.length > 0 ? `<div class="note"><strong>What we explicitly do NOT require:</strong><br/>${antiList.join(' · ')}<br/><br/>We evaluate candidates on demonstrated capability, not credentials, pedigree, or employment continuity. If you can deliver the outcomes above, we want to hear from you.</div>` : ''}
+${antiList.length>0?`<div class="note"><strong>What we explicitly do NOT require:</strong><br/>${antiList.join(' \u00B7 ')}<br/><br/>We evaluate on demonstrated capability, not credentials, pedigree, or employment continuity. If you can deliver the outcomes above, we want to hear from you.</div>`:''}
+
+${d.environment||d.scale||d.systemFragmentation?`<h2>The environment</h2><p>${[d.companyStage,d.structure,d.environment,d.scale,d.systemFragmentation].filter(Boolean).join('. ')}.</p>`:''}
 
 <h2>How we hire</h2>
-<p>This role is governed by the <strong>HCCS™ Standard</strong>, a structured hiring governance framework. That means:</p>
+<p>This role is governed by the <strong>HCCS\u2122 Standard</strong>:</p>
 <ul>
 <li>You will be evaluated against the same criteria as every other candidate</li>
 <li>Evaluation is based on what you can <em>do</em>, not where you've <em>been</em></li>
-<li>Every decision in this process is documented with rationale</li>
-<li>If AI tools are used in screening, you will be informed, and a human reviews every output</li>
+<li>Every decision is documented with rationale</li>
+<li>If AI tools are used, you will be informed, and a human reviews every output</li>
 </ul>
-<p>We believe hiring should be transparent, consistent, and defensible. Read our <a href="https://hccsstandard.com/rights" style="color:#2563eb">Applicant's Bill of Rights</a> to see what we commit to.</p>
-
+<p>Read our <a href="https://hccsstandard.com/rights" style="color:#2563eb">Applicant's Bill of Rights</a>.</p>
 <a href="#" class="apply no-print">Apply for this role</a>
 </div>
-
-<div class="ft">
-<div>Generated with the HCCS™ Job Description Builder | hccsstandard.com/tools</div>
-<div style="margin-top:4px">This posting was created from an HCCS™ Role Definition Worksheet satisfying controls RG-001 through RG-005.</div>
-</div>
+<div class="ft">Generated with HCCS\u2122 Role Design System | hccsstandard.com/tools<br/>Controls: RG-001 through RG-005</div>
 </body></html>`
-    const w = window.open('', '_blank'); w.document.write(html); w.document.close()
+    const w=window.open('','_blank');w.document.write(html);w.document.close()
   }
 
-  const F = (k, l, ph, type = 'text') => (
-    <div style={{ marginBottom: 14 }}>
-      <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#334155', marginBottom: 4 }}>{l}</label>
-      {type === 'textarea' ? (
-        <textarea value={d[k]} onChange={e => set(k, e.target.value)} placeholder={ph} rows={3}
-          style={{ width: '100%', padding: '10px 12px', borderRadius: 8, border: '1px solid #e2e8f0', fontSize: 14, outline: 'none', fontFamily: 'inherit', resize: 'vertical', boxSizing: 'border-box', lineHeight: 1.5 }} />
-      ) : (
-        <input type="text" value={d[k]} onChange={e => set(k, e.target.value)} placeholder={ph}
-          style={{ width: '100%', padding: '10px 12px', borderRadius: 8, border: '1px solid #e2e8f0', fontSize: 14, outline: 'none', boxSizing: 'border-box' }} />
+  const F=(k,l,ph,type='text')=>(
+    <div style={{marginBottom:12}}>
+      <label style={{display:'block',fontSize:12,fontWeight:600,color:'#334155',marginBottom:4}}>{l}</label>
+      {type==='textarea'?(<textarea value={d[k]||''} onChange={e=>set(k,e.target.value)} placeholder={ph} rows={2}
+        style={{width:'100%',padding:'10px 12px',borderRadius:8,border:'1px solid #e2e8f0',fontSize:14,outline:'none',fontFamily:'inherit',resize:'vertical',boxSizing:'border-box',lineHeight:1.5}}/>
+      ):type==='select'?null:(
+        <input type="text" value={d[k]||''} onChange={e=>set(k,e.target.value)} placeholder={ph}
+          style={{width:'100%',padding:'10px 12px',borderRadius:8,border:'1px solid #e2e8f0',fontSize:14,outline:'none',boxSizing:'border-box'}}/>
       )}
     </div>
   )
+  const S=(title)=>(<div style={{fontSize:16,fontWeight:700,color:'#185FA5',marginBottom:8,paddingBottom:4,borderBottom:'2px solid #185FA520',marginTop:24}}>{title}</div>)
 
   return (
     <div>
-      <div style={{ background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 10, padding: '16px 20px', marginBottom: 24 }}>
-        <div style={{ fontSize: 14, color: '#1e40af', lineHeight: 1.6 }}>
-          This tool generates two documents from the same data: an <strong>internal role definition</strong> (audit artifact, satisfies RG-001 through RG-005) and a <strong>public job posting</strong> ready to paste into LinkedIn, your careers page, or any job board. Fill once, get both.
+      <div style={{background:'#eff6ff',border:'1px solid #bfdbfe',borderRadius:10,padding:'14px 18px',marginBottom:20}}>
+        <div style={{fontSize:14,color:'#1e40af',lineHeight:1.6}}>
+          <strong>v2: Role Design System.</strong> This goes beyond a JD. It captures why the role exists, what's broken today, measurable outcomes with baselines, role boundaries, team composition, operating conditions, risk, and milestones. Generates both an <strong>internal audit artifact</strong> and a <strong>public job posting</strong>.
         </div>
       </div>
 
-      <div style={{ fontSize: 16, fontWeight: 700, color: '#185FA5', marginBottom: 12, paddingBottom: 6, borderBottom: '2px solid #185FA520' }}>Role information</div>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 }}>
-        {F('title', 'Role title', 'e.g. Senior Backend Engineer')}
-        {F('dept', 'Department', 'e.g. Engineering')}
-        {F('reportsTo', 'Reports to', 'e.g. VP Engineering')}
+      {/* Warnings */}
+      {warnings.length > 0 && (
+        <div style={{background:'#fef2f2',border:'1px solid #fecaca',borderRadius:10,padding:'14px 18px',marginBottom:20}}>
+          <div style={{fontSize:13,fontWeight:700,color:'#991b1b',marginBottom:6}}>{warnings.length} warning{warnings.length>1?'s':''}</div>
+          {warnings.map((w,i)=>(<div key={i} style={{fontSize:13,color:'#7f1d1d',marginBottom:4,paddingLeft:12,borderLeft:'2px solid #fecaca'}}>{w}</div>))}
+        </div>
+      )}
+
+      {S('Role information')}
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:10}}>
+        {F('title','Role title','e.g. Director of Talent Acquisition Strategy')}
+        {F('dept','Department','e.g. People / Human Capital')}
+        {F('reportsTo','Reports to','e.g. Chief People Officer')}
+      </div>
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}}>
+        <div style={{marginBottom:12}}>
+          <label style={{display:'block',fontSize:12,fontWeight:600,color:'#334155',marginBottom:4}}>Role type</label>
+          <select value={d.roleType||''} onChange={e=>set('roleType',e.target.value)} style={{width:'100%',padding:'10px 12px',borderRadius:8,border:'1px solid #e2e8f0',fontSize:14,background:'#fff'}}>
+            <option value="">Select...</option>
+            <option value="Net new role">Net new role</option><option value="Backfill">Backfill</option><option value="Transformation role">Transformation role</option><option value="Turnaround role">Turnaround role</option><option value="Expansion / growth">Expansion / growth</option>
+          </select>
+        </div>
+        {F('whyNow','Why does this role exist now?','What triggered the opening? What problem, gap, or opportunity?','textarea')}
+      </div>
+      {F('currentState','What is broken, slow, risky, or unclear today?','The current state this role is meant to change. Be specific.','textarea')}
+
+      {S('Business outcomes with baselines (RG-002)')}
+      <p style={{fontSize:13,color:'#64748b',margin:'0 0 10px'}}>What will this person deliver? Include the baseline you're measuring from.</p>
+      {F('outcome1','Primary outcome','e.g. Reduce time-to-decision by 30% within 12 months','textarea')}
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}}>
+        {F('baseline1','Current baseline','e.g. Average 42 days today')}
+        {F('target1','Target state + timeline','e.g. 29 days within 12 months')}
+      </div>
+      {F('outcome2','Secondary outcome','','textarea')}
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}}>
+        {F('baseline2','Current baseline','')}
+        {F('target2','Target state + timeline','')}
+      </div>
+      {F('outcome3','Tertiary outcome (optional)','','textarea')}
+
+      {S('Steady state vs. transformation mandate')}
+      <p style={{fontSize:13,color:'#64748b',margin:'0 0 10px'}}>Separate the ongoing job from the first-year mission. They're not always the same.</p>
+      {F('steadyState','Why this role exists in steady state','What this person does ongoing, beyond the initial transformation','textarea')}
+      {F('d90','90-day milestone','What should be true by day 90?','textarea')}
+      {F('d180','6-month milestone','What should be true by month 6?','textarea')}
+      {F('d365','12-month milestone','What should be true by month 12?','textarea')}
+
+      {S('Decision rights & accountability (RG-004)')}
+      {F('decidesAlone','Decides independently','','textarea')}
+      {F('decidesConsult','Decides with consultation','','textarea')}
+      {F('needsApproval','Requires approval','','textarea')}
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}}>
+        {F('budget','Budget authority','e.g. Up to $25K independently')}
+        {F('vetoAuthority','Who can veto this role\'s decisions?','e.g. CPO on policy, Legal on compliance')}
+      </div>
+      {F('accountableTo','If this role fails, who is accountable and what breaks?','Be specific about consequences','textarea')}
+
+      {S('Role boundaries: what this role does NOT own')}
+      <p style={{fontSize:13,color:'#64748b',margin:'0 0 10px'}}>Good roles have edges. Without explicit boundaries, scope expands by assumption.</p>
+      {F('notOwned','Out of scope responsibilities','e.g. Employer brand, compensation design, enterprise workforce planning','textarea')}
+      {F('partnerTeams','Partner teams (not owned)','e.g. HR shared services, Legal, Finance','textarea')}
+      {F('influencedMetrics','Metrics that influence this role but are not directly owned','e.g. Overall attrition, employee engagement scores','textarea')}
+
+      {S('Required vs. learnable capabilities (RG-003)')}
+      {F('required','Required at hire (one per line)','What would you reject someone for lacking?','textarea')}
+      {F('learnable','Learnable post-hire (one per line)','What can they develop in 6-12 months?','textarea')}
+      {F('antiReqs','Explicitly NOT required','e.g. Specific ATS platform, name brand company, continuous employment','textarea')}
+      {F('evidencePrompts','Evidence prompts: what counts as proof for required capabilities?','e.g. "Describe a process you redesigned. Show the before/after metrics."','textarea')}
+
+      {S('Team scope (RG-005)')}
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:10}}>
+        {F('directs','Direct reports','e.g. 6')}
+        {F('directRoles','Team composition','e.g. 2 recruiters, 2 ops analysts, 2 coordinators')}
+        {F('directLevels','Report levels','e.g. Senior Individual Contributors')}
+      </div>
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}}>
+        <div style={{marginBottom:12}}>
+          <label style={{display:'block',fontSize:12,fontWeight:600,color:'#334155',marginBottom:4}}>Team mandate</label>
+          <select value={d.teamMandate||''} onChange={e=>set('teamMandate',e.target.value)} style={{width:'100%',padding:'10px 12px',borderRadius:8,border:'1px solid #e2e8f0',fontSize:14,background:'#fff'}}>
+            <option value="">Select...</option>
+            <option value="Build: creating from scratch">Build from scratch</option><option value="Fix: repairing broken systems">Fix / repair</option><option value="Optimize: improving working systems">Optimize / improve</option><option value="Scale: growing what works">Scale / grow</option><option value="Lead: sustaining high performance">Sustain / lead</option>
+          </select>
+        </div>
+        {F('openReqs','Open reqs on the team','e.g. 2 open, backfill + new')}
+      </div>
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}}>
+        {F('indirects','Indirect / cross-functional reach','e.g. 25+ hiring managers, HRBPs')}
+        {F('geoSpan','Geographic span','e.g. US + EMEA, 3 time zones')}
+      </div>
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}}>
+        {F('stakeholders','Stakeholder exposure','e.g. VP+, quarterly exec reporting')}
+        <div style={{marginBottom:12}}>
+          <label style={{display:'block',fontSize:12,fontWeight:600,color:'#334155',marginBottom:4}}>Ambiguity level</label>
+          <select value={d.ambiguity||''} onChange={e=>set('ambiguity',e.target.value)} style={{width:'100%',padding:'10px 12px',borderRadius:8,border:'1px solid #e2e8f0',fontSize:14,background:'#fff'}}>
+            <option value="">Select...</option>
+            {AMBIGUITY.map(a=><option key={a} value={a}>{a}</option>)}
+          </select>
+        </div>
       </div>
 
-      <div style={{ fontSize: 16, fontWeight: 700, color: '#185FA5', marginBottom: 12, paddingBottom: 6, borderBottom: '2px solid #185FA520', marginTop: 20 }}>Business outcomes (RG-002)</div>
-      <p style={{ fontSize: 13, color: '#64748b', margin: '0 0 12px' }}>What will this person <strong>deliver or change</strong>? Not activities they perform. "Reduce incidents by 40%" not "attend standups."</p>
-      {F('outcome1', 'Primary outcome (the reason this role exists)', 'e.g. Reduce production incidents by 40% in 12 months', 'textarea')}
-      {F('outcome2', 'Secondary outcome', 'e.g. Own and execute migration from monolith to microservices', 'textarea')}
-      {F('outcome3', 'Tertiary outcome (optional)', 'e.g. Mentor 2 junior engineers to mid-level within 18 months', 'textarea')}
-
-      <div style={{ fontSize: 16, fontWeight: 700, color: '#185FA5', marginBottom: 12, paddingBottom: 6, borderBottom: '2px solid #185FA520', marginTop: 20 }}>Decision rights & accountability (RG-004)</div>
-      {F('decidesAlone', 'Decides independently', 'e.g. Implementation approach, code review standards, tool selection under $10K', 'textarea')}
-      {F('decidesConsult', 'Decides with consultation', 'e.g. Architecture changes affecting other teams, hiring for their team', 'textarea')}
-      {F('needsApproval', 'Requires approval', 'e.g. Budget over $50K, vendor contracts, cross-org commitments', 'textarea')}
-      {F('budget', 'Budget authority', 'e.g. Up to $50K independently, $50K-200K with VP approval')}
-
-      <div style={{ fontSize: 16, fontWeight: 700, color: '#185FA5', marginBottom: 12, paddingBottom: 6, borderBottom: '2px solid #185FA520', marginTop: 20 }}>Required vs. learnable capabilities (RG-003)</div>
-      <p style={{ fontSize: 13, color: '#64748b', margin: '0 0 12px' }}>For each capability ask: "Would I reject someone strong on everything else if they lacked this?" If no, it's learnable.</p>
-      {F('required', 'Required at hire (non-negotiable)', 'e.g. Led teams of 10+ through production migrations\nDesigned systems handling 1M+ daily transactions\nIncident command experience at scale', 'textarea')}
-      {F('learnable', 'Learnable post-hire (6-12 months)', 'e.g. Company deployment pipeline\nInternal monitoring toolchain\nDomain-specific business logic', 'textarea')}
-      {F('antiReqs', 'Explicitly NOT required (optional but powerful)', 'e.g. CS degree, specific company pedigree, continuous employment history', 'textarea')}
-
-      <div style={{ fontSize: 16, fontWeight: 700, color: '#185FA5', marginBottom: 12, paddingBottom: 6, borderBottom: '2px solid #185FA520', marginTop: 20 }}>Scope indicators (RG-005)</div>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-        {F('directs', 'Direct reports', 'e.g. 8')}
-        {F('indirects', 'Indirect / cross-functional', 'e.g. 35 across 3 teams')}
-        {F('geoSpan', 'Geographic span', 'e.g. 3 time zones, US + EU')}
-        {F('stakeholders', 'Stakeholder exposure', 'e.g. VP+, board quarterly')}
+      {S('Operating environment')}
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}}>
+        {F('companyStage','Company stage','e.g. Series C, 800 employees')}
+        {F('structure','Centralized vs decentralized','e.g. Centralized TA function')}
+        {F('environment','Regulatory / legal complexity','e.g. GDPR, OFCCP, multi-state')}
+        {F('workModel','Work model','e.g. Hybrid, 3 days in office')}
+        {F('travel','Travel','e.g. 15%, quarterly onsite')}
+        {F('systemFragmentation','System/tool fragmentation','e.g. 3 different ATS across BUs')}
+        {F('scale','Volume / scale expectations','e.g. 200 hires/year across 4 BUs')}
       </div>
-      <div style={{ marginBottom: 14 }}>
-        <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#334155', marginBottom: 4 }}>Ambiguity level</label>
-        <select value={d.ambiguity} onChange={e => set('ambiguity', e.target.value)} style={{ width: '100%', padding: '10px 12px', borderRadius: 8, border: '1px solid #e2e8f0', fontSize: 14, background: '#fff' }}>
-          <option value="">Select...</option>
-          {AMBIGUITY.map(a => <option key={a} value={a}>{a}</option>)}
-        </select>
-      </div>
+
+      {S('Risk & failure modes')}
+      <p style={{fontSize:13,color:'#64748b',margin:'0 0 10px'}}>A role is also defined by the risks it exists to contain.</p>
+      {F('riskReduces','What risks does this role reduce?','e.g. Inconsistent evaluation, undocumented decisions, AI tool compliance gaps','textarea')}
+      {F('failureImpact','What happens if this role underperforms?','e.g. Continued legal exposure, manager-driven hiring with no governance','textarea')}
 
       {!canUse('jd') ? <UpgradePrompt toolId="jd" /> : (
-      <div style={{ display: 'flex', gap: 12, marginTop: 28, paddingTop: 20, borderTop: '1px solid #e2e8f0', flexWrap: 'wrap' }}>
-        <button onClick={() => { incrementUsage('jd'); generate(); }} style={{ padding: '14px 28px', borderRadius: 8, border: 'none', background: '#185FA5', color: '#fff', fontSize: 15, fontWeight: 600, cursor: 'pointer' }}>Generate role definition (internal)</button>
-        <button onClick={() => { incrementUsage('jd'); generatePosting(); }} style={{ padding: '14px 28px', borderRadius: 8, border: 'none', background: '#059669', color: '#fff', fontSize: 15, fontWeight: 600, cursor: 'pointer' }}>Generate job posting (external)</button>
-        <button onClick={() => setD({ title: '', dept: '', reportsTo: '', outcome1: '', outcome2: '', outcome3: '', decidesAlone: '', decidesConsult: '', needsApproval: '', budget: '', required: '', learnable: '', directs: '', indirects: '', geoSpan: '', stakeholders: '', ambiguity: '', antiReqs: '' })}
-          style={{ padding: '14px 28px', borderRadius: 8, border: '1px solid #e2e8f0', background: '#fff', color: '#64748b', fontSize: 15, cursor: 'pointer' }}>Clear</button>
+      <div style={{display:'flex',gap:12,marginTop:28,paddingTop:20,borderTop:'1px solid #e2e8f0',flexWrap:'wrap'}}>
+        <button onClick={()=>{incrementUsage('jd');generate();}} style={{padding:'14px 28px',borderRadius:8,border:'none',background:'#185FA5',color:'#fff',fontSize:15,fontWeight:600,cursor:'pointer'}}>Generate role definition (internal)</button>
+        <button onClick={()=>{incrementUsage('jd');generatePosting();}} style={{padding:'14px 28px',borderRadius:8,border:'none',background:'#059669',color:'#fff',fontSize:15,fontWeight:600,cursor:'pointer'}}>Generate job posting (external)</button>
+        <button onClick={()=>{localStorage.removeItem('hccs_jd');setD({...defaultJD});}} style={{padding:'14px 28px',borderRadius:8,border:'1px solid #e2e8f0',background:'#fff',color:'#64748b',fontSize:15,cursor:'pointer'}}>Clear</button>
       </div>
       )}
     </div>
