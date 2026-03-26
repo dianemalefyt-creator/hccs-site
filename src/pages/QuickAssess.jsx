@@ -335,6 +335,105 @@ function Results({ answers }) {
           </div>
         </div>
 
+        {/* Business case generator */}
+        <div style={{ background: '#0f172a', borderRadius: 12, padding: 28, marginBottom: 24, textAlign: 'center' }}>
+          <div style={{ fontSize: 13, color: '#5b9bd5', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 8, fontWeight: 600 }}>Need budget approval?</div>
+          <h3 style={{ fontSize: 20, fontWeight: 700, color: '#fff', margin: '0 0 8px' }}>Generate a business case to share with leadership</h3>
+          <p style={{ fontSize: 14, color: '#94a3b8', marginBottom: 20, maxWidth: 480, margin: '0 auto 20px' }}>
+            Based on your assessment results, we'll generate a one-page executive brief with your risk profile, cost of inaction, and ROI justification. Ready to print or email to your CFO.
+          </p>
+          <button onClick={() => {
+            const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            const orgName = org || name || 'Your Organization';
+            const gapList = gaps.map(g => `<tr><td style="padding:8px 12px;font-family:monospace;font-size:12px;font-weight:600;color:#991b1b">${g.id}</td><td style="padding:8px 12px;font-size:13px">${g.text}</td><td style="padding:8px 12px;font-size:12px;color:#dc2626;font-weight:600">${g.level}</td></tr>`).join('');
+            const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>HCCS™ Business Case - ${orgName}</title>
+<style>
+@media print{body{margin:0}}
+body{font-family:Helvetica,Arial,sans-serif;color:#1e293b;line-height:1.55;max-width:780px;margin:0 auto;padding:40px;font-size:13px}
+h1{font-size:24px;margin:0 0 4px}h2{font-size:17px;color:#1e3a5f;margin:28px 0 10px;padding-bottom:5px;border-bottom:2px solid #e2e8f0}
+.hdr{background:linear-gradient(135deg,#0a1628,#1a2d4a);color:#fff;padding:28px 32px;border-radius:12px;margin-bottom:24px}
+.hdr h1{color:#fff}.hdr .s{color:#94a3b8;font-size:13px;margin-top:4px}
+table{width:100%;border-collapse:collapse;margin:10px 0}
+th{background:#0f172a;color:#fff;padding:8px 12px;text-align:left;font-size:12px}
+td{padding:8px 12px;border-bottom:1px solid #f1f5f9;font-size:13px}
+tr:nth-child(even){background:#f8fafc}
+.r{background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:20px;margin:14px 0}
+.g{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:20px;margin:14px 0}
+.box{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:14px;margin:8px 0}
+.ft{margin-top:36px;padding-top:14px;border-top:1px solid #e2e8f0;font-size:11px;color:#94a3b8;text-align:center}
+</style></head><body>
+<div class="hdr">
+<div style="font-size:11px;color:#5b9bd5;letter-spacing:0.15em;margin-bottom:4px">HCCS™ BUDGET REQUEST</div>
+<h1>The Case for a Human Capital Governance Assessment</h1>
+<div class="s">Prepared for: ${orgName} leadership | ${date}</div>
+<div class="s">Based on HCCS™ Quick Assessment (10 of 67 controls sampled)</div>
+</div>
+
+<h2>The situation</h2>
+<p>${orgName} currently scores at an estimated <strong>HCCS™ Maturity Level ${level} (${['Not Established','Initial','Developing','Defined','Managed','Optimizing'][level]})</strong> based on a sample of 10 critical controls. ${level < 3 ? `This is ${3-level} level${3-level>1?'s':''} below the credibility threshold, the minimum for organizations making defensible claims about hiring fairness or AI governance.` : 'This meets the credibility threshold based on the sample.'}</p>
+<p><strong>${yes}</strong> of 10 sampled controls are in place. <strong>${no}</strong> are not in place. <strong>${partial}</strong> are partial. This is a <strong>${score}% readiness score</strong> on a sample that deliberately targets the highest-risk controls.</p>
+<p>These 10 controls represent the foundation. The full HCCS™ Standard covers <strong>67 controls across 7 governance domains</strong>. If foundation controls have gaps, deeper controls almost certainly do as well.</p>
+
+<h2>What we found</h2>
+${gaps.length > 0 ? `<div class="r"><strong style="color:#991b1b">Controls not fully in place (${gaps.length} of 10):</strong>
+<table><tr><th>Control</th><th>Requirement</th><th>Level</th></tr>${gapList}</table>
+<p style="font-size:12px;color:#7f1d1d;margin:8px 0 0">Each gap represents a potential compliance, legal, or operational exposure.</p></div>` : '<p>All sampled controls are in place. A full assessment would validate this across all 67 controls.</p>'}
+
+<h2>The cost of not knowing</h2>
+<div class="r">
+<p style="margin:0 0 8px"><strong>We sampled 10 of 67 controls. We do not know the state of the other 57.</strong></p>
+<table>
+<tr><td style="font-weight:600">Average cost of one bad hire (mid-level)</td><td style="text-align:right;font-weight:700;color:#dc2626">$180,000 - $360,000</td></tr>
+<tr><td style="font-weight:600">Average employment discrimination settlement</td><td style="text-align:right;font-weight:700;color:#dc2626">$40,000 - $165,000</td></tr>
+<tr><td style="font-weight:600">OFCCP audit (legal + remediation)</td><td style="text-align:right;font-weight:700;color:#dc2626">$100,000 - $1,000,000+</td></tr>
+<tr><td style="font-weight:600">NYC LL144 AI hiring violation (per day)</td><td style="text-align:right;font-weight:700;color:#dc2626">$500 - $1,500</td></tr>
+</table>
+<p style="font-size:12px;color:#7f1d1d;margin:8px 0 0">Sources: SHRM, DOL, EEOC, NYC Admin Code. The question is not whether these costs exist. It is whether we know where our exposure is.</p>
+</div>
+
+<h2>What the full assessment delivers</h2>
+<div class="g">
+<table>
+<tr><td style="font-weight:600">Scope</td><td>All 67 controls across 7 governance domains</td></tr>
+<tr><td style="font-weight:600">Per-control detail</td><td>Definition, example, your status, remediation recommendation, your notes</td></tr>
+<tr><td style="font-weight:600">Maturity scoring</td><td>Validated level (L0-L5) per domain and overall</td></tr>
+<tr><td style="font-weight:600">Gap analysis</td><td>Prioritized by MUST/SHOULD/MAY with specific action steps</td></tr>
+<tr><td style="font-weight:600">Remediation roadmap</td><td>Phased plan to reach Level 3 (credibility threshold)</td></tr>
+<tr><td style="font-weight:600">Business case document</td><td>Executive-ready report generated from your actual data</td></tr>
+<tr><td style="font-weight:600">Audit-grade report</td><td>Downloadable, emailable, presentable to leadership or counsel</td></tr>
+</table>
+</div>
+
+<h2>Investment options</h2>
+<table>
+<tr><th>Option</th><th>Investment</th><th>What's included</th><th>Best for</th></tr>
+<tr style="background:#eff6ff"><td style="font-weight:700">Self-Assessment</td><td style="font-weight:700">$149</td><td>Full 67-control assessment, gap analysis, remediation roadmap, audit-grade report</td><td>HR/TA leaders assessing independently</td></tr>
+<tr><td style="font-weight:700">Guided Assessment</td><td style="font-weight:700">$2,500</td><td>Everything above + expert-guided walkthrough, executive presentation, 30-day follow-up</td><td>CHROs needing validated results for leadership</td></tr>
+<tr><td style="font-weight:700">Enterprise</td><td style="font-weight:700">Custom</td><td>Everything above + third-party validation, attestation letter, board-ready report</td><td>Organizations making public hiring claims</td></tr>
+</table>
+<p><strong>Recommended:</strong> ${level <= 1 ? 'Guided Assessment ($2,500). With foundation-level gaps, expert interpretation and executive presentation will accelerate remediation and internal buy-in.' : level <= 2 ? 'Self-Assessment ($149) for initial gap identification, with Guided Assessment if executive presentation is needed.' : 'Self-Assessment ($149) to validate the full 67-control profile and identify remaining gaps.'}</p>
+
+<h2>The ask</h2>
+<div class="box">
+<p style="margin:0;font-size:14px"><strong>We are requesting approval for ${level <= 1 ? 'a Guided HCCS™ Assessment ($2,500)' : 'an HCCS™ Self-Assessment ($149)'}.</strong></p>
+<p style="margin:8px 0 0">This is a one-time investment that produces: a complete governance gap analysis, a prioritized remediation roadmap, an audit-grade report, and a defensible record that we assessed our practices proactively. The alternative is discovering our gaps when a regulator, litigator, or journalist finds them first.</p>
+</div>
+
+<div class="ft">
+<div>HCCS™ Budget Request | Generated from Quick Assessment data | ${date}</div>
+<div style="margin-top:4px">© 2026 IngenuityCo LLC | hccsstandard.com</div>
+</div>
+</body></html>`;
+            const w = window.open('', '_blank');
+            w.document.write(html);
+            w.document.close();
+          }}
+          style={{ padding: '14px 28px', borderRadius: 8, border: 'none', background: '#059669', color: '#fff', fontSize: 15, fontWeight: 600, cursor: 'pointer' }}>
+            Generate budget request document
+          </button>
+          <div style={{ fontSize: 12, color: '#64748b', marginTop: 10 }}>Opens in a new tab. Print or save as PDF to share with your leadership team.</div>
+        </div>
+
         {/* Email capture */}
         {!submitted ? (
           <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 12, padding: 28, textAlign: "center", marginBottom: 24 }}>
