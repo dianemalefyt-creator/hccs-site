@@ -1,20 +1,18 @@
-// Blog CRUD via Airtable
-// Table: "Blog" in existing HCCS base
-// Fields: Title (text), Slug (text), Excerpt (long text), Category (text), 
-//         Body (long text), Date (text), Author (text), AuthorTitle (text),
-//         Status (text: draft/published), ReadTime (text), LastModified (text)
-
 const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY
 const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID
-const TABLE = 'Blog'
+const TABLE_NAME = encodeURIComponent('Blog')
+const BASE_URL = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${TABLE_NAME}`
 
 const HEADERS = {
   'Content-Type': 'application/json',
   'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
 }
 
-async function airtableFetch(path, options = {}) {
-  const res = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${TABLE}${path}`, {
+async function callAirtable(path, options = {}) {
+  const url = `${BASE_URL}${path}`
+  const res = await fetch(url, {
     ...options,
     headers: {
       Authorization: `Bearer ${AIRTABLE_API_KEY}`,
@@ -22,128 +20,125 @@ async function airtableFetch(path, options = {}) {
       ...(options.headers || {}),
     },
   })
-  return res.json()
+  const text = await res.text()
+  try { return JSON.parse(text) } catch { return { error: 'Invalid JSON', raw: text.slice(0, 500) } }
 }
 
 exports.handler = async function(event) {
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 204, headers: HEADERS }
+  }
+
   if (!AIRTABLE_API_KEY || !AIRTABLE_BASE_ID) {
     return { statusCode: 200, headers: HEADERS,
-      body: JSON.stringify({ error: 'Airtable not configured', posts: [] }) }
+      body: JSON.stringify({ posts: [], error: 'Missing env vars', hasKey: !!AIRTABLE_API_KEY, hasBase: !!AIRTABLE_BASE_ID }) }
   }
 
-  const method = event.httpMethod
-
-  // CORS preflight
-  if (method === 'OPTIONS') {
-    return { statusCode: 204, headers: { ...HEADERS, 'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type' } }
-  }
-
-  // GET: list all posts
-  if (method === 'GET') {
+  if (event.httpMethod === 'GET') {
     try {
-      const params = new URLSearchParams(event.queryStringParameters || {})
-      const showAll = params.get('all') === 'true'
-      
-      // Fetch all records, sorted by date descending
-      let allRecords = []
-      let offset = null
-      
-      do {
-        const url = offset ? `?offset=${offset}&sort%5B0%5D%5Bfield%5D=Date&sort%5B0%5D%5Bdirection%5D=desc` 
-                           : '?sort%5B0%5D%5Bfield%5D=Date&sort%5B0%5D%5Bdirection%5D=desc'
-        const data = await airtableFetch(url)
-        if (data.records) allRecords = allRecords.concat(data.records)
-        offset = data.offset
-      } while (offset)
+      const showAll = (event.queryStringParameters || {}).all === 'true'
+      const data = await callAirtable('')
 
-      const posts = allRecords.map(r => ({
-        id: r.id,
-        title: r.fields.Title || '',
-        slug: r.fields.Slug || '',
-        excerpt: r.fields.Excerpt || '',
-        category: r.fields.Category || 'Governance',
-        body: r.fields.Body || '',
-        content: r.fields.Body || '',
-        date: r.fields.Date || '',
-        author: r.fields.Author || 'Diane Malefyt',
-        authorTitle: r.fields.AuthorTitle || '',
-        status: (r.fields.Status || 'draft').toLowerCase(),
-        readTime: r.fields.ReadTime || '3 min read',
-        lastModified: r.fields.LastModified || '',
-      }))
+      if (data.error) {
+        return { statusCode: 200, headers: HEADERS,
+          body: JSON.stringify({ posts: [], error: data.error, debug: data }) }
+      }
 
+      if (!data.records) {
+        return { statusCode: 200, headers: HEADERS,
+          body: JSON.stringify({ posts: [], error: 'No records array', debug: { keys: Object.keys(data) } }) }
+      }
+
+      const posts = data.records.map(r => {
+        const f = r.fields || {}
+        return {
+          id: r.id,
+          title: f.Title || f.title || f.Name || '',
+          slug: f.Slug || f.slug || '',
+          excerpt: f.Excerpt || f.excerpt || '',
+          category: f.Category || f.category || 'Governance',
+          body: f.Body || f.body || f.Content || f.content || '',
+          content: f.Body || f.body || f.Content || f.content || '',
+          date: f.Date || f.date || '',
+          author: f.Author || f.author || 'Diane Malefyt',
+          authorTitle: f.AuthorTitle || f.authorTitle || f['Author Title'] || '',
+          status: (f.Status || f.status || 'draft').toLowerCase(),
+          readTime: f.ReadTime || f.readTime || f['Read Time'] || '3 min read',
+          lastModified: f.LastModified || f.lastModified || f['Last Modified'] || '',
+        }
+      }).sort((a, b) => new Date(b.date) - new Date(a.date))
+
+      const debugFieldNames = data.records.length > 0 ? Object.keys(data.records[0].fields || {}) : []
       const filtered = showAll ? posts : posts.filter(p => p.status === 'published')
 
       return { statusCode: 200, headers: HEADERS,
-        body: JSON.stringify({ posts: filtered }) }
+        body: JSON.stringify({ posts: filtered, total: posts.length, fieldNames: debugFieldNames }) }
     } catch (err) {
-      console.error('Blog list error:', err)
       return { statusCode: 200, headers: HEADERS,
-        body: JSON.stringify({ error: err.message, posts: [] }) }
+        body: JSON.stringify({ posts: [], error: err.message, stack: err.stack?.slice(0, 300) }) }
     }
   }
 
-  // POST: create or update
-  if (method === 'POST') {
+  if (event.httpMethod === 'POST') {
     try {
       const { action, post, recordId } = JSON.parse(event.body)
 
       const fields = {
-        Title: post.title,
-        Slug: post.slug,
-        Excerpt: post.excerpt || '',
-        Category: post.category || 'Governance',
-        Body: post.body || post.content || '',
-        Date: post.date || new Date().toISOString().split('T')[0],
-        Author: post.author || 'Diane Malefyt',
-        AuthorTitle: post.authorTitle || '',
-        Status: post.status || 'draft',
-        ReadTime: post.readTime || `${Math.max(3, Math.ceil((post.body || post.content || '').split(/\s+/).length / 200))} min read`,
+        Title: post?.title || '',
+        Slug: post?.slug || '',
+        Excerpt: post?.excerpt || '',
+        Category: post?.category || 'Governance',
+        Body: post?.body || post?.content || '',
+        Date: post?.date || new Date().toISOString().split('T')[0],
+        Author: post?.author || 'Diane Malefyt',
+        AuthorTitle: post?.authorTitle || '',
+        Status: post?.status || 'draft',
+        ReadTime: post?.readTime || '3 min read',
         LastModified: new Date().toISOString(),
       }
 
       if (action === 'create') {
-        const data = await airtableFetch('', {
+        const data = await callAirtable('', {
           method: 'POST',
           body: JSON.stringify({ records: [{ fields }] }),
         })
-        return { statusCode: 200, headers: HEADERS,
-          body: JSON.stringify({ success: true, record: data.records?.[0] }) }
+        if (data.error) return { statusCode: 200, headers: HEADERS, body: JSON.stringify({ error: data.error, debug: data }) }
+        return { statusCode: 200, headers: HEADERS, body: JSON.stringify({ success: true, record: data.records?.[0] }) }
       }
 
       if (action === 'update' && recordId) {
-        const data = await airtableFetch('', {
+        const data = await callAirtable('', {
           method: 'PATCH',
           body: JSON.stringify({ records: [{ id: recordId, fields }] }),
         })
-        return { statusCode: 200, headers: HEADERS,
-          body: JSON.stringify({ success: true, record: data.records?.[0] }) }
+        if (data.error) return { statusCode: 200, headers: HEADERS, body: JSON.stringify({ error: data.error }) }
+        return { statusCode: 200, headers: HEADERS, body: JSON.stringify({ success: true, record: data.records?.[0] }) }
       }
 
       if (action === 'delete' && recordId) {
-        await airtableFetch(`/${recordId}`, { method: 'DELETE' })
-        return { statusCode: 200, headers: HEADERS,
-          body: JSON.stringify({ success: true }) }
+        const data = await callAirtable(`/${recordId}`, { method: 'DELETE' })
+        if (data.error) return { statusCode: 200, headers: HEADERS, body: JSON.stringify({ error: data.error }) }
+        return { statusCode: 200, headers: HEADERS, body: JSON.stringify({ success: true }) }
       }
 
       if (action === 'toggleStatus' && recordId) {
-        // Get current status, flip it
-        const current = await airtableFetch(`/${recordId}`)
-        const newStatus = current.fields?.Status === 'published' ? 'draft' : 'published'
-        const data = await airtableFetch('', {
+        const current = await callAirtable(`/${recordId}`)
+        if (current.error) return { statusCode: 200, headers: HEADERS, body: JSON.stringify({ error: current.error }) }
+        const curStatus = (current.fields?.Status || current.fields?.status || 'draft').toLowerCase()
+        const newStatus = curStatus === 'published' ? 'draft' : 'published'
+        const data = await callAirtable('', {
           method: 'PATCH',
           body: JSON.stringify({ records: [{ id: recordId, fields: { Status: newStatus, LastModified: new Date().toISOString() } }] }),
         })
-        return { statusCode: 200, headers: HEADERS,
-          body: JSON.stringify({ success: true, record: data.records?.[0] }) }
+        if (data.error) return { statusCode: 200, headers: HEADERS, body: JSON.stringify({ error: data.error }) }
+        return { statusCode: 200, headers: HEADERS, body: JSON.stringify({ success: true, record: data.records?.[0] }) }
       }
 
-      return { statusCode: 400, body: JSON.stringify({ error: 'Invalid action' }) }
+      return { statusCode: 400, headers: HEADERS, body: JSON.stringify({ error: 'Invalid action: ' + action }) }
     } catch (err) {
-      console.error('Blog write error:', err)
-      return { statusCode: 500, body: JSON.stringify({ error: err.message }) }
+      return { statusCode: 200, headers: HEADERS, body: JSON.stringify({ error: err.message }) }
     }
   }
 
-  return { statusCode: 405, body: 'Method not allowed' }
+  return { statusCode: 405, headers: HEADERS, body: JSON.stringify({ error: 'Method not allowed' }) }
 }

@@ -203,6 +203,12 @@ function BlogPost() {
 
   const post = allPosts.find(p => p.slug === slug)
 
+  if (!post && loading) return (
+    <div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ color: '#64748b', fontSize: 15 }}>Loading...</div>
+    </div>
+  )
+
   if (!post) return (
     <div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 16 }}>
       <h1 style={{ fontSize: 28, color: '#0f172a' }}>Post not found</h1>
