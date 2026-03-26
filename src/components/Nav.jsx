@@ -3,22 +3,22 @@ import { useState, useRef, useEffect } from 'react'
 
 const NAV = [
   { label: 'Home', to: '/' },
-  { label: 'Assess', children: [
-    { label: 'Quick assessment', desc: 'Free, 10 questions, 3 minutes', to: '/assess' },
-    { label: 'Full assessment', desc: '67 controls, pricing & access codes', to: '/assess/full' },
-  ]},
   { label: 'Standard', children: [
+    { label: 'Documents', desc: 'Core Standard, Implementation Guide, Templates', to: '/documents' },
     { label: 'Controls library', desc: 'All 67 controls with definitions', to: '/controls' },
-    { label: 'Documents', desc: 'Core Standard, IG, Template Library', to: '/documents' },
     { label: 'Fillable templates', desc: 'Fill online, generate PDF', to: '/templates' },
-    { label: 'Free tools', desc: 'JD builder, scorecard, bias checker, more', to: '/tools' },
+  ]},
+  { label: 'Tools', children: [
+    { label: 'Quick assessment', desc: 'Free, 10 questions, 3 minutes', to: '/assess' },
+    { label: 'Full assessment', desc: '67 controls, gap analysis, roadmap', to: '/assess/full' },
+    { label: 'Free tools', desc: 'Role designer, scorecard, bias checker', to: '/tools' },
     { label: 'Guided workflow', desc: 'Step-by-step with AI suggestions', to: '/workflow' },
+    { label: 'Business case & ROI', desc: 'Cost of inaction, stakeholder talking points', to: '/business-case' },
   ]},
   { label: 'About', children: [
     { label: 'About HCCS\u2122', desc: 'What it is, who built it, why', to: '/about' },
-    { label: "Applicant's Bill of Rights", desc: '15 rights for candidates', to: '/rights' },
-    { label: "Organization's Bill of Rights", desc: '12 rights for employers', to: '/org-rights' },
-    { label: 'Business case & ROI', desc: 'Cost of inaction, how to sell internally', to: '/business-case' },
+    { label: "Applicant's Bill of Rights", desc: '15 rights every candidate deserves', to: '/rights' },
+    { label: "Organization's Bill of Rights", desc: '12 rights employers can claim', to: '/org-rights' },
   ]},
   { label: 'Blog', to: '/blog' },
   { label: 'Pricing', to: '/pricing' },

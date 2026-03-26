@@ -449,14 +449,16 @@ ${d.environment||d.scale||d.systemFragmentation?`<h2>The environment</h2><p>${[d
         </div>
       </div>
 
-      {/* PDF Upload */}
+      {/* PDF Upload + Template */}
       <div style={{background:'#f8fafc',border:'1px dashed #cbd5e1',borderRadius:10,padding:'16px 20px',marginBottom:20,textAlign:'center'}}>
-        <div style={{fontSize:14,fontWeight:600,color:'#334155',marginBottom:6}}>Have an existing role definition?</div>
-        <div style={{fontSize:13,color:'#64748b',marginBottom:10}}>Upload a previous HCCS™ Role Definition PDF or any text-based role document. Fields will auto-populate.</div>
+        <div style={{fontSize:14,fontWeight:600,color:'#334155',marginBottom:6}}>Start from a template or upload a previous version</div>
+        <div style={{fontSize:13,color:'#64748b',marginBottom:12}}>Download the blank worksheet, fill it out offline, then upload here. Or upload any previous role definition to edit.</div>
         {uploadStatus && <div style={{fontSize:13,color:uploadStatus.includes('Error')?'#dc2626':'#059669',marginBottom:10,fontWeight:600}}>{uploadStatus}</div>}
-        <label style={{display:'inline-block',padding:'10px 24px',borderRadius:8,border:'1px solid #2563eb',background:'#fff',color:'#2563eb',fontSize:14,fontWeight:600,cursor:'pointer'}}>
-          Upload PDF or text file
-          <input type="file" accept=".pdf,.txt,.text" style={{display:'none'}} onChange={async e=>{
+        <div style={{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap'}}>
+          <a href="/docs/HCCS-Role-Definition-Template.pdf" download style={{display:'inline-block',padding:'10px 24px',borderRadius:8,border:'none',background:'#185FA5',color:'#fff',fontSize:14,fontWeight:600,textDecoration:'none'}}>Download blank template</a>
+          <label style={{display:'inline-block',padding:'10px 24px',borderRadius:8,border:'1px solid #2563eb',background:'#fff',color:'#2563eb',fontSize:14,fontWeight:600,cursor:'pointer'}}>
+            Upload PDF or text file
+            <input type="file" accept=".pdf,.txt,.text" style={{display:'none'}} onChange={async e=>{
             const file=e.target.files?.[0]
             if(!file)return
             setUploadStatus('Reading file...')
@@ -502,6 +504,9 @@ ${d.environment||d.scale||d.systemFragmentation?`<h2>The environment</h2><p>${[d
             e.target.value=''
           }}/>
         </label>
+          <a href="/docs/HCCS-Role-Definition-Template-v2.docx" download style={{display:'inline-block',padding:'10px 24px',borderRadius:8,border:'1px solid #059669',background:'#fff',color:'#059669',fontSize:14,fontWeight:600,textDecoration:'none'}}>Download blank template (.docx)</a>
+        </div>
+        <div style={{fontSize:12,color:'#94a3b8',marginTop:8}}>Download the template, fill it out in Word, save as PDF, and upload here to auto-populate all fields.</div>
       </div>
 
       {/* Warnings */}
