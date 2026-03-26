@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { fetchPosts, createPost, updatePost, deletePostApi, togglePostStatus, STATIC_POSTS } from '../lib/blog'
+import { fetchDocs, createDoc, updateDoc, deleteDocApi, STATIC_DOCS } from '../lib/docs'
 
 const ADMIN_PASS = 'hccsadmin2026'
 
@@ -20,8 +21,12 @@ export default function Admin() {
   const [pass, setPass] = useState('')
   const [passErr, setPassErr] = useState('')
   const [posts, setPosts] = useState([])
-  const [editing, setEditing] = useState(null) // null = list, 'new' = new post, slug = editing
+  const [editing, setEditing] = useState(null)
   const [form, setForm] = useState({ title: '', slug: '', excerpt: '', category: '', content: '', date: '' })
+  const [tab, setTab] = useState('blog')
+  const [docs, setDocs] = useState([])
+  const [editingDoc, setEditingDoc] = useState(null)
+  const [docForm, setDocForm] = useState({ docId: '', title: '', subtitle: '', desc: '', details: '', file: '', color: '#185FA5', pages: '', format: 'pdf', sortOrder: 99, status: 'published' })
 
   const [loading, setLoading] = useState(false)
   const [saveMsg, setSaveMsg] = useState('')
@@ -35,8 +40,15 @@ export default function Admin() {
     setLoading(false)
   }
 
+  const refreshDocs = async () => {
+    try {
+      const d = await fetchDocs(true)
+      setDocs(d)
+    } catch { }
+  }
+
   useEffect(() => {
-    if (authed) refreshPosts()
+    if (authed) { refreshPosts(); refreshDocs() }
   }, [authed])
 
   const login = () => {
@@ -262,7 +274,21 @@ export default function Admin() {
         </div>
         <button onClick={() => setAuthed(false)} style={{ background: 'none', border: '1px solid rgba(255,255,255,0.2)', color: '#94a3b8', padding: '6px 16px', borderRadius: 6, cursor: 'pointer', fontSize: 13 }}>Log out</button>
       </div>
+      {/* Tabs */}
+      <div style={{ background: '#fff', borderBottom: '1px solid #e2e8f0', padding: '0 24px' }}>
+        <div style={{ maxWidth: 900, margin: '0 auto', display: 'flex', gap: 0 }}>
+          {[['blog', 'Blog'], ['docs', 'Documents']].map(([key, label]) => (
+            <button key={key} onClick={() => { setTab(key); setEditing(null); setEditingDoc(null) }}
+              style={{ padding: '14px 24px', fontSize: 14, fontWeight: 600, cursor: 'pointer', border: 'none', borderBottom: tab === key ? '3px solid #2563eb' : '3px solid transparent', background: 'none', color: tab === key ? '#0f172a' : '#64748b' }}>
+              {label}
+            </button>
+          ))}
+        </div>
+      </div>
       <div style={{ maxWidth: 900, margin: '0 auto', padding: '32px 24px' }}>
+
+      {/* === BLOG TAB === */}
+      {tab === 'blog' && !editing && (<>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
           <h1 style={{ fontSize: 24, fontWeight: 700, color: '#0f172a', margin: 0 }}>Blog posts</h1>
           <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
@@ -347,6 +373,166 @@ export default function Admin() {
             </div>
           )}
         </div>
+      </>)}
+
+      {/* === DOCUMENTS TAB === */}
+      {tab === 'docs' && !editingDoc && (<>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+          <h1 style={{ fontSize: 24, fontWeight: 700, color: '#0f172a', margin: 0 }}>Documents</h1>
+          <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+            <span style={{ fontSize: 13, color: '#64748b' }}>{docs.length} documents</span>
+            <button onClick={() => { setDocForm({ docId: '', title: '', subtitle: '', desc: '', details: '', file: '', color: '#185FA5', pages: '', format: 'pdf', sortOrder: docs.length + 1, status: 'published' }); setEditingDoc('new') }}
+              style={{ padding: '10px 24px', borderRadius: 8, border: 'none', background: '#2563eb', color: '#fff', fontSize: 14, fontWeight: 600, cursor: 'pointer' }}>+ New document</button>
+          </div>
+        </div>
+
+        {saveMsg && <div style={{ marginBottom: 16, padding: '10px 16px', borderRadius: 8, background: saveMsg.startsWith('Error') ? '#fef2f2' : saveMsg.startsWith('Done') ? '#f0fdf4' : '#eff6ff', color: saveMsg.startsWith('Error') ? '#dc2626' : saveMsg.startsWith('Done') ? '#059669' : '#2563eb', fontSize: 13, fontWeight: 600 }}>{saveMsg}</div>}
+        {loading && <div style={{ textAlign: 'center', padding: 24, color: '#64748b' }}>Loading...</div>}
+
+        {docs.map(doc => (
+          <div key={doc.id || doc.docId} style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: 10, padding: '18px 22px', marginBottom: 10, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+            <div style={{ flex: 1 }}>
+              <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 4 }}>
+                <div style={{ width: 8, height: 8, borderRadius: '50%', background: doc.color }} />
+                <div style={{ fontSize: 16, fontWeight: 600, color: '#0f172a' }}>{doc.title}</div>
+                <span style={{ fontSize: 12, color: '#64748b' }}>{doc.subtitle}</span>
+              </div>
+              <div style={{ fontSize: 13, color: '#64748b' }}>{doc.format?.toUpperCase()} · {doc.pages} pages · Sort: {doc.sortOrder}</div>
+              <div style={{ fontSize: 13, color: '#94a3b8', marginTop: 2 }}>{doc.file}</div>
+            </div>
+            <div style={{ display: 'flex', gap: 8, flexShrink: 0, marginLeft: 16 }}>
+              <button onClick={() => { setDocForm({ ...doc, details: Array.isArray(doc.details) ? doc.details.join('\n') : doc.details || '', _recordId: doc.id }); setEditingDoc(doc.docId || doc.id) }}
+                style={{ padding: '6px 14px', borderRadius: 6, border: '1px solid #e2e8f0', background: '#fff', color: '#2563eb', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>Edit</button>
+              {doc.id && <button onClick={async () => { if (!confirm(`Delete "${doc.title}"?`)) return; setLoading(true); await deleteDocApi(doc.id); await refreshDocs(); setLoading(false) }} disabled={loading}
+                style={{ padding: '6px 14px', borderRadius: 6, border: '1px solid #fecaca', background: '#fff', color: '#dc2626', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>Delete</button>}
+              {doc.file && <a href={doc.file} target="_blank" style={{ padding: '6px 14px', borderRadius: 6, border: '1px solid #e2e8f0', background: '#f8fafc', color: '#475569', fontSize: 12, fontWeight: 600, textDecoration: 'none' }}>View</a>}
+            </div>
+          </div>
+        ))}
+
+        {/* Seed built-in docs */}
+        <div style={{ marginTop: 40, padding: 24, background: '#0f172a', borderRadius: 12 }}>
+          <div style={{ fontSize: 14, fontWeight: 600, color: '#fff', marginBottom: 8 }}>Seed documents</div>
+          <div style={{ fontSize: 13, color: '#94a3b8', marginBottom: 12 }}>{STATIC_DOCS.length} built-in documents in code. Push them to Airtable for centralized management.</div>
+          <button onClick={async () => {
+            if (!confirm(`Push ${STATIC_DOCS.length} documents to Airtable?`)) return
+            setLoading(true)
+            setSaveMsg('Seeding documents...')
+            const existingIds = new Set(docs.filter(d => d.id).map(d => d.docId))
+            let added = 0
+            for (const sd of STATIC_DOCS) {
+              if (existingIds.has(sd.docId)) continue
+              await createDoc(sd)
+              added++
+            }
+            await refreshDocs()
+            setSaveMsg(added > 0 ? `Done! Added ${added} documents.` : 'All documents already in Airtable.')
+            setLoading(false)
+          }} disabled={loading}
+            style={{ padding: '8px 20px', borderRadius: 6, border: '1px solid #5b9bd5', background: 'transparent', color: '#5b9bd5', fontSize: 13, fontWeight: 600, cursor: 'pointer' }}>
+            Push built-in documents to Airtable
+          </button>
+        </div>
+      </>)}
+
+      {/* === DOCUMENT EDITOR === */}
+      {tab === 'docs' && editingDoc && (
+        <div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+            <h2 style={{ fontSize: 20, fontWeight: 700, color: '#0f172a', margin: 0 }}>{editingDoc === 'new' ? 'New document' : `Edit: ${docForm.title}`}</h2>
+            <button onClick={() => setEditingDoc(null)} style={{ padding: '6px 16px', borderRadius: 6, border: '1px solid #e2e8f0', background: '#fff', color: '#64748b', fontSize: 13, cursor: 'pointer' }}>Cancel</button>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 16 }}>
+            <div>
+              <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#334155', marginBottom: 4 }}>Title</label>
+              <input value={docForm.title} onChange={e => setDocForm(p => ({ ...p, title: e.target.value }))}
+                style={{ width: '100%', padding: '10px 12px', borderRadius: 8, border: '1px solid #e2e8f0', fontSize: 14, outline: 'none', boxSizing: 'border-box' }} />
+            </div>
+            <div>
+              <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#334155', marginBottom: 4 }}>Subtitle / Version</label>
+              <input value={docForm.subtitle} onChange={e => setDocForm(p => ({ ...p, subtitle: e.target.value }))} placeholder="e.g. HCCS-1.0"
+                style={{ width: '100%', padding: '10px 12px', borderRadius: 8, border: '1px solid #e2e8f0', fontSize: 14, outline: 'none', boxSizing: 'border-box' }} />
+            </div>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 12, marginBottom: 16 }}>
+            <div>
+              <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#334155', marginBottom: 4 }}>Doc ID</label>
+              <input value={docForm.docId} onChange={e => setDocForm(p => ({ ...p, docId: e.target.value }))} placeholder="HCCS-1.0"
+                style={{ width: '100%', padding: '10px 12px', borderRadius: 8, border: '1px solid #e2e8f0', fontSize: 13, fontFamily: 'monospace', outline: 'none', boxSizing: 'border-box' }} />
+            </div>
+            <div>
+              <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#334155', marginBottom: 4 }}>Format</label>
+              <select value={docForm.format} onChange={e => setDocForm(p => ({ ...p, format: e.target.value }))}
+                style={{ width: '100%', padding: '10px 12px', borderRadius: 8, border: '1px solid #e2e8f0', fontSize: 14, background: '#fff' }}>
+                <option value="pdf">PDF</option><option value="docx">DOCX</option><option value="xlsx">XLSX</option>
+              </select>
+            </div>
+            <div>
+              <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#334155', marginBottom: 4 }}>Pages</label>
+              <input value={docForm.pages} onChange={e => setDocForm(p => ({ ...p, pages: e.target.value }))} placeholder="~40"
+                style={{ width: '100%', padding: '10px 12px', borderRadius: 8, border: '1px solid #e2e8f0', fontSize: 14, outline: 'none', boxSizing: 'border-box' }} />
+            </div>
+            <div>
+              <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#334155', marginBottom: 4 }}>Sort order</label>
+              <input type="number" value={docForm.sortOrder} onChange={e => setDocForm(p => ({ ...p, sortOrder: parseInt(e.target.value) || 0 }))}
+                style={{ width: '100%', padding: '10px 12px', borderRadius: 8, border: '1px solid #e2e8f0', fontSize: 14, outline: 'none', boxSizing: 'border-box' }} />
+            </div>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 12, marginBottom: 16 }}>
+            <div>
+              <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#334155', marginBottom: 4 }}>File URL</label>
+              <input value={docForm.file} onChange={e => setDocForm(p => ({ ...p, file: e.target.value }))} placeholder="/docs/filename.pdf"
+                style={{ width: '100%', padding: '10px 12px', borderRadius: 8, border: '1px solid #e2e8f0', fontSize: 13, fontFamily: 'monospace', outline: 'none', boxSizing: 'border-box' }} />
+            </div>
+            <div>
+              <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#334155', marginBottom: 4 }}>Color (hex)</label>
+              <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                <input type="color" value={docForm.color} onChange={e => setDocForm(p => ({ ...p, color: e.target.value }))} style={{ width: 40, height: 38, border: 'none', cursor: 'pointer' }} />
+                <input value={docForm.color} onChange={e => setDocForm(p => ({ ...p, color: e.target.value }))}
+                  style={{ flex: 1, padding: '10px 12px', borderRadius: 8, border: '1px solid #e2e8f0', fontSize: 13, fontFamily: 'monospace', outline: 'none', boxSizing: 'border-box' }} />
+              </div>
+            </div>
+          </div>
+          <div style={{ marginBottom: 16 }}>
+            <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#334155', marginBottom: 4 }}>Description</label>
+            <textarea value={docForm.desc} onChange={e => setDocForm(p => ({ ...p, desc: e.target.value }))} rows={3}
+              style={{ width: '100%', padding: '10px 12px', borderRadius: 8, border: '1px solid #e2e8f0', fontSize: 14, outline: 'none', fontFamily: 'inherit', resize: 'vertical', boxSizing: 'border-box', lineHeight: 1.5 }} />
+          </div>
+          <div style={{ marginBottom: 16 }}>
+            <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#334155', marginBottom: 4 }}>Details (one per line, shown as arrow list)</label>
+            <textarea value={docForm.details} onChange={e => setDocForm(p => ({ ...p, details: e.target.value }))} rows={6}
+              style={{ width: '100%', padding: '10px 12px', borderRadius: 8, border: '1px solid #e2e8f0', fontSize: 13, fontFamily: 'monospace', outline: 'none', resize: 'vertical', boxSizing: 'border-box', lineHeight: 1.6 }} />
+          </div>
+          <div style={{ display: 'flex', gap: 12 }}>
+            <button onClick={async () => {
+              if (!docForm.title) return setSaveMsg('Error: Title required')
+              setSaveMsg('Saving...')
+              setLoading(true)
+              const doc = { ...docForm, details: docForm.details.split('\n').filter(Boolean) }
+              try {
+                if (editingDoc === 'new') {
+                  await createDoc(doc)
+                } else if (docForm._recordId) {
+                  await updateDoc(docForm._recordId, doc)
+                } else {
+                  await createDoc(doc)
+                }
+                await refreshDocs()
+                setEditingDoc(null)
+                setSaveMsg('Saved!')
+              } catch (err) {
+                setSaveMsg('Error: ' + err.message)
+              }
+              setLoading(false)
+            }} disabled={loading || !docForm.title}
+              style={{ padding: '12px 28px', borderRadius: 8, border: 'none', background: docForm.title ? '#059669' : '#94a3b8', color: '#fff', fontSize: 15, fontWeight: 700, cursor: docForm.title ? 'pointer' : 'default' }}>
+              {editingDoc === 'new' ? 'Create document' : 'Save changes'}
+            </button>
+            <button onClick={() => setEditingDoc(null)} style={{ padding: '12px 20px', borderRadius: 8, border: '1px solid #e2e8f0', background: '#fff', color: '#64748b', fontSize: 14, cursor: 'pointer' }}>Cancel</button>
+          </div>
+        </div>
+      )}
+
       </div>
     </div>
   )

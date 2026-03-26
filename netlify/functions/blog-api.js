@@ -68,11 +68,10 @@ exports.handler = async function(event) {
         }
       }).sort((a, b) => new Date(b.date) - new Date(a.date))
 
-      const debugFieldNames = data.records.length > 0 ? Object.keys(data.records[0].fields || {}) : []
       const filtered = showAll ? posts : posts.filter(p => p.status === 'published')
 
       return { statusCode: 200, headers: HEADERS,
-        body: JSON.stringify({ posts: filtered, total: posts.length, fieldNames: debugFieldNames }) }
+        body: JSON.stringify({ posts: filtered }) }
     } catch (err) {
       return { statusCode: 200, headers: HEADERS,
         body: JSON.stringify({ posts: [], error: err.message, stack: err.stack?.slice(0, 300) }) }

@@ -117,20 +117,10 @@ function BlogList() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetchPosts().then(posts => { 
-      console.log('Blog fetched posts:', posts.length, posts.map(p => `${p.slug}:${p.status}:${p.source}`))
-      setAllPosts(posts)
-      setLoading(false) 
-    }).catch(err => {
-      console.error('Blog fetch error:', err)
-      setLoading(false)
-    })
+    fetchPosts().then(posts => { setAllPosts(posts); setLoading(false) }).catch(() => setLoading(false))
   }, [])
 
   const filtered = cat === 'All' ? allPosts : allPosts.filter(p => p.category === cat)
-
-  // Debug: remove after confirming it works
-  const debugInfo = `${allPosts.length} posts loaded (${allPosts.filter(p=>p.source==='airtable').length} from Airtable, ${allPosts.filter(p=>p.source==='static').length} from code)`
 
   return (
     <div style={{ minHeight: '100vh', background: '#f8fafc' }}>
@@ -146,10 +136,6 @@ function BlogList() {
 
       <section style={{ padding: '32px 24px 0' }}>
         <div style={{ maxWidth: 800, margin: '0 auto' }}>
-          {/* Debug - remove after confirming */}
-          <div style={{ background: '#fefce8', border: '1px solid #fde68a', borderRadius: 8, padding: '8px 14px', marginBottom: 16, fontSize: 12, color: '#854d0e' }}>
-            Debug: {debugInfo} {loading ? '(loading...)' : '(loaded)'}
-          </div>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           {CATEGORIES.map(c => (
             <button key={c} onClick={() => setCat(c)} style={{

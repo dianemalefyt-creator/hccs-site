@@ -13,7 +13,6 @@ export async function fetchPosts(showAll = false) {
     const res = await fetch(url)
     if (!res.ok) throw new Error(`API returned ${res.status}`)
     const data = await res.json()
-    console.log('[blog] API response:', data.posts?.length, 'posts', data.error || '')
 
     if (data.posts && data.posts.length > 0) {
       const airtableSlugs = new Set(data.posts.map(p => p.slug))
@@ -32,12 +31,10 @@ export async function fetchPosts(showAll = false) {
     }
 
     if (data.error) {
-      console.warn('[blog] API error:', data.error)
     }
 
     return STATIC_POSTS.map(p => ({ ...p, status: 'published', source: 'static' }))
   } catch (err) {
-    console.error('[blog] Fetch failed:', err)
     return STATIC_POSTS.map(p => ({ ...p, status: 'published', source: 'static' }))
   }
 }

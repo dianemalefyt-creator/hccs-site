@@ -1,53 +1,14 @@
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-
-const docs = [
-  {
-    id: 'HCCS-1.0',
-    title: 'Core Standard',
-    subtitle: 'HCCS-1.0',
-    desc: 'The normative document. 67 controls across 7 governance domains, 5-level maturity model, tiered compliance framework, and formal references. This is what an auditor holds.',
-    details: ['67 auditable controls', '7 governance domains', '5-level maturity model', 'Tiered compliance (self-attest to third-party audit)', 'PCAOB-aligned normative language (MUST/SHOULD/MAY)', 'Grounded in forensic and organizational psychology', '5 appendices including regulatory cross-reference'],
-    file: '/docs/HCCS-1.0-Core-Standard.pdf',
-    color: '#185FA5',
-    pages: '~40',
-    format: 'pdf',
-  },
-  {
-    id: 'HCCS-IG-1.0',
-    title: 'Implementation Guide',
-    subtitle: 'HCCS-IG-1.0',
-    desc: 'The operational companion. Translates every control into implementation requirements, scoring rubrics, audit test procedures (Inspect-Verify-Conclude), worked examples across role types, and control failure classifications.',
-    details: ['Domain-by-domain implementation guidance', 'Maturity level progression criteria (L1 to L5)', '5-point anchored behavioral scoring rubric', 'Audit test procedures for every control', 'Worked examples: executive, technical, operational, hourly', 'Cognitive bias mitigation guidance', 'Assessor and auditor qualification criteria', 'Level 3 implementation playbook (12-month phased roadmap)'],
-    file: '/docs/HCCS-IG-1.0-Implementation-Guide.pdf',
-    color: '#0F6E56',
-    pages: '~45',
-    format: 'pdf',
-  },
-  {
-    id: 'HCCS-T-1.0',
-    title: 'Template Library',
-    subtitle: 'HCCS-T-1.0',
-    desc: '10 fillable templates that produce the evidence required for audit. Every template maps to specific control IDs and threads back through the Implementation Guide to the Core Standard.',
-    details: ['T-01: Role Definition Worksheet', 'T-02: Evaluation Criteria Design', 'T-03: Candidate Evaluation Scorecard', 'T-04: Structured Debrief Record', 'T-05: Hiring Decision Rationale', 'T-06: ADT Inventory Entry', 'T-07: ADT Human Review Record', 'T-08: Process Classification Record', 'T-09: Compensable Factor Analysis', 'T-10: Maturity Self-Assessment Instrument'],
-    file: '/docs/HCCS-T-1.0-Template-Library.docx',
-    color: '#534AB7',
-    pages: '~35',
-    format: 'docx',
-  },
-  {
-    id: 'HCCS-RD-Template',
-    title: 'Role Definition Template',
-    subtitle: 'Fillable Worksheet',
-    desc: 'Blank v2 Role Definition Worksheet. Download, fill out offline (print or digital), then upload to the Role Definition Builder tool to auto-populate all fields. Includes every section with guidance text.',
-    details: ['Current state and role origin', 'Outcomes with baselines and targets', 'Steady state vs transformation milestones', 'Decision rights and accountability', 'Role boundaries (what is NOT owned)', 'Required vs learnable capabilities with evidence prompts', 'Team scope and composition', 'Operating environment', 'Risk and failure modes', 'Reviewer validation section'],
-    file: '/docs/HCCS-Role-Definition-Template.pdf',
-    color: '#993C1D',
-    pages: '3',
-    format: 'pdf',
-  },
-]
+import { getStaticDocs, fetchDocs } from '../lib/docs'
 
 export default function Documents() {
+  const [docs, setDocs] = useState(getStaticDocs())
+
+  useEffect(() => {
+    fetchDocs().then(d => { if (d.length > 0) setDocs(d) }).catch(() => {})
+  }, [])
+
   return (
     <div style={{ minHeight: '100vh', background: '#f8fafc' }}>
       {/* Header */}
@@ -65,7 +26,7 @@ export default function Documents() {
       <section style={{ padding: '60px 24px 80px' }}>
         <div style={{ maxWidth: 900, margin: '0 auto' }}>
           {docs.map((d, i) => (
-            <div key={d.id} style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: 14, padding: 32, marginBottom: 24, borderLeft: `5px solid ${d.color}` }}>
+            <div key={d.docId || d.id || i} style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: 14, padding: 32, marginBottom: 24, borderLeft: `5px solid ${d.color}` }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16, flexWrap: 'wrap', gap: 16 }}>
                 <div>
                   <div style={{ fontSize: 13, fontWeight: 600, color: d.color, letterSpacing: '0.05em', marginBottom: 4 }}>{d.subtitle}</div>
