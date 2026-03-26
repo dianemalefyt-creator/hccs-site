@@ -96,7 +96,7 @@ export default function Home() {
           <div style={{ textAlign: 'center', marginBottom: 16 }}>
             <div style={{ letterSpacing: '0.15em', fontSize: 12, textTransform: 'uppercase', color: '#2563eb', marginBottom: 16, fontWeight: 600 }}>7 control domains</div>
             <h2 style={{ fontSize: 32, fontWeight: 700, color: '#0f172a', marginBottom: 12 }}>Complete coverage. No control gaps.</h2>
-            <p style={{ fontSize: 16, color: '#64748b', maxWidth: 620, margin: '0 auto', lineHeight: 1.6 }}>HCCS\u2122 defines seven control domains that collectively govern the full lifecycle of human capital decisions.</p>
+            <p style={{ fontSize: 16, color: '#64748b', maxWidth: 620, margin: '0 auto', lineHeight: 1.6 }}>HCCS™ defines seven control domains that collectively govern the full lifecycle of human capital decisions.</p>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 16, marginTop: 32 }}>
             {[
@@ -126,7 +126,7 @@ export default function Home() {
           <div style={{ maxWidth: 720, margin: '0 auto', textAlign: 'center', marginBottom: 48 }}>
             <div style={{ letterSpacing: '0.15em', fontSize: 12, textTransform: 'uppercase', color: '#5b9bd5', marginBottom: 16, fontWeight: 600 }}>Maturity model</div>
             <h2 style={{ fontSize: 32, fontWeight: 700, color: '#fff', marginBottom: 16 }}>Five levels. One credibility threshold.</h2>
-            <p style={{ fontSize: 17, color: '#94a3b8', lineHeight: 1.6 }}>HCCS\u2122 defines five levels of control maturity. Level 3 represents the minimum standard for external credibility and is required for organizations making claims of fair, unbiased, or AI-governed hiring practices.</p>
+            <p style={{ fontSize: 17, color: '#94a3b8', lineHeight: 1.6 }}>HCCS™ defines five levels of control maturity. Level 3 represents the minimum standard for external credibility and is required for organizations making claims of fair, unbiased, or AI-governed hiring practices.</p>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {[
@@ -159,7 +159,7 @@ export default function Home() {
               Grounded in decades of forensic and organizational psychology
             </h2>
             <p style={{ fontSize: 17, lineHeight: 1.7, color: '#475569', marginBottom: 24 }}>
-              HCCS\u2122 is not opinion-based. It is grounded in replicated research demonstrating that structured, actuarial methods consistently outperform unstructured judgment in personnel selection, risk assessment, and classification decisions.
+              HCCS™ is not opinion-based. It is grounded in replicated research demonstrating that structured, actuarial methods consistently outperform unstructured judgment in personnel selection, risk assessment, and classification decisions.
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
               {[
@@ -184,7 +184,7 @@ export default function Home() {
           <p style={{ fontSize: 22, color: '#94a3b8', fontStyle: 'italic', lineHeight: 1.6, margin: 0 }}>
             "If an organization cannot reconstruct how a decision was made, what evidence was used, and whether standards were applied consistently, the process must be treated as unreliable."
           </p>
-          <p style={{ fontSize: 14, color: '#475569', marginTop: 16, fontWeight: 600 }}>HCCS\u2122 Governing Principle 1.0</p>
+          <p style={{ fontSize: 14, color: '#475569', marginTop: 16, fontWeight: 600 }}>HCCS™ Governing Principle 1.0</p>
         </div>
       </section>
 
