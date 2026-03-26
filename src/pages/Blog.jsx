@@ -4,34 +4,61 @@ import { POSTS } from '../data/blog'
 import { getAllPosts } from './Admin'
 
 function renderBody(text, navigate) {
+  if (!text) return <p style={{ color: '#94a3b8', fontStyle: 'italic' }}>No content.</p>
   const lines = text.trim().split('\n')
   const elements = []
   let i = 0
+  let listBuffer = []
+
+  const flushList = () => {
+    if (listBuffer.length > 0) {
+      elements.push(
+        <ul key={`list-${elements.length}`} style={{ margin: '12px 0', paddingLeft: 24 }}>
+          {listBuffer.map((item, j) => <li key={j} style={{ fontSize: 16, lineHeight: 1.7, color: '#475569', marginBottom: 6 }}>{renderInline(item, navigate)}</li>)}
+        </ul>
+      )
+      listBuffer = []
+    }
+  }
 
   while (i < lines.length) {
     const line = lines[i]
 
-    if (line.startsWith('## ')) {
+    if (line.startsWith('### ')) {
+      flushList()
+      elements.push(<h3 key={i} style={{ fontSize: 18, fontWeight: 600, color: '#0f172a', margin: '24px 0 8px' }}>{line.slice(4)}</h3>)
+    } else if (line.startsWith('## ')) {
+      flushList()
       elements.push(<h2 key={i} style={{ fontSize: 22, fontWeight: 700, color: '#0f172a', margin: '32px 0 12px' }}>{line.slice(3)}</h2>)
-    } else if (line.startsWith('**') && line.endsWith('**')) {
+    } else if (line.startsWith('> ')) {
+      flushList()
+      elements.push(<blockquote key={i} style={{ borderLeft: '3px solid #5b9bd5', paddingLeft: 16, margin: '16px 0', color: '#475569', fontStyle: 'italic', fontSize: 16, lineHeight: 1.7 }}>{renderInline(line.slice(2), navigate)}</blockquote>)
+    } else if (line.startsWith('- ') || line.startsWith('* ')) {
+      listBuffer.push(line.slice(2))
+    } else if (line.startsWith('**') && line.endsWith('**') && !line.includes('**:')) {
+      flushList()
       elements.push(<p key={i} style={{ fontSize: 16, lineHeight: 1.7, color: '#334155', fontWeight: 700, margin: '16px 0 4px' }}>{line.slice(2, -2)}</p>)
     } else if (line.startsWith('**') && line.includes('**:')) {
+      flushList()
       const boldEnd = line.indexOf('**:')
       const bold = line.slice(2, boldEnd)
       const rest = line.slice(boldEnd + 3)
       elements.push(<p key={i} style={{ fontSize: 16, lineHeight: 1.7, color: '#334155', margin: '12px 0' }}><strong>{bold}:</strong>{renderInline(rest, navigate)}</p>)
     } else if (line.trim() === '') {
-      // skip blank lines
+      flushList()
     } else {
+      flushList()
       elements.push(<p key={i} style={{ fontSize: 16, lineHeight: 1.7, color: '#475569', margin: '12px 0' }}>{renderInline(line, navigate)}</p>)
     }
     i++
   }
+  flushList()
   return elements
 }
 
 function renderInline(text, navigate) {
-  const parts = text.split(/(\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*)/g)
+  // Split on links, bold, and italic patterns
+  const parts = text.split(/(\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*|\*[^*]+\*)/g)
   return parts.map((part, i) => {
     const linkMatch = part.match(/\[([^\]]+)\]\(([^)]+)\)/)
     if (linkMatch) {
@@ -41,8 +68,10 @@ function renderInline(text, navigate) {
       }
       return <a key={i} href={href} target="_blank" rel="noopener" style={{ color: '#2563eb' }}>{label}</a>
     }
-    const boldMatch = part.match(/\*\*([^*]+)\*\*/)
+    const boldMatch = part.match(/^\*\*([^*]+)\*\*$/)
     if (boldMatch) return <strong key={i}>{boldMatch[1]}</strong>
+    const italicMatch = part.match(/^\*([^*]+)\*$/)
+    if (italicMatch) return <em key={i}>{italicMatch[1]}</em>
     return <span key={i}>{part}</span>
   })
 }
@@ -94,7 +123,7 @@ function BlogList() {
                   <span style={{ fontSize: 12, color: '#94a3b8' }}>{post.readTime}</span>
                 </div>
                 <h2 style={{ fontSize: 22, fontWeight: 700, color: '#0f172a', margin: '0 0 8px', lineHeight: 1.3 }}>{post.title}</h2>
-                <p style={{ fontSize: 15, color: '#64748b', lineHeight: 1.6, margin: 0 }}>{post.excerpt}</p>
+                <p style={{ fontSize: 15, color: '#64748b', lineHeight: 1.6, margin: 0 }}>{post.excerpt || (post.body || post.content || '').slice(0, 150) + '...'}</p>
               </article>
             </Link>
           ))}
@@ -138,7 +167,7 @@ function BlogPost() {
       <section style={{ padding: '48px 24px 80px' }}>
         <div style={{ maxWidth: 720, margin: '0 auto' }}>
           <article style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: 14, padding: '40px 44px' }}>
-            {renderBody(post.body, navigate)}
+            {renderBody(post.body || post.content, navigate)}
           </article>
 
           {/* Author */}

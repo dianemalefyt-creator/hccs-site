@@ -44,12 +44,12 @@ export default function Admin() {
   const autoSlug = (title) => title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60)
 
   const startNew = () => {
-    setForm({ title: '', slug: '', excerpt: '', category: 'Governance', content: '', date: new Date().toISOString().split('T')[0] })
+    setForm({ title: '', slug: '', excerpt: '', category: 'Governance', content: '', date: new Date().toISOString().split('T')[0], author: 'Diane Malefyt', authorTitle: 'Author, HCCS™ Standard' })
     setEditing('new')
   }
 
   const startEdit = (post) => {
-    setForm({ title: post.title, slug: post.slug, excerpt: post.excerpt, category: post.category, content: post.content, date: post.date })
+    setForm({ title: post.title, slug: post.slug, excerpt: post.excerpt, category: post.category, content: post.body || post.content || '', date: post.date, author: post.author || 'Diane Malefyt', authorTitle: post.authorTitle || '' })
     setEditing(post.slug)
   }
 
@@ -58,10 +58,11 @@ export default function Admin() {
     const dynamic = getDynamicPosts()
     const post = {
       ...form,
+      body: form.content,
       slug: form.slug || autoSlug(form.title),
       date: form.date || new Date().toISOString().split('T')[0],
-      author: 'Diane Malefyt',
-      authorTitle: 'Author, HCCS™ Standard',
+      author: form.author || 'Diane Malefyt',
+      authorTitle: form.authorTitle || '',
       readTime: `${Math.max(3, Math.ceil(form.content.split(/\s+/).length / 200))} min read`,
     }
 
@@ -142,6 +143,18 @@ export default function Admin() {
               style={{ width: '100%', padding: '10px 12px', borderRadius: 8, border: '1px solid #e2e8f0', fontSize: 14, outline: 'none', boxSizing: 'border-box' }} />
           </div>
         </div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 16 }}>
+          <div>
+            <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#334155', marginBottom: 4 }}>Author</label>
+            <input value={form.author} onChange={e => set('author', e.target.value)} placeholder="Author name"
+              style={{ width: '100%', padding: '10px 12px', borderRadius: 8, border: '1px solid #e2e8f0', fontSize: 14, outline: 'none', boxSizing: 'border-box' }} />
+          </div>
+          <div>
+            <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#334155', marginBottom: 4 }}>Author title</label>
+            <input value={form.authorTitle} onChange={e => set('authorTitle', e.target.value)} placeholder="e.g. Author, HCCS™ Standard"
+              style={{ width: '100%', padding: '10px 12px', borderRadius: 8, border: '1px solid #e2e8f0', fontSize: 14, outline: 'none', boxSizing: 'border-box' }} />
+          </div>
+        </div>
         <div style={{ marginBottom: 16 }}>
           <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#334155', marginBottom: 4 }}>Excerpt (shown in listing and meta)</label>
           <textarea value={form.excerpt} onChange={e => set('excerpt', e.target.value)} rows={2}
@@ -164,7 +177,7 @@ export default function Admin() {
             <div style={{ fontSize: 12, fontWeight: 600, color: '#64748b', marginBottom: 12 }}>Preview</div>
             <div style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: 12, padding: '32px 28px' }}>
               <h1 style={{ fontSize: 24, fontWeight: 700, color: '#0f172a', margin: '0 0 8px' }}>{form.title}</h1>
-              <div style={{ fontSize: 13, color: '#64748b', marginBottom: 20 }}>{form.date} · {form.category} · Diane Malefyt</div>
+              <div style={{ fontSize: 13, color: '#64748b', marginBottom: 20 }}>{form.date} · {form.category} · {form.author || 'Author'}</div>
               <div style={{ fontSize: 15, lineHeight: 1.8, color: '#334155' }}>
                 {form.content.split('\n').map((line, i) => {
                   if (line.startsWith('## ')) return <h2 key={i} style={{ fontSize: 20, fontWeight: 700, color: '#0f172a', margin: '24px 0 8px' }}>{line.slice(3)}</h2>
