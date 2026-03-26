@@ -321,9 +321,10 @@ ${d.environment||d.scale||d.systemFragmentation?`<h2>The environment</h2><p>${[d
     const w=window.open('','_blank');w.document.write(html);w.document.close()
   }
 
-  const F=(k,l,ph,type='text')=>(
+  const F=(k,l,ph,type='text',help='')=>(
     <div style={{marginBottom:12}}>
-      <label style={{display:'block',fontSize:12,fontWeight:600,color:'#334155',marginBottom:4}}>{l}</label>
+      <label style={{display:'block',fontSize:12,fontWeight:600,color:'#334155',marginBottom:2}}>{l}</label>
+      {help&&<div style={{fontSize:11,color:'#94a3b8',marginBottom:4,lineHeight:1.4}}>{help}</div>}
       {type==='textarea'?(<textarea value={d[k]||''} onChange={e=>set(k,e.target.value)} placeholder={ph} rows={2}
         style={{width:'100%',padding:'10px 12px',borderRadius:8,border:'1px solid #e2e8f0',fontSize:14,outline:'none',fontFamily:'inherit',resize:'vertical',boxSizing:'border-box',lineHeight:1.5}}/>
       ):type==='select'?null:(
@@ -334,12 +335,84 @@ ${d.environment||d.scale||d.systemFragmentation?`<h2>The environment</h2><p>${[d
   )
   const S=(title)=>(<div style={{fontSize:16,fontWeight:700,color:'#185FA5',marginBottom:8,paddingBottom:4,borderBottom:'2px solid #185FA520',marginTop:24}}>{title}</div>)
 
+  const parsePDF = async (file) => {
+    const text = await file.text()
+    // Try to extract fields from the known HCCS Role Definition format
+    const get = (label, nextLabel) => {
+      const re = new RegExp(label + '[\\s:]*([\\s\\S]*?)(?=' + (nextLabel || '$') + ')', 'i')
+      const m = text.match(re)
+      return m ? m[1].replace(/^\s*\n/, '').trim().slice(0, 1000) : ''
+    }
+    const parsed = {}
+    // Title is usually the first large text after header
+    const titleM = text.match(/(?:Role Definition|ROLE DEFINITION)[^\n]*\n+([^\n]+)/i)
+    if (titleM) parsed.title = titleM[1].trim()
+    // Try common field patterns from our generated PDFs
+    const fieldMap = [
+      ['dept','Department','Reports to'],['reportsTo','Reports to','Defined:'],
+      ['roleType','Role type','Why this role'],['whyNow','Why this role exists now','Current state'],
+      ['currentState','Current state','Business outcomes'],
+      ['outcome1','Primary outcome','Secondary outcome'],['outcome2','Secondary outcome','Tertiary outcome'],
+      ['outcome3','Tertiary outcome','Steady state'],
+      ['baseline1','Current baseline','Target state'],['target1','Target state','Secondary'],
+      ['steadyState','Ongoing purpose','90-day'],['d90','90-day milestone','6-month'],
+      ['d180','6-month milestone','12-month'],['d365','12-month milestone','Decision rights'],
+      ['decidesAlone','Decides independently','Decides with'],['decidesConsult','Decides with consultation','Requires approval'],
+      ['needsApproval','Requires approval','Budget authority'],['budget','Budget authority','Veto'],
+      ['vetoAuthority','Veto authority','Accountable'],['accountableTo','Accountable to','Role boundaries'],
+      ['notOwned','Out of scope','Partner teams'],['partnerTeams','Partner teams','Influenced'],
+      ['influencedMetrics','Influenced.*metrics','Required'],
+      ['required','Required at hire','Learnable'],['learnable','Learnable post-hire','Evidence'],
+      ['evidencePrompts','Evidence prompts','Explicitly NOT'],['antiReqs','Explicitly NOT required','Scope'],
+      ['directs','Direct reports','Team composition'],['directRoles','Team composition','Report levels'],
+      ['teamMandate','Team mandate','Open reqs'],['openReqs','Open reqs','Indirect'],
+      ['indirects','Indirect','Geographic'],['geoSpan','Geographic span','Stakeholder'],
+      ['stakeholders','Stakeholder exposure','Ambiguity'],['ambiguity','Ambiguity level','Operating'],
+      ['companyStage','Company stage','Centralized'],['structure','Centralized','Regulatory'],
+      ['environment','Regulatory','Travel'],['travel','Travel','System'],
+      ['systemFragmentation','System.*fragmentation','Volume'],['scale','Volume.*scale','Risk'],
+      ['riskReduces','Risks this role reduces','Impact if'],['failureImpact','Impact if role underperforms','Tool-generated'],
+    ]
+    fieldMap.forEach(([key, label, next]) => {
+      const v = get(label, next)
+      if (v && v.length > 1 && v !== 'Not specified' && v !== 'N/A' && v !== 'Not defined') parsed[key] = v
+    })
+    setD(p => { const next = { ...p, ...parsed }; localStorage.setItem('hccs_jd', JSON.stringify(next)); return next })
+  }
+
   return (
     <div>
       <div style={{background:'#eff6ff',border:'1px solid #bfdbfe',borderRadius:10,padding:'14px 18px',marginBottom:20}}>
         <div style={{fontSize:14,color:'#1e40af',lineHeight:1.6}}>
           <strong>v2: Role Design System.</strong> This goes beyond a JD. It captures why the role exists, what's broken today, measurable outcomes with baselines, role boundaries, team composition, operating conditions, risk, and milestones. Generates both an <strong>internal audit artifact</strong> and a <strong>public job posting</strong>.
         </div>
+      </div>
+
+      {/* PDF Upload */}
+      <div style={{background:'#f8fafc',border:'1px dashed #cbd5e1',borderRadius:10,padding:'16px 20px',marginBottom:20,textAlign:'center'}}>
+        <div style={{fontSize:14,fontWeight:600,color:'#334155',marginBottom:6}}>Have an existing role definition?</div>
+        <div style={{fontSize:13,color:'#64748b',marginBottom:10}}>Upload a previous HCCS™ Role Definition PDF or any text-based role document. Fields will auto-populate.</div>
+        <label style={{display:'inline-block',padding:'10px 24px',borderRadius:8,border:'1px solid #2563eb',background:'#fff',color:'#2563eb',fontSize:14,fontWeight:600,cursor:'pointer'}}>
+          Upload PDF or text file
+          <input type="file" accept=".pdf,.txt,.text" style={{display:'none'}} onChange={e=>{
+            const file=e.target.files?.[0]
+            if(!file)return
+            if(file.name.endsWith('.pdf')){
+              // For PDF, use FileReader to get text
+              const reader=new FileReader()
+              reader.onload=async()=>{
+                // Try to extract text from PDF binary - basic extraction
+                const text=reader.result
+                const textContent=text.replace(/[^\x20-\x7E\n\r\t]/g,' ').replace(/\s+/g,' ')
+                parsePDF({text:()=>Promise.resolve(textContent)})
+              }
+              reader.readAsText(file)
+            } else {
+              parsePDF(file)
+            }
+            e.target.value=''
+          }}/>
+        </label>
       </div>
 
       {/* Warnings */}
@@ -352,89 +425,92 @@ ${d.environment||d.scale||d.systemFragmentation?`<h2>The environment</h2><p>${[d
 
       {S('Role information')}
       <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:10}}>
-        {F('title','Role title','e.g. Director of Talent Acquisition Strategy')}
-        {F('dept','Department','e.g. People / Human Capital')}
-        {F('reportsTo','Reports to','e.g. Chief People Officer')}
+        {F('title','Role title','e.g. Director of Talent Acquisition Strategy','text','The official title. Consider whether the level matches the scope before finalizing.')}
+        {F('dept','Department','e.g. People / Human Capital','text','The function or business unit this role sits in.')}
+        {F('reportsTo','Reports to','e.g. Chief People Officer','text','Direct manager. This signals level and decision authority.')}
       </div>
       <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}}>
         <div style={{marginBottom:12}}>
-          <label style={{display:'block',fontSize:12,fontWeight:600,color:'#334155',marginBottom:4}}>Role type</label>
+          <label style={{display:'block',fontSize:12,fontWeight:600,color:'#334155',marginBottom:2}}>Role type</label>
+          <div style={{fontSize:11,color:'#94a3b8',marginBottom:4}}>Why is this opening happening? Different types require different capabilities.</div>
           <select value={d.roleType||''} onChange={e=>set('roleType',e.target.value)} style={{width:'100%',padding:'10px 12px',borderRadius:8,border:'1px solid #e2e8f0',fontSize:14,background:'#fff'}}>
             <option value="">Select...</option>
             <option value="Net new role">Net new role</option><option value="Backfill">Backfill</option><option value="Transformation role">Transformation role</option><option value="Turnaround role">Turnaround role</option><option value="Expansion / growth">Expansion / growth</option>
           </select>
         </div>
-        {F('whyNow','Why does this role exist now?','What triggered the opening? What problem, gap, or opportunity?','textarea')}
+        {F('whyNow','Why does this role exist now?','What triggered the opening? What problem, gap, or opportunity?','textarea','Be specific. "We need more people" is not a reason. "Three compliance incidents in Q4 with no governance framework" is.')}
       </div>
-      {F('currentState','What is broken, slow, risky, or unclear today?','The current state this role is meant to change. Be specific.','textarea')}
+      {F('currentState','What is broken, slow, risky, or unclear today?','The current state this role is meant to change.','textarea','Describe the actual conditions. Without this, outcomes become aspirational statements instead of responses to real problems.')}
 
       {S('Business outcomes with baselines (RG-002)')}
-      <p style={{fontSize:13,color:'#64748b',margin:'0 0 10px'}}>What will this person deliver? Include the baseline you're measuring from.</p>
-      {F('outcome1','Primary outcome','e.g. Reduce time-to-decision by 30% within 12 months','textarea')}
+      <p style={{fontSize:13,color:'#64748b',margin:'0 0 10px'}}>What will this person deliver? Include the baseline you're measuring from. Without a starting point, no outcome can be audited.</p>
+      {F('outcome1','Primary outcome','e.g. Reduce time-to-decision by 30% within 12 months','textarea','The #1 reason this role exists. Should be a measurable result, not an activity. "Reduce X by Y" not "manage the team."')}
       <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}}>
-        {F('baseline1','Current baseline','e.g. Average 42 days today')}
-        {F('target1','Target state + timeline','e.g. 29 days within 12 months')}
+        {F('baseline1','Current baseline','e.g. Average 42 days today','text','Where are things now? This is the number you measure improvement from.')}
+        {F('target1','Target state + timeline','e.g. 29 days within 12 months','text','The specific target and when it should be hit.')}
       </div>
-      {F('outcome2','Secondary outcome','','textarea')}
+      {F('outcome2','Secondary outcome','','textarea','The second most important deliverable. Ideally a different dimension of impact than outcome 1.')}
       <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}}>
-        {F('baseline2','Current baseline','')}
-        {F('target2','Target state + timeline','')}
+        {F('baseline2','Current baseline','','text','Starting measurement for outcome 2.')}
+        {F('target2','Target state + timeline','','text','Target and timeline for outcome 2.')}
       </div>
-      {F('outcome3','Tertiary outcome (optional)','','textarea')}
+      {F('outcome3','Tertiary outcome (optional)','','textarea','A third outcome if relevant. Avoid adding outcomes just to fill space.')}
 
       {S('Steady state vs. transformation mandate')}
-      <p style={{fontSize:13,color:'#64748b',margin:'0 0 10px'}}>Separate the ongoing job from the first-year mission. They're not always the same.</p>
-      {F('steadyState','Why this role exists in steady state','What this person does ongoing, beyond the initial transformation','textarea')}
-      {F('d90','90-day milestone','What should be true by day 90?','textarea')}
-      {F('d180','6-month milestone','What should be true by month 6?','textarea')}
-      {F('d365','12-month milestone','What should be true by month 12?','textarea')}
+      <p style={{fontSize:13,color:'#64748b',margin:'0 0 10px'}}>Separate the ongoing job from the first-year mission. A transformation mandate ends. The steady-state purpose persists.</p>
+      {F('steadyState','Why this role exists in steady state','What this person does ongoing, beyond the initial transformation','textarea','Once the first-year mission is done, what does this role continue to do? This is the permanent value.')}
+      {F('d90','90-day milestone','What should be true by day 90?','textarea','Usually: assess current state, build relationships, identify quick wins. What should the hiring manager see at day 90?')}
+      {F('d180','6-month milestone','What should be true by month 6?','textarea','Usually: first process changes shipped, team stabilized, initial metrics moving. Visible progress.')}
+      {F('d365','12-month milestone','What should be true by month 12?','textarea','Usually: primary outcome measurably improved, systems in place, governance operational. The proof of hire quality.')}
 
       {S('Decision rights & accountability (RG-004)')}
-      {F('decidesAlone','Decides independently','','textarea')}
-      {F('decidesConsult','Decides with consultation','','textarea')}
-      {F('needsApproval','Requires approval','','textarea')}
+      {F('decidesAlone','Decides independently','','textarea','What can this person do without asking anyone? This is where real authority lives. If this is empty, the role has no autonomy.')}
+      {F('decidesConsult','Decides with consultation','','textarea','What requires input from others before acting? Name the consultees. "Cross-functional alignment" is too vague.')}
+      {F('needsApproval','Requires approval','','textarea','What must be approved before this person can act? Name the approver and threshold.')}
       <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}}>
-        {F('budget','Budget authority','e.g. Up to $25K independently')}
-        {F('vetoAuthority','Who can veto this role\'s decisions?','e.g. CPO on policy, Legal on compliance')}
+        {F('budget','Budget authority','e.g. Up to $25K independently','text','Specific dollar thresholds and approval tiers. This signals level more than title does.')}
+        {F('vetoAuthority','Who can veto this role\'s decisions?','e.g. CPO on policy, Legal on compliance','text','Name the person and the domain. Unspoken vetoes create fake authority.')}
       </div>
-      {F('accountableTo','If this role fails, who is accountable and what breaks?','Be specific about consequences','textarea')}
+      {F('accountableTo','If this role fails, who is accountable and what breaks?','Be specific about consequences','textarea','Not "the team suffers." What specifically breaks? Revenue impact? Compliance exposure? Candidate experience collapse?')}
 
       {S('Role boundaries: what this role does NOT own')}
-      <p style={{fontSize:13,color:'#64748b',margin:'0 0 10px'}}>Good roles have edges. Without explicit boundaries, scope expands by assumption.</p>
-      {F('notOwned','Out of scope responsibilities','e.g. Employer brand, compensation design, enterprise workforce planning','textarea')}
-      {F('partnerTeams','Partner teams (not owned)','e.g. HR shared services, Legal, Finance','textarea')}
-      {F('influencedMetrics','Metrics that influence this role but are not directly owned','e.g. Overall attrition, employee engagement scores','textarea')}
+      <p style={{fontSize:13,color:'#64748b',margin:'0 0 10px'}}>Good roles have edges. Without explicit boundaries, scope expands by assumption and the role becomes ungovernable.</p>
+      {F('notOwned','Out of scope responsibilities','e.g. Employer brand, compensation design, enterprise workforce planning','textarea','What neighboring work is explicitly NOT this person\'s job? This prevents scope creep and sets honest expectations.')}
+      {F('partnerTeams','Partner teams (not owned)','e.g. HR shared services, Legal, Finance','textarea','Teams this role works with but does not manage. Clarifies where collaboration ends and ownership begins.')}
+      {F('influencedMetrics','Metrics that influence this role but are not directly owned','e.g. Overall attrition, employee engagement scores','textarea','Numbers this person cares about but cannot fully control. Prevents misaligned accountability.')}
 
       {S('Required vs. learnable capabilities (RG-003)')}
-      {F('required','Required at hire (one per line)','What would you reject someone for lacking?','textarea')}
-      {F('learnable','Learnable post-hire (one per line)','What can they develop in 6-12 months?','textarea')}
-      {F('antiReqs','Explicitly NOT required','e.g. Specific ATS platform, name brand company, continuous employment','textarea')}
-      {F('evidencePrompts','Evidence prompts: what counts as proof for required capabilities?','e.g. "Describe a process you redesigned. Show the before/after metrics."','textarea')}
+      {F('required','Required at hire (one per line)','What would you reject someone for lacking?','textarea','For each: "Would I pass on someone strong on everything else who lacked this?" If no, move it to learnable.')}
+      {F('learnable','Learnable post-hire (one per line)','What can they develop in 6-12 months?','textarea','What the company teaches. Company systems, internal processes, domain-specific knowledge. These should NOT appear in screening criteria.')}
+      {F('antiReqs','Explicitly NOT required','e.g. Specific ATS platform, name brand company, continuous employment','textarea','What you are deliberately choosing not to screen for. This fights credential inflation and signals inclusion.')}
+      {F('evidencePrompts','Evidence prompts: what counts as proof for required capabilities?','e.g. "Describe a process you redesigned. Show the before/after metrics."','textarea','What should interviewers ask or look for? Without this, evaluators default to gut feel. One prompt per required capability is ideal.')}
 
       {S('Team scope (RG-005)')}
       <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:10}}>
-        {F('directs','Direct reports','e.g. 6')}
-        {F('directRoles','Team composition','e.g. 2 recruiters, 2 ops analysts, 2 coordinators')}
-        {F('directLevels','Report levels','e.g. Senior Individual Contributors')}
+        {F('directs','Direct reports','e.g. 6','text','Number alone is insufficient. A team of 6 recruiters is a fundamentally different role than 6 regional leads.')}
+        {F('directRoles','Team composition','e.g. 2 recruiters, 2 ops analysts, 2 coordinators','text','What roles make up the team? This defines the management challenge.')}
+        {F('directLevels','Report levels','e.g. Senior ICs and mid-level','text','Junior team = heavy coaching. Senior team = heavy coordination. Different capabilities required.')}
       </div>
       <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}}>
         <div style={{marginBottom:12}}>
-          <label style={{display:'block',fontSize:12,fontWeight:600,color:'#334155',marginBottom:4}}>Team mandate</label>
+          <label style={{display:'block',fontSize:12,fontWeight:600,color:'#334155',marginBottom:2}}>Team mandate</label>
+          <div style={{fontSize:11,color:'#94a3b8',marginBottom:4}}>Is this person building something new, fixing something broken, optimizing what works, or scaling growth?</div>
           <select value={d.teamMandate||''} onChange={e=>set('teamMandate',e.target.value)} style={{width:'100%',padding:'10px 12px',borderRadius:8,border:'1px solid #e2e8f0',fontSize:14,background:'#fff'}}>
             <option value="">Select...</option>
             <option value="Build: creating from scratch">Build from scratch</option><option value="Fix: repairing broken systems">Fix / repair</option><option value="Optimize: improving working systems">Optimize / improve</option><option value="Scale: growing what works">Scale / grow</option><option value="Lead: sustaining high performance">Sustain / lead</option>
           </select>
         </div>
-        {F('openReqs','Open reqs on the team','e.g. 2 open, backfill + new')}
+        {F('openReqs','Open reqs on the team','e.g. 2 open, backfill + new','text','Are they inheriting a full team or hiring half of it? Major difference in first 90 days.')}
       </div>
       <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}}>
-        {F('indirects','Indirect / cross-functional reach','e.g. 25+ hiring managers, HRBPs')}
-        {F('geoSpan','Geographic span','e.g. US + EMEA, 3 time zones')}
+        {F('indirects','Indirect / cross-functional reach','e.g. 25+ hiring managers, HRBPs','text','People this role must influence without direct authority. Signals the persuasion and coordination load.')}
+        {F('geoSpan','Geographic span','e.g. US + EMEA, 3 time zones','text','Time zones, countries, regulatory jurisdictions. Each adds complexity.')}
       </div>
       <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}}>
-        {F('stakeholders','Stakeholder exposure','e.g. VP+, quarterly exec reporting')}
+        {F('stakeholders','Stakeholder exposure','e.g. VP+, quarterly exec reporting','text','Who does this person present to? Board exposure is a different job than manager-level reporting.')}
         <div style={{marginBottom:12}}>
-          <label style={{display:'block',fontSize:12,fontWeight:600,color:'#334155',marginBottom:4}}>Ambiguity level</label>
+          <label style={{display:'block',fontSize:12,fontWeight:600,color:'#334155',marginBottom:2}}>Ambiguity level</label>
+          <div style={{fontSize:11,color:'#94a3b8',marginBottom:4}}>Low = clear problems, known solutions. High = novel problems, no playbook. Drives capability requirements.</div>
           <select value={d.ambiguity||''} onChange={e=>set('ambiguity',e.target.value)} style={{width:'100%',padding:'10px 12px',borderRadius:8,border:'1px solid #e2e8f0',fontSize:14,background:'#fff'}}>
             <option value="">Select...</option>
             {AMBIGUITY.map(a=><option key={a} value={a}>{a}</option>)}
@@ -444,19 +520,19 @@ ${d.environment||d.scale||d.systemFragmentation?`<h2>The environment</h2><p>${[d
 
       {S('Operating environment')}
       <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}}>
-        {F('companyStage','Company stage','e.g. Series C, 800 employees')}
-        {F('structure','Centralized vs decentralized','e.g. Centralized TA function')}
-        {F('environment','Regulatory / legal complexity','e.g. GDPR, OFCCP, multi-state')}
-        {F('workModel','Work model','e.g. Hybrid, 3 days in office')}
-        {F('travel','Travel','e.g. 15%, quarterly onsite')}
-        {F('systemFragmentation','System/tool fragmentation','e.g. 3 different ATS across BUs')}
-        {F('scale','Volume / scale expectations','e.g. 200 hires/year across 4 BUs')}
+        {F('companyStage','Company stage','e.g. Series C, 800 employees','text','Growth stage, employee count, revenue range. Signals pace, resources, and structure maturity.')}
+        {F('structure','Centralized vs decentralized','e.g. Centralized TA function','text','Is this function centralized (one team serves all) or distributed (embedded in BUs)? Affects authority model.')}
+        {F('environment','Regulatory / legal complexity','e.g. GDPR, OFCCP, multi-state','text','Compliance obligations that constrain how this role operates. Required for global or regulated industries.')}
+        {F('workModel','Work model','e.g. Hybrid, 3 days in office','text','Remote, hybrid, in-office. Include any location requirements.')}
+        {F('travel','Travel','e.g. 15%, quarterly onsite','text','Expected travel as percentage and pattern. Affects candidate pool significantly.')}
+        {F('systemFragmentation','System/tool fragmentation','e.g. 3 different ATS across BUs','text','How many systems exist? Are they integrated? Fragmentation signals operational difficulty.')}
+        {F('scale','Volume / scale expectations','e.g. 200 hires/year across 4 BUs','text','The operational volume this role must handle. Drives headcount and tooling needs.')}
       </div>
 
       {S('Risk & failure modes')}
-      <p style={{fontSize:13,color:'#64748b',margin:'0 0 10px'}}>A role is also defined by the risks it exists to contain.</p>
-      {F('riskReduces','What risks does this role reduce?','e.g. Inconsistent evaluation, undocumented decisions, AI tool compliance gaps','textarea')}
-      {F('failureImpact','What happens if this role underperforms?','e.g. Continued legal exposure, manager-driven hiring with no governance','textarea')}
+      <p style={{fontSize:13,color:'#64748b',margin:'0 0 10px'}}>A role is defined by the risks it exists to contain, not just the goals it pursues.</p>
+      {F('riskReduces','What risks does this role reduce?','e.g. Inconsistent evaluation, undocumented decisions, AI tool compliance gaps','textarea','Name the specific risks. Compliance, legal, operational, reputational. This justifies the role\'s existence.')}
+      {F('failureImpact','What happens if this role underperforms?','e.g. Continued legal exposure, manager-driven hiring with no governance','textarea','Be honest about consequences. This informs the urgency, capability bar, and compensation.')}
 
       {!canUse('jd') ? <UpgradePrompt toolId="jd" /> : (
       <div style={{display:'flex',gap:12,marginTop:28,paddingTop:20,borderTop:'1px solid #e2e8f0',flexWrap:'wrap'}}>

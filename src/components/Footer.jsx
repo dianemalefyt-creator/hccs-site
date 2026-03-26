@@ -26,9 +26,12 @@ export default function Footer() {
         <div>
           <div style={{ fontSize: 12, fontWeight: 600, color: '#5b9bd5', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 16 }}>Tools</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            <Link to="/assess" style={{ fontSize: 14, color: '#94a3b8' }}>Maturity Assessment</Link>
-            <Link to="/documents" style={{ fontSize: 14, color: '#94a3b8' }}>Gap Analysis</Link>
-            <Link to="/documents" style={{ fontSize: 14, color: '#94a3b8' }}>Remediation Roadmap</Link>
+            <Link to="/assess" style={{ fontSize: 14, color: '#94a3b8' }}>Quick Assessment</Link>
+            <Link to="/assess/full" style={{ fontSize: 14, color: '#94a3b8' }}>Full Assessment</Link>
+            <Link to="/tools" style={{ fontSize: 14, color: '#94a3b8' }}>Free Tools</Link>
+            <Link to="/workflow" style={{ fontSize: 14, color: '#94a3b8' }}>Guided Workflow</Link>
+            <Link to="/business-case" style={{ fontSize: 14, color: '#94a3b8' }}>Business Case &amp; ROI</Link>
+            <Link to="/pricing" style={{ fontSize: 14, color: '#94a3b8' }}>Pricing</Link>
           </div>
         </div>
         <div>
@@ -38,7 +41,6 @@ export default function Footer() {
             <Link to="/contact" style={{ fontSize: 14, color: '#94a3b8' }}>Contact</Link>
             <Link to="/rights" style={{ fontSize: 14, color: '#94a3b8' }}>Applicant's Bill of Rights</Link>
             <Link to="/org-rights" style={{ fontSize: 14, color: '#94a3b8' }}>Organization's Bill of Rights</Link>
-            <Link to="/business-case" style={{ fontSize: 14, color: '#94a3b8' }}>Business Case &amp; ROI</Link>
             <Link to="/blog" style={{ fontSize: 14, color: '#94a3b8' }}>Blog</Link>
             <a href="https://www.linkedin.com/in/dianemalefyt/" target="_blank" rel="noopener" style={{ fontSize: 14, color: '#94a3b8' }}>LinkedIn</a>
           </div>
