@@ -272,6 +272,7 @@ export default function Admin() {
           </div>
         </div>
 
+        {saveMsg && <div style={{ marginBottom: 16, padding: '10px 16px', borderRadius: 8, background: saveMsg.startsWith('Error') ? '#fef2f2' : saveMsg.startsWith('Done') ? '#f0fdf4' : '#eff6ff', color: saveMsg.startsWith('Error') ? '#dc2626' : saveMsg.startsWith('Done') ? '#059669' : '#2563eb', fontSize: 13, fontWeight: 600 }}>{saveMsg}</div>}
         {loading && <div style={{ textAlign: 'center', padding: '24px', color: '#64748b', fontSize: 14 }}>Loading from Airtable...</div>}
         {!loading && posts.length === 0 ? (
           <div style={{ textAlign: 'center', padding: 48, color: '#64748b' }}>No posts yet. Click "New post" to create one.</div>
@@ -316,8 +317,35 @@ export default function Admin() {
             Posts use Markdown-style formatting: <code style={{ background: '#1e293b', padding: '2px 6px', borderRadius: 4 }}>## Heading</code>, <code style={{ background: '#1e293b', padding: '2px 6px', borderRadius: 4 }}>**bold**</code>, <code style={{ background: '#1e293b', padding: '2px 6px', borderRadius: 4 }}>*italic*</code>, <code style={{ background: '#1e293b', padding: '2px 6px', borderRadius: 4 }}>{'>'}  blockquote</code>, <code style={{ background: '#1e293b', padding: '2px 6px', borderRadius: 4 }}>- list item</code>
           </div>
           <div style={{ fontSize: 13, color: '#64748b', marginTop: 8 }}>
-            <strong>Draft/Publish:</strong> New posts start as drafts. Drafts are only visible in admin. Click "Publish" to make a post live on the blog. You can unpublish anytime. Built-in posts (from code) are always published unless overridden.
+            <strong>Draft/Publish:</strong> New posts start as drafts. Drafts are only visible in admin. Click "Publish" to make a post live on the blog. You can unpublish anytime.
           </div>
+          {STATIC_POSTS.length > 0 && (
+            <div style={{ marginTop: 16, paddingTop: 16, borderTop: '1px solid #1e293b' }}>
+              <div style={{ fontSize: 13, color: '#94a3b8', marginBottom: 8 }}>{STATIC_POSTS.length} built-in posts exist in code. Push them to Airtable so everything lives in one place.</div>
+              <button onClick={async () => {
+                if (!confirm(`Push ${STATIC_POSTS.length} built-in posts to Airtable? (Skips any that already exist by slug)`)) return
+                setLoading(true)
+                setSaveMsg('Seeding posts...')
+                const existingSlugs = new Set(posts.filter(p => p.source === 'airtable').map(p => p.slug))
+                let added = 0
+                for (const sp of STATIC_POSTS) {
+                  if (existingSlugs.has(sp.slug)) continue
+                  await createPost({
+                    title: sp.title, slug: sp.slug, excerpt: sp.excerpt || '', category: sp.category || 'Governance',
+                    body: sp.body || sp.content || '', date: sp.date, author: sp.author || 'Diane Malefyt',
+                    authorTitle: sp.authorTitle || 'Author, HCCS™ Standard', status: 'published',
+                    readTime: sp.readTime || '4 min read',
+                  })
+                  added++
+                }
+                await refreshPosts()
+                setSaveMsg(added > 0 ? `Done! Added ${added} posts to Airtable.` : 'All built-in posts already exist in Airtable.')
+              }} disabled={loading}
+                style={{ padding: '8px 20px', borderRadius: 6, border: '1px solid #5b9bd5', background: 'transparent', color: '#5b9bd5', fontSize: 13, fontWeight: 600, cursor: 'pointer' }}>
+                Push built-in posts to Airtable
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
