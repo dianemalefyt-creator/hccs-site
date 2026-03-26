@@ -8,6 +8,11 @@ const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY
 const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID
 const TABLE = 'Blog'
 
+const HEADERS = {
+  'Content-Type': 'application/json',
+  'Access-Control-Allow-Origin': '*',
+}
+
 async function airtableFetch(path, options = {}) {
   const res = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${TABLE}${path}`, {
     ...options,
@@ -22,11 +27,16 @@ async function airtableFetch(path, options = {}) {
 
 exports.handler = async function(event) {
   if (!AIRTABLE_API_KEY || !AIRTABLE_BASE_ID) {
-    return { statusCode: 200, headers: { 'Content-Type': 'application/json' },
+    return { statusCode: 200, headers: HEADERS,
       body: JSON.stringify({ error: 'Airtable not configured', posts: [] }) }
   }
 
   const method = event.httpMethod
+
+  // CORS preflight
+  if (method === 'OPTIONS') {
+    return { statusCode: 204, headers: { ...HEADERS, 'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type' } }
+  }
 
   // GET: list all posts
   if (method === 'GET') {
@@ -57,18 +67,18 @@ exports.handler = async function(event) {
         date: r.fields.Date || '',
         author: r.fields.Author || 'Diane Malefyt',
         authorTitle: r.fields.AuthorTitle || '',
-        status: r.fields.Status || 'draft',
+        status: (r.fields.Status || 'draft').toLowerCase(),
         readTime: r.fields.ReadTime || '3 min read',
         lastModified: r.fields.LastModified || '',
       }))
 
       const filtered = showAll ? posts : posts.filter(p => p.status === 'published')
 
-      return { statusCode: 200, headers: { 'Content-Type': 'application/json' },
+      return { statusCode: 200, headers: HEADERS,
         body: JSON.stringify({ posts: filtered }) }
     } catch (err) {
       console.error('Blog list error:', err)
-      return { statusCode: 200, headers: { 'Content-Type': 'application/json' },
+      return { statusCode: 200, headers: HEADERS,
         body: JSON.stringify({ error: err.message, posts: [] }) }
     }
   }
@@ -97,7 +107,7 @@ exports.handler = async function(event) {
           method: 'POST',
           body: JSON.stringify({ records: [{ fields }] }),
         })
-        return { statusCode: 200, headers: { 'Content-Type': 'application/json' },
+        return { statusCode: 200, headers: HEADERS,
           body: JSON.stringify({ success: true, record: data.records?.[0] }) }
       }
 
@@ -106,13 +116,13 @@ exports.handler = async function(event) {
           method: 'PATCH',
           body: JSON.stringify({ records: [{ id: recordId, fields }] }),
         })
-        return { statusCode: 200, headers: { 'Content-Type': 'application/json' },
+        return { statusCode: 200, headers: HEADERS,
           body: JSON.stringify({ success: true, record: data.records?.[0] }) }
       }
 
       if (action === 'delete' && recordId) {
         await airtableFetch(`/${recordId}`, { method: 'DELETE' })
-        return { statusCode: 200, headers: { 'Content-Type': 'application/json' },
+        return { statusCode: 200, headers: HEADERS,
           body: JSON.stringify({ success: true }) }
       }
 
@@ -124,7 +134,7 @@ exports.handler = async function(event) {
           method: 'PATCH',
           body: JSON.stringify({ records: [{ id: recordId, fields: { Status: newStatus, LastModified: new Date().toISOString() } }] }),
         })
-        return { statusCode: 200, headers: { 'Content-Type': 'application/json' },
+        return { statusCode: 200, headers: HEADERS,
           body: JSON.stringify({ success: true, record: data.records?.[0] }) }
       }
 

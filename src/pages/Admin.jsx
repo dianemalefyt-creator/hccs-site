@@ -280,9 +280,9 @@ export default function Admin() {
           posts.map(post => {
             const status = post.status || 'published'
             const isDraft = status === 'draft'
-            const isBuiltIn = isStatic(post)
+            const hasAirtable = !!post.id
             return (
-            <div key={post.slug} style={{ background: '#fff', border: `1px solid ${isDraft ? '#fde68a' : '#e2e8f0'}`, borderRadius: 10, padding: '18px 22px', marginBottom: 10, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', opacity: isDraft ? 0.85 : 1 }}>
+            <div key={post.id || post.slug} style={{ background: '#fff', border: `1px solid ${isDraft ? '#fde68a' : '#e2e8f0'}`, borderRadius: 10, padding: '18px 22px', marginBottom: 10, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', opacity: isDraft ? 0.85 : 1 }}>
               <div style={{ flex: 1 }}>
                 <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 4 }}>
                   <div style={{ fontSize: 16, fontWeight: 600, color: '#0f172a' }}>{post.title}</div>
@@ -290,7 +290,7 @@ export default function Admin() {
                     ? <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 4, background: '#fefce8', color: '#854d0e', fontWeight: 600, border: '1px solid #fde68a' }}>Draft</span>
                     : <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 4, background: '#f0fdf4', color: '#059669', fontWeight: 600, border: '1px solid #bbf7d0' }}>Published</span>
                   }
-                  {isBuiltIn && <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 4, background: '#f1f5f9', color: '#64748b', fontWeight: 600 }}>Built-in</span>}
+                  {!hasAirtable && <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 4, background: '#f1f5f9', color: '#64748b', fontWeight: 600 }}>Code only</span>}
                 </div>
                 <div style={{ fontSize: 13, color: '#64748b' }}>
                   {post.date} · {post.category} · {post.author} · /blog/{post.slug}
@@ -299,12 +299,12 @@ export default function Admin() {
                 {post.excerpt && <div style={{ fontSize: 13, color: '#94a3b8', marginTop: 4 }}>{post.excerpt.slice(0, 120)}...</div>}
               </div>
               <div style={{ display: 'flex', gap: 8, flexShrink: 0, marginLeft: 16, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-                {!isBuiltIn && <button onClick={() => handleToggleStatus(post)} disabled={loading}
+                {hasAirtable && <button onClick={() => handleToggleStatus(post)} disabled={loading}
                   style={{ padding: '6px 14px', borderRadius: 6, border: `1px solid ${isDraft ? '#bbf7d0' : '#fde68a'}`, background: isDraft ? '#f0fdf4' : '#fefce8', color: isDraft ? '#059669' : '#854d0e', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>
                   {isDraft ? 'Publish' : 'Unpublish'}
                 </button>}
                 <button onClick={() => startEdit(post)} style={{ padding: '6px 14px', borderRadius: 6, border: '1px solid #e2e8f0', background: '#fff', color: '#2563eb', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>Edit</button>
-                {!isBuiltIn && <button onClick={() => handleDelete(post)} disabled={loading} style={{ padding: '6px 14px', borderRadius: 6, border: '1px solid #fecaca', background: '#fff', color: '#dc2626', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>Delete</button>}
+                {hasAirtable && <button onClick={() => handleDelete(post)} disabled={loading} style={{ padding: '6px 14px', borderRadius: 6, border: '1px solid #fecaca', background: '#fff', color: '#dc2626', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>Delete</button>}
                 {!isDraft && <a href={`/blog/${post.slug}`} target="_blank" style={{ padding: '6px 14px', borderRadius: 6, border: '1px solid #e2e8f0', background: '#f8fafc', color: '#475569', fontSize: 12, fontWeight: 600, textDecoration: 'none' }}>View</a>}
               </div>
             </div>
