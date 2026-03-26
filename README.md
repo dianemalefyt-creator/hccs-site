@@ -136,11 +136,3 @@ The `/docs/` directory contains:
 - `HCCS-T-1.0-Template-Library.docx` (200 KB)
 
 These are served directly. Users click "Download .docx" and get the file.
-
-
-
-
-
-
-
-

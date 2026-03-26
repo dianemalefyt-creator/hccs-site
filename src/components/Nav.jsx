@@ -16,6 +16,7 @@ const NAV = [
     { label: 'About HCCS\u2122', desc: 'What it is, who built it, why', to: '/about' },
     { label: "Applicant's Bill of Rights", desc: '15 rights for candidates', to: '/rights' },
     { label: "Organization's Bill of Rights", desc: '12 rights for employers', to: '/org-rights' },
+    { label: 'Business case & ROI', desc: 'Cost of inaction, how to sell internally', to: '/business-case' },
   ]},
   { label: 'Contact', to: '/contact' },
 ]
