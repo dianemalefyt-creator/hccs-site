@@ -90,27 +90,28 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Domains */}
+            {/* Domains */}
       <section style={S.section}>
         <div style={S.wrap}>
-          <div style={{ textAlign: 'center', marginBottom: 48 }}>
+          <div style={{ textAlign: 'center', marginBottom: 16 }}>
             <div style={{ letterSpacing: '0.15em', fontSize: 12, textTransform: 'uppercase', color: '#2563eb', marginBottom: 16, fontWeight: 600 }}>7 control domains</div>
-            <h2 style={{ fontSize: 32, fontWeight: 700, color: '#0f172a' }}>Complete coverage. No gaps.</h2>
+            <h2 style={{ fontSize: 32, fontWeight: 700, color: '#0f172a', marginBottom: 12 }}>Complete coverage. No control gaps.</h2>
+            <p style={{ fontSize: 16, color: '#64748b', maxWidth: 620, margin: '0 auto', lineHeight: 1.6 }}>HCCS\u2122 defines seven control domains that collectively govern the full lifecycle of human capital decisions.</p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 16 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 16, marginTop: 32 }}>
             {[
-              { code: 'RG', name: 'Role Governance', desc: 'Outcome-based role definitions with decision rights, scope indicators, and capability distinctions.', color: '#185FA5' },
-              { code: 'EI', name: 'Evaluation Integrity', desc: 'Structured, capability-based assessment with construct validity, calibration, and cognitive load controls.', color: '#0F6E56' },
-              { code: 'DG', name: 'Decision Governance', desc: 'Documented, criteria-referenced decisions with bias detection and post-decision rationalization controls.', color: '#534AB7' },
-              { code: 'AG', name: 'AI Governance', desc: 'ADT inventory, human-in-the-loop with override authority, explainability, and disparate impact testing.', color: '#993C1D' },
-              { code: 'PI', name: 'Process Integrity', desc: 'Genuinely open processes, internal-preference transparency, procedural justice, and candidate communication.', color: '#854F0B' },
-              { code: 'CG', name: 'Compensation Governance', desc: 'Compensable factor analysis replacing title-based pay. Five factors, documented rationale, pay equity.', color: '#3B6D11' },
-              { code: 'ER', name: 'Evidence & Records', desc: 'Contemporaneous records, 3-year retention, classification, access controls, and audit producibility.', color: '#993556' },
+              { code: 'RG', name: 'Role Governance', desc: 'Outcome-based role definitions with defined decision rights, scope boundaries, and capability requirements.', color: '#185FA5' },
+              { code: 'EI', name: 'Evaluation Integrity', desc: 'Structured, capability-based assessment with validated constructs, calibration standards, and cognitive load controls.', color: '#0F6E56' },
+              { code: 'DG', name: 'Decision Governance', desc: 'Documented, criteria-referenced decisions with bias detection, approval controls, and post-decision review requirements.', color: '#534AB7' },
+              { code: 'AG', name: 'AI Governance', desc: 'Inventory and classification of AI decision tools, human-in-the-loop authority, explainability requirements, and disparate impact monitoring.', color: '#993C1D' },
+              { code: 'PI', name: 'Process Integrity', desc: 'Transparent, consistently applied processes with procedural justice standards, internal preference controls, and candidate communication requirements.', color: '#854F0B' },
+              { code: 'CG', name: 'Compensation Governance', desc: 'Compensation aligned to defined role scope using structured factor analysis, documented rationale, and pay equity controls.', color: '#3B6D11' },
+              { code: 'ER', name: 'Evidence & Records', desc: 'Contemporaneous records, defined retention periods, classification standards, access controls, and audit reproducibility.', color: '#993556' },
             ].map(d => (
               <div key={d.code} style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: 12, padding: 24, borderLeft: `4px solid ${d.color}` }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
-                  <div style={{ width: 36, height: 36, borderRadius: 6, background: d.color, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: 13 }}>{d.code}</div>
-                  <span style={{ fontSize: 16, fontWeight: 600, color: '#0f172a' }}>{d.name}</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
+                  <div style={{ width: 36, height: 36, borderRadius: 8, background: d.color, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: 13, fontWeight: 700 }}>{d.code}</div>
+                  <div style={{ fontSize: 17, fontWeight: 600, color: '#0f172a' }}>{d.name}</div>
                 </div>
                 <p style={{ fontSize: 14, lineHeight: 1.6, color: '#64748b', margin: 0 }}>{d.desc}</p>
               </div>
@@ -125,24 +126,24 @@ export default function Home() {
           <div style={{ maxWidth: 720, margin: '0 auto', textAlign: 'center', marginBottom: 48 }}>
             <div style={{ letterSpacing: '0.15em', fontSize: 12, textTransform: 'uppercase', color: '#5b9bd5', marginBottom: 16, fontWeight: 600 }}>Maturity model</div>
             <h2 style={{ fontSize: 32, fontWeight: 700, color: '#fff', marginBottom: 16 }}>Five levels. One credibility threshold.</h2>
-            <p style={{ fontSize: 17, color: '#94a3b8', lineHeight: 1.6 }}>Level 3 is the minimum for external credibility and the minimum required for organizations making public claims of fair, unbiased, or AI-governed hiring practices.</p>
+            <p style={{ fontSize: 17, color: '#94a3b8', lineHeight: 1.6 }}>HCCS\u2122 defines five levels of control maturity. Level 3 represents the minimum standard for external credibility and is required for organizations making claims of fair, unbiased, or AI-governed hiring practices.</p>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {[
-              { l: 5, n: 'Optimizing', c: '67 controls', t: 'Audited', col: '#993C1D' },
-              { l: 4, n: 'Managed', c: '60 controls', t: 'Audited', col: '#534AB7' },
-              { l: 3, n: 'Defined', c: '48 controls', t: 'Validated', col: '#0F6E56', threshold: true },
-              { l: 2, n: 'Developing', c: '25 controls', t: 'Self-Attest', col: '#185FA5' },
-              { l: 1, n: 'Initial', c: '12 controls', t: 'Self-Attest', col: '#888780' },
+              { l: 5, n: 'Optimizing', d: 'All controls implemented, continuously improved, independently audited.', c: '67 controls', t: 'Audited', col: '#993C1D' },
+              { l: 4, n: 'Managed', d: 'Controls consistently applied, measured, and subject to internal audit.', c: '60 controls', t: 'Audited', col: '#534AB7' },
+              { l: 3, n: 'Defined', d: 'Controls formally established, documented, and validated. Minimum threshold for external credibility.', c: '48 controls', t: 'Validated', col: '#0F6E56', threshold: true },
+              { l: 2, n: 'Developing', d: 'Controls partially implemented, inconsistently applied, self-attested.', c: '25 controls', t: 'Self-Attest', col: '#185FA5' },
+              { l: 1, n: 'Initial', d: 'Ad hoc practices, limited controls, no formal governance structure.', c: '12 controls', t: 'Self-Attest', col: '#888780' },
             ].map(lv => (
               <div key={lv.l} style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '16px 24px', borderRadius: 10, background: `${lv.col}15`, border: lv.threshold ? `2px solid ${lv.col}` : '1px solid rgba(255,255,255,0.06)' }}>
                 <div style={{ fontSize: 24, fontWeight: 700, color: lv.col, minWidth: 40 }}>L{lv.l}</div>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: 16, fontWeight: 600, color: '#fff' }}>{lv.n}</div>
-                  <div style={{ fontSize: 13, color: '#94a3b8' }}>{lv.c} (cumulative)</div>
+                  <div style={{ fontSize: 13, color: '#94a3b8' }}>{lv.d}</div>
                 </div>
-                <div style={{ fontSize: 13, color: '#64748b' }}>{lv.t}</div>
-                {lv.threshold && <div style={{ fontSize: 12, fontWeight: 600, color: '#22c55e', background: '#22c55e15', padding: '4px 12px', borderRadius: 12 }}>Credibility threshold</div>}
+                <div style={{ fontSize: 12, color: '#64748b', textAlign: 'right', minWidth: 80 }}>{lv.c}<br/><span style={{ color: '#475569' }}>{lv.t}</span></div>
+                {lv.threshold && <div style={{ fontSize: 12, fontWeight: 600, color: '#22c55e', background: '#22c55e15', padding: '4px 12px', borderRadius: 12, whiteSpace: 'nowrap' }}>Credibility threshold</div>}
               </div>
             ))}
           </div>
@@ -155,17 +156,17 @@ export default function Home() {
           <div style={{ maxWidth: 720, margin: '0 auto' }}>
             <div style={{ letterSpacing: '0.15em', fontSize: 12, textTransform: 'uppercase', color: '#2563eb', marginBottom: 16, fontWeight: 600 }}>Empirical foundation</div>
             <h2 style={{ fontSize: 32, fontWeight: 700, color: '#0f172a', lineHeight: 1.25, marginBottom: 24 }}>
-              Grounded in 60+ years of forensic and organizational psychology
+              Grounded in decades of forensic and organizational psychology
             </h2>
             <p style={{ fontSize: 17, lineHeight: 1.7, color: '#475569', marginBottom: 24 }}>
-              HCCS™ is not opinion-based. It is grounded in replicated research demonstrating that structured, actuarial methods consistently outperform clinical judgment in personnel selection, risk assessment, and classification decisions.
+              HCCS\u2122 is not opinion-based. It is grounded in replicated research demonstrating that structured, actuarial methods consistently outperform unstructured judgment in personnel selection, risk assessment, and classification decisions.
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
               {[
-                ['Actuarial > Clinical', 'Structured methods outperform intuitive judgment in every meta-analysis conducted (Meehl, 1954; Grove et al., 2000; Kuncel et al., 2013).'],
-                ['Cognitive Bias Taxonomy', 'Named biases monitored: anchoring, confirmation, halo/horn, affinity, contrast, primacy/recency.'],
-                ['Procedural Justice', 'Process Integrity controls operationalize Leventhal\'s six criteria for fair processes.'],
-                ['Signal Detection', 'Evaluation framed as classification: maximize correct selections, minimize false rejections and false advances.'],
+                ['Actuarial > Clinical', 'Structured methods outperform intuitive judgment across decades of meta-analytic research (Meehl, Grove, Kuncel, and others).'],
+                ['Cognitive Bias Taxonomy', 'Controls address known bias patterns, including anchoring, confirmation bias, halo/horn effects, affinity bias, contrast effects, and recency/primacy distortions.'],
+                ['Procedural Justice', 'Process integrity controls align with established fairness frameworks, ensuring consistency, transparency, and defensibility.'],
+                ['Signal Detection', 'Evaluation is structured as a classification problem: maximizing correct selections while minimizing false rejections and false advancements.'],
               ].map(([title, desc]) => (
                 <div key={title} style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: 10, padding: 20 }}>
                   <div style={{ fontSize: 15, fontWeight: 600, color: '#0f172a', marginBottom: 8 }}>{title}</div>
@@ -181,9 +182,9 @@ export default function Home() {
       <section style={{ background: '#0f172a', padding: '60px 24px' }}>
         <div style={{ maxWidth: 720, margin: '0 auto', textAlign: 'center' }}>
           <p style={{ fontSize: 22, color: '#94a3b8', fontStyle: 'italic', lineHeight: 1.6, margin: 0 }}>
-            "If the organization cannot reconstruct how a decision was made, what evidence it relied on, and whether standards were applied consistently, the process must be treated as unreliable."
+            "If an organization cannot reconstruct how a decision was made, what evidence was used, and whether standards were applied consistently, the process must be treated as unreliable."
           </p>
-          <p style={{ fontSize: 14, color: '#475569', marginTop: 16 }}>HCCS-1.0, Governing Principle</p>
+          <p style={{ fontSize: 14, color: '#475569', marginTop: 16, fontWeight: 600 }}>HCCS\u2122 Governing Principle 1.0</p>
         </div>
       </section>
 
