@@ -319,7 +319,7 @@ h2 { font-size: 16px; color: ${template.color}; margin: 28px 0 12px; padding-bot
 .controls { font-size: 11px; color: #64748b; margin-top: 2px; }
 </style></head><body>
 <div class="header">
-<div class="id">${template.id} | HCCS\u2122 Standard</div>
+<div class="id">${template.id} | HCCS™ Standard</div>
 <h1>${template.title}</h1>
 <div class="sub">${template.domain} | Controls: ${template.controls}</div>
 <div class="sub">Generated: ${date} at ${time}</div>
@@ -332,9 +332,9 @@ ${s.fields.map(f => `
 <div class="value">${(data[f.key] || '').replace(/</g, '&lt;').replace(/\n/g, '<br>')}</div>
 </div>`).join('')}`).join('')}
 <div class="footer">
-<div>${template.id}: ${template.title} | HCCS\u2122-1.0 | Controls: ${template.controls}</div>
-<div style="margin-top:4px">\u00A9 2026 IngenuityCo LLC. All rights reserved.</div>
-<div style="margin-top:4px;color:#cbd5e1">This document is generated from the HCCS\u2122 Template Library. It should be retained as part of the organization's audit evidence.</div>
+<div>${template.id}: ${template.title} | HCCS™-1.0 | Controls: ${template.controls}</div>
+<div style="margin-top:4px">© 2026 IngenuityCo LLC. All rights reserved.</div>
+<div style="margin-top:4px;color:#cbd5e1">This document is generated from the HCCS™ Template Library. It should be retained as part of the organization's audit evidence.</div>
 </div>
 </body></html>`
   const w = window.open('', '_blank')
@@ -355,10 +355,10 @@ export default function Templates() {
       {/* Hero */}
       <section style={{ background: 'linear-gradient(165deg, #0a1628, #1a2d4a, #0f3460)', padding: '80px 24px 60px' }}>
         <div style={{ maxWidth: 900, margin: '0 auto', textAlign: 'center' }}>
-          <div style={{ letterSpacing: '0.25em', fontSize: 12, textTransform: 'uppercase', color: '#5b9bd5', marginBottom: 16, fontWeight: 500 }}>HCCS\u2122 Template Library</div>
+          <div style={{ letterSpacing: '0.25em', fontSize: 12, textTransform: 'uppercase', color: '#5b9bd5', marginBottom: 16, fontWeight: 500 }}>HCCS™ Template Library</div>
           <h1 style={{ fontSize: 40, fontWeight: 700, color: '#fff', margin: '0 0 16px' }}>Fillable audit templates</h1>
           <p style={{ fontSize: 17, color: '#94a3b8', maxWidth: 560, margin: '0 auto', lineHeight: 1.6 }}>
-            10 templates that produce the evidence required for HCCS\u2122 compliance. Fill them in your browser, generate a PDF, keep the record.
+            10 templates that produce the evidence required for HCCS™ compliance. Fill them in your browser, generate a PDF, keep the record.
           </p>
         </div>
       </section>

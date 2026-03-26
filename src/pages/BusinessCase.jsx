@@ -63,7 +63,7 @@ export default function BusinessCase() {
       {/* Hero */}
       <section style={{ background: 'linear-gradient(165deg, #0a1628, #1a2d4a, #0f3460)', padding: '80px 24px 60px' }}>
         <div style={{ maxWidth: 800, margin: '0 auto', textAlign: 'center' }}>
-          <div style={{ letterSpacing: '0.25em', fontSize: 12, textTransform: 'uppercase', color: '#5b9bd5', marginBottom: 16, fontWeight: 500 }}>HCCS\u2122 Business Case</div>
+          <div style={{ letterSpacing: '0.25em', fontSize: 12, textTransform: 'uppercase', color: '#5b9bd5', marginBottom: 16, fontWeight: 500 }}>HCCS™ Business Case</div>
           <h1 style={{ fontSize: 44, fontWeight: 700, color: '#fff', margin: '0 0 20px', lineHeight: 1.15 }}>The ROI of hiring governance</h1>
           <p style={{ fontSize: 18, color: '#94a3b8', maxWidth: 600, margin: '0 auto', lineHeight: 1.65 }}>
             Every other consequential business decision has controls. Hiring doesn't. Here's what that costs, and what governance returns.
@@ -95,7 +95,7 @@ export default function BusinessCase() {
               </tbody>
             </table>
           </div>
-          <p style={{ fontSize: 14, color: '#64748b', marginTop: 12 }}>HCCS\u2122 closes this gap. It is the SOX equivalent for human capital decisions.</p>
+          <p style={{ fontSize: 14, color: '#64748b', marginTop: 12 }}>HCCS™ closes this gap. It is the SOX equivalent for human capital decisions.</p>
         </div>
       </section>
 
@@ -138,7 +138,7 @@ export default function BusinessCase() {
             </div>
 
             <div style={{ background: 'rgba(5,150,105,0.1)', border: '1px solid rgba(5,150,105,0.2)', borderRadius: 12, padding: 24 }}>
-              <div style={{ fontSize: 13, color: '#6ee7b7', fontWeight: 600, marginBottom: 12, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Estimated savings (with HCCS\u2122 governance)</div>
+              <div style={{ fontSize: 13, color: '#6ee7b7', fontWeight: 600, marginBottom: 12, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Estimated savings (with HCCS™ governance)</div>
               <div style={{ marginBottom: 12 }}>
                 <div style={{ fontSize: 13, color: '#94a3b8' }}>Better hires (30% reduction in bad hires)</div>
                 <div style={{ fontSize: 20, fontWeight: 700, color: '#6ee7b7' }}>{fmt(structuredSavings)}</div>
@@ -159,7 +159,7 @@ export default function BusinessCase() {
           </div>
 
           <div style={{ textAlign: 'center', marginTop: 24 }}>
-            <div style={{ fontSize: 14, color: '#64748b' }}>HCCS\u2122 Self-Assessment: $149 | ROI: <strong style={{ color: '#059669' }}>{Math.round(totalSavings / 149)}x return</strong></div>
+            <div style={{ fontSize: 14, color: '#64748b' }}>HCCS™ Self-Assessment: $149 | ROI: <strong style={{ color: '#059669' }}>{Math.round(totalSavings / 149)}x return</strong></div>
           </div>
         </div>
       </section>
@@ -209,7 +209,7 @@ export default function BusinessCase() {
       {/* How to sell it internally */}
       <section style={{ padding: '60px 24px' }}>
         <div style={{ maxWidth: 800, margin: '0 auto' }}>
-          <h2 style={{ fontSize: 24, fontWeight: 700, color: '#0f172a', marginBottom: 20 }}>How to sell HCCS\u2122 internally</h2>
+          <h2 style={{ fontSize: 24, fontWeight: 700, color: '#0f172a', marginBottom: 20 }}>How to sell HCCS™ internally</h2>
 
           <div style={{ display: 'grid', gap: 16 }}>
             {[

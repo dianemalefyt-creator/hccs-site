@@ -12,6 +12,7 @@ import BillOfRights from './pages/BillOfRights'
 import OrgBillOfRights from './pages/OrgBillOfRights'
 import Templates from './pages/Templates'
 import BusinessCase from './pages/BusinessCase'
+import { BlogList, BlogPost } from './pages/Blog'
 import Documents from './pages/Documents'
 import About from './pages/About'
 
@@ -36,6 +37,8 @@ export default function App() {
         <Route path="/org-rights" element={<OrgBillOfRights />} />
         <Route path="/templates" element={<Templates />} />
         <Route path="/business-case" element={<BusinessCase />} />
+        <Route path="/blog" element={<BlogList />} />
+        <Route path="/blog/:slug" element={<BlogPost />} />
         <Route path="/documents" element={<Documents />} />
         <Route path="/about" element={<About />} />
       </Routes>

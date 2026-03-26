@@ -18,6 +18,7 @@ const NAV = [
     { label: "Organization's Bill of Rights", desc: '12 rights for employers', to: '/org-rights' },
     { label: 'Business case & ROI', desc: 'Cost of inaction, how to sell internally', to: '/business-case' },
   ]},
+  { label: 'Blog', to: '/blog' },
   { label: 'Contact', to: '/contact' },
 ]
 
