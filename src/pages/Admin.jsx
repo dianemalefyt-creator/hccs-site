@@ -24,6 +24,7 @@ export default function Admin() {
   const [form, setForm] = useState({ title: '', slug: '', excerpt: '', category: '', content: '', date: '' })
 
   const [loading, setLoading] = useState(false)
+  const [saveMsg, setSaveMsg] = useState('')
 
   const refreshPosts = async () => {
     setLoading(true)
@@ -43,26 +44,37 @@ export default function Admin() {
     else setPassErr('Wrong password')
   }
 
-  const set = (k, v) => setForm(p => ({ ...p, [k]: v }))
+  const set = (k, v) => { setSaveMsg(''); setForm(p => ({ ...p, [k]: v })) }
 
   const autoSlug = (title) => title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60)
 
   const startNew = () => {
+    setSaveMsg('')
     setForm({ title: '', slug: '', excerpt: '', category: 'Governance', content: '', date: new Date().toISOString().split('T')[0], author: 'Diane Malefyt', authorTitle: 'Author, HCCS™ Standard', status: 'draft' })
     setEditing('new')
   }
 
   const startEdit = (post) => {
+    setSaveMsg('')
     setForm({ title: post.title, slug: post.slug, excerpt: post.excerpt, category: post.category, content: post.body || post.content || '', date: post.date, author: post.author || 'Diane Malefyt', authorTitle: post.authorTitle || '', status: post.status || 'published', _recordId: post.id || null })
     setEditing(post.slug)
   }
 
   const savePost = async (publishStatus) => {
-    if (!form.title || !form.content || !form.slug) return
+    if (!form.title || !form.content) {
+      setSaveMsg('Error: Title and content are required.')
+      return
+    }
+    const slug = form.slug || autoSlug(form.title)
+    if (!slug) {
+      setSaveMsg('Error: Could not generate a URL slug.')
+      return
+    }
+    setSaveMsg('Saving...')
     setLoading(true)
     const post = {
       title: form.title,
-      slug: form.slug || autoSlug(form.title),
+      slug,
       excerpt: form.excerpt || '',
       category: form.category || 'Governance',
       body: form.content,
@@ -74,21 +86,23 @@ export default function Admin() {
     }
 
     try {
+      let result
       if (editing === 'new') {
-        await createPost(post)
+        result = await createPost(post)
       } else if (form._recordId) {
-        await updatePost(form._recordId, post)
+        result = await updatePost(form._recordId, post)
       } else {
-        // Editing a static post with no Airtable record - create new
-        await createPost(post)
+        result = await createPost(post)
       }
+      if (result.error) throw new Error(result.error)
+      setSaveMsg('')
+      await refreshPosts()
+      setEditing(null)
     } catch (err) {
       console.error('Save error:', err)
-      alert('Save failed. Check console.')
+      setSaveMsg('Error: ' + (err.message || 'Save failed. Is the Blog table created in Airtable?'))
+      setLoading(false)
     }
-
-    await refreshPosts()
-    setEditing(null)
   }
 
   const handleToggleStatus = async (post) => {
@@ -136,11 +150,11 @@ export default function Admin() {
         </div>
         <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
           <button onClick={() => setEditing(null)} style={{ background: 'none', border: '1px solid rgba(255,255,255,0.2)', color: '#94a3b8', padding: '6px 16px', borderRadius: 6, cursor: 'pointer', fontSize: 13 }}>Cancel</button>
-          <button onClick={() => savePost('draft')} disabled={!form.title || !form.content}
+          <button onClick={() => savePost('draft')} disabled={loading || !form.title || !form.content}
             style={{ padding: '6px 20px', borderRadius: 6, border: '1px solid rgba(255,255,255,0.2)', background: 'transparent', color: '#cbd5e1', fontSize: 13, fontWeight: 600, cursor: form.title && form.content ? 'pointer' : 'default' }}>
             Save draft
           </button>
-          <button onClick={() => savePost('published')} disabled={!form.title || !form.content}
+          <button onClick={() => savePost('published')} disabled={loading || !form.title || !form.content}
             style={{ padding: '6px 20px', borderRadius: 6, border: 'none', background: form.title && form.content ? '#059669' : '#475569', color: '#fff', fontSize: 13, fontWeight: 600, cursor: form.title && form.content ? 'pointer' : 'default' }}>
             Publish
           </button>
@@ -154,9 +168,12 @@ export default function Admin() {
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12, marginBottom: 16 }}>
           <div>
-            <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#334155', marginBottom: 4 }}>Slug (URL path)</label>
-            <input value={form.slug} onChange={e => set('slug', e.target.value)}
-              style={{ width: '100%', padding: '10px 12px', borderRadius: 8, border: '1px solid #e2e8f0', fontSize: 13, fontFamily: 'monospace', outline: 'none', boxSizing: 'border-box' }} />
+            <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#334155', marginBottom: 4 }}>URL</label>
+            <div style={{ display: 'flex', alignItems: 'center', borderRadius: 8, border: '1px solid #e2e8f0', overflow: 'hidden' }}>
+              <span style={{ padding: '10px 0 10px 12px', fontSize: 13, color: '#94a3b8', background: '#f8fafc', whiteSpace: 'nowrap', userSelect: 'all' }}>hccsstandard.com/blog/</span>
+              <input value={form.slug} onChange={e => set('slug', e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))}
+                style={{ flex: 1, padding: '10px 12px 10px 0', borderRadius: 0, border: 'none', fontSize: 13, fontFamily: 'monospace', outline: 'none', boxSizing: 'border-box', background: '#f8fafc' }} />
+            </div>
           </div>
           <div>
             <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#334155', marginBottom: 4 }}>Category</label>
@@ -196,15 +213,19 @@ export default function Admin() {
         {/* Sticky publish bar */}
         <div style={{ position: 'sticky', bottom: 0, left: 0, right: 0, background: '#fff', borderTop: '2px solid #e2e8f0', padding: '16px 24px', display: 'flex', gap: 12, justifyContent: 'flex-end', alignItems: 'center', marginTop: 24, marginLeft: -24, marginRight: -24, marginBottom: -32, boxShadow: '0 -4px 12px rgba(0,0,0,0.06)' }}>
           <span style={{ flex: 1, fontSize: 13, color: '#64748b' }}>
-            {form.title ? `"${form.title}"` : 'Untitled'}
-            {form.status === 'published' ? <span style={{ marginLeft: 8, fontSize: 11, padding: '2px 8px', borderRadius: 4, background: '#f0fdf4', color: '#059669', fontWeight: 600 }}>Published</span> : <span style={{ marginLeft: 8, fontSize: 11, padding: '2px 8px', borderRadius: 4, background: '#fefce8', color: '#854d0e', fontWeight: 600 }}>Draft</span>}
+            {saveMsg ? <span style={{ color: saveMsg.startsWith('Error') ? '#dc2626' : saveMsg === 'Saving...' ? '#2563eb' : '#059669', fontWeight: 600 }}>{saveMsg}</span> : (
+              <>
+                {form.title ? `"${form.title}"` : 'Untitled'}
+                {form.status === 'published' ? <span style={{ marginLeft: 8, fontSize: 11, padding: '2px 8px', borderRadius: 4, background: '#f0fdf4', color: '#059669', fontWeight: 600 }}>Published</span> : <span style={{ marginLeft: 8, fontSize: 11, padding: '2px 8px', borderRadius: 4, background: '#fefce8', color: '#854d0e', fontWeight: 600 }}>Draft</span>}
+              </>
+            )}
           </span>
           <button onClick={() => setEditing(null)} style={{ padding: '12px 20px', borderRadius: 8, border: '1px solid #e2e8f0', background: '#fff', color: '#64748b', fontSize: 14, cursor: 'pointer' }}>Cancel</button>
-          <button onClick={() => savePost('draft')} disabled={!form.title || !form.content}
+          <button onClick={() => savePost('draft')} disabled={loading || !form.title || !form.content}
             style={{ padding: '12px 24px', borderRadius: 8, border: '1px solid #e2e8f0', background: '#fff', color: '#334155', fontSize: 14, fontWeight: 600, cursor: form.title && form.content ? 'pointer' : 'default' }}>
             Save draft
           </button>
-          <button onClick={() => savePost('published')} disabled={!form.title || !form.content}
+          <button onClick={() => savePost('published')} disabled={loading || !form.title || !form.content}
             style={{ padding: '12px 28px', borderRadius: 8, border: 'none', background: form.title && form.content ? '#059669' : '#94a3b8', color: '#fff', fontSize: 15, fontWeight: 700, cursor: form.title && form.content ? 'pointer' : 'default', minWidth: 120 }}>
             Publish
           </button>
