@@ -315,7 +315,7 @@ return `<tr><td style="padding:10px 14px;font-weight:600">${d.domain}: ${d.name}
 
 const html=`<!DOCTYPE html><html><head><meta charset="utf-8"><title>HCCS™ Business Case - ${user?.org||'Organization'}</title>
 <style>
-@media print{body{margin:0}}
+@media print{body{margin:0}.no-print{display:none!important}}
 body{font-family:Helvetica,Arial,sans-serif;color:#1e293b;line-height:1.55;max-width:800px;margin:0 auto;padding:40px;font-size:13px}
 h1{font-size:24px;color:#0f172a;margin:0 0 4px}
 h2{font-size:18px;color:#1e3a5f;margin:32px 0 12px;padding-bottom:6px;border-bottom:2px solid #e2e8f0}
@@ -333,11 +333,40 @@ tr:nth-child(even){background:#f8fafc}
 .metric .label{font-size:12px;color:#64748b}
 .risk-box{background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:20px;margin:16px 0}
 .savings-box{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:20px;margin:16px 0}
+.toolbar{display:flex;gap:10px;align-items:center;padding:16px 0;margin-bottom:16px;border-bottom:1px solid #e2e8f0;flex-wrap:wrap}
+.toolbar button,.toolbar a{padding:10px 20px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn-p{background:#2563eb;color:#fff;border:none}
+.btn-s{background:#fff;color:#334155;border:1px solid #e2e8f0}
+.ef{display:none;align-items:center;gap:8px;margin-left:auto}
+.ef.show{display:flex}
+.ef input{padding:8px 12px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;width:220px}
+.ef button{padding:8px 16px;border-radius:6px;border:none;background:#059669;color:#fff;font-size:13px;font-weight:600;cursor:pointer}
 .stakeholder{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:16px;margin:10px 0}
 .stakeholder strong{color:#0f172a}
 .phase{border-left:3px solid #2563eb;padding:12px 16px;margin:10px 0;background:#f8fafc;border-radius:0 8px 8px 0}
 .footer{margin-top:40px;padding-top:16px;border-top:1px solid #e2e8f0;font-size:11px;color:#94a3b8;text-align:center}
 </style></head><body>
+<div class="no-print toolbar">
+<button class="btn-p" onclick="window.print()">Save as PDF</button>
+<button class="btn-s" onclick="document.getElementById('ef2').classList.toggle('show')">Email this document</button>
+<div id="ef2" class="ef">
+<input type="email" id="bc-email" placeholder="recipient@company.com" />
+<button onclick="sendBC()">Send</button>
+<span id="bc-msg"></span>
+</div>
+</div>
+<script>
+async function sendBC(){
+var e=document.getElementById('bc-email').value;if(!e)return;
+document.getElementById('bc-msg').textContent='Sending...';
+try{var r=await fetch('https://hccsstandard.com/.netlify/functions/send-business-case',{
+method:'POST',headers:{'Content-Type':'application/json'},
+body:JSON.stringify({email:e,html:document.documentElement.outerHTML,org:'${(user?.org||'Organization').replace(/'/g,"\\'")}'})});
+if(r.ok){document.getElementById('bc-msg').textContent='Sent ✓';document.getElementById('bc-msg').style.color='#059669';}
+else{document.getElementById('bc-msg').textContent='Failed. Try Save as PDF.';}}
+catch(x){document.getElementById('bc-msg').textContent='Failed. Try Save as PDF.';}
+}
+</script>
 
 <div class="header">
 <div style="font-size:12px;color:#5b9bd5;letter-spacing:0.15em;margin-bottom:4px">HCCS™ BUSINESS CASE</div>

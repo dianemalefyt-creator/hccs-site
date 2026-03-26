@@ -310,7 +310,7 @@ function Results({ answers }) {
             const gapList = gaps.map(g => `<tr><td style="padding:8px 12px;font-family:monospace;font-size:12px;font-weight:600;color:#991b1b">${g.id}</td><td style="padding:8px 12px;font-size:13px">${g.text}</td><td style="padding:8px 12px;font-size:12px;color:#dc2626;font-weight:600">${g.level}</td></tr>`).join('');
             const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>HCCS™ Business Case - ${orgName}</title>
 <style>
-@media print{body{margin:0}}
+@media print{body{margin:0}.no-print{display:none!important}}
 body{font-family:Helvetica,Arial,sans-serif;color:#1e293b;line-height:1.55;max-width:780px;margin:0 auto;padding:40px;font-size:13px}
 h1{font-size:24px;margin:0 0 4px}h2{font-size:17px;color:#1e3a5f;margin:28px 0 10px;padding-bottom:5px;border-bottom:2px solid #e2e8f0}
 .hdr{background:linear-gradient(135deg,#0a1628,#1a2d4a);color:#fff;padding:28px 32px;border-radius:12px;margin-bottom:24px}
@@ -323,7 +323,41 @@ tr:nth-child(even){background:#f8fafc}
 .g{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:20px;margin:14px 0}
 .box{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:14px;margin:8px 0}
 .ft{margin-top:36px;padding-top:14px;border-top:1px solid #e2e8f0;font-size:11px;color:#94a3b8;text-align:center}
+.toolbar{display:flex;gap:10px;align-items:center;padding:16px 0;margin-bottom:16px;border-bottom:1px solid #e2e8f0;flex-wrap:wrap}
+.toolbar button,.toolbar a{padding:10px 20px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn-primary{background:#2563eb;color:#fff;border:none}
+.btn-secondary{background:#fff;color:#334155;border:1px solid #e2e8f0}
+.email-form{display:none;align-items:center;gap:8px;margin-left:auto}
+.email-form.show{display:flex}
+.email-form input{padding:8px 12px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;width:220px}
+.email-form button{padding:8px 16px;border-radius:6px;border:none;background:#059669;color:#fff;font-size:13px;font-weight:600;cursor:pointer}
+.sent-msg{color:#059669;font-size:13px;font-weight:600}
 </style></head><body>
+<div class="no-print toolbar">
+<button class="btn-primary" onclick="window.print()">Save as PDF</button>
+<button class="btn-secondary" onclick="document.getElementById('ef').classList.toggle('show')">Email this document</button>
+<div id="ef" class="email-form">
+<input type="email" id="send-email" placeholder="recipient@company.com" />
+<button onclick="sendEmail()">Send</button>
+<span id="sent-msg"></span>
+</div>
+</div>
+<script>
+async function sendEmail(){
+var e=document.getElementById('send-email').value;
+if(!e)return;
+document.getElementById('sent-msg').textContent='Sending...';
+try{
+var r=await fetch('https://hccsstandard.com/.netlify/functions/send-business-case',{
+method:'POST',headers:{'Content-Type':'application/json'},
+body:JSON.stringify({email:e,html:document.documentElement.outerHTML,org:'${orgName.replace(/'/g,"\\'")}'})
+});
+if(r.ok){document.getElementById('sent-msg').textContent='Sent ✓';document.getElementById('sent-msg').className='sent-msg';}
+else{document.getElementById('sent-msg').textContent='Failed. Try Save as PDF instead.';}
+}catch(x){document.getElementById('sent-msg').textContent='Failed. Try Save as PDF instead.';}
+}
+</script>
+
 <div class="hdr">
 <div style="font-size:11px;color:#5b9bd5;letter-spacing:0.15em;margin-bottom:4px">HCCS™ BUDGET REQUEST</div>
 <h1>The Case for a Human Capital Governance Assessment</h1>
