@@ -9,7 +9,7 @@ export default function Tools() {
   const [active, setActive] = useState(null)
 
   const tools = [
-    { id: 'jd', title: 'Job Description Builder', desc: 'Create HCCS™-compliant role definitions with outcomes, decision rights, and scope indicators.', controls: 'RG-001 to RG-007', color: '#185FA5', component: <JDBuilder /> },
+    { id: 'jd', title: 'Job Description Builder', desc: 'Generate both an internal role definition (audit artifact) and a public job posting from the same data. Outcomes, decision rights, scope.', controls: 'RG-001 to RG-007', color: '#185FA5', component: <JDBuilder /> },
     { id: 'scorecard', title: 'Interview Scorecard Generator', desc: 'Build criteria-based scorecards from your role definition. Structured evaluation in 2 minutes.', controls: 'EI-001 to EI-004', color: '#0F6E56', component: <ScorecardGenerator /> },
     { id: 'bias', title: 'Bias Language Checker', desc: 'Paste a job posting or evaluation criteria. Flags proxy language, inflated requirements, and bias patterns.', controls: 'EI-003, DG-005', color: '#534AB7', component: <BiasChecker /> },
     { id: 'comp', title: 'Compensable Factor Calculator', desc: 'Score 5 factors, get a scope-based compensation framework. Replaces title-matching with factor analysis.', controls: 'CG-001 to CG-003', color: '#3B6D11', component: <CompCalculator /> },
@@ -53,6 +53,15 @@ export default function Tools() {
         </div>
       </section>
       <section style={{ padding: '48px 24px 80px' }}>
+        {(() => { try { const j = JSON.parse(localStorage.getItem('hccs_jd') || '{}'); return j.title || null } catch { return null } })() && (
+          <div style={{ maxWidth: 900, margin: '0 auto 20px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 12, padding: '16px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
+            <div>
+              <div style={{ fontSize: 14, fontWeight: 600, color: '#1e40af' }}>Active workflow: {(() => { try { return JSON.parse(localStorage.getItem('hccs_jd')).title } catch { return '' } })()}</div>
+              <div style={{ fontSize: 13, color: '#3b82f6' }}>Scorecard, bias checker, and comp calculator will pre-fill from this role definition.</div>
+            </div>
+            <button onClick={() => { localStorage.removeItem('hccs_jd'); window.location.reload() }} style={{ padding: '6px 14px', borderRadius: 6, border: '1px solid #bfdbfe', background: '#fff', color: '#3b82f6', fontSize: 12, cursor: 'pointer' }}>Clear</button>
+          </div>
+        )}
         <div style={{ maxWidth: 900, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(270px, 1fr))', gap: 16 }}>
           {tools.map(tool => (
             <div key={tool.id} onClick={() => setActive(tool.id)}
@@ -85,10 +94,14 @@ export default function Tools() {
 }
 
 function JDBuilder() {
-  const [d, setD] = useState({ title: '', dept: '', reportsTo: '', outcome1: '', outcome2: '', outcome3: '', decidesAlone: '', decidesConsult: '', needsApproval: '', budget: '', required: '', learnable: '', directs: '', indirects: '', geoSpan: '', stakeholders: '', ambiguity: '', antiReqs: '' })
-  const set = (k, v) => setD(p => ({ ...p, [k]: v }))
+  const defaultJD = { title: '', dept: '', reportsTo: '', outcome1: '', outcome2: '', outcome3: '', decidesAlone: '', decidesConsult: '', needsApproval: '', budget: '', required: '', learnable: '', directs: '', indirects: '', geoSpan: '', stakeholders: '', ambiguity: '', antiReqs: '' }
+  const [d, setD] = useState(() => {
+    try { const saved = localStorage.getItem('hccs_jd'); return saved ? JSON.parse(saved) : defaultJD } catch { return defaultJD }
+  })
+  const set = (k, v) => setD(p => { const next = { ...p, [k]: v }; localStorage.setItem('hccs_jd', JSON.stringify(next)); return next })
 
   const generate = () => {
+    localStorage.setItem('hccs_jd', JSON.stringify(d))
     const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
     const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Role Definition - ${d.title}</title>
 <style>
@@ -159,6 +172,106 @@ ${d.antiReqs ? `<div style="background:#fef2f2;border:1px solid #fecaca;border-r
     const w = window.open('', '_blank'); w.document.write(html); w.document.close()
   }
 
+  const generatePosting = () => {
+    const reqList = (d.required || '').split('\n').filter(Boolean).map(r => `<li>${r.trim()}</li>`).join('')
+    const learnList = (d.learnable || '').split('\n').filter(Boolean).map(r => `<li>${r.trim()}</li>`).join('')
+    const antiList = (d.antiReqs || '').split('\n').filter(Boolean)
+    const outcomes = [d.outcome1, d.outcome2, d.outcome3].filter(Boolean)
+
+    const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${d.title || 'Job Posting'} - Job Description</title>
+<style>
+@media print{body{margin:0}.no-print{display:none!important}}
+body{font-family:Helvetica,Arial,sans-serif;color:#1e293b;line-height:1.7;max-width:720px;margin:0 auto;padding:40px;font-size:15px}
+h1{font-size:28px;color:#0f172a;margin:0 0 8px}
+h2{font-size:18px;color:#0f172a;margin:32px 0 12px}
+h3{font-size:15px;color:#475569;margin:20px 0 8px}
+ul{margin:8px 0 16px;padding-left:24px}
+li{margin-bottom:6px}
+.dept{font-size:16px;color:#475569;margin-bottom:4px}
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 24px}
+.tag{padding:4px 12px;border-radius:16px;font-size:13px;font-weight:500;background:#f1f5f9;color:#475569}
+.note{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:16px;margin:24px 0;font-size:14px;color:#065f46;line-height:1.6}
+.note strong{color:#064e3b}
+.apply{display:inline-block;background:#2563eb;color:#fff;padding:14px 32px;border-radius:8px;font-size:16px;font-weight:600;text-decoration:none;margin:24px 0}
+.toolbar{display:flex;gap:10px;padding:16px 0;margin-bottom:16px;border-bottom:1px solid #e2e8f0}
+.toolbar button{padding:10px 20px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;border:none;background:#2563eb;color:#fff}
+.toolbar .sec{background:#fff;color:#334155;border:1px solid #e2e8f0}
+.copy-msg{font-size:13px;color:#059669;font-weight:600;margin-left:8px}
+.ft{margin-top:40px;padding-top:16px;border-top:1px solid #e2e8f0;font-size:12px;color:#94a3b8;text-align:center}
+</style></head><body>
+<div class="no-print toolbar">
+<button onclick="window.print()">Save as PDF</button>
+<button class="sec" onclick="copyText()">Copy as text</button>
+<span id="copyMsg"></span>
+</div>
+<script>
+function copyText(){
+var b=document.querySelector('.jd-content');
+var range=document.createRange();range.selectNodeContents(b);
+var sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);
+document.execCommand('copy');sel.removeAllRanges();
+document.getElementById('copyMsg').textContent='Copied to clipboard!';
+document.getElementById('copyMsg').className='copy-msg';
+setTimeout(()=>{document.getElementById('copyMsg').textContent='';},3000);
+}
+</script>
+
+<div class="jd-content">
+<h1>${d.title || 'Role Title'}</h1>
+<div class="dept">${d.dept || 'Department'}${d.reportsTo ? ' · Reports to ' + d.reportsTo : ''}</div>
+
+<div class="tags">
+${d.directs ? `<span class="tag">${d.directs} direct reports</span>` : ''}
+${d.geoSpan ? `<span class="tag">${d.geoSpan}</span>` : ''}
+${d.ambiguity ? `<span class="tag">${d.ambiguity.split(' - ')[0]} ambiguity</span>` : ''}
+${d.budget ? `<span class="tag">Budget: ${d.budget}</span>` : ''}
+</div>
+
+<h2>About the role</h2>
+<p>This role exists to deliver measurable outcomes, not to perform a list of tasks. Here is what success looks like:</p>
+<ul>
+${outcomes.map(o => `<li><strong>${o}</strong></li>`).join('')}
+</ul>
+
+<h2>What you'll own</h2>
+<p>This role has real decision-making authority:</p>
+<ul>
+${d.decidesAlone ? `<li><strong>You decide:</strong> ${d.decidesAlone}</li>` : ''}
+${d.decidesConsult ? `<li><strong>You influence:</strong> ${d.decidesConsult}</li>` : ''}
+${d.needsApproval ? `<li><strong>You escalate:</strong> ${d.needsApproval}</li>` : ''}
+</ul>
+
+${d.stakeholders ? `<h3>Stakeholder landscape</h3><p>${d.stakeholders}${d.indirects ? '. Cross-functional reach: ' + d.indirects : ''}.</p>` : ''}
+
+<h2>What we're looking for</h2>
+<p>These are the capabilities required to succeed in this role from day one:</p>
+${reqList ? `<ul>${reqList}</ul>` : ''}
+
+${learnList ? `<h3>What you'll learn here</h3><p>We don't expect you to know everything on day one. These are capabilities you'll develop in the first 6-12 months:</p><ul>${learnList}</ul>` : ''}
+
+${antiList.length > 0 ? `<div class="note"><strong>What we explicitly do NOT require:</strong><br/>${antiList.join(' · ')}<br/><br/>We evaluate candidates on demonstrated capability, not credentials, pedigree, or employment continuity. If you can deliver the outcomes above, we want to hear from you.</div>` : ''}
+
+<h2>How we hire</h2>
+<p>This role is governed by the <strong>HCCS™ Standard</strong>, a structured hiring governance framework. That means:</p>
+<ul>
+<li>You will be evaluated against the same criteria as every other candidate</li>
+<li>Evaluation is based on what you can <em>do</em>, not where you've <em>been</em></li>
+<li>Every decision in this process is documented with rationale</li>
+<li>If AI tools are used in screening, you will be informed, and a human reviews every output</li>
+</ul>
+<p>We believe hiring should be transparent, consistent, and defensible. Read our <a href="https://hccsstandard.com/rights" style="color:#2563eb">Applicant's Bill of Rights</a> to see what we commit to.</p>
+
+<a href="#" class="apply no-print">Apply for this role</a>
+</div>
+
+<div class="ft">
+<div>Generated with the HCCS™ Job Description Builder | hccsstandard.com/tools</div>
+<div style="margin-top:4px">This posting was created from an HCCS™ Role Definition Worksheet satisfying controls RG-001 through RG-005.</div>
+</div>
+</body></html>`
+    const w = window.open('', '_blank'); w.document.write(html); w.document.close()
+  }
+
   const F = (k, l, ph, type = 'text') => (
     <div style={{ marginBottom: 14 }}>
       <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#334155', marginBottom: 4 }}>{l}</label>
@@ -176,7 +289,7 @@ ${d.antiReqs ? `<div style="background:#fef2f2;border:1px solid #fecaca;border-r
     <div>
       <div style={{ background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 10, padding: '16px 20px', marginBottom: 24 }}>
         <div style={{ fontSize: 14, color: '#1e40af', lineHeight: 1.6 }}>
-          This tool generates a role definition that satisfies <strong>RG-001 through RG-005</strong>. Complete before sourcing begins. The output is an audit-ready document you can print or save as PDF.
+          This tool generates two documents from the same data: an <strong>internal role definition</strong> (audit artifact, satisfies RG-001 through RG-005) and a <strong>public job posting</strong> ready to paste into LinkedIn, your careers page, or any job board. Fill once, get both.
         </div>
       </div>
 
@@ -221,8 +334,9 @@ ${d.antiReqs ? `<div style="background:#fef2f2;border:1px solid #fecaca;border-r
       </div>
 
       {!canUse('jd') ? <UpgradePrompt toolId="jd" /> : (
-      <div style={{ display: 'flex', gap: 12, marginTop: 28, paddingTop: 20, borderTop: '1px solid #e2e8f0' }}>
-        <button onClick={() => { incrementUsage('jd'); generate(); }} style={{ padding: '14px 28px', borderRadius: 8, border: 'none', background: '#185FA5', color: '#fff', fontSize: 15, fontWeight: 600, cursor: 'pointer' }}>Generate role definition</button>
+      <div style={{ display: 'flex', gap: 12, marginTop: 28, paddingTop: 20, borderTop: '1px solid #e2e8f0', flexWrap: 'wrap' }}>
+        <button onClick={() => { incrementUsage('jd'); generate(); }} style={{ padding: '14px 28px', borderRadius: 8, border: 'none', background: '#185FA5', color: '#fff', fontSize: 15, fontWeight: 600, cursor: 'pointer' }}>Generate role definition (internal)</button>
+        <button onClick={() => { incrementUsage('jd'); generatePosting(); }} style={{ padding: '14px 28px', borderRadius: 8, border: 'none', background: '#059669', color: '#fff', fontSize: 15, fontWeight: 600, cursor: 'pointer' }}>Generate job posting (external)</button>
         <button onClick={() => setD({ title: '', dept: '', reportsTo: '', outcome1: '', outcome2: '', outcome3: '', decidesAlone: '', decidesConsult: '', needsApproval: '', budget: '', required: '', learnable: '', directs: '', indirects: '', geoSpan: '', stakeholders: '', ambiguity: '', antiReqs: '' })}
           style={{ padding: '14px 28px', borderRadius: 8, border: '1px solid #e2e8f0', background: '#fff', color: '#64748b', fontSize: 15, cursor: 'pointer' }}>Clear</button>
       </div>
@@ -232,9 +346,32 @@ ${d.antiReqs ? `<div style="background:#fef2f2;border:1px solid #fecaca;border-r
 }
 
 function ScorecardGenerator() {
-  const [d, setD] = useState({ role: '', c1: '', c2: '', c3: '', c4: '', c5: '' })
+  // Pull from JD builder if available
+  const jdRaw = (() => { try { return JSON.parse(localStorage.getItem('hccs_jd') || '{}') } catch { return {} } })()
+  const hasJD = !!(jdRaw.title && (jdRaw.outcome1 || jdRaw.required))
+
+  // Build suggestions from JD outcomes + required capabilities
+  const suggestions = []
+  if (jdRaw.outcome1) suggestions.push(jdRaw.outcome1.split('.')[0].trim())
+  if (jdRaw.outcome2) suggestions.push(jdRaw.outcome2.split('.')[0].trim())
+  if (jdRaw.outcome3) suggestions.push(jdRaw.outcome3.split('.')[0].trim())
+  if (jdRaw.required) {
+    jdRaw.required.split('\n').filter(Boolean).forEach(r => {
+      if (r.trim().length > 5 && suggestions.length < 7) suggestions.push(r.trim().split('.')[0].trim())
+    })
+  }
+
+  const [d, setD] = useState({
+    role: jdRaw.title || '',
+    c1: suggestions[0] || '',
+    c2: suggestions[1] || '',
+    c3: suggestions[2] || '',
+    c4: suggestions[3] || '',
+    c5: suggestions[4] || '',
+  })
   const set = (k, v) => setD(p => ({ ...p, [k]: v }))
   const criteria = [d.c1, d.c2, d.c3, d.c4, d.c5].filter(Boolean)
+  const unusedSuggestions = suggestions.filter(s => !Object.values(d).includes(s))
 
   const generate = () => {
     const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
@@ -247,7 +384,7 @@ function ScorecardGenerator() {
 <div style="font-size:13px;color:#64748b;margin-bottom:16px">Candidate: __________ | Interview type: __________</div>
 <div style="font-size:12px;color:#0F6E56;font-weight:600;margin-bottom:8px">Satisfies: EI-002 (consistent criteria), EI-004 (documented rationale)</div>
 <table><tr><th>Criterion</th><th>Score (1-5)</th><th>Evidence & rationale (what did the candidate say/do?)</th></tr>${rows}
-<tr><td style="font-weight:600">Overall recommendation</td><td colspan="2"><div style="display:flex;gap:16px;font-size:13px;padding:8px 0">☐ Advance &nbsp; ☐ Do not advance &nbsp; ☐ Hold</div><div style="min-height:40px;border:1px solid #e2e8f0;border-radius:6px;padding:8px;font-size:12px;color:#94a3b8">Additional notes...</div></td></tr></table>
+<tr><td style="font-weight:600">Overall recommendation</td><td colspan="2"><div style="display:flex;gap:16px;font-size:13px;padding:8px 0">\u2610 Advance &nbsp; \u2610 Do not advance &nbsp; \u2610 Hold</div><div style="min-height:40px;border:1px solid #e2e8f0;border-radius:6px;padding:8px;font-size:12px;color:#94a3b8">Additional notes...</div></td></tr></table>
 <div style="font-size:12px;color:#64748b;margin-top:16px;background:#f8fafc;padding:12px;border-radius:6px"><strong>Scoring guide:</strong> 1 = No evidence demonstrated. 2 = Limited evidence. 3 = Meets expectations. 4 = Exceeds expectations. 5 = Exceptional, among the strongest seen.</div>
 <div class="ft">HCCS™ Scorecard | Controls: EI-002, EI-004 | © 2026 IngenuityCo LLC</div></body></html>`
     const w = window.open('', '_blank'); w.document.write(html); w.document.close()
@@ -255,9 +392,18 @@ function ScorecardGenerator() {
 
   return (
     <div>
-      <div style={{ background: '#ecfdf5', border: '1px solid #a7f3d0', borderRadius: 10, padding: '16px 20px', marginBottom: 24, fontSize: 14, color: '#065f46', lineHeight: 1.6 }}>
-        Input your evaluation criteria (derived from the role definition per EI-001). Generates a printable scorecard with scoring guide.
-      </div>
+      {hasJD ? (
+        <div style={{ background: '#ecfdf5', border: '1px solid #a7f3d0', borderRadius: 10, padding: '16px 20px', marginBottom: 24 }}>
+          <div style={{ fontSize: 14, color: '#065f46', lineHeight: 1.6 }}>
+            <strong>Pre-filled from your role definition for "{jdRaw.title}".</strong> Criteria were derived from your business outcomes and required capabilities (EI-001). Edit or add more below.
+          </div>
+        </div>
+      ) : (
+        <div style={{ background: '#ecfdf5', border: '1px solid #a7f3d0', borderRadius: 10, padding: '16px 20px', marginBottom: 24, fontSize: 14, color: '#065f46', lineHeight: 1.6 }}>
+          Input your evaluation criteria (derived from the role definition per EI-001). Generates a printable scorecard with scoring guide.
+          <div style={{ marginTop: 8, fontSize: 13, color: '#0d9488' }}>Tip: Build a role definition first in the JD Builder. Criteria will auto-populate here.</div>
+        </div>
+      )}
       <div style={{ marginBottom: 14 }}>
         <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#334155', marginBottom: 4 }}>Role title</label>
         <input value={d.role} onChange={e => set('role', e.target.value)} placeholder="e.g. Senior Backend Engineer" style={{ width: '100%', padding: '10px 12px', borderRadius: 8, border: '1px solid #e2e8f0', fontSize: 14, outline: 'none', boxSizing: 'border-box' }} />
@@ -268,6 +414,19 @@ function ScorecardGenerator() {
           <input value={d[`c${i}`]} onChange={e => set(`c${i}`, e.target.value)} placeholder={['e.g. System design at scale','e.g. Cross-team leadership','e.g. Incident response','',''][i-1]} style={{ width: '100%', padding: '10px 12px', borderRadius: 8, border: '1px solid #e2e8f0', fontSize: 14, outline: 'none', boxSizing: 'border-box' }} />
         </div>
       ))}
+      {unusedSuggestions.length > 0 && (
+        <div style={{ marginBottom: 16 }}>
+          <div style={{ fontSize: 12, fontWeight: 600, color: '#0d9488', marginBottom: 6 }}>More suggestions from your role definition:</div>
+          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+            {unusedSuggestions.map(s => (
+              <button key={s} onClick={() => {
+                const empty = [1,2,3,4,5].find(i => !d[`c${i}`])
+                if (empty) set(`c${empty}`, s)
+              }} style={{ padding: '4px 12px', borderRadius: 16, border: '1px solid #a7f3d0', background: '#f0fdf4', fontSize: 12, color: '#065f46', cursor: 'pointer' }}>+ {s.length > 50 ? s.slice(0, 50) + '...' : s}</button>
+            ))}
+          </div>
+        </div>
+      )}
       {!canUse('scorecard') ? <UpgradePrompt toolId="scorecard" /> :
       <button onClick={() => { incrementUsage('scorecard'); generate(); }} disabled={!d.role || criteria.length < 2} style={{ marginTop: 16, padding: '14px 28px', borderRadius: 8, border: 'none', background: criteria.length >= 2 ? '#0F6E56' : '#94a3b8', color: '#fff', fontSize: 15, fontWeight: 600, cursor: criteria.length >= 2 ? 'pointer' : 'default' }}>Generate scorecard</button>}
     </div>
@@ -275,6 +434,9 @@ function ScorecardGenerator() {
 }
 
 function BiasChecker() {
+  const jdRaw = (() => { try { return JSON.parse(localStorage.getItem('hccs_jd') || '{}') } catch { return {} } })()
+  const jdText = jdRaw.title ? [jdRaw.title, jdRaw.outcome1, jdRaw.outcome2, jdRaw.outcome3, jdRaw.required, jdRaw.learnable, jdRaw.decidesAlone].filter(Boolean).join('\n') : ''
+
   const [text, setText] = useState('')
   const [results, setResults] = useState(null)
 
@@ -307,6 +469,12 @@ function BiasChecker() {
       <div style={{ background: '#f5f3ff', border: '1px solid #ddd6fe', borderRadius: 10, padding: '16px 20px', marginBottom: 24, fontSize: 14, color: '#4c1d95', lineHeight: 1.6 }}>
         Paste a job posting, role definition, or evaluation criteria below. The checker flags proxy language, inflated requirements, and bias patterns per EI-003 and DG-005.
       </div>
+      {jdText && !text && (
+        <div style={{ background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, padding: '12px 16px', marginBottom: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ fontSize: 13, color: '#1e40af' }}>You have a role definition for "{jdRaw.title}". Check it for bias?</div>
+          <button onClick={() => setText(jdText)} style={{ padding: '6px 16px', borderRadius: 6, border: 'none', background: '#2563eb', color: '#fff', fontSize: 13, fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>Load role definition</button>
+        </div>
+      )}
       <textarea value={text} onChange={e => setText(e.target.value)} placeholder="Paste your job posting or role definition here..." rows={10}
         style={{ width: '100%', padding: '14px', borderRadius: 8, border: '1px solid #e2e8f0', fontSize: 14, outline: 'none', fontFamily: 'inherit', resize: 'vertical', boxSizing: 'border-box', lineHeight: 1.6 }} />
       <button onClick={check} disabled={!text.trim()} style={{ marginTop: 12, padding: '14px 28px', borderRadius: 8, border: 'none', background: text.trim() ? '#534AB7' : '#94a3b8', color: '#fff', fontSize: 15, fontWeight: 600, cursor: text.trim() ? 'pointer' : 'default' }}>Check for bias patterns</button>
@@ -340,7 +508,22 @@ function BiasChecker() {
 }
 
 function CompCalculator() {
-  const [scores, setScores] = useState({ authority: 3, complexity: 3, accountability: 3, impact: 3, expertise: 3 })
+  const jdRaw = (() => { try { return JSON.parse(localStorage.getItem('hccs_jd') || '{}') } catch { return {} } })()
+  const hasJD = !!(jdRaw.title)
+
+  // Infer starting scores from JD scope indicators
+  const inferAuth = jdRaw.budget ? (jdRaw.budget.match(/\d+/g) || []).reduce((a,v) => Math.max(a, +v > 200000 ? 5 : +v > 50000 ? 4 : +v > 10000 ? 3 : 2), 3) : 3
+  const inferComplex = jdRaw.ambiguity ? (jdRaw.ambiguity.toLowerCase().includes('high') ? 5 : jdRaw.ambiguity.toLowerCase().includes('medium') ? 3 : 2) : 3
+  const inferImpact = jdRaw.stakeholders ? (jdRaw.stakeholders.toLowerCase().includes('board') || jdRaw.stakeholders.toLowerCase().includes('vp') ? 4 : 3) : 3
+  const inferExpertise = jdRaw.required ? (jdRaw.required.split('\n').filter(Boolean).length >= 4 ? 4 : 3) : 3
+
+  const [scores, setScores] = useState({
+    authority: hasJD ? inferAuth : 3,
+    complexity: hasJD ? inferComplex : 3,
+    accountability: 3,
+    impact: hasJD ? inferImpact : 3,
+    expertise: hasJD ? inferExpertise : 3,
+  })
   const set = (k, v) => setScores(p => ({ ...p, [k]: v }))
   const total = Object.values(scores).reduce((a, b) => a + b, 0)
   const avg = total / 5
@@ -354,6 +537,14 @@ function CompCalculator() {
   ]
   const band = bands.find(b => avg >= b.min && avg < b.max) || bands[bands.length - 1]
 
+  const jdHints = {
+    authority: jdRaw.decidesAlone ? `From JD: "${jdRaw.decidesAlone.split('\n')[0].slice(0,60)}..."` : null,
+    complexity: jdRaw.ambiguity ? `From JD: ${jdRaw.ambiguity}` : null,
+    accountability: jdRaw.outcome1 ? `From JD: "${jdRaw.outcome1.slice(0,60)}..."` : null,
+    impact: jdRaw.stakeholders ? `From JD: ${jdRaw.stakeholders}` : null,
+    expertise: jdRaw.required ? `From JD: ${jdRaw.required.split('\n').filter(Boolean).length} required capabilities` : null,
+  }
+
   const factors = [
     { key: 'authority', label: 'Authority', desc: 'Decision scope, approval power, budget control' },
     { key: 'complexity', label: 'Complexity', desc: 'Ambiguity, cross-functional, technical depth' },
@@ -364,16 +555,24 @@ function CompCalculator() {
 
   return (
     <div>
-      <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 10, padding: '16px 20px', marginBottom: 24, fontSize: 14, color: '#065f46', lineHeight: 1.6 }}>
-        Score each factor 1-5. The calculator suggests a compensation band based on role scope, not title or salary history (CG-001).
-      </div>
+      {hasJD ? (
+        <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 10, padding: '16px 20px', marginBottom: 24, fontSize: 14, color: '#065f46', lineHeight: 1.6 }}>
+          <strong>Pre-scored from your "{jdRaw.title}" role definition.</strong> Factors were inferred from scope indicators, decision rights, and ambiguity level. Adjust as needed.
+        </div>
+      ) : (
+        <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 10, padding: '16px 20px', marginBottom: 24, fontSize: 14, color: '#065f46', lineHeight: 1.6 }}>
+          Score each factor 1-5. The calculator suggests a compensation band based on role scope, not title or salary history (CG-001).
+          <div style={{ marginTop: 8, fontSize: 13, color: '#0d9488' }}>Tip: Build a role definition first. Factors will auto-score from your scope indicators.</div>
+        </div>
+      )}
       {factors.map(f => (
         <div key={f.key} style={{ marginBottom: 16, background: '#fff', border: '1px solid #e2e8f0', borderRadius: 10, padding: '16px 20px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
             <div style={{ fontSize: 15, fontWeight: 600, color: '#0f172a' }}>{f.label}</div>
             <div style={{ fontSize: 20, fontWeight: 700, color: '#3B6D11' }}>{scores[f.key]}</div>
           </div>
-          <div style={{ fontSize: 12, color: '#64748b', marginBottom: 8 }}>{f.desc}</div>
+          <div style={{ fontSize: 12, color: '#64748b', marginBottom: 4 }}>{f.desc}</div>
+          {jdHints[f.key] && <div style={{ fontSize: 11, color: '#0d9488', marginBottom: 6, fontStyle: 'italic' }}>{jdHints[f.key]}</div>}
           <input type="range" min="1" max="5" value={scores[f.key]} onChange={e => set(f.key, +e.target.value)} style={{ width: '100%' }} />
           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: '#94a3b8' }}>
             <span>1 - Minimal</span><span>3 - Moderate</span><span>5 - Maximum</span>

@@ -12,6 +12,7 @@ const NAV = [
     { label: 'Documents', desc: 'Core Standard, IG, Template Library', to: '/documents' },
     { label: 'Fillable templates', desc: 'Fill online, generate PDF', to: '/templates' },
     { label: 'Free tools', desc: 'JD builder, scorecard, bias checker, more', to: '/tools' },
+    { label: 'Guided workflow', desc: 'Step-by-step with AI suggestions', to: '/workflow' },
   ]},
   { label: 'About', children: [
     { label: 'About HCCS\u2122', desc: 'What it is, who built it, why', to: '/about' },

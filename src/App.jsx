@@ -12,6 +12,7 @@ import BillOfRights from './pages/BillOfRights'
 import OrgBillOfRights from './pages/OrgBillOfRights'
 import Templates from './pages/Templates'
 import Tools from './pages/Tools'
+import { GuidedWorkflow, Workspace } from './pages/Workflow'
 import BusinessCase from './pages/BusinessCase'
 import { BlogList, BlogPost } from './pages/Blog'
 import Privacy from './pages/Privacy'
@@ -41,6 +42,8 @@ export default function App() {
         <Route path="/org-rights" element={<OrgBillOfRights />} />
         <Route path="/templates" element={<Templates />} />
         <Route path="/tools" element={<Tools />} />
+        <Route path="/workflow" element={<GuidedWorkflow />} />
+        <Route path="/workspace" element={<Workspace />} />
         <Route path="/business-case" element={<BusinessCase />} />
         <Route path="/blog" element={<BlogList />} />
         <Route path="/blog/:slug" element={<BlogPost />} />
