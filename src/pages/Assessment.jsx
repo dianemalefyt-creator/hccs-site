@@ -295,6 +295,130 @@ ${noted.map(c=>`<tr><td><code>${c.id}</code></td><td>${c.domainCode}</td><td cla
 </body></html>`;
 const w=window.open('','_blank');w.document.write(html);w.document.close();}
 
+function genBusinessCase(user,ds,ov,answers,mg,sg){
+const date=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+const Lv=['Not Established','Initial','Developing','Defined','Managed','Optimizing'];
+const totalControls=D.reduce((a,d)=>a+d.controls.length,0);
+const inPlace=D.reduce((a,d)=>a+d.controls.filter(c=>answers[c.id]==='yes').length,0);
+const gaps=totalControls-inPlace;
+const mustGapCount=mg.length;
+const shouldGapCount=sg.length;
+const compliancePct=Math.round(inPlace/totalControls*100);
+const weakest=ds.reduce((a,b)=>a.level<b.level?a:b);
+const strongest=ds.reduce((a,b)=>a.level>b.level?a:b);
+
+const riskRows=ds.map(d=>{
+const riskLevel=d.level<=1?'Critical':d.level===2?'High':d.level===3?'Moderate':'Low';
+const riskColor=d.level<=1?'#dc2626':d.level===2?'#d97706':d.level===3?'#2563eb':'#059669';
+return `<tr><td style="padding:10px 14px;font-weight:600">${d.domain}: ${d.name}</td><td style="padding:10px 14px;text-align:center">Level ${d.level}</td><td style="padding:10px 14px;text-align:center">${d.met}/${d.total}</td><td style="padding:10px 14px;text-align:center;color:${riskColor};font-weight:700">${riskLevel}</td></tr>`;
+}).join('');
+
+const html=`<!DOCTYPE html><html><head><meta charset="utf-8"><title>HCCS™ Business Case - ${user?.org||'Organization'}</title>
+<style>
+@media print{body{margin:0}}
+body{font-family:Helvetica,Arial,sans-serif;color:#1e293b;line-height:1.55;max-width:800px;margin:0 auto;padding:40px;font-size:13px}
+h1{font-size:24px;color:#0f172a;margin:0 0 4px}
+h2{font-size:18px;color:#1e3a5f;margin:32px 0 12px;padding-bottom:6px;border-bottom:2px solid #e2e8f0}
+h3{font-size:15px;color:#0f172a;margin:20px 0 8px}
+.header{background:linear-gradient(135deg,#0a1628,#1a2d4a);color:#fff;padding:32px;border-radius:12px;margin-bottom:28px}
+.header h1{color:#fff;font-size:28px;margin-bottom:4px}
+.header .sub{color:#94a3b8;font-size:14px}
+.header .org{color:#5b9bd5;font-size:16px;font-weight:700;margin-bottom:8px}
+table{width:100%;border-collapse:collapse;margin:12px 0}
+th{background:#0f172a;color:#fff;padding:10px 14px;text-align:left;font-size:12px}
+td{padding:10px 14px;border-bottom:1px solid #f1f5f9;font-size:13px}
+tr:nth-child(even){background:#f8fafc}
+.metric{display:inline-block;width:48%;vertical-align:top;margin-bottom:16px}
+.metric .num{font-size:28px;font-weight:700;color:#0f172a}
+.metric .label{font-size:12px;color:#64748b}
+.risk-box{background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:20px;margin:16px 0}
+.savings-box{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:20px;margin:16px 0}
+.stakeholder{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:16px;margin:10px 0}
+.stakeholder strong{color:#0f172a}
+.phase{border-left:3px solid #2563eb;padding:12px 16px;margin:10px 0;background:#f8fafc;border-radius:0 8px 8px 0}
+.footer{margin-top:40px;padding-top:16px;border-top:1px solid #e2e8f0;font-size:11px;color:#94a3b8;text-align:center}
+</style></head><body>
+
+<div class="header">
+<div style="font-size:12px;color:#5b9bd5;letter-spacing:0.15em;margin-bottom:4px">HCCS™ BUSINESS CASE</div>
+<div class="org">${user?.org||'Your Organization'}</div>
+<h1>The Case for Human Capital Governance</h1>
+<div class="sub">Prepared for executive review | ${date}</div>
+<div class="sub">Based on HCCS™ assessment completed by ${user?.name||'Assessment Lead'}, ${user?.title||''}</div>
+</div>
+
+<h2>1. Executive Summary</h2>
+<p><strong>${user?.org||'The organization'}</strong> currently operates at <strong>HCCS™ Maturity Level ${ov}: ${Lv[ov]}</strong>. ${ov<3?`This is ${3-ov} level${3-ov>1?'s':''} below the credibility threshold (Level 3), the minimum required for organizations making public claims about fair, unbiased, or AI-governed hiring practices.`:'The organization meets or exceeds the credibility threshold.'}</p>
+<p>Of 67 auditable controls, <strong>${inPlace} are in place</strong> (${compliancePct}%). There are <strong>${mustGapCount} critical (MUST) gaps</strong> and <strong>${shouldGapCount} significant (SHOULD) gaps</strong> requiring remediation.</p>
+
+<div style="display:flex;flex-wrap:wrap;gap:12px;margin:20px 0">
+<div class="metric"><div class="num">Level ${ov}</div><div class="label">Current maturity (of 5)</div></div>
+<div class="metric"><div class="num">${gaps}</div><div class="label">Control gaps</div></div>
+<div class="metric"><div class="num">${mustGapCount}</div><div class="label">Critical (MUST) gaps</div></div>
+<div class="metric"><div class="num">${compliancePct}%</div><div class="label">Controls in place</div></div>
+</div>
+
+<h2>2. Current Risk Profile</h2>
+<table>
+<tr><th>Domain</th><th style="text-align:center">Level</th><th style="text-align:center">Controls Met</th><th style="text-align:center">Risk</th></tr>
+${riskRows}
+</table>
+<p><strong>Weakest domain:</strong> ${weakest.domain} (${weakest.name}) at Level ${weakest.level}. <strong>Strongest:</strong> ${strongest.domain} (${strongest.name}) at Level ${strongest.level}.</p>
+
+<h2>3. Cost of Inaction</h2>
+<div class="risk-box">
+<h3 style="color:#991b1b;margin-top:0">What ungoverned hiring costs</h3>
+<table>
+<tr><td style="font-weight:600">Bad hire costs (15% rate × 2× salary)</td><td style="text-align:right;font-weight:700;color:#dc2626">$180,000 - $360,000 per occurrence</td></tr>
+<tr><td style="font-weight:600">Discrimination settlement (average)</td><td style="text-align:right;font-weight:700;color:#dc2626">$40,000 - $165,000</td></tr>
+<tr><td style="font-weight:600">OFCCP audit (legal + remediation)</td><td style="text-align:right;font-weight:700;color:#dc2626">$100,000 - $1,000,000+</td></tr>
+<tr><td style="font-weight:600">NYC LL144 violation (per day)</td><td style="text-align:right;font-weight:700;color:#dc2626">$500 - $1,500</td></tr>
+<tr><td style="font-weight:600">EU AI Act (high-risk non-compliance)</td><td style="text-align:right;font-weight:700;color:#dc2626">Up to 3% global revenue</td></tr>
+</table>
+<p style="margin:12px 0 0;font-size:12px;color:#7f1d1d"><strong>${mustGapCount} critical control gaps</strong> represent immediate exposure. Each undocumented decision, each untested AI tool, each undefined role is a potential incident.</p>
+</div>
+
+<h2>4. Return on Investment</h2>
+<div class="savings-box">
+<h3 style="color:#166534;margin-top:0">What governance returns</h3>
+<table>
+<tr><td>Better hires (structured methods reduce bad hires 25-40%)</td><td style="text-align:right;font-weight:700;color:#059669">Cost avoidance: $45K-$144K per prevented bad hire</td></tr>
+<tr><td>Defensible decisions (60% lower litigation risk)</td><td style="text-align:right;font-weight:700;color:#059669">Risk reduction: $24K-$99K per year</td></tr>
+<tr><td>Retention improvement (structured hiring +15-30%)</td><td style="text-align:right;font-weight:700;color:#059669">Turnover savings: significant at scale</td></tr>
+<tr><td>Regulatory readiness (exceeds all current requirements)</td><td style="text-align:right;font-weight:700;color:#059669">Compliance cost avoidance: material</td></tr>
+</table>
+</div>
+
+<h2>5. Recommended Investment</h2>
+<table>
+<tr><th>Option</th><th>Investment</th><th>Best For</th></tr>
+<tr><td style="font-weight:600">Self-Assessment</td><td>$149</td><td>Initial gap identification, internal use</td></tr>
+<tr style="background:#eff6ff"><td style="font-weight:600">Guided Assessment ★</td><td>$2,500</td><td>Expert-guided, executive presentation, 30-day follow-up</td></tr>
+<tr><td style="font-weight:600">Enterprise / Validated</td><td>Custom</td><td>Third-party validation, attestation letter, board-ready report</td></tr>
+</table>
+${ov<3?`<p><strong>Recommendation:</strong> Based on Level ${ov} maturity with ${mustGapCount} critical gaps, the <strong>Guided Assessment ($2,500)</strong> is recommended. It includes expert interpretation, executive-ready deliverables, and a 30-day follow-up to verify remediation progress.</p>`:'<p><strong>Recommendation:</strong> The organization has achieved the credibility threshold. Consider the Enterprise option for third-party validation and formal attestation.</p>'}
+
+<h2>6. Implementation Roadmap</h2>
+${ov<3?`
+<div class="phase"><strong>Phase 1 (Months 1-3): Foundation</strong><br>Close ${mustGapCount} MUST control gaps. Establish role definitions, evaluation criteria, decision documentation, and ADT inventory. Estimated effort: 40-60 hours of process design + training.</div>
+<div class="phase"><strong>Phase 2 (Months 3-6): Standardize</strong><br>Activate SHOULD controls. Implement calibration, bias detection, feedback processes, and compensation factor analysis. Estimated effort: 30-50 hours.</div>
+<div class="phase"><strong>Phase 3 (Months 6-9): Validate</strong><br>Achieve Level 3 (credibility threshold). Internal audit of all controls. Prepare for external validation if desired.</div>
+`:`<div class="phase"><strong>Ongoing:</strong> Maintain Level ${ov} controls. Activate remaining MAY controls. Consider post-hire validation studies and published metrics for Level 5.</div>`}
+
+<h2>7. Stakeholder Talking Points</h2>
+<div class="stakeholder"><strong>For the CEO / Board:</strong> We govern every financial decision with SOX controls. We govern data with GDPR/CCPA. But hiring and compensation, our largest operational cost, has no equivalent governance. This closes that gap before regulators force it. Current gap: ${mustGapCount} critical controls missing.</div>
+<div class="stakeholder"><strong>For General Counsel:</strong> We have ${mustGapCount} undocumented decision points that represent litigation exposure. Current AI hiring legislation (NYC LL144, EU AI Act) requires governance we do not yet have. HCCS exceeds all current requirements. Assessment cost: $149-$2,500. Average discrimination settlement: $40K-$165K.</div>
+<div class="stakeholder"><strong>For the CFO:</strong> Bad hires cost 1.5-3× salary. We currently have no structured method to prevent them. Governance investment: $149-$2,500. One prevented bad hire at mid-level: $180K+ saved. ROI is measured in multiples, not percentages.</div>
+<div class="stakeholder"><strong>For the CHRO:</strong> This assessment identified ${gaps} control gaps across ${ds.filter(d=>d.level<3).length} domains below the credibility threshold. HCCS gives us a framework to prove our practices are structured, fair, and auditable. It turns "we think our process is good" into documented evidence.</div>
+
+<div class="footer">
+<div>HCCS™ Business Case | Generated from assessment data | ${date}</div>
+<div style="margin-top:4px">© 2026 IngenuityCo LLC. All rights reserved. | hccsstandard.com</div>
+<div style="margin-top:4px;color:#cbd5e1">This document is generated from a self-assessment and is intended for internal decision-making purposes.</div>
+</div>
+</body></html>`;
+const w=window.open('','_blank');w.document.write(html);w.document.close();}
+
 function Results({answers,notes,user,onRestart}){
 const[done,setDone]=useState(false);const[sending,setSending]=useState(false);const[emailErr,setEmailErr]=useState('');const[resent,setResent]=useState(false);
 const ds=D.map(d=>({domain:d.code,name:d.name,color:d.color,level:calcLv(answers,d),total:d.controls.length,met:d.controls.filter(c=>answers[c.id]==="yes").length,partial:d.controls.filter(c=>answers[c.id]==="partial").length,gaps:getGaps(answers,d)}));
@@ -379,6 +503,8 @@ return(<div key={c.id} style={{marginBottom:10,paddingLeft:12,borderLeft:`2px so
 <div style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap"}}>
 <button onClick={()=>{genReport(user,ds,ov,answers,notes,mg,sg,ag,ph);}}
 style={{padding:"14px 28px",borderRadius:8,border:"1px solid #e2e8f0",background:"#fff",color:"#334155",fontSize:14,fontWeight:600,cursor:"pointer"}}>Open Report in Browser</button>
+<button onClick={()=>{genBusinessCase(user,ds,ov,answers,mg,sg);}}
+style={{padding:"14px 28px",borderRadius:8,border:"1px solid #059669",background:"#f0fdf4",color:"#059669",fontSize:14,fontWeight:600,cursor:"pointer"}}>Generate Business Case</button>
 <button onClick={async()=>{setSending(true);setEmailErr('');try{
 const payload={user,domainScores:ds.map(d=>({domain:d.domain,name:d.name,level:d.level,met:d.met,total:d.total,partial:d.partial,gaps:d.gaps.length})),
 overallLevel:ov,controls:D.map(d=>({code:d.code,name:d.name,color:d.color,controls:d.controls})),answers,notes,
@@ -398,6 +524,8 @@ disabled={sending} style={{padding:"14px 28px",borderRadius:8,border:"none",back
 <div style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap"}}>
 <button onClick={()=>genReport(user,ds,ov,answers,notes,mg,sg,ag,ph)}
 style={{padding:"10px 24px",borderRadius:6,border:"1px solid #e2e8f0",background:"#fff",color:"#475569",fontSize:13,fontWeight:500,cursor:"pointer"}}>Open in browser</button>
+<button onClick={()=>genBusinessCase(user,ds,ov,answers,mg,sg)}
+style={{padding:"10px 24px",borderRadius:6,border:"1px solid #059669",background:"#f0fdf4",color:"#059669",fontSize:13,fontWeight:500,cursor:"pointer"}}>Business case</button>
 <button onClick={async()=>{setSending(true);setEmailErr('');try{
 const payload={user,domainScores:ds.map(d=>({domain:d.domain,name:d.name,level:d.level,met:d.met,total:d.total,partial:d.partial,gaps:d.gaps.length})),
 overallLevel:ov,controls:D.map(d=>({code:d.code,name:d.name,color:d.color,controls:d.controls})),answers,notes,
