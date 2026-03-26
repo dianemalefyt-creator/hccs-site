@@ -57,23 +57,57 @@ function renderBody(text, navigate) {
 }
 
 function renderInline(text, navigate) {
-  // Split on links, bold, and italic patterns
-  const parts = text.split(/(\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*|\*[^*]+\*)/g)
-  return parts.map((part, i) => {
-    const linkMatch = part.match(/\[([^\]]+)\]\(([^)]+)\)/)
-    if (linkMatch) {
-      const [, label, href] = linkMatch
-      if (href.startsWith('/')) {
-        return <a key={i} href={href} onClick={e => { e.preventDefault(); navigate(href) }} style={{ color: '#2563eb', fontWeight: 500 }}>{label}</a>
-      }
-      return <a key={i} href={href} target="_blank" rel="noopener" style={{ color: '#2563eb' }}>{label}</a>
+  if (!text) return text
+  // Process in order: links, then bold, then italic
+  const parts = []
+  let remaining = text
+  let key = 0
+
+  while (remaining.length > 0) {
+    // Find the earliest match of any pattern
+    const linkIdx = remaining.search(/\[[^\]]+\]\([^)]+\)/)
+    const boldIdx = remaining.search(/\*\*[^*]+\*\*/)
+    const italicIdx = remaining.search(/(?<!\*)\*(?!\*)[^*]+\*(?!\*)/)
+
+    const candidates = [
+      linkIdx >= 0 ? { type: 'link', idx: linkIdx } : null,
+      boldIdx >= 0 ? { type: 'bold', idx: boldIdx } : null,
+      italicIdx >= 0 ? { type: 'italic', idx: italicIdx } : null,
+    ].filter(Boolean).sort((a, b) => a.idx - b.idx)
+
+    if (candidates.length === 0) {
+      parts.push(<span key={key++}>{remaining}</span>)
+      break
     }
-    const boldMatch = part.match(/^\*\*([^*]+)\*\*$/)
-    if (boldMatch) return <strong key={i}>{boldMatch[1]}</strong>
-    const italicMatch = part.match(/^\*([^*]+)\*$/)
-    if (italicMatch) return <em key={i}>{italicMatch[1]}</em>
-    return <span key={i}>{part}</span>
-  })
+
+    const first = candidates[0]
+
+    // Add text before the match
+    if (first.idx > 0) {
+      parts.push(<span key={key++}>{remaining.slice(0, first.idx)}</span>)
+    }
+
+    if (first.type === 'link') {
+      const m = remaining.slice(first.idx).match(/\[([^\]]+)\]\(([^)]+)\)/)
+      const [full, label, href] = m
+      if (href.startsWith('/')) {
+        parts.push(<a key={key++} href={href} onClick={e => { e.preventDefault(); navigate(href) }} style={{ color: '#2563eb', fontWeight: 500 }}>{label}</a>)
+      } else {
+        parts.push(<a key={key++} href={href} target="_blank" rel="noopener" style={{ color: '#2563eb' }}>{label}</a>)
+      }
+      remaining = remaining.slice(first.idx + full.length)
+    } else if (first.type === 'bold') {
+      const m = remaining.slice(first.idx).match(/\*\*([^*]+)\*\*/)
+      parts.push(<strong key={key++}>{m[1]}</strong>)
+      remaining = remaining.slice(first.idx + m[0].length)
+    } else if (first.type === 'italic') {
+      const m = remaining.slice(first.idx).match(/\*([^*]+)\*/)
+      parts.push(<em key={key++}>{m[1]}</em>)
+      remaining = remaining.slice(first.idx + m[0].length)
+    }
+  }
+
+  return parts
 }
 
 const CATEGORIES = ['All', 'Governance', 'AI & Hiring', 'Research', 'Compliance', 'Tools', 'Case Studies', 'Opinion']

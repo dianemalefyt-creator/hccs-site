@@ -5,11 +5,15 @@ const ADMIN_PASS = 'hccsadmin2026'
 const BLOG_STORAGE_KEY = 'hccs_blog_posts'
 
 // Get all posts: static + localStorage
-export function getAllPosts() {
+// showAll = true for admin, false for public blog
+export function getAllPosts(showAll = false) {
   const dynamic = getDynamicPosts()
-  // Dynamic posts override static posts with same slug
   const staticFiltered = STATIC_POSTS.filter(sp => !dynamic.find(dp => dp.slug === sp.slug))
-  return [...dynamic, ...staticFiltered].sort((a, b) => new Date(b.date) - new Date(a.date))
+  // Static posts without explicit status are treated as published
+  const all = [...dynamic, ...staticFiltered.map(p => ({ ...p, status: p.status || 'published' }))]
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
+  if (showAll) return all
+  return all.filter(p => (p.status || 'published') === 'published')
 }
 
 function getDynamicPosts() {
@@ -22,6 +26,16 @@ function saveDynamicPosts(posts) {
 
 const CATEGORIES = ['Governance', 'AI & Hiring', 'Research', 'Compliance', 'Tools', 'Case Studies', 'Opinion']
 
+function renderBold(text) {
+  if (!text) return text
+  const parts = text.split(/(\*\*[^*]+\*\*)/g)
+  return parts.map((part, i) => {
+    const m = part.match(/^\*\*([^*]+)\*\*$/)
+    if (m) return <strong key={i}>{m[1]}</strong>
+    return <span key={i}>{part}</span>
+  })
+}
+
 export default function Admin() {
   const [authed, setAuthed] = useState(false)
   const [pass, setPass] = useState('')
@@ -31,7 +45,7 @@ export default function Admin() {
   const [form, setForm] = useState({ title: '', slug: '', excerpt: '', category: '', content: '', date: '' })
 
   useEffect(() => {
-    if (authed) setPosts(getAllPosts())
+    if (authed) setPosts(getAllPosts(true))
   }, [authed])
 
   const login = () => {
@@ -44,16 +58,16 @@ export default function Admin() {
   const autoSlug = (title) => title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60)
 
   const startNew = () => {
-    setForm({ title: '', slug: '', excerpt: '', category: 'Governance', content: '', date: new Date().toISOString().split('T')[0], author: 'Diane Malefyt', authorTitle: 'Author, HCCS™ Standard' })
+    setForm({ title: '', slug: '', excerpt: '', category: 'Governance', content: '', date: new Date().toISOString().split('T')[0], author: 'Diane Malefyt', authorTitle: 'Author, HCCS™ Standard', status: 'draft' })
     setEditing('new')
   }
 
   const startEdit = (post) => {
-    setForm({ title: post.title, slug: post.slug, excerpt: post.excerpt, category: post.category, content: post.body || post.content || '', date: post.date, author: post.author || 'Diane Malefyt', authorTitle: post.authorTitle || '' })
+    setForm({ title: post.title, slug: post.slug, excerpt: post.excerpt, category: post.category, content: post.body || post.content || '', date: post.date, author: post.author || 'Diane Malefyt', authorTitle: post.authorTitle || '', status: post.status || 'published' })
     setEditing(post.slug)
   }
 
-  const save = () => {
+  const savePost = (publishStatus) => {
     if (!form.title || !form.content || !form.slug) return
     const dynamic = getDynamicPosts()
     const post = {
@@ -63,11 +77,12 @@ export default function Admin() {
       date: form.date || new Date().toISOString().split('T')[0],
       author: form.author || 'Diane Malefyt',
       authorTitle: form.authorTitle || '',
+      status: publishStatus || form.status || 'draft',
       readTime: `${Math.max(3, Math.ceil(form.content.split(/\s+/).length / 200))} min read`,
+      lastModified: new Date().toISOString(),
     }
 
     if (editing === 'new') {
-      // Check slug collision
       if (dynamic.find(p => p.slug === post.slug)) {
         post.slug = post.slug + '-' + Date.now().toString(36).slice(-4)
       }
@@ -75,23 +90,39 @@ export default function Admin() {
     } else {
       const idx = dynamic.findIndex(p => p.slug === editing)
       if (idx >= 0) {
-        dynamic[idx] = post
+        dynamic[idx] = { ...dynamic[idx], ...post }
       } else {
-        // Editing a static post - add as dynamic override
         dynamic.unshift(post)
       }
     }
 
     saveDynamicPosts(dynamic)
-    setPosts(getAllPosts())
+    setPosts(getAllPosts(true))
     setEditing(null)
+  }
+
+  const toggleStatus = (slug) => {
+    const dynamic = getDynamicPosts()
+    const idx = dynamic.findIndex(p => p.slug === slug)
+    if (idx >= 0) {
+      dynamic[idx].status = dynamic[idx].status === 'published' ? 'draft' : 'published'
+      dynamic[idx].lastModified = new Date().toISOString()
+    } else {
+      // Static post: create dynamic override with toggled status
+      const staticPost = STATIC_POSTS.find(p => p.slug === slug)
+      if (staticPost) {
+        dynamic.unshift({ ...staticPost, status: 'draft', lastModified: new Date().toISOString() })
+      }
+    }
+    saveDynamicPosts(dynamic)
+    setPosts(getAllPosts(true))
   }
 
   const deletePost = (slug) => {
     if (!confirm('Delete this post?')) return
     const dynamic = getDynamicPosts().filter(p => p.slug !== slug)
     saveDynamicPosts(dynamic)
-    setPosts(getAllPosts())
+    setPosts(getAllPosts(true))
   }
 
   const isStatic = (slug) => STATIC_POSTS.some(p => p.slug === slug) && !getDynamicPosts().some(p => p.slug === slug)
@@ -116,7 +147,17 @@ export default function Admin() {
         <div style={{ fontSize: 16, fontWeight: 700, color: '#fff' }}>
           {editing === 'new' ? 'New blog post' : `Editing: ${form.title || editing}`}
         </div>
-        <button onClick={() => setEditing(null)} style={{ background: 'none', border: '1px solid rgba(255,255,255,0.2)', color: '#94a3b8', padding: '6px 16px', borderRadius: 6, cursor: 'pointer', fontSize: 13 }}>Cancel</button>
+        <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+          <button onClick={() => setEditing(null)} style={{ background: 'none', border: '1px solid rgba(255,255,255,0.2)', color: '#94a3b8', padding: '6px 16px', borderRadius: 6, cursor: 'pointer', fontSize: 13 }}>Cancel</button>
+          <button onClick={() => savePost('draft')} disabled={!form.title || !form.content}
+            style={{ padding: '6px 20px', borderRadius: 6, border: '1px solid rgba(255,255,255,0.2)', background: 'transparent', color: '#cbd5e1', fontSize: 13, fontWeight: 600, cursor: form.title && form.content ? 'pointer' : 'default' }}>
+            Save draft
+          </button>
+          <button onClick={() => savePost('published')} disabled={!form.title || !form.content}
+            style={{ padding: '6px 20px', borderRadius: 6, border: 'none', background: form.title && form.content ? '#059669' : '#475569', color: '#fff', fontSize: 13, fontWeight: 600, cursor: form.title && form.content ? 'pointer' : 'default' }}>
+            Publish
+          </button>
+        </div>
       </div>
       <div style={{ maxWidth: 800, margin: '0 auto', padding: '32px 24px' }}>
         <div style={{ marginBottom: 16 }}>
@@ -165,12 +206,21 @@ export default function Admin() {
           <textarea value={form.content} onChange={e => set('content', e.target.value)} rows={20}
             style={{ width: '100%', padding: '14px', borderRadius: 8, border: '1px solid #e2e8f0', fontSize: 14, outline: 'none', fontFamily: "'IBM Plex Mono', monospace", resize: 'vertical', boxSizing: 'border-box', lineHeight: 1.7 }} />
         </div>
-        <div style={{ display: 'flex', gap: 12 }}>
-          <button onClick={save} disabled={!form.title || !form.content}
-            style={{ padding: '14px 32px', borderRadius: 8, border: 'none', background: form.title && form.content ? '#059669' : '#94a3b8', color: '#fff', fontSize: 15, fontWeight: 600, cursor: form.title && form.content ? 'pointer' : 'default' }}>
-            {editing === 'new' ? 'Publish post' : 'Save changes'}
+        {/* Sticky publish bar */}
+        <div style={{ position: 'sticky', bottom: 0, left: 0, right: 0, background: '#fff', borderTop: '2px solid #e2e8f0', padding: '16px 24px', display: 'flex', gap: 12, justifyContent: 'flex-end', alignItems: 'center', marginTop: 24, marginLeft: -24, marginRight: -24, marginBottom: -32, boxShadow: '0 -4px 12px rgba(0,0,0,0.06)' }}>
+          <span style={{ flex: 1, fontSize: 13, color: '#64748b' }}>
+            {form.title ? `"${form.title}"` : 'Untitled'}
+            {form.status === 'published' ? <span style={{ marginLeft: 8, fontSize: 11, padding: '2px 8px', borderRadius: 4, background: '#f0fdf4', color: '#059669', fontWeight: 600 }}>Published</span> : <span style={{ marginLeft: 8, fontSize: 11, padding: '2px 8px', borderRadius: 4, background: '#fefce8', color: '#854d0e', fontWeight: 600 }}>Draft</span>}
+          </span>
+          <button onClick={() => setEditing(null)} style={{ padding: '12px 20px', borderRadius: 8, border: '1px solid #e2e8f0', background: '#fff', color: '#64748b', fontSize: 14, cursor: 'pointer' }}>Cancel</button>
+          <button onClick={() => savePost('draft')} disabled={!form.title || !form.content}
+            style={{ padding: '12px 24px', borderRadius: 8, border: '1px solid #e2e8f0', background: '#fff', color: '#334155', fontSize: 14, fontWeight: 600, cursor: form.title && form.content ? 'pointer' : 'default' }}>
+            Save draft
           </button>
-          <button onClick={() => setEditing(null)} style={{ padding: '14px 24px', borderRadius: 8, border: '1px solid #e2e8f0', background: '#fff', color: '#64748b', fontSize: 15, cursor: 'pointer' }}>Cancel</button>
+          <button onClick={() => savePost('published')} disabled={!form.title || !form.content}
+            style={{ padding: '12px 28px', borderRadius: 8, border: 'none', background: form.title && form.content ? '#059669' : '#94a3b8', color: '#fff', fontSize: 15, fontWeight: 700, cursor: form.title && form.content ? 'pointer' : 'default', minWidth: 120 }}>
+            Publish
+          </button>
         </div>
         {form.content && (
           <div style={{ marginTop: 32, paddingTop: 24, borderTop: '1px solid #e2e8f0' }}>
@@ -183,9 +233,9 @@ export default function Admin() {
                   if (line.startsWith('## ')) return <h2 key={i} style={{ fontSize: 20, fontWeight: 700, color: '#0f172a', margin: '24px 0 8px' }}>{line.slice(3)}</h2>
                   if (line.startsWith('### ')) return <h3 key={i} style={{ fontSize: 17, fontWeight: 600, color: '#0f172a', margin: '20px 0 6px' }}>{line.slice(4)}</h3>
                   if (line.startsWith('> ')) return <blockquote key={i} style={{ borderLeft: '3px solid #5b9bd5', paddingLeft: 16, margin: '12px 0', color: '#475569', fontStyle: 'italic' }}>{line.slice(2)}</blockquote>
-                  if (line.startsWith('- ')) return <div key={i} style={{ paddingLeft: 16, marginBottom: 4 }}>• {line.slice(2)}</div>
+                  if (line.startsWith('- ')) return <div key={i} style={{ paddingLeft: 16, marginBottom: 4 }}>• {renderBold(line.slice(2))}</div>
                   if (line.trim() === '') return <div key={i} style={{ height: 12 }} />
-                  return <p key={i} style={{ margin: '0 0 8px' }}>{line}</p>
+                  return <p key={i} style={{ margin: '0 0 8px' }}>{renderBold(line)}</p>
                 })}
               </div>
             </div>
@@ -206,32 +256,48 @@ export default function Admin() {
       </div>
       <div style={{ maxWidth: 900, margin: '0 auto', padding: '32px 24px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
-          <h1 style={{ fontSize: 24, fontWeight: 700, color: '#0f172a', margin: 0 }}>Blog posts ({posts.length})</h1>
-          <button onClick={startNew} style={{ padding: '10px 24px', borderRadius: 8, border: 'none', background: '#2563eb', color: '#fff', fontSize: 14, fontWeight: 600, cursor: 'pointer' }}>+ New post</button>
+          <h1 style={{ fontSize: 24, fontWeight: 700, color: '#0f172a', margin: 0 }}>Blog posts</h1>
+          <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+            <span style={{ fontSize: 13, color: '#059669', fontWeight: 600 }}>{posts.filter(p => (p.status || 'published') === 'published').length} published</span>
+            <span style={{ fontSize: 13, color: '#854d0e', fontWeight: 600 }}>{posts.filter(p => p.status === 'draft').length} drafts</span>
+            <button onClick={startNew} style={{ padding: '10px 24px', borderRadius: 8, border: 'none', background: '#2563eb', color: '#fff', fontSize: 14, fontWeight: 600, cursor: 'pointer' }}>+ New post</button>
+          </div>
         </div>
 
         {posts.length === 0 ? (
           <div style={{ textAlign: 'center', padding: 48, color: '#64748b' }}>No posts yet. Click "New post" to create one.</div>
         ) : (
-          posts.map(post => (
-            <div key={post.slug} style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: 10, padding: '18px 22px', marginBottom: 10, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+          posts.map(post => {
+            const status = post.status || 'published'
+            const isDraft = status === 'draft'
+            return (
+            <div key={post.slug} style={{ background: '#fff', border: `1px solid ${isDraft ? '#fde68a' : '#e2e8f0'}`, borderRadius: 10, padding: '18px 22px', marginBottom: 10, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', opacity: isDraft ? 0.85 : 1 }}>
               <div style={{ flex: 1 }}>
                 <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 4 }}>
                   <div style={{ fontSize: 16, fontWeight: 600, color: '#0f172a' }}>{post.title}</div>
+                  {isDraft
+                    ? <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 4, background: '#fefce8', color: '#854d0e', fontWeight: 600, border: '1px solid #fde68a' }}>Draft</span>
+                    : <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 4, background: '#f0fdf4', color: '#059669', fontWeight: 600, border: '1px solid #bbf7d0' }}>Published</span>
+                  }
                   {isStatic(post.slug) && <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 4, background: '#f1f5f9', color: '#64748b', fontWeight: 600 }}>Built-in</span>}
                 </div>
                 <div style={{ fontSize: 13, color: '#64748b' }}>
-                  {post.date} · {post.category} · /blog/{post.slug}
+                  {post.date} · {post.category} · {post.author} · /blog/{post.slug}
                 </div>
+                {post.lastModified && <div style={{ fontSize: 11, color: '#94a3b8', marginTop: 2 }}>Last modified: {new Date(post.lastModified).toLocaleString()}</div>}
                 {post.excerpt && <div style={{ fontSize: 13, color: '#94a3b8', marginTop: 4 }}>{post.excerpt.slice(0, 120)}...</div>}
               </div>
-              <div style={{ display: 'flex', gap: 8, flexShrink: 0, marginLeft: 16 }}>
+              <div style={{ display: 'flex', gap: 8, flexShrink: 0, marginLeft: 16, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+                <button onClick={() => toggleStatus(post.slug)}
+                  style={{ padding: '6px 14px', borderRadius: 6, border: `1px solid ${isDraft ? '#bbf7d0' : '#fde68a'}`, background: isDraft ? '#f0fdf4' : '#fefce8', color: isDraft ? '#059669' : '#854d0e', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>
+                  {isDraft ? 'Publish' : 'Unpublish'}
+                </button>
                 <button onClick={() => startEdit(post)} style={{ padding: '6px 14px', borderRadius: 6, border: '1px solid #e2e8f0', background: '#fff', color: '#2563eb', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>Edit</button>
                 <button onClick={() => deletePost(post.slug)} style={{ padding: '6px 14px', borderRadius: 6, border: '1px solid #fecaca', background: '#fff', color: '#dc2626', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>Delete</button>
-                <a href={`/blog/${post.slug}`} target="_blank" style={{ padding: '6px 14px', borderRadius: 6, border: '1px solid #e2e8f0', background: '#f8fafc', color: '#475569', fontSize: 12, fontWeight: 600, textDecoration: 'none' }}>View</a>
+                {!isDraft && <a href={`/blog/${post.slug}`} target="_blank" style={{ padding: '6px 14px', borderRadius: 6, border: '1px solid #e2e8f0', background: '#f8fafc', color: '#475569', fontSize: 12, fontWeight: 600, textDecoration: 'none' }}>View</a>}
               </div>
             </div>
-          ))
+          )})
         )}
 
         <div style={{ marginTop: 40, padding: 24, background: '#0f172a', borderRadius: 12 }}>
@@ -240,7 +306,7 @@ export default function Admin() {
             Posts use Markdown-style formatting: <code style={{ background: '#1e293b', padding: '2px 6px', borderRadius: 4 }}>## Heading</code>, <code style={{ background: '#1e293b', padding: '2px 6px', borderRadius: 4 }}>**bold**</code>, <code style={{ background: '#1e293b', padding: '2px 6px', borderRadius: 4 }}>*italic*</code>, <code style={{ background: '#1e293b', padding: '2px 6px', borderRadius: 4 }}>{'>'}  blockquote</code>, <code style={{ background: '#1e293b', padding: '2px 6px', borderRadius: 4 }}>- list item</code>
           </div>
           <div style={{ fontSize: 13, color: '#64748b', marginTop: 8 }}>
-            Built-in posts (from code) can be overridden by editing them here. New posts are stored in your browser's local storage. To make posts permanent across devices, export and add to src/data/blog.js.
+            <strong>Draft/Publish:</strong> New posts start as drafts. Drafts are only visible in admin. Click "Publish" to make a post live on the blog. You can unpublish anytime. Built-in posts (from code) are always published unless overridden.
           </div>
         </div>
       </div>
