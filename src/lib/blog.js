@@ -1,4 +1,3 @@
-// Blog post storage - Airtable backend with static fallback
 import { POSTS as STATIC_POSTS } from '../data/blog'
 
 let cache = null
@@ -12,7 +11,9 @@ export async function fetchPosts(showAll = false) {
   try {
     const url = showAll ? '/.netlify/functions/blog-api?all=true' : '/.netlify/functions/blog-api'
     const res = await fetch(url)
+    if (!res.ok) throw new Error(`API returned ${res.status}`)
     const data = await res.json()
+    console.log('[blog] API response:', data.posts?.length, 'posts', data.error || '')
 
     if (data.posts && data.posts.length > 0) {
       const airtableSlugs = new Set(data.posts.map(p => p.slug))
@@ -29,8 +30,14 @@ export async function fetchPosts(showAll = false) {
       }
       return merged
     }
+
+    if (data.error) {
+      console.warn('[blog] API error:', data.error)
+    }
+
     return STATIC_POSTS.map(p => ({ ...p, status: 'published', source: 'static' }))
-  } catch {
+  } catch (err) {
+    console.error('[blog] Fetch failed:', err)
     return STATIC_POSTS.map(p => ({ ...p, status: 'published', source: 'static' }))
   }
 }
