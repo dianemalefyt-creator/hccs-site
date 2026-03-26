@@ -132,14 +132,6 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* Direct contact */}
-            <div style={{ background: '#0f172a', borderRadius: 14, padding: 28 }}>
-              <h3 style={{ fontSize: 18, fontWeight: 700, color: '#fff', margin: '0 0 16px' }}>Prefer to connect directly?</h3>
-              <div>
-                <div style={{ fontSize: 13, color: '#5b9bd5', fontWeight: 600, marginBottom: 4 }}>LinkedIn</div>
-                <a href="https://www.linkedin.com/in/dianemalefyt/" target="_blank" rel="noopener" style={{ fontSize: 14, color: '#cbd5e1' }}>linkedin.com/in/dianemalefyt</a>
-              </div>
-            </div>
           </div>
         </div>
       </section>

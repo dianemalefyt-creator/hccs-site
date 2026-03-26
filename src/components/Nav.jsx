@@ -11,6 +11,7 @@ const NAV = [
     { label: 'Controls library', desc: 'All 67 controls with definitions', to: '/controls' },
     { label: 'Documents', desc: 'Core Standard, IG, Template Library', to: '/documents' },
     { label: 'Fillable templates', desc: 'Fill online, generate PDF', to: '/templates' },
+    { label: 'Free tools', desc: 'JD builder, scorecard, bias checker, more', to: '/tools' },
   ]},
   { label: 'About', children: [
     { label: 'About HCCS\u2122', desc: 'What it is, who built it, why', to: '/about' },
@@ -19,6 +20,7 @@ const NAV = [
     { label: 'Business case & ROI', desc: 'Cost of inaction, how to sell internally', to: '/business-case' },
   ]},
   { label: 'Blog', to: '/blog' },
+  { label: 'Pricing', to: '/pricing' },
   { label: 'Contact', to: '/contact' },
 ]
 

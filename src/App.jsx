@@ -11,10 +11,12 @@ import Contact from './pages/Contact'
 import BillOfRights from './pages/BillOfRights'
 import OrgBillOfRights from './pages/OrgBillOfRights'
 import Templates from './pages/Templates'
+import Tools from './pages/Tools'
 import BusinessCase from './pages/BusinessCase'
 import { BlogList, BlogPost } from './pages/Blog'
 import Privacy from './pages/Privacy'
 import Terms from './pages/Terms'
+import { PricingPage } from './components/ProGate'
 import Documents from './pages/Documents'
 import About from './pages/About'
 
@@ -38,11 +40,13 @@ export default function App() {
         <Route path="/rights" element={<BillOfRights />} />
         <Route path="/org-rights" element={<OrgBillOfRights />} />
         <Route path="/templates" element={<Templates />} />
+        <Route path="/tools" element={<Tools />} />
         <Route path="/business-case" element={<BusinessCase />} />
         <Route path="/blog" element={<BlogList />} />
         <Route path="/blog/:slug" element={<BlogPost />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />
+        <Route path="/pricing" element={<PricingPage />} />
         <Route path="/documents" element={<Documents />} />
         <Route path="/about" element={<About />} />
       </Routes>

@@ -299,7 +299,7 @@ exports.handler = async function(event) {
     // Build appropriate email
     var html;
     var subject;
-    console.log('isTeaser:', isTeaser, 'user:', user.name, user.email);
+    // console.log('isTeaser:', isTeaser, 'user:', user.name, user.email);
     if (isTeaser) {
       html = buildTeaserEmailHTML(user, domainScores, overallLevel, answers, mustGaps);
       subject = 'HCCS™ Quick Assessment Results - ' + (user.name || 'Assessment') + ' - Estimated Level ' + overallLevel + ': ' + LEVEL_NAMES[overallLevel];
@@ -345,7 +345,7 @@ exports.handler = async function(event) {
     }
 
     // Store in Airtable
-    console.log('Airtable check: API_KEY exists:', !!AIRTABLE_API_KEY, 'BASE_ID exists:', !!AIRTABLE_BASE_ID, 'isTeaser:', !!isTeaser);
+    // console.log('Airtable check: API_KEY exists:', !!AIRTABLE_API_KEY, 'BASE_ID exists:', !!AIRTABLE_BASE_ID, 'isTeaser:', !!isTeaser);
     if (AIRTABLE_API_KEY && AIRTABLE_BASE_ID) {
       try {
         var airtableTable;
@@ -396,8 +396,8 @@ exports.handler = async function(event) {
         }
 
         var airtableUrl = 'https://api.airtable.com/v0/' + AIRTABLE_BASE_ID + '/' + encodeURIComponent(airtableTable);
-        console.log('Airtable URL:', airtableUrl);
-        console.log('Airtable table:', airtableTable);
+        // console.log('Airtable URL:', airtableUrl);
+        // console.log('Airtable table:', airtableTable);
 
         var airtableResponse = await fetch(airtableUrl, {
           method: 'POST',
@@ -409,19 +409,19 @@ exports.handler = async function(event) {
         });
 
         var airtableResult = await airtableResponse.json();
-        console.log('Airtable response status:', airtableResponse.status);
-        console.log('Airtable response body:', JSON.stringify(airtableResult));
+        // console.log('Airtable response status:', airtableResponse.status);
+        // console.log('Airtable response body:', JSON.stringify(airtableResult));
 
         if (!airtableResponse.ok) {
           console.error('Airtable FAILED:', airtableResponse.status, JSON.stringify(airtableResult));
         } else {
-          console.log('Airtable SUCCESS: record created in', airtableTable);
+          // console.log('Airtable SUCCESS: record created in', airtableTable);
         }
       } catch (airtableErr) {
         console.error('Airtable error (non-fatal):', airtableErr.message);
       }
     } else {
-      console.log('Airtable SKIPPED: missing env vars');
+      // console.log('Airtable SKIPPED: missing env vars');
     }
 
     return {
