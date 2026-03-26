@@ -13,30 +13,31 @@ export default function Home() {
       {/* Hero */}
       <section style={S.hero}>
         <div style={S.wrap}>
-          <div style={{ maxWidth: 640 }}>
-            <div style={{ letterSpacing: '0.25em', fontSize: 12, textTransform: 'uppercase', color: '#5b9bd5', marginBottom: 20, fontWeight: 500 }}>Human Capital Control Standard™</div>
-            <h1 style={{ fontSize: 52, fontWeight: 700, lineHeight: 1.12, margin: '0 0 24px', color: '#fff' }}>
-              Human capital decisions are not discretionary activities.
+          <div style={{ maxWidth: 600 }}>
+            <div style={{ letterSpacing: '0.25em', fontSize: 12, textTransform: 'uppercase', color: '#5b9bd5', marginBottom: 20, fontWeight: 500 }}>Human Capital Control Standard™ (HCCS™)</div>
+            <h1 style={{ fontSize: 44, fontWeight: 700, lineHeight: 1.18, margin: '0 0 24px', color: '#fff' }}>
+              A governance and audit standard for human capital decisions.
             </h1>
-            <p style={{ fontSize: 20, lineHeight: 1.65, color: '#94a3b8', margin: '0 0 16px' }}>
-              They are controlled processes subject to audit.
+            <p style={{ fontSize: 17, lineHeight: 1.7, color: '#cbd5e1', margin: '0 0 16px', maxWidth: 540 }}>
+              HCCS™ establishes the control framework for how organizations define roles, evaluate candidates, make hiring decisions, and align compensation to the actual scope of work.
             </p>
-            <p style={{ fontSize: 17, lineHeight: 1.65, color: '#64748b', margin: '0 0 40px', maxWidth: 520 }}>
-              HCCS™ is the first governance and audit standard for how companies define roles, evaluate candidates, make hiring decisions, and align compensation to the actual scope of work.
+            <p style={{ fontSize: 15, lineHeight: 1.7, color: '#94a3b8', margin: '0 0 16px', maxWidth: 540 }}>
+              Human capital decisions directly impact financial performance, legal exposure, operational consistency, and organizational trust. Despite this, most organizations operate without consistent controls, documentation standards, or auditability across hiring processes.
             </p>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, maxWidth: 520 }}>
-              <Link to="/assess" style={{ background: '#2563eb', color: '#fff', padding: '14px 24px', borderRadius: 8, fontSize: 15, fontWeight: 600, textAlign: 'center', textDecoration: 'none' }}>
+            <p style={{ fontSize: 15, lineHeight: 1.7, color: '#94a3b8', margin: '0 0 40px', maxWidth: 540 }}>
+              The introduction of AI into hiring workflows increases both scale and risk, making governance requirements more critical, not less.
+            </p>
+            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', maxWidth: 540 }}>
+              <Link to="/assess" style={{ background: '#2563eb', color: '#fff', padding: '14px 28px', borderRadius: 8, fontSize: 15, fontWeight: 600, textAlign: 'center', textDecoration: 'none' }}>
                 Assess your organization
               </Link>
               <Link to="/documents" style={{ border: '1px solid rgba(255,255,255,0.2)', color: '#cbd5e1', padding: '14px 24px', borderRadius: 8, fontSize: 15, fontWeight: 500, textAlign: 'center', textDecoration: 'none' }}>
                 Read the standard
               </Link>
-              <Link to="/rights" style={{ border: '1px solid rgba(255,255,255,0.2)', color: '#cbd5e1', padding: '14px 24px', borderRadius: 8, fontSize: 15, fontWeight: 500, textAlign: 'center', textDecoration: 'none' }}>
-                Applicant's Bill of Rights
-              </Link>
-              <Link to="/org-rights" style={{ border: '1px solid rgba(255,255,255,0.2)', color: '#cbd5e1', padding: '14px 24px', borderRadius: 8, fontSize: 15, fontWeight: 500, textAlign: 'center', textDecoration: 'none' }}>
-                Organization's Bill of Rights
-              </Link>
+            </div>
+            <div style={{ display: 'flex', gap: 16, marginTop: 20 }}>
+              <Link to="/rights" style={{ fontSize: 13, color: '#64748b', textDecoration: 'none' }}>Applicant's Bill of Rights →</Link>
+              <Link to="/org-rights" style={{ fontSize: 13, color: '#64748b', textDecoration: 'none' }}>Organization's Bill of Rights →</Link>
             </div>
           </div>
         </div>
@@ -60,16 +61,30 @@ export default function Home() {
           <div style={{ maxWidth: 720, margin: '0 auto' }}>
             <div style={{ letterSpacing: '0.15em', fontSize: 12, textTransform: 'uppercase', color: '#2563eb', marginBottom: 16, fontWeight: 600 }}>The problem</div>
             <h2 style={{ fontSize: 32, fontWeight: 700, color: '#0f172a', lineHeight: 1.25, marginBottom: 24 }}>
-              Organizations have financial controls. They do not have equivalent controls for human capital decisions.
+              Organizations maintain financial controls. Equivalent controls do not exist for human capital decisions.
             </h2>
-            <p style={{ fontSize: 17, lineHeight: 1.7, color: '#475569', marginBottom: 16 }}>
-              Most companies treat hiring as a workflow rather than a decision system. Roles are poorly defined. Candidates are filtered through weak proxies. Hiring managers apply subjective judgment shaped by bias. AI is being layered onto these flawed processes, increasing speed without improving integrity.
+            <p style={{ fontSize: 17, lineHeight: 1.7, color: '#475569', marginBottom: 20 }}>
+              Human capital decisions determine who enters the organization, how they are evaluated, how they are selected, and how they are compensated. These decisions directly impact financial performance, legal exposure, operational consistency, and organizational trust.
             </p>
             <p style={{ fontSize: 17, lineHeight: 1.7, color: '#475569', marginBottom: 16 }}>
-              These decisions represent one of the largest ungoverned risk surfaces in the enterprise.
+              Despite this, most organizations operate without:
             </p>
-            <p style={{ fontSize: 17, lineHeight: 1.7, color: '#475569' }}>
-              The result is not simply inefficiency. It is a unified decision system, one that governs who enters the organization, how they are evaluated, how they are selected, and how they are paid, operating without formal governance, auditability, or enforceable controls.
+            <div style={{ paddingLeft: 20, marginBottom: 20, borderLeft: '3px solid #2563eb' }}>
+              {['Consistent role definition standards', 'Governed evaluation criteria', 'Documented decision frameworks', 'Alignment between role scope and compensation', 'Auditability across hiring processes'].map(item => (
+                <div key={item} style={{ fontSize: 16, color: '#334155', marginBottom: 8, lineHeight: 1.5 }}>{item}</div>
+              ))}
+            </div>
+            <p style={{ fontSize: 17, lineHeight: 1.7, color: '#475569', marginBottom: 16 }}>
+              Hiring is commonly treated as a workflow rather than a controlled decision system. As a result, subjective judgment, inconsistent criteria, and weak proxies drive outcomes.
+            </p>
+            <p style={{ fontSize: 17, lineHeight: 1.7, color: '#475569', marginBottom: 16 }}>
+              The introduction of AI into these workflows increases speed and scale, but does not correct underlying control deficiencies.
+            </p>
+            <p style={{ fontSize: 17, lineHeight: 1.7, color: '#0f172a', fontWeight: 600, marginBottom: 16 }}>
+              Human capital decisions represent a material, ungoverned risk surface within the enterprise.
+            </p>
+            <p style={{ fontSize: 16, lineHeight: 1.7, color: '#475569' }}>
+              These decisions function as a unified system governing workforce composition, evaluation, selection, and compensation, yet operate without formal governance, enforceable controls, or audit standards. This gap creates exposure that is often unmeasured, inconsistently managed, and difficult to defend under audit or legal scrutiny.
             </p>
           </div>
         </div>
