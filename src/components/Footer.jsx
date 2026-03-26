@@ -28,7 +28,7 @@ export default function Footer() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             <Link to="/assess" style={{ fontSize: 14, color: '#94a3b8' }}>Quick Assessment</Link>
             <Link to="/assess/full" style={{ fontSize: 14, color: '#94a3b8' }}>Full Assessment</Link>
-            <Link to="/tools" style={{ fontSize: 14, color: '#94a3b8' }}>Free Tools</Link>
+            <Link to="/tools" style={{ fontSize: 14, color: '#94a3b8' }}>Tools</Link>
             <Link to="/workflow" style={{ fontSize: 14, color: '#94a3b8' }}>Guided Workflow</Link>
             <Link to="/business-case" style={{ fontSize: 14, color: '#94a3b8' }}>Business Case &amp; ROI</Link>
             <Link to="/pricing" style={{ fontSize: 14, color: '#94a3b8' }}>Pricing</Link>

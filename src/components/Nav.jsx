@@ -11,7 +11,7 @@ const NAV = [
   { label: 'Tools', children: [
     { label: 'Quick assessment', desc: 'Free, 10 questions, 3 minutes', to: '/assess' },
     { label: 'Full assessment', desc: '67 controls, gap analysis, roadmap', to: '/assess/full' },
-    { label: 'Free tools', desc: 'Role designer, scorecard, bias checker', to: '/tools' },
+    { label: 'Governance tools', desc: 'Role definition, scorecard, bias checker, more', to: '/tools' },
     { label: 'Guided workflow', desc: 'Step-by-step with AI suggestions', to: '/workflow' },
     { label: 'Business case & ROI', desc: 'Cost of inaction, stakeholder talking points', to: '/business-case' },
   ]},

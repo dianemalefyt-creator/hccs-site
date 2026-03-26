@@ -38,7 +38,7 @@ const docs = [
     id: 'HCCS-RD-Template',
     title: 'Role Definition Template',
     subtitle: 'Fillable Worksheet',
-    desc: 'Blank v2 Role Definition Worksheet. Download, fill out offline (print or digital), then upload to the Role Design System tool to auto-populate all fields. Includes every section with guidance text.',
+    desc: 'Blank v2 Role Definition Worksheet. Download, fill out offline (print or digital), then upload to the Role Definition Builder tool to auto-populate all fields. Includes every section with guidance text.',
     details: ['Current state and role origin', 'Outcomes with baselines and targets', 'Steady state vs transformation milestones', 'Decision rights and accountability', 'Role boundaries (what is NOT owned)', 'Required vs learnable capabilities with evidence prompts', 'Team scope and composition', 'Operating environment', 'Risk and failure modes', 'Reviewer validation section'],
     file: '/docs/HCCS-Role-Definition-Template.pdf',
     color: '#993C1D',

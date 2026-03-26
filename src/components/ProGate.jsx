@@ -152,7 +152,7 @@ export function PricingPage() {
                   <div style={{ fontSize: 36, fontWeight: 700, color: '#0f172a', marginBottom: 4 }}>$0</div>
                   <div style={{ fontSize: 14, color: '#64748b', marginBottom: 20 }}>Get started</div>
                   <div style={{ flex: 1 }}>
-                    {['Bias language checker (unlimited)', '1 job description', '1 scorecard', '3 compensation calculations', '1 ADT inventory', 'Quick assessment (10 controls)', '10 fillable templates'].map(f => (
+                    {['Bias language checker (unlimited)', '1 role definition', '1 scorecard', '3 compensation calculations', '1 ADT inventory', 'Quick assessment (10 controls)', '10 fillable templates'].map(f => (
                       <div key={f} style={{ fontSize: 13, color: '#475569', marginBottom: 8, display: 'flex', gap: 8, lineHeight: 1.45 }}>
                         <span style={{ color: '#059669', fontWeight: 700, flexShrink: 0 }}>✓</span><span>{f}</span>
                       </div>
@@ -169,7 +169,7 @@ export function PricingPage() {
                   <div style={{ fontSize: 36, fontWeight: 700, color: '#0f172a', marginBottom: 4 }}>$29<span style={{ fontSize: 16, fontWeight: 400, color: '#64748b' }}>/mo</span></div>
                   <div style={{ fontSize: 14, color: '#64748b', marginBottom: 20 }}>Cancel anytime</div>
                   <div style={{ flex: 1 }}>
-                    {['Everything in Free, plus:', 'Unlimited JD builder', 'Unlimited scorecards', 'Unlimited comp calculations', 'Unlimited ADT inventories', 'Priority email support', 'New tools as they launch'].map((f, i) => (
+                    {['Everything in Free, plus:', 'Unlimited role definitions', 'Unlimited scorecards', 'Unlimited comp calculations', 'Unlimited ADT inventories', 'Priority email support', 'New tools as they launch'].map((f, i) => (
                       <div key={f} style={{ fontSize: 13, color: i === 0 ? '#0f172a' : '#475569', fontWeight: i === 0 ? 600 : 400, marginBottom: 8, display: 'flex', gap: 8, lineHeight: 1.45 }}>
                         {i > 0 && <span style={{ color: '#2563eb', fontWeight: 700, flexShrink: 0 }}>✓</span>}<span>{f}</span>
                       </div>

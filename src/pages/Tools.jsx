@@ -9,7 +9,7 @@ export default function Tools() {
   const [active, setActive] = useState(null)
 
   const tools = [
-    { id: 'jd', title: 'Role Design System', desc: 'v2: Why the role exists, what\'s broken, outcomes with baselines, boundaries, team scope, risk, milestones. Internal artifact + public posting.', controls: 'RG-001 to RG-007', color: '#185FA5', component: <JDBuilder /> },
+    { id: 'jd', title: 'Role Definition Builder', desc: 'Why the role exists, what\'s broken, outcomes with baselines, boundaries, team scope, risk, milestones. Internal artifact + public posting.', controls: 'RG-001 to RG-007', color: '#185FA5', component: <JDBuilder /> },
     { id: 'scorecard', title: 'Interview Scorecard Generator', desc: 'Build criteria-based scorecards from your role definition. Structured evaluation in 2 minutes.', controls: 'EI-001 to EI-004', color: '#0F6E56', component: <ScorecardGenerator /> },
     { id: 'bias', title: 'Bias Language Checker', desc: 'Paste a job posting or evaluation criteria. Flags proxy language, inflated requirements, and bias patterns.', controls: 'EI-003, DG-005', color: '#534AB7', component: <BiasChecker /> },
     { id: 'comp', title: 'Compensable Factor Calculator', desc: 'Score 5 factors, get a scope-based compensation framework. Replaces title-matching with factor analysis.', controls: 'CG-001 to CG-003', color: '#3B6D11', component: <CompCalculator /> },
@@ -43,11 +43,11 @@ export default function Tools() {
       <section style={{ background: 'linear-gradient(165deg, #0a1628, #1a2d4a, #0f3460)', padding: '80px 24px 60px' }}>
         <div style={{ maxWidth: 900, margin: '0 auto', textAlign: 'center' }}>
           <div style={{ letterSpacing: '0.25em', fontSize: 12, textTransform: 'uppercase', color: '#5b9bd5', marginBottom: 16, fontWeight: 500 }}>HCCS™ Tools</div>
-          <h1 style={{ fontSize: 40, fontWeight: 700, color: '#fff', margin: '0 0 16px' }}>Free governance tools</h1>
+          <h1 style={{ fontSize: 40, fontWeight: 700, color: '#fff', margin: '0 0 16px' }}>Governance tools</h1>
           <p style={{ fontSize: 17, color: '#94a3b8', maxWidth: 560, margin: '0 auto', lineHeight: 1.6 }}>
             {isPro()
               ? 'You have HCCS™ Pro. Unlimited access to all tools.'
-              : 'Build HCCS™-compliant artifacts without buying the full assessment. Each tool maps to specific controls and generates audit-ready output.'}
+              : 'Start with the Role Definition Builder. Other tools build on it. Each maps to specific controls and generates audit-ready output.'}
           </p>
           {isPro() && <div style={{ marginTop: 12 }}><ProBadge /></div>}
         </div>
@@ -317,7 +317,7 @@ ${d.environment||d.scale||d.systemFragmentation?`<h2>The environment</h2><p>${[d
 <p>Read our <a href="https://hccsstandard.com/rights" style="color:#2563eb">Applicant's Bill of Rights</a>.</p>
 <a href="#" class="apply no-print">Apply for this role</a>
 </div>
-<div class="ft">Generated with HCCS\u2122 Role Design System | hccsstandard.com/tools<br/>Controls: RG-001 through RG-005</div>
+<div class="ft">Generated with HCCS\u2122 Role Definition Builder | hccsstandard.com/tools<br/>Controls: RG-001 through RG-005</div>
 </body></html>`
     const w=window.open('','_blank');w.document.write(html);w.document.close()
   }
@@ -445,7 +445,7 @@ ${d.environment||d.scale||d.systemFragmentation?`<h2>The environment</h2><p>${[d
     <div>
       <div style={{background:'#eff6ff',border:'1px solid #bfdbfe',borderRadius:10,padding:'14px 18px',marginBottom:20}}>
         <div style={{fontSize:14,color:'#1e40af',lineHeight:1.6}}>
-          <strong>v2: Role Design System.</strong> This goes beyond a JD. It captures why the role exists, what's broken today, measurable outcomes with baselines, role boundaries, team composition, operating conditions, risk, and milestones. Generates both an <strong>internal audit artifact</strong> and a <strong>public job posting</strong>.
+          <strong>v2: Role Definition Builder.</strong> This goes beyond a JD. It captures why the role exists, what's broken today, measurable outcomes with baselines, role boundaries, team composition, operating conditions, risk, and milestones. Generates both an <strong>internal audit artifact</strong> and a <strong>public job posting</strong>.
         </div>
       </div>
 
@@ -695,7 +695,7 @@ function ScorecardGenerator() {
       ) : (
         <div style={{ background: '#ecfdf5', border: '1px solid #a7f3d0', borderRadius: 10, padding: '16px 20px', marginBottom: 24, fontSize: 14, color: '#065f46', lineHeight: 1.6 }}>
           Input your evaluation criteria (derived from the role definition per EI-001). Generates a printable scorecard with scoring guide.
-          <div style={{ marginTop: 8, fontSize: 13, color: '#0d9488' }}>Tip: Build a role definition first in the JD Builder. Criteria will auto-populate here.</div>
+          <div style={{ marginTop: 8, fontSize: 13, color: '#0d9488' }}>Tip: Build a role definition first. Criteria will auto-populate from it. Criteria will auto-populate here.</div>
         </div>
       )}
       <div style={{ marginBottom: 14 }}>

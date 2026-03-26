@@ -150,55 +150,89 @@ export function GuidedWorkflow() {
           {/* Step 1: Role Definition */}
           {step === 0 && (
             <div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 }}>
-                {F('title', 'Role title', 'e.g. Director of Talent Acquisition')}
-                {F('dept', 'Department', 'e.g. People / HR')}
-                {F('reportsTo', 'Reports to', 'e.g. Chief People Officer')}
-              </div>
-              <div style={{ fontSize: 15, fontWeight: 700, color: s.color, margin: '20px 0 8px', paddingBottom: 4, borderBottom: `2px solid ${s.color}20` }}>Business outcomes</div>
-              <AIButton step="outcomes" context={d} onSuggestion={setSuggestion} />
-              {F('outcome1', 'Primary outcome', 'What is the #1 thing this role delivers?', 'textarea')}
-              {F('outcome2', 'Secondary outcome', '', 'textarea')}
-              {F('outcome3', 'Tertiary outcome (optional)', '', 'textarea')}
-              <div style={{ fontSize: 15, fontWeight: 700, color: s.color, margin: '20px 0 8px', paddingBottom: 4, borderBottom: `2px solid ${s.color}20` }}>Decision rights</div>
-              <AIButton step="decisions" context={d} onSuggestion={(text) => {
-                setSuggestion(text)
-                const sections = text.split(/INDEPENDENT:|CONSULTATION:|APPROVAL:/).filter(Boolean)
-                if (sections[0] && !d.decidesAlone) set('decidesAlone', sections[0].trim())
-                if (sections[1] && !d.decidesConsult) set('decidesConsult', sections[1].trim())
-                if (sections[2] && !d.needsApproval) set('needsApproval', sections[2].trim())
-              }} />
-              {F('decidesAlone', 'Decides independently', '', 'textarea')}
-              {F('decidesConsult', 'Decides with consultation', '', 'textarea')}
-              {F('needsApproval', 'Requires approval', '', 'textarea')}
-              {F('budget', 'Budget authority', 'e.g. Up to $50K independently')}
-              <div style={{ fontSize: 15, fontWeight: 700, color: s.color, margin: '20px 0 8px', paddingBottom: 4, borderBottom: `2px solid ${s.color}20` }}>Capabilities</div>
-              <AIButton step="capabilities" context={d} onSuggestion={(text) => {
-                setSuggestion(text)
-                const req = text.match(/REQUIRED:\n([\s\S]*?)(?=LEARNABLE:)/)?.[1]
-                const learn = text.match(/LEARNABLE:\n([\s\S]*?)(?=NOT_REQUIRED:)/)?.[1]
-                const anti = text.match(/NOT_REQUIRED:\n([\s\S]*?)$/)?.[1]
-                if (req && !d.required) set('required', req.trim())
-                if (learn && !d.learnable) set('learnable', learn.trim())
-                if (anti && !d.antiReqs) set('antiReqs', anti.trim())
-              }} />
-              {F('required', 'Required at hire', 'One per line', 'textarea')}
-              {F('learnable', 'Learnable post-hire', 'One per line', 'textarea')}
-              {F('antiReqs', 'Explicitly NOT required', 'e.g. CS degree, specific company pedigree', 'textarea')}
-              <div style={{ fontSize: 15, fontWeight: 700, color: s.color, margin: '20px 0 8px', paddingBottom: 4, borderBottom: `2px solid ${s.color}20` }}>Scope</div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-                {F('directs', 'Direct reports', 'e.g. 6')}
-                {F('indirects', 'Indirect / cross-functional', 'e.g. 25+')}
-                {F('geoSpan', 'Geographic span', 'e.g. US + EMEA')}
-                {F('stakeholders', 'Stakeholder exposure', 'e.g. VP+, board quarterly')}
-              </div>
-              <div style={{ marginBottom: 12 }}>
-                <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#334155', marginBottom: 4 }}>Ambiguity level</label>
-                <select value={d.ambiguity || ''} onChange={e => set('ambiguity', e.target.value)} style={{ width: '100%', padding: '10px 12px', borderRadius: 8, border: '1px solid #e2e8f0', fontSize: 14, background: '#fff' }}>
-                  <option value="">Select...</option>
-                  <option value="Low">Low</option><option value="Medium">Medium</option><option value="High">High</option>
-                </select>
-              </div>
+              {d.title ? (
+                <>
+                  <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 10, padding: '16px 20px', marginBottom: 20 }}>
+                    <div style={{ fontSize: 14, color: '#065f46', lineHeight: 1.6 }}>
+                      <strong>Role definition loaded: "{d.title}"</strong>. Review the summary below. To make changes, open the full Role Definition Builder.
+                    </div>
+                  </div>
+                  <div style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: 12, padding: 24, marginBottom: 20 }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+                      {[
+                        ['Role', d.title],['Department', d.dept],['Reports to', d.reportsTo],['Role type', d.roleType],
+                        ['Primary outcome', d.outcome1],['Secondary outcome', d.outcome2],
+                        ['Why now', d.whyNow],['Current state', d.currentState],
+                        ['Decides independently', d.decidesAlone],['Budget authority', d.budget],
+                        ['Required capabilities', d.required],['Direct reports', d.directs],
+                        ['90-day milestone', d.d90],['Risks reduced', d.riskReduces],
+                      ].filter(([,v]) => v).map(([label, val]) => (
+                        <div key={label}>
+                          <div style={{ fontSize: 11, fontWeight: 600, color: '#64748b', marginBottom: 2 }}>{label}</div>
+                          <div style={{ fontSize: 13, color: '#1e293b', lineHeight: 1.4 }}>{String(val).slice(0, 120)}{String(val).length > 120 ? '...' : ''}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', gap: 12 }}>
+                    <a href="/tools" onClick={e => { e.preventDefault(); window.open('/tools', '_self') }} style={{ padding: '10px 20px', borderRadius: 8, border: '1px solid #185FA5', background: '#fff', color: '#185FA5', fontSize: 13, fontWeight: 600, textDecoration: 'none', cursor: 'pointer' }}>Edit in Role Definition Builder</a>
+                    <button onClick={() => { localStorage.removeItem('hccs_jd'); localStorage.removeItem('hccs_workflow'); window.location.reload() }} style={{ padding: '10px 20px', borderRadius: 8, border: '1px solid #e2e8f0', background: '#fff', color: '#64748b', fontSize: 13, cursor: 'pointer' }}>Start new role</button>
+                  </div>
+                  <div style={{ marginTop: 20, paddingTop: 16, borderTop: '1px solid #e2e8f0' }}>
+                    <div style={{ fontSize: 14, fontWeight: 600, color: '#0f172a', marginBottom: 8 }}>Quick additions with AI</div>
+                    <p style={{ fontSize: 13, color: '#64748b', margin: '0 0 12px' }}>Use AI to fill gaps in your role definition without leaving this workflow.</p>
+                    {!d.outcome1 && <AIButton step="outcomes" context={d} onSuggestion={(text) => {
+                      setSuggestion(text)
+                      const lines = text.split('\n').filter(Boolean)
+                      if (lines[0] && !d.outcome1) set('outcome1', lines[0])
+                      if (lines[1] && !d.outcome2) set('outcome2', lines[1])
+                      if (lines[2] && !d.outcome3) set('outcome3', lines[2])
+                    }} />}
+                    {d.outcome1 && !d.required && <AIButton step="capabilities" context={d} onSuggestion={(text) => {
+                      setSuggestion(text)
+                      const req = text.match(/REQUIRED:\n([\s\S]*?)(?=LEARNABLE:)/)?.[1]
+                      const learn = text.match(/LEARNABLE:\n([\s\S]*?)(?=NOT_REQUIRED:)/)?.[1]
+                      const anti = text.match(/NOT_REQUIRED:\n([\s\S]*?)$/)?.[1]
+                      if (req && !d.required) set('required', req.trim())
+                      if (learn && !d.learnable) set('learnable', learn.trim())
+                      if (anti && !d.antiReqs) set('antiReqs', anti.trim())
+                    }} />}
+                    {d.outcome1 && !d.decidesAlone && <AIButton step="decisions" context={d} onSuggestion={(text) => {
+                      setSuggestion(text)
+                      const sections = text.split(/INDEPENDENT:|CONSULTATION:|APPROVAL:/).filter(Boolean)
+                      if (sections[0] && !d.decidesAlone) set('decidesAlone', sections[0].trim())
+                      if (sections[1] && !d.decidesConsult) set('decidesConsult', sections[1].trim())
+                      if (sections[2] && !d.needsApproval) set('needsApproval', sections[2].trim())
+                    }} />}
+                  </div>
+                </>
+              ) : (
+                <div style={{ textAlign: 'center', padding: '32px 0' }}>
+                  <div style={{ fontSize: 20, fontWeight: 700, color: '#0f172a', marginBottom: 8 }}>No role definition yet</div>
+                  <p style={{ fontSize: 15, color: '#64748b', maxWidth: 480, margin: '0 auto 24px', lineHeight: 1.6 }}>
+                    Start by building a role definition in the Role Definition Builder. It captures why the role exists, outcomes with baselines, decision rights, team scope, and more. All other workflow steps build on it.
+                  </p>
+                  <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
+                    <a href="/tools" style={{ display: 'inline-block', background: '#185FA5', color: '#fff', padding: '14px 28px', borderRadius: 8, fontSize: 15, fontWeight: 600, textDecoration: 'none' }}>Open Role Definition Builder</a>
+                    <a href="/docs/HCCS-Role-Definition-Template.pdf" download style={{ display: 'inline-block', border: '1px solid #e2e8f0', color: '#475569', padding: '14px 28px', borderRadius: 8, fontSize: 15, fontWeight: 500, textDecoration: 'none' }}>Download blank template</a>
+                  </div>
+                  <div style={{ marginTop: 24, paddingTop: 16, borderTop: '1px solid #e2e8f0' }}>
+                    <div style={{ fontSize: 13, color: '#94a3b8' }}>Or enter the basics here to get started quickly:</div>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12, marginTop: 12, textAlign: 'left' }}>
+                      {F('title', 'Role title', 'e.g. Director of TA')}
+                      {F('dept', 'Department', 'e.g. People')}
+                      {F('reportsTo', 'Reports to', 'e.g. CPO')}
+                    </div>
+                    {F('outcome1', 'Primary outcome', 'The #1 thing this role delivers', 'textarea')}
+                    <AIButton step="outcomes" context={d} onSuggestion={(text) => {
+                      setSuggestion(text)
+                      const lines = text.split('\n').filter(Boolean)
+                      if (lines[0] && !d.outcome1) set('outcome1', lines[0])
+                      if (lines[1] && !d.outcome2) set('outcome2', lines[1])
+                    }} />
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
@@ -361,8 +395,8 @@ function ReviewStep({ data }) {
       {/* Actions */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 24 }}>
         <button onClick={() => { window.open('/tools', '_self') }} style={{ padding: 16, borderRadius: 10, border: '1px solid #e2e8f0', background: '#fff', cursor: 'pointer', textAlign: 'left' }}>
-          <div style={{ fontSize: 14, fontWeight: 600, color: '#185FA5' }}>Open in JD Builder</div>
-          <div style={{ fontSize: 12, color: '#64748b' }}>Generate role definition + job posting</div>
+          <div style={{ fontSize: 14, fontWeight: 600, color: '#185FA5' }}>Open in Role Definition Builder</div>
+          <div style={{ fontSize: 12, color: '#64748b' }}>Generate internal artifact + job posting</div>
         </button>
         <button onClick={() => { window.open('/tools', '_self') }} style={{ padding: 16, borderRadius: 10, border: '1px solid #e2e8f0', background: '#fff', cursor: 'pointer', textAlign: 'left' }}>
           <div style={{ fontSize: 14, fontWeight: 600, color: '#0F6E56' }}>Open in Scorecard Generator</div>
