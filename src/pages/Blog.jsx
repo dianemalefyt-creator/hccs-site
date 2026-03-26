@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
-import { getAllPosts } from '../lib/blog'
+import { getAllPosts, fetchPosts } from '../lib/blog'
 
 function renderBody(text, navigate) {
   if (!text) return <p style={{ color: '#94a3b8', fontStyle: 'italic' }}>No content.</p>
@@ -113,7 +113,13 @@ const CATEGORIES = ['All', 'Governance', 'AI & Hiring', 'Research', 'Compliance'
 
 function BlogList() {
   const [cat, setCat] = useState('All')
-  const allPosts = getAllPosts()
+  const [allPosts, setAllPosts] = useState(getAllPosts())
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetchPosts().then(posts => { setAllPosts(posts); setLoading(false) }).catch(() => setLoading(false))
+  }, [])
+
   const filtered = cat === 'All' ? allPosts : allPosts.filter(p => p.category === cat)
 
   return (
@@ -172,7 +178,13 @@ function BlogList() {
 function BlogPost() {
   const { slug } = useParams()
   const navigate = useNavigate()
-  const allPosts = getAllPosts()
+  const [allPosts, setAllPosts] = useState(getAllPosts())
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetchPosts().then(posts => { setAllPosts(posts); setLoading(false) }).catch(() => setLoading(false))
+  }, [])
+
   const post = allPosts.find(p => p.slug === slug)
 
   if (!post) return (

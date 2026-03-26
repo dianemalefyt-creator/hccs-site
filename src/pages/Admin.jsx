@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { getAllPosts, getDynamicPosts, saveDynamicPosts, STATIC_POSTS } from '../lib/blog'
+import { fetchPosts, createPost, updatePost, deletePostApi, togglePostStatus, STATIC_POSTS } from '../lib/blog'
 
 const ADMIN_PASS = 'hccsadmin2026'
 
@@ -23,8 +23,19 @@ export default function Admin() {
   const [editing, setEditing] = useState(null) // null = list, 'new' = new post, slug = editing
   const [form, setForm] = useState({ title: '', slug: '', excerpt: '', category: '', content: '', date: '' })
 
+  const [loading, setLoading] = useState(false)
+
+  const refreshPosts = async () => {
+    setLoading(true)
+    try {
+      const p = await fetchPosts(true)
+      setPosts(p)
+    } catch { }
+    setLoading(false)
+  }
+
   useEffect(() => {
-    if (authed) setPosts(getAllPosts(true))
+    if (authed) refreshPosts()
   }, [authed])
 
   const login = () => {
@@ -42,69 +53,66 @@ export default function Admin() {
   }
 
   const startEdit = (post) => {
-    setForm({ title: post.title, slug: post.slug, excerpt: post.excerpt, category: post.category, content: post.body || post.content || '', date: post.date, author: post.author || 'Diane Malefyt', authorTitle: post.authorTitle || '', status: post.status || 'published' })
+    setForm({ title: post.title, slug: post.slug, excerpt: post.excerpt, category: post.category, content: post.body || post.content || '', date: post.date, author: post.author || 'Diane Malefyt', authorTitle: post.authorTitle || '', status: post.status || 'published', _recordId: post.id || null })
     setEditing(post.slug)
   }
 
-  const savePost = (publishStatus) => {
+  const savePost = async (publishStatus) => {
     if (!form.title || !form.content || !form.slug) return
-    const dynamic = getDynamicPosts()
+    setLoading(true)
     const post = {
-      ...form,
-      body: form.content,
+      title: form.title,
       slug: form.slug || autoSlug(form.title),
+      excerpt: form.excerpt || '',
+      category: form.category || 'Governance',
+      body: form.content,
       date: form.date || new Date().toISOString().split('T')[0],
       author: form.author || 'Diane Malefyt',
       authorTitle: form.authorTitle || '',
       status: publishStatus || form.status || 'draft',
       readTime: `${Math.max(3, Math.ceil(form.content.split(/\s+/).length / 200))} min read`,
-      lastModified: new Date().toISOString(),
     }
 
-    if (editing === 'new') {
-      if (dynamic.find(p => p.slug === post.slug)) {
-        post.slug = post.slug + '-' + Date.now().toString(36).slice(-4)
-      }
-      dynamic.unshift(post)
-    } else {
-      const idx = dynamic.findIndex(p => p.slug === editing)
-      if (idx >= 0) {
-        dynamic[idx] = { ...dynamic[idx], ...post }
+    try {
+      if (editing === 'new') {
+        await createPost(post)
+      } else if (form._recordId) {
+        await updatePost(form._recordId, post)
       } else {
-        dynamic.unshift(post)
+        // Editing a static post with no Airtable record - create new
+        await createPost(post)
       }
+    } catch (err) {
+      console.error('Save error:', err)
+      alert('Save failed. Check console.')
     }
 
-    saveDynamicPosts(dynamic)
-    setPosts(getAllPosts(true))
+    await refreshPosts()
     setEditing(null)
   }
 
-  const toggleStatus = (slug) => {
-    const dynamic = getDynamicPosts()
-    const idx = dynamic.findIndex(p => p.slug === slug)
-    if (idx >= 0) {
-      dynamic[idx].status = dynamic[idx].status === 'published' ? 'draft' : 'published'
-      dynamic[idx].lastModified = new Date().toISOString()
-    } else {
-      // Static post: create dynamic override with toggled status
-      const staticPost = STATIC_POSTS.find(p => p.slug === slug)
-      if (staticPost) {
-        dynamic.unshift({ ...staticPost, status: 'draft', lastModified: new Date().toISOString() })
-      }
+  const handleToggleStatus = async (post) => {
+    if (!post.id) {
+      alert('Cannot toggle built-in posts. Edit and save to Airtable first.')
+      return
     }
-    saveDynamicPosts(dynamic)
-    setPosts(getAllPosts(true))
+    setLoading(true)
+    await togglePostStatus(post.id)
+    await refreshPosts()
   }
 
-  const deletePost = (slug) => {
-    if (!confirm('Delete this post?')) return
-    const dynamic = getDynamicPosts().filter(p => p.slug !== slug)
-    saveDynamicPosts(dynamic)
-    setPosts(getAllPosts(true))
+  const handleDelete = async (post) => {
+    if (!confirm('Delete this post permanently?')) return
+    if (!post.id) {
+      alert('Cannot delete built-in posts.')
+      return
+    }
+    setLoading(true)
+    await deletePostApi(post.id)
+    await refreshPosts()
   }
 
-  const isStatic = (slug) => STATIC_POSTS.some(p => p.slug === slug) && !getDynamicPosts().some(p => p.slug === slug)
+  const isStatic = (post) => post.source === 'static' && !post.id
 
   if (!authed) return (
     <div style={{ minHeight: '100vh', background: '#0a1628', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -243,12 +251,14 @@ export default function Admin() {
           </div>
         </div>
 
-        {posts.length === 0 ? (
+        {loading && <div style={{ textAlign: 'center', padding: '24px', color: '#64748b', fontSize: 14 }}>Loading from Airtable...</div>}
+        {!loading && posts.length === 0 ? (
           <div style={{ textAlign: 'center', padding: 48, color: '#64748b' }}>No posts yet. Click "New post" to create one.</div>
         ) : (
           posts.map(post => {
             const status = post.status || 'published'
             const isDraft = status === 'draft'
+            const isBuiltIn = isStatic(post)
             return (
             <div key={post.slug} style={{ background: '#fff', border: `1px solid ${isDraft ? '#fde68a' : '#e2e8f0'}`, borderRadius: 10, padding: '18px 22px', marginBottom: 10, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', opacity: isDraft ? 0.85 : 1 }}>
               <div style={{ flex: 1 }}>
@@ -258,7 +268,7 @@ export default function Admin() {
                     ? <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 4, background: '#fefce8', color: '#854d0e', fontWeight: 600, border: '1px solid #fde68a' }}>Draft</span>
                     : <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 4, background: '#f0fdf4', color: '#059669', fontWeight: 600, border: '1px solid #bbf7d0' }}>Published</span>
                   }
-                  {isStatic(post.slug) && <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 4, background: '#f1f5f9', color: '#64748b', fontWeight: 600 }}>Built-in</span>}
+                  {isBuiltIn && <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 4, background: '#f1f5f9', color: '#64748b', fontWeight: 600 }}>Built-in</span>}
                 </div>
                 <div style={{ fontSize: 13, color: '#64748b' }}>
                   {post.date} · {post.category} · {post.author} · /blog/{post.slug}
@@ -267,12 +277,12 @@ export default function Admin() {
                 {post.excerpt && <div style={{ fontSize: 13, color: '#94a3b8', marginTop: 4 }}>{post.excerpt.slice(0, 120)}...</div>}
               </div>
               <div style={{ display: 'flex', gap: 8, flexShrink: 0, marginLeft: 16, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-                <button onClick={() => toggleStatus(post.slug)}
+                {!isBuiltIn && <button onClick={() => handleToggleStatus(post)} disabled={loading}
                   style={{ padding: '6px 14px', borderRadius: 6, border: `1px solid ${isDraft ? '#bbf7d0' : '#fde68a'}`, background: isDraft ? '#f0fdf4' : '#fefce8', color: isDraft ? '#059669' : '#854d0e', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>
                   {isDraft ? 'Publish' : 'Unpublish'}
-                </button>
+                </button>}
                 <button onClick={() => startEdit(post)} style={{ padding: '6px 14px', borderRadius: 6, border: '1px solid #e2e8f0', background: '#fff', color: '#2563eb', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>Edit</button>
-                <button onClick={() => deletePost(post.slug)} style={{ padding: '6px 14px', borderRadius: 6, border: '1px solid #fecaca', background: '#fff', color: '#dc2626', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>Delete</button>
+                {!isBuiltIn && <button onClick={() => handleDelete(post)} disabled={loading} style={{ padding: '6px 14px', borderRadius: 6, border: '1px solid #fecaca', background: '#fff', color: '#dc2626', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>Delete</button>}
                 {!isDraft && <a href={`/blog/${post.slug}`} target="_blank" style={{ padding: '6px 14px', borderRadius: 6, border: '1px solid #e2e8f0', background: '#f8fafc', color: '#475569', fontSize: 12, fontWeight: 600, textDecoration: 'none' }}>View</a>}
               </div>
             </div>
