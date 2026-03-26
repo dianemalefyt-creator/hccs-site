@@ -18,6 +18,7 @@ import { BlogList, BlogPost } from './pages/Blog'
 import Privacy from './pages/Privacy'
 import Terms from './pages/Terms'
 import { PricingPage } from './components/ProGate'
+import Admin from './pages/Admin'
 import Documents from './pages/Documents'
 import About from './pages/About'
 
@@ -28,10 +29,12 @@ function ScrollToTop() {
 }
 
 export default function App() {
+  const { pathname } = useLocation()
+  const isAdmin = pathname === '/admin'
   return (
     <>
       <ScrollToTop />
-      <Nav />
+      {!isAdmin && <Nav />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/assess" element={<QuickAssess />} />
@@ -47,14 +50,15 @@ export default function App() {
         <Route path="/business-case" element={<BusinessCase />} />
         <Route path="/blog" element={<BlogList />} />
         <Route path="/blog/:slug" element={<BlogPost />} />
+        <Route path="/admin" element={<Admin />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/documents" element={<Documents />} />
         <Route path="/about" element={<About />} />
       </Routes>
-      <Footer />
-      <ChatWidget />
+      {!isAdmin && <Footer />}
+      {!isAdmin && <ChatWidget />}
     </>
   )
 }

@@ -99,6 +99,7 @@ function JDBuilder() {
     try { const saved = localStorage.getItem('hccs_jd'); return saved ? { ...defaultJD, ...JSON.parse(saved) } : defaultJD } catch { return defaultJD }
   })
   const set = (k, v) => setD(p => { const next = { ...p, [k]: v }; localStorage.setItem('hccs_jd', JSON.stringify(next)); return next })
+  const [uploadStatus, setUploadStatus] = useState('')
 
   // Smart warnings
   const warnings = []
@@ -337,47 +338,107 @@ ${d.environment||d.scale||d.systemFragmentation?`<h2>The environment</h2><p>${[d
 
   const parsePDF = async (file) => {
     const text = await file.text()
-    // Try to extract fields from the known HCCS Role Definition format
-    const get = (label, nextLabel) => {
-      const re = new RegExp(label + '[\\s:]*([\\s\\S]*?)(?=' + (nextLabel || '$') + ')', 'i')
-      const m = text.match(re)
-      return m ? m[1].replace(/^\s*\n/, '').trim().slice(0, 1000) : ''
-    }
     const parsed = {}
-    // Title is usually the first large text after header
-    const titleM = text.match(/(?:Role Definition|ROLE DEFINITION)[^\n]*\n+([^\n]+)/i)
-    if (titleM) parsed.title = titleM[1].trim()
-    // Try common field patterns from our generated PDFs
-    const fieldMap = [
-      ['dept','Department','Reports to'],['reportsTo','Reports to','Defined:'],
-      ['roleType','Role type','Why this role'],['whyNow','Why this role exists now','Current state'],
-      ['currentState','Current state','Business outcomes'],
-      ['outcome1','Primary outcome','Secondary outcome'],['outcome2','Secondary outcome','Tertiary outcome'],
-      ['outcome3','Tertiary outcome','Steady state'],
-      ['baseline1','Current baseline','Target state'],['target1','Target state','Secondary'],
-      ['steadyState','Ongoing purpose','90-day'],['d90','90-day milestone','6-month'],
-      ['d180','6-month milestone','12-month'],['d365','12-month milestone','Decision rights'],
-      ['decidesAlone','Decides independently','Decides with'],['decidesConsult','Decides with consultation','Requires approval'],
-      ['needsApproval','Requires approval','Budget authority'],['budget','Budget authority','Veto'],
-      ['vetoAuthority','Veto authority','Accountable'],['accountableTo','Accountable to','Role boundaries'],
-      ['notOwned','Out of scope','Partner teams'],['partnerTeams','Partner teams','Influenced'],
-      ['influencedMetrics','Influenced.*metrics','Required'],
-      ['required','Required at hire','Learnable'],['learnable','Learnable post-hire','Evidence'],
-      ['evidencePrompts','Evidence prompts','Explicitly NOT'],['antiReqs','Explicitly NOT required','Scope'],
-      ['directs','Direct reports','Team composition'],['directRoles','Team composition','Report levels'],
-      ['teamMandate','Team mandate','Open reqs'],['openReqs','Open reqs','Indirect'],
-      ['indirects','Indirect','Geographic'],['geoSpan','Geographic span','Stakeholder'],
-      ['stakeholders','Stakeholder exposure','Ambiguity'],['ambiguity','Ambiguity level','Operating'],
-      ['companyStage','Company stage','Centralized'],['structure','Centralized','Regulatory'],
-      ['environment','Regulatory','Travel'],['travel','Travel','System'],
-      ['systemFragmentation','System.*fragmentation','Volume'],['scale','Volume.*scale','Risk'],
-      ['riskReduces','Risks this role reduces','Impact if'],['failureImpact','Impact if role underperforms','Tool-generated'],
+
+    // Helper: find text between two labels (flexible whitespace/formatting from PDF extraction)
+    const between = (startLabel, endLabels) => {
+      // Build start regex - allow spaces between words since PDF text can have them
+      const startRe = new RegExp(startLabel.split(/\s+/).join('[\\s]*'), 'i')
+      const startMatch = text.match(startRe)
+      if (!startMatch) return ''
+      const afterStart = text.slice(startMatch.index + startMatch[0].length)
+
+      // Find the earliest end label
+      let endIdx = afterStart.length
+      const ends = Array.isArray(endLabels) ? endLabels : [endLabels]
+      for (const end of ends) {
+        if (!end) continue
+        const endRe = new RegExp(end.split(/\s+/).join('[\\s]*'), 'i')
+        const endMatch = afterStart.match(endRe)
+        if (endMatch && endMatch.index < endIdx) endIdx = endMatch.index
+      }
+
+      return afterStart.slice(0, endIdx).replace(/^\s*[:|\-]\s*/, '').trim().replace(/\s+/g, ' ').slice(0, 1000)
+    }
+
+    // Clean extracted value
+    const clean = (v) => {
+      if (!v) return ''
+      const c = v.replace(/Not specified|N\/A|Not defined|TBD/gi, '').trim()
+      return c.length > 1 ? c : ''
+    }
+
+    // Title: try multiple patterns
+    const titlePatterns = [
+      /ROLE DEFINITION[^]*?WORKSHEET[^]*?\n\s*([A-Z][^\n]{5,80})/i,
+      /Role Definition[^]*?\n\s*([A-Z][^\n]{5,80})/i,
+      /^([A-Z][A-Za-z\s\/\-]{10,60})\s*(?:Department|Reports|People|Engineering|Sales)/m,
     ]
-    fieldMap.forEach(([key, label, next]) => {
-      const v = get(label, next)
-      if (v && v.length > 1 && v !== 'Not specified' && v !== 'N/A' && v !== 'Not defined') parsed[key] = v
+    for (const p of titlePatterns) {
+      const m = text.match(p)
+      if (m) { parsed.title = m[1].trim().replace(/\s+/g, ' '); break }
+    }
+
+    // Map fields using flexible label matching
+    const fields = [
+      ['dept', 'Department', ['Reports to','Defined','Role type']],
+      ['reportsTo', 'Reports to', ['Defined','Role type','Satisfies']],
+      ['roleType', 'Role type', ['Why this role','Current state','Business outcomes']],
+      ['whyNow', 'Why this role exists now', ['Current state','What is broken','Business outcomes']],
+      ['currentState', 'What is broken', ['Business outcomes','Primary outcome','Outcomes']],
+      ['outcome1', 'Primary outcome', ['Current baseline','Secondary outcome','Baseline']],
+      ['baseline1', 'Current baseline', ['Target state','Secondary outcome']],
+      ['target1', 'Target state', ['Secondary outcome','Steady state']],
+      ['outcome2', 'Secondary outcome', ['Current baseline','Tertiary outcome','Baseline']],
+      ['baseline2', 'Current baseline', ['Target state','Tertiary']],
+      ['target2', 'Target state', ['Tertiary outcome','Steady state']],
+      ['outcome3', 'Tertiary outcome', ['Steady state','Ongoing purpose','Decision rights']],
+      ['steadyState', 'Ongoing purpose', ['90-day','day milestone']],
+      ['d90', '90-day milestone', ['6-month','month milestone']],
+      ['d180', '6-month milestone', ['12-month','month milestone']],
+      ['d365', '12-month milestone', ['Decision rights','Decides']],
+      ['decidesAlone', 'Decides independently', ['Decides with','consultation']],
+      ['decidesConsult', 'Decides with consultation', ['Requires approval']],
+      ['needsApproval', 'Requires approval', ['Budget authority']],
+      ['budget', 'Budget authority', ['Veto','Accountable','Role boundaries','Required vs']],
+      ['vetoAuthority', 'Veto authority', ['Accountable','Role boundaries']],
+      ['accountableTo', 'Accountable to', ['Role boundaries','Out of scope','what this role does NOT']],
+      ['notOwned', 'Out of scope', ['Partner teams','Influenced']],
+      ['partnerTeams', 'Partner teams', ['Influenced','Required vs','Required at hire']],
+      ['influencedMetrics', 'Influenced.*not.*owned', ['Required','Capabilities']],
+      ['required', 'Required at hire', ['Learnable','post-hire']],
+      ['learnable', 'Learnable post-hire', ['Evidence','Explicitly NOT','NOT required']],
+      ['evidencePrompts', 'Evidence prompts', ['Explicitly NOT','NOT required','Scope']],
+      ['antiReqs', 'Explicitly NOT required', ['Scope','Direct reports','Team scope']],
+      ['directs', 'Direct reports', ['Team composition','Indirect','cross-functional','Report levels']],
+      ['directRoles', 'Team composition', ['Report levels','Team mandate','Open reqs']],
+      ['directLevels', 'Report levels', ['Team mandate','Open reqs','Indirect']],
+      ['teamMandate', 'Team mandate', ['Open reqs','Indirect']],
+      ['openReqs', 'Open reqs', ['Indirect','Geographic']],
+      ['indirects', 'Indirect', ['Geographic','Stakeholder']],
+      ['geoSpan', 'Geographic span', ['Stakeholder','Ambiguity']],
+      ['stakeholders', 'Stakeholder exposure', ['Ambiguity']],
+      ['ambiguity', 'Ambiguity level', ['Operating','Company stage','Environment']],
+      ['companyStage', 'Company stage', ['Centralized','Regulatory']],
+      ['structure', 'Centralized', ['Regulatory','Travel']],
+      ['environment', 'Regulatory', ['Travel','Work model','System']],
+      ['workModel', 'Work model', ['Travel','System']],
+      ['travel', 'Travel', ['System','Volume']],
+      ['systemFragmentation', 'System.*fragmentation', ['Volume','Risk']],
+      ['scale', 'Volume.*scale', ['Risk','Failure','What happens']],
+      ['riskReduces', 'Risks this role reduces', ['Impact if','What happens','Failure','Tool-generated']],
+      ['failureImpact', 'Impact if role underperforms', ['Tool-generated','Warning','HCCS','Controls']],
+    ]
+
+    fields.forEach(([key, label, ends]) => {
+      const v = clean(between(label, ends))
+      if (v) parsed[key] = v
     })
+
+    const count = Object.keys(parsed).filter(k => parsed[k]).length
+    console.log('PDF parsed fields:', count, parsed)
     setD(p => { const next = { ...p, ...parsed }; localStorage.setItem('hccs_jd', JSON.stringify(next)); return next })
+    return count
   }
 
   return (
@@ -392,23 +453,51 @@ ${d.environment||d.scale||d.systemFragmentation?`<h2>The environment</h2><p>${[d
       <div style={{background:'#f8fafc',border:'1px dashed #cbd5e1',borderRadius:10,padding:'16px 20px',marginBottom:20,textAlign:'center'}}>
         <div style={{fontSize:14,fontWeight:600,color:'#334155',marginBottom:6}}>Have an existing role definition?</div>
         <div style={{fontSize:13,color:'#64748b',marginBottom:10}}>Upload a previous HCCS™ Role Definition PDF or any text-based role document. Fields will auto-populate.</div>
+        {uploadStatus && <div style={{fontSize:13,color:uploadStatus.includes('Error')?'#dc2626':'#059669',marginBottom:10,fontWeight:600}}>{uploadStatus}</div>}
         <label style={{display:'inline-block',padding:'10px 24px',borderRadius:8,border:'1px solid #2563eb',background:'#fff',color:'#2563eb',fontSize:14,fontWeight:600,cursor:'pointer'}}>
           Upload PDF or text file
-          <input type="file" accept=".pdf,.txt,.text" style={{display:'none'}} onChange={e=>{
+          <input type="file" accept=".pdf,.txt,.text" style={{display:'none'}} onChange={async e=>{
             const file=e.target.files?.[0]
             if(!file)return
-            if(file.name.endsWith('.pdf')){
-              // For PDF, use FileReader to get text
-              const reader=new FileReader()
-              reader.onload=async()=>{
-                // Try to extract text from PDF binary - basic extraction
-                const text=reader.result
-                const textContent=text.replace(/[^\x20-\x7E\n\r\t]/g,' ').replace(/\s+/g,' ')
-                parsePDF({text:()=>Promise.resolve(textContent)})
+            setUploadStatus('Reading file...')
+            try{
+              let text=''
+              if(file.name.endsWith('.pdf')){
+                // Load pdf.js from CDN
+                if(!window.pdfjsLib){
+                  setUploadStatus('Loading PDF reader...')
+                  await new Promise((resolve,reject)=>{
+                    const s=document.createElement('script')
+                    s.src='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js'
+                    s.onload=resolve
+                    s.onerror=reject
+                    document.head.appendChild(s)
+                  })
+                  window.pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'
+                }
+                setUploadStatus('Extracting text...')
+                const buf=await file.arrayBuffer()
+                const pdf=await window.pdfjsLib.getDocument({data:buf}).promise
+                const pages=[]
+                for(let i=1;i<=pdf.numPages;i++){
+                  const page=await pdf.getPage(i)
+                  const content=await page.getTextContent()
+                  pages.push(content.items.map(item=>item.str).join(' '))
+                }
+                text=pages.join('\n')
+              } else {
+                text=await file.text()
               }
-              reader.readAsText(file)
-            } else {
-              parsePDF(file)
+              if(text.length<20){
+                setUploadStatus('Error: Could not extract text from this file.')
+                return
+              }
+              setUploadStatus(`Extracted ${text.length} characters. Mapping fields...`)
+              const count=await parsePDF({text:()=>Promise.resolve(text)})
+              setUploadStatus(`Done! Mapped ${count||0} fields. Review and edit below.`)
+            }catch(err){
+              console.error('Upload error:',err)
+              setUploadStatus('Error: Could not read this file. Try a text-based PDF.')
             }
             e.target.value=''
           }}/>

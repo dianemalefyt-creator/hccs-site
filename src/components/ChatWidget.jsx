@@ -150,6 +150,7 @@ export default function ChatWidget() {
                 fontSize: 14, fontWeight: 600, cursor: loading ? 'default' : 'pointer', whiteSpace: 'nowrap',
               }}>Send</button>
           </div>
+          <div style={{ padding: '0 12px 8px', fontSize: 10, color: '#94a3b8', textAlign: 'center', lineHeight: 1.4 }}>AI-powered. Responses may be incomplete or imperfect. Not a substitute for professional advice.</div>
         </div>
       )}
 

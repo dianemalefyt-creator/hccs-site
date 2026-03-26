@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import { POSTS } from '../data/blog'
+import { getAllPosts } from './Admin'
 
 function renderBody(text, navigate) {
   const lines = text.trim().split('\n')
@@ -46,11 +47,12 @@ function renderInline(text, navigate) {
   })
 }
 
-const CATEGORIES = ['All', ...new Set(POSTS.map(p => p.category))]
+const CATEGORIES = ['All', 'Governance', 'AI & Hiring', 'Research', 'Compliance', 'Tools', 'Case Studies', 'Opinion']
 
 function BlogList() {
   const [cat, setCat] = useState('All')
-  const filtered = cat === 'All' ? POSTS : POSTS.filter(p => p.category === cat)
+  const allPosts = getAllPosts()
+  const filtered = cat === 'All' ? allPosts : allPosts.filter(p => p.category === cat)
 
   return (
     <div style={{ minHeight: '100vh', background: '#f8fafc' }}>
@@ -108,7 +110,8 @@ function BlogList() {
 function BlogPost() {
   const { slug } = useParams()
   const navigate = useNavigate()
-  const post = POSTS.find(p => p.slug === slug)
+  const allPosts = getAllPosts()
+  const post = allPosts.find(p => p.slug === slug)
 
   if (!post) return (
     <div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 16 }}>
@@ -149,11 +152,11 @@ function BlogPost() {
           </div>
 
           {/* Related posts */}
-          {POSTS.filter(p => p.slug !== slug).length > 0 && (
+          {allPosts.filter(p => p.slug !== slug).length > 0 && (
             <div style={{ marginTop: 40 }}>
               <h3 style={{ fontSize: 18, fontWeight: 700, color: '#0f172a', marginBottom: 16 }}>More from the HCCS™ blog</h3>
               <div style={{ display: 'grid', gap: 12 }}>
-                {POSTS.filter(p => p.slug !== slug).slice(0, 3).map(p => (
+                {allPosts.filter(p => p.slug !== slug).slice(0, 3).map(p => (
                   <Link key={p.slug} to={`/blog/${p.slug}`} style={{ textDecoration: 'none' }}>
                     <div style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: 10, padding: '16px 20px', transition: 'border-color 0.2s' }}
                       onMouseOver={e => e.currentTarget.style.borderColor = '#2563eb'}
