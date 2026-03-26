@@ -2,6 +2,7 @@ import { Routes, Route, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import Nav from './components/Nav'
 import Footer from './components/Footer'
+import ChatWidget from './components/ChatWidget'
 import Home from './pages/Home'
 import QuickAssess from './pages/QuickAssess'
 import Assessment from './pages/Assessment'
@@ -37,6 +38,7 @@ export default function App() {
         <Route path="/about" element={<About />} />
       </Routes>
       <Footer />
+      <ChatWidget />
     </>
   )
 }
