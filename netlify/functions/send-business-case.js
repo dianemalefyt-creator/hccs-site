@@ -28,7 +28,7 @@ exports.handler = async function(event) {
       body: JSON.stringify({
         from: 'HCCS Standard <noreply@hccsstandard.com>',
         to: [email],
-        bcc: ['diane.malefyt@gmail.com'],
+        bcc: ['info@hccsstandard.com'],
         subject: `HCCS™ Business Case - ${org || 'Your Organization'}`,
         html: cleanHtml,
       }),

@@ -573,7 +573,7 @@ disabled={sending} style={{padding:"10px 24px",borderRadius:6,border:"none",back
 </div></div>);}
 
 const FREE_DOMAINS = ['gmail.com','yahoo.com','hotmail.com','outlook.com','aol.com','icloud.com','mail.com','protonmail.com','zoho.com','yandex.com','gmx.com','live.com','msn.com','me.com','inbox.com','fastmail.com','hushmail.com','mailfence.com','tutanota.com','proton.me'];
-const ADMIN_EMAILS = ['diane.malefyt@gmail.com'];
+const ADMIN_EMAILS = ['info@hccsstandard.com'];
 const SIZES = ['1-50','51-200','201-500','501-1,000','1,001-5,000','5,001-10,000','10,000+'];
 
 function Gate({onComplete}){
@@ -770,7 +770,7 @@ const[phase,setPhase]=useState("code");const[answers,setAnswers]=useState({});co
 useEffect(()=>{
 const params=new URLSearchParams(window.location.search);
 if(params.get('test')==='1'){
-const testUser={name:'Diane Malefyt (Test)',email:'diane.malefyt@gmail.com',org:'HCCS™ Test',title:'Admin',size:'1-50',linkedin:'https://www.linkedin.com/in/dianemalefyt/'};
+const testUser={name:'Diane Malefyt (Test)',email:'info@hccsstandard.com',org:'HCCS™ Test',title:'Admin',size:'1-50',linkedin:'https://www.linkedin.com/in/dianemalefyt/'};
 const testAnswers={};const testNotes={};
 const options=['yes','partial','no'];
 D.forEach(d=>{d.controls.forEach((c,i)=>{

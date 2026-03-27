@@ -282,7 +282,7 @@ exports.handler = async function(event) {
   const RESEND_API_KEY = process.env.RESEND_API_KEY;
   const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
   const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
-  const BCC_EMAIL = process.env.BCC_EMAIL || 'diane.malefyt@gmail.com';
+  const BCC_EMAIL = process.env.BCC_EMAIL || 'info@hccsstandard.com';
 
   if (!RESEND_API_KEY) {
     return { statusCode: 500, body: JSON.stringify({ error: 'Email service not configured' }) };

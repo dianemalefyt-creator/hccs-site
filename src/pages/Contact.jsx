@@ -28,8 +28,8 @@ export default function Contact() {
         body: JSON.stringify(form),
       })
       if (res.ok) setSent(true)
-      else setErr('Something went wrong. Try emailing diane.malefyt@gmail.com directly.')
-    } catch (e) { setErr('Network error. Try emailing diane.malefyt@gmail.com directly.') }
+      else setErr('Something went wrong. Try emailing info@hccsstandard.com directly.')
+    } catch (e) { setErr('Network error. Try emailing info@hccsstandard.com directly.') }
     finally { setSending(false) }
   }
 

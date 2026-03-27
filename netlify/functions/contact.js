@@ -43,7 +43,7 @@ exports.handler = async function(event) {
       },
       body: JSON.stringify({
         from: 'HCCS Contact <reports@hccsstandard.com>',
-        to: ['diane.malefyt@gmail.com'],
+        to: ['info@hccsstandard.com'],
         reply_to: email,
         subject: 'HCCS\u2122 Inquiry from ' + name + (org ? ' (' + org + ')' : '') + (interest ? ' - ' + interest : ''),
         html: html,

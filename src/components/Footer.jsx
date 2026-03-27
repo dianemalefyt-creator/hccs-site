@@ -42,6 +42,7 @@ export default function Footer() {
             <Link to="/rights" style={{ fontSize: 14, color: '#94a3b8' }}>Applicant's Bill of Rights</Link>
             <Link to="/org-rights" style={{ fontSize: 14, color: '#94a3b8' }}>Organization's Bill of Rights</Link>
             <Link to="/blog" style={{ fontSize: 14, color: '#94a3b8' }}>Blog</Link>
+            <a href="mailto:info@hccsstandard.com" style={{ fontSize: 14, color: '#94a3b8' }}>info@hccsstandard.com</a>
             <a href="https://www.linkedin.com/in/dianemalefyt/" target="_blank" rel="noopener" style={{ fontSize: 14, color: '#94a3b8' }}>LinkedIn</a>
           </div>
         </div>

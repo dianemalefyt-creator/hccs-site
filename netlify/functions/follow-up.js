@@ -53,7 +53,7 @@ const followUpHtml = (name, level, gaps) => `
   
   <div style="padding:20px 32px;background:#f8fafc;border:1px solid #e2e8f0;border-top:none;border-radius:0 0 12px 12px;text-align:center">
     <div style="font-size:12px;color:#94a3b8">HCCS\u2122 | hccsstandard.com | \u00A9 2026 IngenuityCo LLC</div>
-    <div style="font-size:11px;color:#cbd5e1;margin-top:4px">You received this because you took the HCCS\u2122 Quick Assessment. <a href="mailto:diane.malefyt@gmail.com?subject=Unsubscribe" style="color:#94a3b8">Unsubscribe</a></div>
+    <div style="font-size:11px;color:#cbd5e1;margin-top:4px">You received this because you took the HCCS\u2122 Quick Assessment. <a href="mailto:info@hccsstandard.com?subject=Unsubscribe" style="color:#94a3b8">Unsubscribe</a></div>
   </div>
 </div>`;
 
@@ -108,7 +108,7 @@ exports.handler = async function(event) {
           body: JSON.stringify({
             from: 'HCCS Standard <noreply@hccsstandard.com>',
             to: [email],
-            bcc: ['diane.malefyt@gmail.com'],
+            bcc: ['info@hccsstandard.com'],
             subject: FOLLOW_UP_SUBJECT,
             html: followUpHtml(name.split(' ')[0], level, gaps),
           }),
