@@ -1,10 +1,12 @@
 import { useState } from 'react'
 
 const INTERESTS = [
+  'Pro Monthly ($29/mo)',
+  'Pro Annual ($249/yr)',
   'Self-Assessment ($149)',
   'Guided Assessment ($2,500)',
   'Enterprise / Validated Audit',
-  'Licensing the HCCS\u2122 Standard',
+  'Licensing the HCCS™ Standard',
   'Partnership or integration',
   'Speaking or advisory',
   'General question',
@@ -127,7 +129,7 @@ export default function Contact() {
                 </a>
                 <a href="/assess/full" style={{ display: 'block', padding: '14px 16px', borderRadius: 8, border: '1px solid #e2e8f0', textDecoration: 'none' }}>
                   <div style={{ fontSize: 14, fontWeight: 600, color: '#0f172a' }}>View Pricing</div>
-                  <div style={{ fontSize: 13, color: '#64748b' }}>Self-Assessment, Guided, and Enterprise options.</div>
+                  <div style={{ fontSize: 13, color: '#64748b' }}>Pro subscriptions, assessments, enterprise, and licensing.</div>
                 </a>
               </div>
             </div>
