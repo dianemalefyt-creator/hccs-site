@@ -15,7 +15,7 @@ export default function Documents() {
       <section style={{ background: 'linear-gradient(165deg, #0a1628, #1a2d4a)', padding: '80px 24px 60px' }}>
         <div style={{ maxWidth: 900, margin: '0 auto', textAlign: 'center' }}>
           <div style={{ letterSpacing: '0.25em', fontSize: 12, textTransform: 'uppercase', color: '#5b9bd5', marginBottom: 16, fontWeight: 500 }}>Document system</div>
-          <h1 style={{ fontSize: 40, fontWeight: 700, color: '#fff', margin: '0 0 16px' }}>Three documents. One standard.</h1>
+          <h1 className='hero-title' style={{ fontSize: 40, fontWeight: 700, color: '#fff', margin: '0 0 16px' }}>Three documents. One standard.</h1>
           <p style={{ fontSize: 17, color: '#94a3b8', maxWidth: 560, margin: '0 auto', lineHeight: 1.6 }}>
             Persistent control IDs thread across all three documents. An auditor can trace from a template back to the implementation guidance back to the normative requirement.
           </p>
@@ -26,13 +26,13 @@ export default function Documents() {
       <section style={{ padding: '60px 24px 80px' }}>
         <div style={{ maxWidth: 900, margin: '0 auto' }}>
           {docs.map((d, i) => (
-            <div key={d.docId || d.id || i} style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: 14, padding: 32, marginBottom: 24, borderLeft: `5px solid ${d.color}` }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16, flexWrap: 'wrap', gap: 16 }}>
+            <div key={d.docId || d.id || i} className='card-padding' style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: 14, padding: 32, marginBottom: 24, borderLeft: `5px solid ${d.color}` }}>
+              <div className='doc-card-header' style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16, flexWrap: 'wrap', gap: 16 }}>
                 <div>
                   <div style={{ fontSize: 13, fontWeight: 600, color: d.color, letterSpacing: '0.05em', marginBottom: 4 }}>{d.subtitle}</div>
                   <h2 style={{ fontSize: 24, fontWeight: 700, color: '#0f172a', margin: 0 }}>{d.title}</h2>
                 </div>
-                <div style={{ display: 'flex', gap: 8 }}>
+                <div className='doc-card-buttons' style={{ display: 'flex', gap: 8 }}>
                   {d.format === 'pdf' && (
                     <a href={d.file} target="_blank" rel="noopener" style={{ background: '#fff', color: d.color, border: `2px solid ${d.color}`, padding: '10px 20px', borderRadius: 8, fontSize: 14, fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: 8, whiteSpace: 'nowrap', textDecoration: 'none' }}>
                       Read online

@@ -1,0 +1,112 @@
+/* HCCS Responsive & Accessibility Styles */
+* { box-sizing: border-box; }
+body { overflow-x: hidden; }
+img, video, iframe { max-width: 100%; height: auto; }
+
+/* === ADA / WCAG COMPLIANCE === */
+
+/* Focus indicators for keyboard navigation */
+a:focus-visible, button:focus-visible, input:focus-visible, 
+select:focus-visible, textarea:focus-visible {
+  outline: 3px solid #2563eb !important;
+  outline-offset: 2px !important;
+}
+
+/* Skip to content link (screen readers) */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 16px;
+  background: #2563eb;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  z-index: 9999;
+  transition: top 0.2s;
+}
+.skip-link:focus {
+  top: 16px;
+}
+
+/* Minimum touch target size (44x44px per WCAG 2.5.5) */
+@media (pointer: coarse) {
+  button, a, select, input[type="checkbox"], input[type="radio"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Utility classes for responsive grids */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+.grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.grid-science { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.flex-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.stack-mobile {}
+.hero-title {}
+.hero-sub {}
+.section-title {}
+.stat-number {}
+.quote-text {}
+.doc-card-header {}
+.doc-card-buttons {}
+.maturity-row {}
+.maturity-meta {}
+
+@media (max-width: 768px) {
+  /* Grids collapse */
+  .grid-2, .grid-3, .grid-science { grid-template-columns: 1fr !important; }
+  .grid-4 { grid-template-columns: 1fr 1fr !important; gap: 16px !important; }
+  .grid-cards { grid-template-columns: 1fr !important; }
+
+  /* Typography scaling */
+  .hero-title { font-size: 28px !important; }
+  .hero-sub { font-size: 15px !important; }
+  .section-title { font-size: 24px !important; }
+  .stat-number { font-size: 32px !important; }
+  .quote-text { font-size: 18px !important; }
+
+  /* Document card header stacks */
+  .doc-card-header { flex-direction: column !important; }
+  .doc-card-buttons { width: 100% !important; }
+  .doc-card-buttons a { flex: 1 !important; text-align: center !important; }
+
+  /* Maturity rows */
+  .maturity-row { flex-wrap: wrap !important; padding: 12px 16px !important; gap: 8px !important; }
+  .maturity-meta { min-width: auto !important; }
+
+  /* Stack flexbox items on mobile */
+  .stack-mobile { flex-direction: column !important; }
+
+  /* Admin list items */
+  .admin-post-row { flex-direction: column !important; gap: 12px !important; }
+  .admin-post-actions { width: 100% !important; margin-left: 0 !important; justify-content: flex-start !important; }
+
+  /* Footer */
+  .footer-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+  .footer-bottom { flex-direction: column !important; text-align: center !important; gap: 8px !important; }
+
+  /* General padding reduction */
+  .page-section { padding: 40px 16px !important; }
+  .page-hero { padding: 50px 16px 40px !important; }
+  .card-padding { padding: 20px !important; }
+}
+
+@media (max-width: 480px) {
+  .hero-title { font-size: 24px !important; }
+  .section-title { font-size: 20px !important; }
+  .grid-4 { grid-template-columns: 1fr 1fr !important; }
+  .grid-2 { grid-template-columns: 1fr !important; }
+  .quote-text { font-size: 16px !important; padding: 0 8px !important; }
+  .flex-row { flex-direction: column !important; }
+}

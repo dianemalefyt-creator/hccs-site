@@ -77,7 +77,7 @@ function Landing({ onStart }) {
     <div style={{ minHeight: "80vh", background: "linear-gradient(165deg, #0a1628 0%, #1a2d4a 40%, #0f3460 100%)", color: "#e2e8f0", display: "flex", alignItems: "center" }}>
       <div style={{ maxWidth: 700, margin: "0 auto", padding: "80px 24px 60px" }}>
         <div style={{ letterSpacing: "0.25em", fontSize: 12, textTransform: "uppercase", color: "#5b9bd5", marginBottom: 16, fontWeight: 500 }}>Quick Assessment</div>
-        <h1 style={{ fontSize: 40, fontWeight: 700, lineHeight: 1.15, margin: "0 0 20px", color: "#fff" }}>How audit-ready is your hiring process?</h1>
+        <h1 className="hero-title" style={{ fontSize: 40, fontWeight: 700, lineHeight: 1.15, margin: "0 0 20px", color: "#fff" }}>How audit-ready is your hiring process?</h1>
         <p style={{ fontSize: 18, lineHeight: 1.65, color: "#94a3b8", maxWidth: 540, margin: "0 0 32px" }}>
           10 questions. 3 minutes. Find out where your organization stands across the 7 HCCS™ governance domains.
         </p>

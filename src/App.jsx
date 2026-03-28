@@ -34,7 +34,9 @@ export default function App() {
   return (
     <>
       <ScrollToTop />
+      <a href="#main-content" className="skip-link">Skip to main content</a>
       {!isAdmin && <Nav />}
+      <main id="main-content">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/assess" element={<QuickAssess />} />
@@ -57,6 +59,7 @@ export default function App() {
         <Route path="/documents" element={<Documents />} />
         <Route path="/about" element={<About />} />
       </Routes>
+      </main>
       {!isAdmin && <Footer />}
       {!isAdmin && <ChatWidget />}
     </>

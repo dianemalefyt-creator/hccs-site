@@ -33,7 +33,7 @@ export default function Controls() {
       <section style={{ background: 'linear-gradient(165deg, #0a1628 0%, #1a2d4a 40%, #0f3460 100%)', padding: '80px 24px 60px' }}>
         <div style={{ maxWidth: 1000, margin: '0 auto', textAlign: 'center' }}>
           <div style={{ letterSpacing: '0.25em', fontSize: 12, textTransform: 'uppercase', color: '#5b9bd5', marginBottom: 16, fontWeight: 500 }}>Control Library</div>
-          <h1 style={{ fontSize: 40, fontWeight: 700, color: '#fff', margin: '0 0 16px' }}>What HCCS™ Tests For</h1>
+          <h1 className='hero-title' style={{ fontSize: 40, fontWeight: 700, color: '#fff', margin: '0 0 16px' }}>What HCCS™ Tests For</h1>
           <p style={{ fontSize: 17, color: '#94a3b8', maxWidth: 600, margin: '0 auto 32px', lineHeight: 1.6 }}>
             {totalControls} auditable controls across 7 governance domains. Each control defines a specific requirement, what "in place" looks like, and how to remediate if it's not.
           </p>

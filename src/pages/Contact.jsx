@@ -40,7 +40,7 @@ export default function Contact() {
       {/* Hero */}
       <section style={{ background: 'linear-gradient(165deg, #0a1628, #1a2d4a)', padding: '80px 24px 60px' }}>
         <div style={{ maxWidth: 700, margin: '0 auto', textAlign: 'center' }}>
-          <h1 style={{ fontSize: 40, fontWeight: 700, color: '#fff', margin: '0 0 12px' }}>Get in touch</h1>
+          <h1 className='hero-title' style={{ fontSize: 40, fontWeight: 700, color: '#fff', margin: '0 0 12px' }}>Get in touch</h1>
           <p style={{ fontSize: 17, color: '#94a3b8', lineHeight: 1.6 }}>
             Questions about the HCCS™ Standard, assessment options, enterprise pricing, or partnerships? We'll get back to you within one business day.
           </p>

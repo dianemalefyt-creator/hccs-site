@@ -128,7 +128,7 @@ export default function Nav() {
 
   return (
     <>
-      <nav style={{ background: '#0a1628', borderBottom: '1px solid rgba(255,255,255,0.06)', position: 'sticky', top: 0, zIndex: 50 }}>
+      <nav aria-label="Main navigation" style={{ background: '#0a1628', borderBottom: '1px solid rgba(255,255,255,0.06)', position: 'sticky', top: 0, zIndex: 50 }}>
         <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: 64 }}>
           <Link to="/" style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
             <span style={{ fontSize: 20, fontWeight: 700, color: '#fff', letterSpacing: '0.05em' }}>HCCS</span>
@@ -157,7 +157,7 @@ export default function Nav() {
           </div>
 
           {/* Mobile hamburger */}
-          <button className="mobile-menu-btn" onClick={() => setMobileOpen(true)} style={{
+          <button className="mobile-menu-btn" aria-label="Open menu" onClick={() => setMobileOpen(true)} style={{
             display: 'none', background: 'none', border: 'none', cursor: 'pointer', padding: 8,
           }}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round">

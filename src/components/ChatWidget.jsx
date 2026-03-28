@@ -150,12 +150,12 @@ export default function ChatWidget() {
                 fontSize: 14, fontWeight: 600, cursor: loading ? 'default' : 'pointer', whiteSpace: 'nowrap',
               }}>Send</button>
           </div>
-          <div style={{ padding: '0 12px 8px', fontSize: 10, color: '#94a3b8', textAlign: 'center', lineHeight: 1.4 }}>AI-powered. Responses may be incomplete or imperfect. Not a substitute for professional advice.</div>
+          <div style={{ padding: '0 12px 8px', fontSize: 10, color: '#64748b', textAlign: 'center', lineHeight: 1.4 }}>AI-powered. Responses may be incomplete or imperfect. Not a substitute for professional advice.</div>
         </div>
       )}
 
       {/* Floating button */}
-      <button onClick={() => setOpen(!open)} style={{
+      <button aria-label="Open chat assistant" onClick={() => setOpen(!open)} style={{
         position: 'fixed', bottom: 24, right: 24, width: 56, height: 56,
         borderRadius: '50%', background: '#2563eb', border: 'none', cursor: 'pointer',
         boxShadow: '0 6px 20px rgba(37,99,235,0.4)', zIndex: 1000,

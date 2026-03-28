@@ -11,11 +11,11 @@ export default function Home() {
   return (
     <div>
       {/* Hero */}
-      <section style={S.hero}>
+      <section className='page-hero' style={S.hero}>
         <div style={S.wrap}>
           <div style={{ maxWidth: 600 }}>
             <div style={{ letterSpacing: '0.25em', fontSize: 12, textTransform: 'uppercase', color: '#5b9bd5', marginBottom: 20, fontWeight: 500 }}>Human Capital Control Standard™ (HCCS™)</div>
-            <h1 style={{ fontSize: 44, fontWeight: 700, lineHeight: 1.18, margin: '0 0 24px', color: '#fff' }}>
+            <h1 className='hero-title' style={{ fontSize: 44, fontWeight: 700, lineHeight: 1.18, margin: '0 0 24px', color: '#fff' }}>
               A governance and audit standard for human capital decisions.
             </h1>
             <p style={{ fontSize: 17, lineHeight: 1.7, color: '#cbd5e1', margin: '0 0 16px', maxWidth: 540 }}>
@@ -36,8 +36,8 @@ export default function Home() {
               </Link>
             </div>
             <div style={{ display: 'flex', gap: 16, marginTop: 20 }}>
-              <Link to="/rights" style={{ fontSize: 13, color: '#64748b', textDecoration: 'none' }}>Applicant's Bill of Rights →</Link>
-              <Link to="/org-rights" style={{ fontSize: 13, color: '#64748b', textDecoration: 'none' }}>Organization's Bill of Rights →</Link>
+              <Link to="/rights" style={{ fontSize: 13, color: '#94a3b8', textDecoration: 'none' }}>Applicant's Bill of Rights →</Link>
+              <Link to="/org-rights" style={{ fontSize: 13, color: '#94a3b8', textDecoration: 'none' }}>Organization's Bill of Rights →</Link>
             </div>
           </div>
         </div>
@@ -45,10 +45,10 @@ export default function Home() {
 
       {/* Stats bar */}
       <section style={{ background: '#fff', borderBottom: '1px solid #e2e8f0', padding: '40px 24px' }}>
-        <div style={{ ...S.wrap, display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 32, textAlign: 'center' }}>
+        <div className='grid-4' style={{ ...S.wrap, textAlign: 'center' }}>
           {[['67', 'Auditable controls'], ['7', 'Governance domains'], ['5', 'Maturity levels'], ['3', 'Document system']].map(([n, l]) => (
             <div key={l}>
-              <div style={{ fontSize: 40, fontWeight: 700, color: '#1e3a5f' }}>{n}</div>
+              <div className='stat-number' style={{ fontSize: 40, fontWeight: 700, color: '#1e3a5f' }}>{n}</div>
               <div style={{ fontSize: 14, color: '#64748b', marginTop: 4 }}>{l}</div>
             </div>
           ))}
@@ -60,7 +60,7 @@ export default function Home() {
         <div style={S.wrap}>
           <div style={{ maxWidth: 720, margin: '0 auto' }}>
             <div style={{ letterSpacing: '0.15em', fontSize: 12, textTransform: 'uppercase', color: '#2563eb', marginBottom: 16, fontWeight: 600 }}>The problem</div>
-            <h2 style={{ fontSize: 32, fontWeight: 700, color: '#0f172a', lineHeight: 1.25, marginBottom: 24 }}>
+            <h2 className='section-title' style={{ fontSize: 32, fontWeight: 700, color: '#0f172a', lineHeight: 1.25, marginBottom: 24 }}>
               Organizations maintain financial controls. Equivalent controls do not exist for human capital decisions.
             </h2>
             <p style={{ fontSize: 17, lineHeight: 1.7, color: '#475569', marginBottom: 20 }}>
@@ -95,10 +95,10 @@ export default function Home() {
         <div style={S.wrap}>
           <div style={{ textAlign: 'center', marginBottom: 16 }}>
             <div style={{ letterSpacing: '0.15em', fontSize: 12, textTransform: 'uppercase', color: '#2563eb', marginBottom: 16, fontWeight: 600 }}>7 control domains</div>
-            <h2 style={{ fontSize: 32, fontWeight: 700, color: '#0f172a', marginBottom: 12 }}>Complete coverage. No control gaps.</h2>
+            <h2 className='section-title' style={{ fontSize: 32, fontWeight: 700, color: '#0f172a', marginBottom: 12 }}>Complete coverage. No control gaps.</h2>
             <p style={{ fontSize: 16, color: '#64748b', maxWidth: 620, margin: '0 auto', lineHeight: 1.6 }}>HCCS™ defines seven control domains that collectively govern the full lifecycle of human capital decisions.</p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 16, marginTop: 32 }}>
+          <div className='grid-cards' style={{ marginTop: 32 }}>
             {[
               { code: 'RG', name: 'Role Governance', desc: 'Outcome-based role definitions with defined decision rights, scope boundaries, and capability requirements.', color: '#185FA5' },
               { code: 'EI', name: 'Evaluation Integrity', desc: 'Structured, capability-based assessment with validated constructs, calibration standards, and cognitive load controls.', color: '#0F6E56' },
@@ -125,7 +125,7 @@ export default function Home() {
         <div style={S.wrap}>
           <div style={{ maxWidth: 720, margin: '0 auto', textAlign: 'center', marginBottom: 48 }}>
             <div style={{ letterSpacing: '0.15em', fontSize: 12, textTransform: 'uppercase', color: '#5b9bd5', marginBottom: 16, fontWeight: 600 }}>Maturity model</div>
-            <h2 style={{ fontSize: 32, fontWeight: 700, color: '#fff', marginBottom: 16 }}>Five levels. One credibility threshold.</h2>
+            <h2 className='section-title' style={{ fontSize: 32, fontWeight: 700, color: '#fff', marginBottom: 16 }}>Five levels. One credibility threshold.</h2>
             <p style={{ fontSize: 17, color: '#94a3b8', lineHeight: 1.6 }}>HCCS™ defines five levels of control maturity. Level 3 represents the minimum standard for external credibility and is required for organizations making claims of fair, unbiased, or AI-governed hiring practices.</p>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -136,13 +136,13 @@ export default function Home() {
               { l: 2, n: 'Developing', d: 'Controls partially implemented, inconsistently applied, self-attested.', c: '25 controls', t: 'Self-Attest', col: '#185FA5' },
               { l: 1, n: 'Initial', d: 'Ad hoc practices, limited controls, no formal governance structure.', c: '12 controls', t: 'Self-Attest', col: '#888780' },
             ].map(lv => (
-              <div key={lv.l} style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '16px 24px', borderRadius: 10, background: `${lv.col}15`, border: lv.threshold ? `2px solid ${lv.col}` : '1px solid rgba(255,255,255,0.06)' }}>
+              <div key={lv.l} className='maturity-row' style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '16px 24px', borderRadius: 10, background: `${lv.col}15`, border: lv.threshold ? `2px solid ${lv.col}` : '1px solid rgba(255,255,255,0.06)' }}>
                 <div style={{ fontSize: 24, fontWeight: 700, color: lv.col, minWidth: 40 }}>L{lv.l}</div>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: 16, fontWeight: 600, color: '#fff' }}>{lv.n}</div>
                   <div style={{ fontSize: 13, color: '#94a3b8' }}>{lv.d}</div>
                 </div>
-                <div style={{ fontSize: 12, color: '#64748b', textAlign: 'right', minWidth: 80 }}>{lv.c}<br/><span style={{ color: '#475569' }}>{lv.t}</span></div>
+                <div className='maturity-meta' style={{ fontSize: 12, color: '#94a3b8', textAlign: 'right', minWidth: 80 }}>{lv.c}<br/><span style={{ color: '#94a3b8' }}>{lv.t}</span></div>
                 {lv.threshold && <div style={{ fontSize: 12, fontWeight: 600, color: '#22c55e', background: '#22c55e15', padding: '4px 12px', borderRadius: 12, whiteSpace: 'nowrap' }}>Credibility threshold</div>}
               </div>
             ))}
@@ -155,13 +155,13 @@ export default function Home() {
         <div style={S.wrap}>
           <div style={{ maxWidth: 720, margin: '0 auto' }}>
             <div style={{ letterSpacing: '0.15em', fontSize: 12, textTransform: 'uppercase', color: '#2563eb', marginBottom: 16, fontWeight: 600 }}>Empirical foundation</div>
-            <h2 style={{ fontSize: 32, fontWeight: 700, color: '#0f172a', lineHeight: 1.25, marginBottom: 24 }}>
+            <h2 className='section-title' style={{ fontSize: 32, fontWeight: 700, color: '#0f172a', lineHeight: 1.25, marginBottom: 24 }}>
               Grounded in decades of forensic and organizational psychology
             </h2>
             <p style={{ fontSize: 17, lineHeight: 1.7, color: '#475569', marginBottom: 24 }}>
               HCCS™ is not opinion-based. It is grounded in replicated research demonstrating that structured, actuarial methods consistently outperform unstructured judgment in personnel selection, risk assessment, and classification decisions.
             </p>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+            <div className='grid-science'>
               {[
                 ['Actuarial > Clinical', 'Structured methods outperform intuitive judgment across decades of meta-analytic research (Meehl, Grove, Kuncel, and others).'],
                 ['Cognitive Bias Taxonomy', 'Controls address known bias patterns, including anchoring, confirmation bias, halo/horn effects, affinity bias, contrast effects, and recency/primacy distortions.'],
@@ -181,17 +181,17 @@ export default function Home() {
       {/* Governing principle */}
       <section style={{ background: '#0f172a', padding: '60px 24px' }}>
         <div style={{ maxWidth: 720, margin: '0 auto', textAlign: 'center' }}>
-          <p style={{ fontSize: 22, color: '#94a3b8', fontStyle: 'italic', lineHeight: 1.6, margin: 0 }}>
+          <p className='quote-text' style={{ fontSize: 22, color: '#94a3b8', fontStyle: 'italic', lineHeight: 1.6, margin: 0 }}>
             "If an organization cannot reconstruct how a decision was made, what evidence was used, and whether standards were applied consistently, the process must be treated as unreliable."
           </p>
-          <p style={{ fontSize: 14, color: '#475569', marginTop: 16, fontWeight: 600 }}>HCCS™ Governing Principle 1.0</p>
+          <p style={{ fontSize: 14, color: '#94a3b8', marginTop: 16, fontWeight: 600 }}>HCCS™ Governing Principle 1.0</p>
         </div>
       </section>
 
       {/* CTA */}
       <section style={{ ...S.section, textAlign: 'center' }}>
         <div style={S.wrap}>
-          <h2 style={{ fontSize: 32, fontWeight: 700, color: '#0f172a', marginBottom: 12 }}>Is your hiring process audit-ready?</h2>
+          <h2 className='section-title' style={{ fontSize: 32, fontWeight: 700, color: '#0f172a', marginBottom: 12 }}>Is your hiring process audit-ready?</h2>
           <p style={{ fontSize: 17, color: '#64748b', marginBottom: 32, maxWidth: 520, margin: '0 auto 32px' }}>
             The HCCS™ Maturity Assessment scores your organization across all 67 controls, identifies gaps, and generates a remediation roadmap. Takes 10-15 minutes.
           </p>

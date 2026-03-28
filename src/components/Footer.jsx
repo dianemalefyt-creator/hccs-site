@@ -2,14 +2,14 @@ import { Link } from 'react-router-dom'
 
 export default function Footer() {
   return (
-    <footer style={{ background: '#0a1628', borderTop: '1px solid rgba(255,255,255,0.06)', padding: '48px 24px' }}>
+    <footer aria-label="Site footer" style={{ background: '#0a1628', borderTop: '1px solid rgba(255,255,255,0.06)', padding: '48px 24px' }}>
       <div style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 40 }}>
         <div>
           <div style={{ fontSize: 20, fontWeight: 700, letterSpacing: '0.05em', marginBottom: 12 }}><span style={{ color: '#fff' }}>HCCS</span> <span style={{ color: '#5b9bd5' }}>Standard</span><span style={{ fontSize: 10, position: 'relative', top: -8, color: '#5b9bd5' }}>™</span></div>
-          <p style={{ fontSize: 14, color: '#64748b', lineHeight: 1.6, maxWidth: 320 }}>
+          <p style={{ fontSize: 14, color: '#94a3b8', lineHeight: 1.6, maxWidth: 320 }}>
             The Human Capital Control Standard™. A governance and audit framework for human capital decisions.
           </p>
-          <p style={{ fontSize: 13, color: '#475569', marginTop: 16 }}>
+          <p style={{ fontSize: 13, color: '#64748b', marginTop: 16 }}>
             Aligned to SOX, NIST AI RMF, and ISO governance standards.
           </p>
         </div>
@@ -47,15 +47,15 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div style={{ maxWidth: 1100, margin: '40px auto 0', paddingTop: 24, borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
+      <div className='footer-bottom' style={{ maxWidth: 1100, margin: '40px auto 0', paddingTop: 24, borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <img src="/ingenuityco-logo.jpg" alt="IngenuityCo" style={{ height: 28, borderRadius: 4 }} />
           <span style={{ fontSize: 13, color: '#475569' }}>&copy; 2026 IngenuityCo LLC. All rights reserved.</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-          <Link to="/privacy" style={{ fontSize: 13, color: '#475569' }}>Privacy Policy</Link>
-          <Link to="/terms" style={{ fontSize: 13, color: '#475569' }}>Terms of Use</Link>
-          <span style={{ fontSize: 13, color: '#475569' }}>HCCS-1.0</span>
+          <Link to="/privacy" style={{ fontSize: 13, color: '#64748b' }}>Privacy Policy</Link>
+          <Link to="/terms" style={{ fontSize: 13, color: '#64748b' }}>Terms of Use</Link>
+          <span style={{ fontSize: 13, color: '#64748b' }}>HCCS-1.0</span>
         </div>
       </div>
     </footer>

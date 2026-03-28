@@ -308,7 +308,7 @@ export default function Admin() {
             const isDraft = status === 'draft'
             const hasAirtable = !!post.id
             return (
-            <div key={post.id || post.slug} style={{ background: '#fff', border: `1px solid ${isDraft ? '#fde68a' : '#e2e8f0'}`, borderRadius: 10, padding: '18px 22px', marginBottom: 10, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', opacity: isDraft ? 0.85 : 1 }}>
+            <div key={post.id || post.slug} className='admin-post-row' style={{ background: '#fff', border: `1px solid ${isDraft ? '#fde68a' : '#e2e8f0'}`, borderRadius: 10, padding: '18px 22px', marginBottom: 10, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', opacity: isDraft ? 0.85 : 1 }}>
               <div style={{ flex: 1 }}>
                 <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 4 }}>
                   <div style={{ fontSize: 16, fontWeight: 600, color: '#0f172a' }}>{post.title}</div>
@@ -324,7 +324,7 @@ export default function Admin() {
                 {post.lastModified && <div style={{ fontSize: 11, color: '#94a3b8', marginTop: 2 }}>Last modified: {new Date(post.lastModified).toLocaleString()}</div>}
                 {post.excerpt && <div style={{ fontSize: 13, color: '#94a3b8', marginTop: 4 }}>{post.excerpt.slice(0, 120)}...</div>}
               </div>
-              <div style={{ display: 'flex', gap: 8, flexShrink: 0, marginLeft: 16, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+              <div className='admin-post-actions' style={{ display: 'flex', gap: 8, flexShrink: 0, marginLeft: 16, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
                 {hasAirtable && <button onClick={() => handleToggleStatus(post)} disabled={loading}
                   style={{ padding: '6px 14px', borderRadius: 6, border: `1px solid ${isDraft ? '#bbf7d0' : '#fde68a'}`, background: isDraft ? '#f0fdf4' : '#fefce8', color: isDraft ? '#059669' : '#854d0e', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>
                   {isDraft ? 'Publish' : 'Unpublish'}
