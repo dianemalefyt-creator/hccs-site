@@ -17,6 +17,7 @@ const NAV = [
   ]},
   { label: 'About', children: [
     { label: 'About HCCS\u2122', desc: 'What it is, who built it, why', to: '/about' },
+    { label: 'Research', desc: 'Original AI trust research behind HCCS\u2122', to: '/research' },
     { label: "Applicant's Bill of Rights", desc: '15 rights every candidate deserves', to: '/rights' },
     { label: "Organization's Bill of Rights", desc: '12 rights employers can claim', to: '/org-rights' },
   ]},

@@ -38,6 +38,7 @@ export default function Footer() {
           <div style={{ fontSize: 12, fontWeight: 600, color: '#5b9bd5', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 16 }}>Connect</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             <Link to="/about" style={{ fontSize: 14, color: '#94a3b8' }}>About HCCS™</Link>
+            <Link to="/research" style={{ fontSize: 14, color: '#94a3b8' }}>Research</Link>
             <Link to="/contact" style={{ fontSize: 14, color: '#94a3b8' }}>Contact</Link>
             <Link to="/rights" style={{ fontSize: 14, color: '#94a3b8' }}>Applicant's Bill of Rights</Link>
             <Link to="/org-rights" style={{ fontSize: 14, color: '#94a3b8' }}>Organization's Bill of Rights</Link>
