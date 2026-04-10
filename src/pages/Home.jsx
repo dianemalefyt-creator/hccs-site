@@ -186,14 +186,14 @@ export default function Home() {
             You cannot fix trust with a design change.
           </h2>
           <p style={{ fontSize: 17, lineHeight: 1.7, color: '#475569', marginBottom: 20 }}>
-            HCCS™ is backed by original empirical research on how humans form trust in AI decision systems. A 2026 study with 95 participants across three experimental conditions found that recommendation framing — including agency-supportive design — produced no statistically significant change in trust in an AI tool, F(2, 92) = 0.50, p = .610. Pre-existing individual characteristics explained 68.5% of the variance. The experimental manipulation explained essentially nothing.
+            HCCS™ is backed by original empirical research on how humans form trust in AI decision systems. A 2026 study with 95 participants across three experimental conditions found that recommendation framing, including agency-supportive design, produced no statistically significant change in trust in an AI tool, F(2, 92) = 0.50, p = .610. Pre-existing individual characteristics explained 68.5% of the variance. The experimental manipulation explained essentially nothing.
           </p>
           <p style={{ fontSize: 17, lineHeight: 1.7, color: '#475569', marginBottom: 24 }}>
-            The deeper finding: trust in AI is not a single score. It is a profile. Four profiles emerged — blind trusters, conflicted, ambivalent, and skeptical — and they carry completely different implications for decision quality and organizational risk. A composite trust score of 48 looks identical whether someone is genuinely calibrated or deferring entirely.
+            The deeper finding: trust in AI is not a single score. It is a profile. Four profiles emerged (blind trusters, conflicted, ambivalent, and skeptical) and they carry completely different implications for decision quality and organizational risk. A composite trust score of 48 looks identical whether someone is genuinely calibrated or deferring entirely.
           </p>
           <div className='grid-science' style={{ marginBottom: 32 }}>
             {[
-              ['Blind trust is measurable', 'Organizations can identify workforce trust profiles before deployment — and before a liability event.'],
+              ['Blind trust is measurable', 'Organizations can identify workforce trust profiles before deployment, and before a liability event.'],
               ['Nominal oversight is documentable', 'The research distinguishes substantive from nominal human review. Courts will too.'],
               ['Design cannot manufacture trust', 'Warranted trust is built through demonstrated accuracy and accountable governance. Not UX.'],
               ['Accountability attaches to deployment', 'The organization that deployed the AI owns the outcomes. Governance is the only durable defense.'],

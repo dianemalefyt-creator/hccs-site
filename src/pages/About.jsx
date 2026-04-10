@@ -80,15 +80,15 @@ export default function About() {
 
             {/* Original research callout */}
             <div style={{ background: '#0f172a', borderRadius: 14, padding: 28, marginTop: 24 }}>
-              <div style={{ fontSize: 12, fontWeight: 600, color: '#5b9bd5', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>Original primary research — 2026</div>
+              <div style={{ fontSize: 12, fontWeight: 600, color: '#5b9bd5', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>Original primary research, 2026</div>
               <h3 style={{ fontSize: 18, fontWeight: 700, color: '#fff', margin: '0 0 12px' }}>
                 Trust in AI is a trait, not a state. And it is a profile, not a score.
               </h3>
               <p style={{ fontSize: 14, lineHeight: 1.7, color: '#94a3b8', marginBottom: 12 }}>
-                A 2026 IRB-approved study with 95 participants across three experimental conditions found that recommendation framing — including agency-supportive AI design — produced no statistically significant change in trust. Pre-existing individual characteristics explained 68.5% of trust variance. The experimental manipulation explained essentially nothing.
+                A 2026 IRB-approved study with 95 participants across three experimental conditions found that recommendation framing, including agency-supportive AI design, produced no statistically significant change in trust. Pre-existing individual characteristics explained 68.5% of trust variance. The experimental manipulation explained essentially nothing.
               </p>
               <p style={{ fontSize: 14, lineHeight: 1.7, color: '#94a3b8', marginBottom: 16 }}>
-                More significantly, trust decomposed into four distinct profiles — blind trusters, conflicted, ambivalent, and skeptical — that carry completely different implications for decision quality and governance risk. This is the empirical basis for three new AG domain controls in HCCS™: trust profile assessment (AG-011), substantive vs. nominal oversight (AG-012), and deference risk monitoring (AG-013).
+                More significantly, trust decomposed into four distinct profiles (blind trusters, conflicted, ambivalent, and skeptical) that carry completely different implications for decision quality and governance risk. This is the empirical basis for three new AG domain controls in HCCS™: trust profile assessment (AG-011), substantive vs. nominal oversight (AG-012), and deference risk monitoring (AG-013).
               </p>
               <Link to="/research" style={{ fontSize: 14, color: '#5b9bd5', fontWeight: 600 }}>Read the full research findings →</Link>
             </div>

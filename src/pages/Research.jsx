@@ -31,7 +31,7 @@ const PROFILES = [
     bg: '#eff6ff',
     border: '#bfdbfe',
     desc: 'Moderate on both trust and distrust. Has not yet formed a stable relationship with AI tools.',
-    risk: 'Largest group. Susceptible to design nudges in either direction — toward deference or avoidance.',
+    risk: 'Largest group. Susceptible to design nudges in either direction, toward deference or avoidance.',
     implication: 'This group is where governance frameworks matter most. Their trust disposition is still forming.',
   },
   {
@@ -52,7 +52,7 @@ const FINDINGS = [
     title: 'Trust is a trait, not a state.',
     icon: '◈',
     color: '#993C1D',
-    body: 'Three experimental conditions — no recommendation, direct recommendation, and agency-supportive recommendation — produced no statistically significant difference in trust scores, F(2, 92) = 0.50, p = .610, η² = .011. The manipulation explained essentially nothing. What explained 68.5% of variance in trust was who the participant already was: how often they use AI, how engaged they were with the scenario, what their behavioral intentions already were. Trust in AI tools is formed over time through accumulated experience. It is not meaningfully moved by a single design intervention.',
+    body: 'Three experimental conditions (no recommendation, direct recommendation, and agency-supportive recommendation) produced no statistically significant difference in trust scores, F(2, 92) = 0.50, p = .610, η² = .011. The manipulation explained essentially nothing. What explained 68.5% of variance in trust was who the participant already was: how often they use AI, how engaged they were with the scenario, what their behavioral intentions already were. Trust in AI tools is formed over time through accumulated experience. It is not meaningfully moved by a single design intervention.',
   },
   {
     title: 'Trust is a profile, not a score.',
@@ -64,13 +64,13 @@ const FINDINGS = [
     title: 'Agency-supportive design produces deliberate judgment, not trust.',
     icon: '⬡',
     color: '#185FA5',
-    body: 'The agency-supportive condition had the lowest blind trust rate (3%), the highest skepticism rate (15%), and the smallest gap between trust and distrust subscales (0.06 vs. 1.09 in the no-recommendation condition). Giving people control over the AI decision did not increase their trust — it activated more careful, ambivalent thinking. This is arguably the correct psychological outcome for a novel AI tool in a high-stakes domain. But it is not what conventional trust measures detect, and it is not what most AI governance frameworks are designed to produce.',
+    body: 'The agency-supportive condition had the lowest blind trust rate (3%), the highest skepticism rate (15%), and the smallest gap between trust and distrust subscales (0.06 vs. 1.09 in the no-recommendation condition). Giving people control over the AI decision did not increase their trust. It activated more careful, ambivalent thinking. This is arguably the correct psychological outcome for a novel AI tool in a high-stakes domain. But it is not what conventional trust measures detect, and it is not what most AI governance frameworks are designed to produce.',
   },
   {
     title: 'Accountability cannot be delegated to design.',
     icon: '⬢',
     color: '#0F6E56',
-    body: 'The practical implication is direct: if trust in AI cannot be manufactured through design, then governance frameworks that rely on transparency features, explainability interfaces, or agency-supportive framing to produce warranted trust are insufficient. Warranted trust must be earned through demonstrated accuracy over time, meaningful human oversight, and accountability structures that function when the AI is wrong. The question was never how to build AI that people trust. The question is how to build governance that makes trust warranted when it exists — and protective when it does not.',
+    body: 'The practical implication is direct: if trust in AI cannot be manufactured through design, then governance frameworks that rely on transparency features, explainability interfaces, or agency-supportive framing to produce warranted trust are insufficient. Warranted trust must be earned through demonstrated accuracy over time, meaningful human oversight, and accountability structures that function when the AI is wrong. The question was never how to build AI that people trust. The question is how to build governance that makes trust warranted when it exists, and protective when it does not.',
   },
 ]
 
@@ -86,7 +86,7 @@ export default function Research() {
             You cannot fix trust with a design change.
           </h1>
           <p style={{ fontSize: 18, color: '#94a3b8', maxWidth: 680, lineHeight: 1.7, margin: '0 0 32px' }}>
-            HCCS™ is grounded in original empirical research on how humans actually form trust in AI decision systems. The findings challenge the assumptions driving most AI adoption strategy — and explain why governance, not design, is the only durable solution.
+            HCCS™ is grounded in original empirical research on how humans actually form trust in AI decision systems. The findings challenge the assumptions driving most AI adoption strategy, and explain why governance, not design, is the only durable solution.
           </p>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
             <Link to="/controls" style={{ background: '#2563eb', color: '#fff', padding: '12px 24px', borderRadius: 8, fontSize: 14, fontWeight: 600, textDecoration: 'none' }}>
@@ -188,7 +188,7 @@ export default function Research() {
               { age: '18-29', trust: '47.00', blind: '9%', note: 'Highest rates of both blind trust and skepticism. Trust disposition not yet stabilized.' },
               { age: '30-39', trust: '46.89', blind: '7%', note: 'Highest conflicted profile rate (30%). Using AI critically while maintaining awareness.' },
               { age: '40-49', trust: '48.11', blind: '21%', note: 'Largest trust/distrust gap (+1.32). Most resolved, experience-based confidence.' },
-              { age: '50+', trust: '49.80', blind: '0%', note: 'Zero blind trusters. Highest distrust alongside highest trust — genuine wisdom-based ambivalence.' },
+              { age: '50+', trust: '49.80', blind: '0%', note: 'Zero blind trusters. Highest distrust alongside highest trust. Genuine wisdom-based ambivalence.' },
             ].map(g => (
               <div key={g.age} style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: 12, padding: 20 }}>
                 <div style={{ fontSize: 22, fontWeight: 700, color: '#1e3a5f', marginBottom: 4 }}>{g.age}</div>
@@ -200,7 +200,7 @@ export default function Research() {
           </div>
           <div style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: 12, padding: 24, borderLeft: '4px solid #2563eb' }}>
             <p style={{ fontSize: 15, color: '#334155', lineHeight: 1.7, margin: 0 }}>
-              <strong>Key insight:</strong> Age does not predict a trust score in a linear direction. It predicts a trust profile. The 50+ group has the numerically highest composite trust score — but also zero blind trusters and the most genuine ambivalence of any group. Organizations that interpret high average trust as a positive governance outcome may be misreading their most experienced employees.
+              <strong>Key insight:</strong> Age does not predict a trust score in a linear direction. It predicts a trust profile. The 50+ group has the numerically highest composite trust score, but also zero blind trusters and the most genuine ambivalence of any group. Organizations that interpret high average trust as a positive governance outcome may be misreading their most experienced employees.
             </p>
           </div>
         </div>
@@ -214,10 +214,10 @@ export default function Research() {
             Who is responsible when AI gets it wrong?
           </h2>
           <p style={{ fontSize: 17, color: '#94a3b8', lineHeight: 1.7, marginBottom: 20 }}>
-            The research makes the accountability argument concrete. Blind trust is measurable and predictable. Nominal human oversight is demonstrably different from substantive human oversight. Organizations can no longer claim "a human was in the loop" as a defense when that human was operating on full deference — a profile this research shows is real, identifiable, and concentrated in specific demographic and experiential groups.
+            The research makes the accountability argument concrete. Blind trust is measurable and predictable. Nominal human oversight is demonstrably different from substantive human oversight. Organizations can no longer claim "a human was in the loop" as a defense when that human was operating on full deference, a profile this research shows is real, identifiable, and concentrated in specific demographic and experiential groups.
           </p>
           <p style={{ fontSize: 17, color: '#94a3b8', lineHeight: 1.7, marginBottom: 40 }}>
-            Accountability must attach to the deployment decision, not the human reviewer's nominal presence. The organization that chose to deploy an AI system in a high-stakes decision context — without assessing workforce trust profiles, without monitoring for deference behavior, without distinguishing substantive from nominal oversight — owns the outcomes that system produces.
+            Accountability must attach to the deployment decision, not the human reviewer's nominal presence. The organization that chose to deploy an AI system in a high-stakes decision context, without assessing workforce trust profiles, without monitoring for deference behavior, or distinguishing substantive from nominal oversight, owns the outcomes that system produces.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
             {[
@@ -248,7 +248,7 @@ export default function Research() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             {[
               { n: '1', status: 'Complete', title: 'Single-session design interventions do not move trust.', desc: 'Trust is predicted by pre-existing individual traits. Trust is a profile, not a score. Agency-supportive design promotes deliberate judgment. Null result on the primary hypothesis with significant theoretical contribution.' },
-              { n: '2', status: 'In progress — M.S. thesis, ASU', title: 'Trust profiles are stable across domains and individuals.', desc: 'Replication across healthcare, employment, legal, and financial decision scenarios. Profiles predict decision quality differentially. Blind trust predicts deference errors. AI experience is the primary driver of profile formation. Minimum N = 400.' },
+              { n: '2', status: 'In progress: M.S. thesis, ASU', title: 'Trust profiles are stable across domains and individuals.', desc: 'Replication across healthcare, employment, legal, and financial decision scenarios. Profiles predict decision quality differentially. Blind trust predicts deference errors. AI experience is the primary driver of profile formation. Minimum N = 400.' },
               { n: '3', status: 'Planned', title: 'Organizational trust profile distribution predicts AI deployment outcomes.', desc: 'A validated trust profile assessment tool embedded in governance frameworks reduces deference errors and improves decision quality at the workforce level. HCCS-aligned governance structures are associated with healthier trust profiles over time.' },
             ].map(s => (
               <div key={s.n} style={{ display: 'flex', gap: 20, background: '#fff', border: '1px solid #e2e8f0', borderRadius: 12, padding: 24 }}>

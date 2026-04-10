@@ -27,11 +27,11 @@ We also collect standard web analytics data (page views, device type, referral s
 
 We do not sell, rent, or trade your personal information to third parties.`],
             ['Third-party services', `We use the following services to operate:
-• Resend (email delivery) — processes your email address to send assessment reports and communications
-• Airtable (data storage) — stores assessment submissions and contact form entries
-• Anthropic (AI assistant) — processes chat messages to provide HCCS™ guidance; messages are not stored by us after the session ends
-• Stripe (payments) — processes payment information for assessment purchases; we do not see or store your payment card details
-• Netlify (hosting) — hosts the website and serverless functions
+• Resend (email delivery): processes your email address to send assessment reports and communications
+• Airtable (data storage): stores assessment submissions and contact form entries
+• Anthropic (AI assistant): processes chat messages to provide HCCS™ guidance; messages are not stored by us after the session ends
+• Stripe (payments): processes payment information for assessment purchases; we do not see or store your payment card details
+• Netlify (hosting): hosts the website and serverless functions
 
 Each service has its own privacy policy governing how it handles your data.`],
             ['Data retention', 'Assessment data and contact form submissions are retained for a maximum of 2 years unless you request earlier deletion. You may request deletion of your data at any time by contacting us.'],
