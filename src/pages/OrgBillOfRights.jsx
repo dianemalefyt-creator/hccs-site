@@ -135,7 +135,7 @@ export default function OrgBillOfRights() {
       <section style={{ background: '#f1f5f9', padding: '48px 24px', textAlign: 'center' }}>
         <div style={{ maxWidth: 600, margin: '0 auto' }}>
           <h2 style={{ fontSize: 28, fontWeight: 700, color: '#0f172a', marginBottom: 12 }}>Ready to enforce these rights?</h2>
-          <p style={{ fontSize: 15, color: '#64748b', marginBottom: 24, lineHeight: 1.6 }}>The HCCS™ Standard provides the 67 controls, maturity model, and audit framework to make these rights operational.</p>
+          <p style={{ fontSize: 15, color: '#64748b', marginBottom: 24, lineHeight: 1.6 }}>The HCCS™ Standard provides the 70 controls, maturity model, and audit framework to make these rights operational.</p>
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
             <Link to="/assess" style={{ display: 'inline-block', background: '#2563eb', color: '#fff', padding: '14px 28px', borderRadius: 8, fontSize: 15, fontWeight: 600, textDecoration: 'none' }}>Take the assessment</Link>
             <Link to="/contact" style={{ display: 'inline-block', background: '#fff', color: '#0f172a', padding: '14px 28px', borderRadius: 8, fontSize: 15, fontWeight: 600, textDecoration: 'none', border: '1px solid #e2e8f0' }}>Talk to us</Link>

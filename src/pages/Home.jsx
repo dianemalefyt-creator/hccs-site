@@ -13,19 +13,19 @@ export default function Home() {
       {/* Hero */}
       <section className='page-hero' style={S.hero}>
         <div style={S.wrap}>
-          <div style={{ maxWidth: 600 }}>
+          <div style={{ maxWidth: 620 }}>
             <div style={{ letterSpacing: '0.25em', fontSize: 12, textTransform: 'uppercase', color: '#5b9bd5', marginBottom: 20, fontWeight: 500 }}>Human Capital Control Standard™ (HCCS™)</div>
             <h1 className='hero-title' style={{ fontSize: 44, fontWeight: 700, lineHeight: 1.18, margin: '0 0 24px', color: '#fff' }}>
-              A governance and audit standard for human capital decisions.
+              A governance and assurance standard for consequential human decisions.
             </h1>
-            <p style={{ fontSize: 17, lineHeight: 1.7, color: '#cbd5e1', margin: '0 0 16px', maxWidth: 540 }}>
-              HCCS™ establishes the control framework for how organizations define roles, evaluate candidates, make hiring decisions, and align compensation to the actual scope of work.
+            <p style={{ fontSize: 17, lineHeight: 1.7, color: '#cbd5e1', margin: '0 0 16px', maxWidth: 560 }}>
+              HCCS™ ensures that trust is warranted, human oversight is meaningful, and accountability remains visible when algorithmic influence shapes outcomes.
             </p>
-            <p style={{ fontSize: 15, lineHeight: 1.7, color: '#94a3b8', margin: '0 0 16px', maxWidth: 540 }}>
-              Human capital decisions directly impact financial performance, legal exposure, operational consistency, and organizational trust. Despite this, most organizations operate without consistent controls, documentation standards, or auditability across hiring processes.
+            <p style={{ fontSize: 15, lineHeight: 1.7, color: '#94a3b8', margin: '0 0 16px', maxWidth: 560 }}>
+              The standard begins where the fracture is most visible: human capital decisions. How organizations define roles, evaluate candidates, make hiring decisions, and align compensation to the actual scope of work.
             </p>
-            <p style={{ fontSize: 15, lineHeight: 1.7, color: '#94a3b8', margin: '0 0 40px', maxWidth: 540 }}>
-              The introduction of AI into hiring workflows increases both scale and risk, making governance requirements more critical, not less.
+            <p style={{ fontSize: 15, lineHeight: 1.7, color: '#94a3b8', margin: '0 0 40px', maxWidth: 560 }}>
+              The introduction of AI into these decisions increases both scale and risk. It does not remove the need for governance. It makes governance the only defensible position.
             </p>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', maxWidth: 540 }}>
               <Link to="/assess" style={{ background: '#2563eb', color: '#fff', padding: '14px 28px', borderRadius: 8, fontSize: 15, fontWeight: 600, textAlign: 'center', textDecoration: 'none' }}>
@@ -46,7 +46,7 @@ export default function Home() {
       {/* Stats bar */}
       <section style={{ background: '#fff', borderBottom: '1px solid #e2e8f0', padding: '40px 24px' }}>
         <div className='grid-4' style={{ ...S.wrap, textAlign: 'center' }}>
-          {[['67', 'Auditable controls'], ['7', 'Governance domains'], ['5', 'Maturity levels'], ['3', 'Document system']].map(([n, l]) => (
+          {[['70', 'Auditable controls'], ['7', 'Governance domains'], ['5', 'Maturity levels'], ['3', 'Document system']].map(([n, l]) => (
             <div key={l}>
               <div className='stat-number' style={{ fontSize: 40, fontWeight: 700, color: '#1e3a5f' }}>{n}</div>
               <div style={{ fontSize: 14, color: '#64748b', marginTop: 4 }}>{l}</div>
@@ -61,30 +61,27 @@ export default function Home() {
           <div style={{ maxWidth: 720, margin: '0 auto' }}>
             <div style={{ letterSpacing: '0.15em', fontSize: 12, textTransform: 'uppercase', color: '#2563eb', marginBottom: 16, fontWeight: 600 }}>The problem</div>
             <h2 className='section-title' style={{ fontSize: 32, fontWeight: 700, color: '#0f172a', lineHeight: 1.25, marginBottom: 24 }}>
-              Organizations maintain financial controls. Equivalent controls do not exist for human capital decisions.
+              There is no governance layer for decisions shaped by AI.
             </h2>
             <p style={{ fontSize: 17, lineHeight: 1.7, color: '#475569', marginBottom: 20 }}>
-              Human capital decisions determine who enters the organization, how they are evaluated, how they are selected, and how they are compensated. These decisions directly impact financial performance, legal exposure, operational consistency, and organizational trust.
+              Organizations maintain financial controls, data governance standards, and information security frameworks. But the decisions that most directly affect people, who gets hired, how they are evaluated, what they are paid, operate without equivalent governance, auditability, or accountability structures.
             </p>
             <p style={{ fontSize: 17, lineHeight: 1.7, color: '#475569', marginBottom: 16 }}>
-              Despite this, most organizations operate without:
+              In human capital decisions alone, most organizations operate without:
             </p>
             <div style={{ paddingLeft: 20, marginBottom: 20, borderLeft: '3px solid #2563eb' }}>
-              {['Consistent role definition standards', 'Governed evaluation criteria', 'Documented decision frameworks', 'Alignment between role scope and compensation', 'Auditability across hiring processes'].map(item => (
+              {['Consistent role definition standards', 'Governed evaluation criteria', 'Documented decision frameworks', 'Alignment between role scope and compensation', 'Auditability across hiring processes', 'Distinction between substantive and nominal human oversight'].map(item => (
                 <div key={item} style={{ fontSize: 16, color: '#334155', marginBottom: 8, lineHeight: 1.5 }}>{item}</div>
               ))}
             </div>
             <p style={{ fontSize: 17, lineHeight: 1.7, color: '#475569', marginBottom: 16 }}>
-              Hiring is commonly treated as a workflow rather than a controlled decision system. As a result, subjective judgment, inconsistent criteria, and weak proxies drive outcomes.
-            </p>
-            <p style={{ fontSize: 17, lineHeight: 1.7, color: '#475569', marginBottom: 16 }}>
-              The introduction of AI into these workflows increases speed and scale, but does not correct underlying control deficiencies.
+              The introduction of AI into these decisions increases speed and scale, but does not correct underlying control deficiencies. It amplifies them. And it introduces a new risk: the erosion of meaningful human judgment through unchecked algorithmic deference.
             </p>
             <p style={{ fontSize: 17, lineHeight: 1.7, color: '#0f172a', fontWeight: 600, marginBottom: 16 }}>
-              Human capital decisions represent a material, ungoverned risk surface within the enterprise.
+              Consequential decisions shaped by AI represent a material, ungoverned risk surface within the enterprise.
             </p>
             <p style={{ fontSize: 16, lineHeight: 1.7, color: '#475569' }}>
-              These decisions function as a unified system governing workforce composition, evaluation, selection, and compensation, yet operate without formal governance, enforceable controls, or audit standards. This gap creates exposure that is often unmeasured, inconsistently managed, and difficult to defend under audit or legal scrutiny.
+              HCCS™ is not a hiring standard. It is a governance standard for consequential decisions wherever human judgment is shaped by algorithmic systems. Hiring is where the fracture became impossible to ignore. This gap creates exposure that is often unmeasured, inconsistently managed, and difficult to defend under audit or legal scrutiny.
             </p>
           </div>
         </div>
@@ -130,10 +127,10 @@ export default function Home() {
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {[
-              { l: 5, n: 'Optimizing', d: 'All controls implemented, continuously improved, independently audited.', c: '67 controls', t: 'Audited', col: '#993C1D' },
-              { l: 4, n: 'Managed', d: 'Controls consistently applied, measured, and subject to internal audit.', c: '60 controls', t: 'Audited', col: '#534AB7' },
-              { l: 3, n: 'Defined', d: 'Controls formally established, documented, and validated. Minimum threshold for external credibility.', c: '48 controls', t: 'Validated', col: '#0F6E56', threshold: true },
-              { l: 2, n: 'Developing', d: 'Controls partially implemented, inconsistently applied, self-attested.', c: '25 controls', t: 'Self-Attest', col: '#185FA5' },
+              { l: 5, n: 'Optimizing', d: 'All controls implemented, continuously improved, independently audited.', c: '70 controls', t: 'Audited', col: '#993C1D' },
+              { l: 4, n: 'Managed', d: 'Controls consistently applied, measured, and subject to internal audit.', c: '63 controls', t: 'Audited', col: '#534AB7' },
+              { l: 3, n: 'Defined', d: 'Controls formally established, documented, and validated. Minimum threshold for external credibility.', c: '51 controls', t: 'Validated', col: '#0F6E56', threshold: true },
+              { l: 2, n: 'Developing', d: 'Controls partially implemented, inconsistently applied, self-attested.', c: '26 controls', t: 'Self-Attest', col: '#185FA5' },
               { l: 1, n: 'Initial', d: 'Ad hoc practices, limited controls, no formal governance structure.', c: '12 controls', t: 'Self-Attest', col: '#888780' },
             ].map(lv => (
               <div key={lv.l} className='maturity-row' style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '16px 24px', borderRadius: 10, background: `${lv.col}15`, border: lv.threshold ? `2px solid ${lv.col}` : '1px solid rgba(255,255,255,0.06)' }}>
@@ -210,13 +207,25 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Governing principle */}
-      <section style={{ background: '#0f172a', padding: '60px 24px' }}>
-        <div style={{ maxWidth: 720, margin: '0 auto', textAlign: 'center' }}>
-          <p className='quote-text' style={{ fontSize: 22, color: '#94a3b8', fontStyle: 'italic', lineHeight: 1.6, margin: 0 }}>
-            "If an organization cannot reconstruct how a decision was made, what evidence was used, and whether standards were applied consistently, the process must be treated as unreliable."
-          </p>
-          <p style={{ fontSize: 14, color: '#94a3b8', marginTop: 16, fontWeight: 600 }}>HCCS™ Governing Principle 1.0</p>
+      {/* Governing principles */}
+      <section style={{ background: '#0f172a', padding: '72px 24px' }}>
+        <div style={{ maxWidth: 720, margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: 48 }}>
+            <div style={{ letterSpacing: '0.15em', fontSize: 12, textTransform: 'uppercase', color: '#5b9bd5', marginBottom: 12, fontWeight: 600 }}>Governing principles</div>
+          </div>
+          <div style={{ marginBottom: 40 }}>
+            <div style={{ fontSize: 13, fontWeight: 600, color: '#5b9bd5', marginBottom: 8 }}>Principle 1: Reconstructability</div>
+            <p className='quote-text' style={{ fontSize: 22, color: '#94a3b8', fontStyle: 'italic', lineHeight: 1.6, margin: 0 }}>
+              "If an organization cannot reconstruct how a decision was made, what evidence was used, and whether standards were applied consistently, the process must be treated as unreliable."
+            </p>
+          </div>
+          <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: 40 }}>
+            <div style={{ fontSize: 13, fontWeight: 600, color: '#993C1D', marginBottom: 8 }}>Principle 2: Accountability</div>
+            <p className='quote-text' style={{ fontSize: 22, color: '#94a3b8', fontStyle: 'italic', lineHeight: 1.6, margin: 0 }}>
+              "Accountability for an AI-assisted decision attaches to the organization that deployed the system, not to the presence of a human reviewer. Nominal oversight does not constitute governance."
+            </p>
+          </div>
+          <p style={{ fontSize: 14, color: '#64748b', marginTop: 32, textAlign: 'center', fontWeight: 600 }}>HCCS™ Governing Principles, v2.0</p>
         </div>
       </section>
 
@@ -225,7 +234,7 @@ export default function Home() {
         <div style={S.wrap}>
           <h2 className='section-title' style={{ fontSize: 32, fontWeight: 700, color: '#0f172a', marginBottom: 12 }}>Is your hiring process audit-ready?</h2>
           <p style={{ fontSize: 17, color: '#64748b', marginBottom: 32, maxWidth: 520, margin: '0 auto 32px' }}>
-            The HCCS™ Maturity Assessment scores your organization across all 67 controls, identifies gaps, and generates a remediation roadmap. Takes 10-15 minutes.
+            The HCCS™ Maturity Assessment scores your organization across all 70 controls, identifies gaps, and generates a remediation roadmap. Takes 10-15 minutes.
           </p>
           <Link to="/assess" style={{ background: '#2563eb', color: '#fff', padding: '16px 40px', borderRadius: 8, fontSize: 16, fontWeight: 600, display: 'inline-block' }}>
             Start your assessment

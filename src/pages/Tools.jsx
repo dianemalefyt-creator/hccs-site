@@ -85,7 +85,7 @@ export default function Tools() {
               <Link to="/pricing" style={{ display: 'inline-block', background: '#059669', color: '#fff', padding: '12px 28px', borderRadius: 8, fontSize: 15, fontWeight: 600, textDecoration: 'none' }}>See Pro plans</Link>
             </div>
           )}
-          <p style={{ fontSize: 15, color: '#64748b', marginBottom: 16 }}>Want the full picture? The assessment scores all 67 controls.</p>
+          <p style={{ fontSize: 15, color: '#64748b', marginBottom: 16 }}>Want the full picture? The assessment scores all 70 controls.</p>
           <Link to="/assess" style={{ display: 'inline-block', background: '#2563eb', color: '#fff', padding: '12px 28px', borderRadius: 8, fontSize: 15, fontWeight: 600, textDecoration: 'none' }}>Take the quick assessment</Link>
         </div>
       </section>

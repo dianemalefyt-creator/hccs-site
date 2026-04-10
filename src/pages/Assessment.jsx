@@ -21,7 +21,7 @@ function Landing({onStart}){return(
 <h1 style={{fontSize:44,fontWeight:700,lineHeight:1.15,margin:"0 0 20px",color:"#fff"}}>Is your hiring process<br/>audit-ready?</h1>
 <p style={{fontSize:18,lineHeight:1.65,color:"#94a3b8",maxWidth:560,margin:"0 0 40px"}}>Most organizations have process steps for hiring. Few have enforceable controls. HCCS™ is the first governance and audit standard for human capital decisions.</p>
 <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:16,marginBottom:48}}>
-{[["67","auditable controls"],["7","governance domains"],["5","maturity levels"]].map(([n,l])=>(
+{[["70","auditable controls"],["7","governance domains"],["5","maturity levels"]].map(([n,l])=>(
 <div key={l} style={{background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:10,padding:"20px 16px",textAlign:"center"}}>
 <div style={{fontSize:32,fontWeight:700,color:"#5b9bd5"}}>{n}</div>
 <div style={{fontSize:13,color:"#64748b",marginTop:4}}>{l}</div></div>))}
@@ -35,7 +35,7 @@ function Landing({onStart}){return(
 <button onClick={onStart} style={{background:"#2563eb",color:"#fff",border:"none",borderRadius:8,padding:"16px 40px",fontSize:16,fontWeight:600,cursor:"pointer"}}
 onMouseOver={e=>e.target.style.background="#1d4ed8"} onMouseOut={e=>e.target.style.background="#2563eb"}>Start assessment</button>
 <div style={{marginTop:64,paddingTop:32,borderTop:"1px solid rgba(255,255,255,0.06)",fontSize:13,color:"#475569"}}>
-<div>HCCS-1.0 | Aligned to SOX, NIST AI RMF, and ISO governance standards</div>
+<div>HCCS-2.0 | Aligned to SOX, NIST AI RMF, and ISO governance standards</div>
 <div style={{marginTop:4}}>© 2026 IngenuityCo LLC. All rights reserved.</div></div></div></div>);}
 
 function Assess({onComplete}){
@@ -184,7 +184,7 @@ tr:nth-child(even) td{background:#f8fafc}
 
 <div class="quote">
 "If the organization cannot reconstruct how a decision was made, what evidence it relied on, and whether standards were applied consistently, the process must be treated as unreliable."
-<div style="margin-top:8px;font-style:normal;color:#475569;font-size:12px">HCCS-1.0, Governing Principle</div>
+<div style="margin-top:8px;font-style:normal;color:#475569;font-size:12px">HCCS-2.0, Governing Principles</div>
 </div>
 </div>
 
@@ -224,7 +224,7 @@ ${domainTable}
 <div class="page-break"></div>
 <div class="section">
 <h2>Control-by-Control Assessment Record</h2>
-<p>Complete record of all 67 controls with assessment status, assessor notes, and remediation recommendations.</p>
+<p>Complete record of all 70 controls with assessment status, assessor notes, and remediation recommendations.</p>
 ${D.map(d=>`
 <h3 style="color:${d.color};margin-top:32px">${d.code}: ${d.name}</h3>
 <table>
@@ -289,7 +289,7 @@ ${noted.map(c=>`<tr><td><code>${c.id}</code></td><td>${c.domainCode}</td><td cla
 
 <div class="footer">
 <div>HCCS Maturity Assessment Report | ${user?.org||'Organization'} | ${date}</div>
-<div style="margin-top:4px">Generated at hccsstandard.com | HCCS-1.0 | &copy; 2026 IngenuityCo LLC. All rights reserved.</div>
+<div style="margin-top:4px">Generated at hccsstandard.com | HCCS-2.0 | &copy; 2026 IngenuityCo LLC. All rights reserved.</div>
 <div style="margin-top:8px;color:#cbd5e1">This report is generated from a self-assessment. It does not constitute certified compliance. For validated assessment (Level 3+), engage a qualified HCCS™ assessor.</div>
 </div>
 </body></html>`;
@@ -378,7 +378,7 @@ catch(x){document.getElementById('bc-msg').textContent='Failed. Try Save as PDF.
 
 <h2>1. Executive Summary</h2>
 <p><strong>${user?.org||'The organization'}</strong> currently operates at <strong>HCCS™ Maturity Level ${ov}: ${Lv[ov]}</strong>. ${ov<3?`This is ${3-ov} level${3-ov>1?'s':''} below the credibility threshold (Level 3), the minimum required for organizations making public claims about fair, unbiased, or AI-governed hiring practices.`:'The organization meets or exceeds the credibility threshold.'}</p>
-<p>Of 67 auditable controls, <strong>${inPlace} are in place</strong> (${compliancePct}%). There are <strong>${mustGapCount} critical (MUST) gaps</strong> and <strong>${shouldGapCount} significant (SHOULD) gaps</strong> requiring remediation.</p>
+<p>Of 70 auditable controls, <strong>${inPlace} are in place</strong> (${compliancePct}%). There are <strong>${mustGapCount} critical (MUST) gaps</strong> and <strong>${shouldGapCount} significant (SHOULD) gaps</strong> requiring remediation.</p>
 
 <div style="display:flex;flex-wrap:wrap;gap:12px;margin:20px 0">
 <div class="metric"><div class="num">Level ${ov}</div><div class="label">Current maturity (of 5)</div></div>
@@ -524,7 +524,7 @@ return(<div key={c.id} style={{marginBottom:10,paddingLeft:12,borderLeft:`2px so
 
 <div style={{background:"#0f172a",borderRadius:10,padding:24,marginTop:40,marginBottom:32,textAlign:"center"}}>
 <p style={{margin:0,fontSize:16,color:"#94a3b8",fontStyle:"italic",lineHeight:1.6}}>"If the organization cannot reconstruct how a decision was made, what evidence it relied on, and whether standards were applied consistently, the process must be treated as unreliable."</p>
-<p style={{margin:"12px 0 0",fontSize:13,color:"#475569"}}>HCCS-1.0, Governing Principle</p></div>
+<p style={{margin:"12px 0 0",fontSize:13,color:"#475569"}}>HCCS-2.0, Governing Principles</p></div>
 
 {!done?(<div style={{background:"#fff",border:"1px solid #e2e8f0",borderRadius:12,padding:32,textAlign:"center"}}>
 <h3 style={{margin:"0 0 8px",fontSize:20,fontWeight:600}}>Your HCCS™ Assessment Report</h3>
@@ -568,7 +568,7 @@ disabled={sending} style={{padding:"10px 24px",borderRadius:6,border:"none",back
 </div>)}
 
 <div style={{display:"flex",justifyContent:"space-between",marginTop:48,paddingTop:24,borderTop:"1px solid #e2e8f0"}}>
-<span style={{fontSize:12,color:"#94a3b8"}}>HCCS-1.0 | © 2026 IngenuityCo LLC</span>
+<span style={{fontSize:12,color:"#94a3b8"}}>HCCS-2.0 | © 2026 IngenuityCo LLC</span>
 <button onClick={onRestart} style={{padding:"8px 20px",borderRadius:6,border:"1px solid #e2e8f0",background:"#fff",color:"#64748b",fontSize:13,cursor:"pointer"}}>Retake assessment</button></div>
 </div></div>);}
 
@@ -614,7 +614,7 @@ return(
 <div style={{background:'#fff',borderRadius:16,maxWidth:520,width:'100%',maxHeight:'90vh',overflow:'auto',padding:'36px 32px',boxShadow:'0 24px 48px rgba(0,0,0,0.2)'}}>
 <div style={{textAlign:'center',marginBottom:28}}>
 <div style={{fontSize:28,fontWeight:700,color:'#0f172a',marginBottom:8}}>Access the HCCS™ Assessment</div>
-<p style={{fontSize:15,color:'#64748b',margin:0,lineHeight:1.5}}>Score your organization across 67 auditable controls. Enter your information to begin.</p>
+<p style={{fontSize:15,color:'#64748b',margin:0,lineHeight:1.5}}>Score your organization across 70 auditable controls. Enter your information to begin.</p>
 </div>
 
 {inp('name','Full Name','Jane Smith')}
@@ -670,7 +670,7 @@ return (
 {/* Header */}
 <div style={{textAlign:'center',marginBottom:48}}>
 <div style={{letterSpacing:'0.25em',fontSize:12,textTransform:'uppercase',color:'#5b9bd5',marginBottom:12,fontWeight:500}}>Full HCCS™ Assessment</div>
-<h1 style={{fontSize:40,fontWeight:700,color:'#fff',margin:'0 0 12px'}}>67 controls. 7 domains. Your complete maturity score.</h1>
+<h1 style={{fontSize:40,fontWeight:700,color:'#fff',margin:'0 0 12px'}}>70 controls. 7 domains. Your complete maturity score.</h1>
 <p style={{fontSize:17,color:'#94a3b8',maxWidth:560,margin:'0 auto',lineHeight:1.6}}>Choose the assessment path that fits your organization. Both include the full 67-control assessment, gap analysis, remediation roadmap, and audit-grade report.</p>
 </div>
 
@@ -698,7 +698,7 @@ return (
 <div style={{fontSize:36,fontWeight:700,color:'#0f172a',marginBottom:4}}>$2,500</div>
 <div style={{fontSize:14,color:'#64748b',marginBottom:20}}>Expert-guided engagement</div>
 <div style={{flex:1}}>
-{['Everything in Self-Assessment, plus:','Expert-guided walkthrough of all 67 controls','Scoring based on evidence review','Interpreted findings for executives','Executive presentation deck','Strategic remediation prioritization','30-day follow-up review','Direct access to HCCS™ author'].map((t,i)=>
+{['Everything in Self-Assessment, plus:','Expert-guided walkthrough of all 70 controls','Scoring based on evidence review','Interpreted findings for executives','Executive presentation deck','Strategic remediation prioritization','30-day follow-up review','Direct access to HCCS™ author'].map((t,i)=>
 <div key={t} style={{fontSize:13,color:i===0?'#0f172a':'#475569',fontWeight:i===0?600:400,marginBottom:8,display:'flex',gap:8,lineHeight:1.45}}>
 {i>0&&<span style={{color:'#2563eb',fontWeight:700,marginTop:1,flexShrink:0}}>&#10003;</span>}<span>{t}</span></div>)}
 </div>
@@ -755,7 +755,7 @@ style={{width:'100%',marginTop:12,padding:'12px',borderRadius:8,border:'1px soli
 
 {/* Trust signals */}
 <div style={{display:'flex',justifyContent:'center',gap:32,marginTop:40,paddingTop:32,borderTop:'1px solid rgba(255,255,255,0.06)'}}>
-{['67 auditable controls','Grounded in 60+ years of research','SOX/NIST/ISO aligned'].map(t=>
+{['70 auditable controls','Grounded in 60+ years of research','SOX/NIST/ISO aligned'].map(t=>
 <div key={t} style={{fontSize:13,color:'#64748b',display:'flex',alignItems:'center',gap:6}}><span style={{color:'#5b9bd5'}}>&#10003;</span>{t}</div>)}
 </div>
 

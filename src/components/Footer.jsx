@@ -7,7 +7,7 @@ export default function Footer() {
         <div>
           <div style={{ fontSize: 20, fontWeight: 700, letterSpacing: '0.05em', marginBottom: 12 }}><span style={{ color: '#fff' }}>HCCS</span> <span style={{ color: '#5b9bd5' }}>Standard</span><span style={{ fontSize: 10, position: 'relative', top: -8, color: '#5b9bd5' }}>™</span></div>
           <p style={{ fontSize: 14, color: '#94a3b8', lineHeight: 1.6, maxWidth: 320 }}>
-            The Human Capital Control Standard™. A governance and audit framework for human capital decisions.
+            The Human Capital Control Standard™. A governance and assurance framework for consequential decisions shaped by AI.
           </p>
           <p style={{ fontSize: 13, color: '#64748b', marginTop: 16 }}>
             Aligned to SOX, NIST AI RMF, and ISO governance standards.
@@ -56,7 +56,7 @@ export default function Footer() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           <Link to="/privacy" style={{ fontSize: 13, color: '#64748b' }}>Privacy Policy</Link>
           <Link to="/terms" style={{ fontSize: 13, color: '#64748b' }}>Terms of Use</Link>
-          <span style={{ fontSize: 13, color: '#64748b' }}>HCCS-1.0</span>
+          <span style={{ fontSize: 13, color: '#64748b' }}>HCCS-2.0</span>
         </div>
       </div>
     </footer>

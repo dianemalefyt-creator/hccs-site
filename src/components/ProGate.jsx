@@ -227,7 +227,7 @@ export function PricingPage() {
           {/* Assessment tiers - unchanged */}
           <div style={{ background: '#0f172a', borderRadius: 14, padding: 32, textAlign: 'center' }}>
             <h3 style={{ fontSize: 20, fontWeight: 700, color: '#fff', marginBottom: 8 }}>Need the full assessment?</h3>
-            <p style={{ fontSize: 14, color: '#94a3b8', marginBottom: 20 }}>Pro unlocks the tools. The assessment scores all 67 controls.</p>
+            <p style={{ fontSize: 14, color: '#94a3b8', marginBottom: 20 }}>Pro unlocks the tools. The assessment scores all 70 controls.</p>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
               <Link to="/assess" style={{ background: '#2563eb', color: '#fff', padding: '10px 24px', borderRadius: 8, fontSize: 14, fontWeight: 600, textDecoration: 'none' }}>Quick assessment (free)</Link>
               <Link to="/assess/full" style={{ border: '1px solid rgba(255,255,255,0.2)', color: '#cbd5e1', padding: '10px 24px', borderRadius: 8, fontSize: 14, fontWeight: 500, textDecoration: 'none' }}>Full assessment ($149+)</Link>

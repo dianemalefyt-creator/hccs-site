@@ -18,7 +18,7 @@ const ROI_ITEMS = [
     { label: 'NYC LL144 violation (per violation, per day)', value: '$500 - $1,500', source: 'NYC Admin Code' },
     { label: 'EU AI Act fines (high-risk non-compliance)', value: 'Up to 3% global revenue', source: 'EU AI Act, 2024' },
     { label: 'EEOC charges filed annually (US)', value: '70,000+', source: 'EEOC FY2023' },
-    { label: 'HCCS exceeds requirements of', value: 'Title VII, EU AI Act, LL144, OFCCP', source: 'HCCS-1.0 Appendix D' },
+    { label: 'HCCS exceeds requirements of', value: 'Title VII, EU AI Act, LL144, OFCCP', source: 'HCCS-2.0 Appendix D' },
   ]},
   { category: 'Operational efficiency gains', items: [
     { label: 'Time-to-fill reduction with structured process', value: '15-25%', source: 'LinkedIn Talent Solutions' },
@@ -214,7 +214,7 @@ export default function BusinessCase() {
           <div style={{ display: 'grid', gap: 16 }}>
             {[
               { stakeholder: 'CEO / Board', frame: 'Risk mitigation + competitive advantage', pitch: 'We govern every financial decision with SOX controls. We govern data with GDPR/CCPA. But hiring and compensation, our largest operational cost, has no equivalent governance. HCCS closes that gap before regulators force it.' },
-              { stakeholder: 'CHRO / VP People', frame: 'Operational credibility + defensibility', pitch: 'HCCS gives us a framework to prove our hiring practices are structured, fair, and auditable. It turns "we think our process is good" into "here is documented evidence of 67 controls in place." That matters when someone files a charge.' },
+              { stakeholder: 'CHRO / VP People', frame: 'Operational credibility + defensibility', pitch: 'HCCS gives us a framework to prove our hiring practices are structured, fair, and auditable. It turns "we think our process is good" into "here is documented evidence of 70 controls in place." That matters when someone files a charge.' },
               { stakeholder: 'General Counsel', frame: 'Legal defensibility + regulatory readiness', pitch: 'Current AI hiring legislation (NYC LL144, EU AI Act, state laws) requires documented governance we don\'t have. HCCS exceeds all current requirements and positions us for what\'s coming. The assessment identifies our gaps before a regulator does.' },
               { stakeholder: 'CFO', frame: 'Cost avoidance + ROI', pitch: 'Bad hires cost 1.5-3x salary. Discrimination settlements average $40K-$165K. One OFCCP audit can cost $1M+. A $149 self-assessment identifies every gap. A $2,500 guided assessment produces an executive presentation with prioritized remediation.' },
             ].map(s => (
