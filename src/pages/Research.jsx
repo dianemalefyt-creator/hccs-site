@@ -92,6 +92,9 @@ export default function Research() {
             <Link to="/controls" style={{ background: '#2563eb', color: '#fff', padding: '12px 24px', borderRadius: 8, fontSize: 14, fontWeight: 600, textDecoration: 'none' }}>
               See how this shapes the controls →
             </Link>
+            <a href="/docs/HCCS-Case-Study-AI-Trust-Research.docx" download style={{ background: '#fff', color: '#0f172a', padding: '12px 24px', borderRadius: 8, fontSize: 14, fontWeight: 600, textDecoration: 'none' }}>
+              Download case study (.docx)
+            </a>
             <Link to="/assess" style={{ border: '1px solid rgba(255,255,255,0.2)', color: '#cbd5e1', padding: '12px 24px', borderRadius: 8, fontSize: 14, fontWeight: 500, textDecoration: 'none' }}>
               Assess your organization
             </Link>
