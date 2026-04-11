@@ -108,11 +108,11 @@ export default function BusinessCase() {
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 32 }}>
             <div>
               <label style={{ display: 'block', fontSize: 13, color: '#94a3b8', marginBottom: 8 }}>Annual hires: <strong style={{ color: '#fff' }}>{hires}</strong></label>
-              <input type="range" min="10" max="500" value={hires} onChange={e => setHires(+e.target.value)} style={{ width: '100%' }} />
+              <input type="range" min="10" max="500" aria-label="Annual hires" value={hires} onChange={e => setHires(+e.target.value)} style={{ width: '100%' }} />
             </div>
             <div>
               <label style={{ display: 'block', fontSize: 13, color: '#94a3b8', marginBottom: 8 }}>Average salary: <strong style={{ color: '#fff' }}>{fmt(avgSalary)}</strong></label>
-              <input type="range" min="50000" max="300000" step="5000" value={avgSalary} onChange={e => setAvgSalary(+e.target.value)} style={{ width: '100%' }} />
+              <input type="range" min="50000" max="300000" aria-label="Average salary" step="5000" value={avgSalary} onChange={e => setAvgSalary(+e.target.value)} style={{ width: '100%' }} />
             </div>
           </div>
 

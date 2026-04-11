@@ -7,9 +7,9 @@ export default function Footer() {
         <div>
           <div style={{ fontSize: 20, fontWeight: 700, letterSpacing: '0.05em', marginBottom: 12 }}><span style={{ color: '#fff' }}>HCCS</span> <span style={{ color: '#5b9bd5' }}>Standard</span><span style={{ fontSize: 10, position: 'relative', top: -8, color: '#5b9bd5' }}>™</span></div>
           <p style={{ fontSize: 14, color: '#94a3b8', lineHeight: 1.6, maxWidth: 320 }}>
-            The Human Capital Control Standard™. A governance and assurance framework for consequential decisions shaped by AI.
+            The Human Capital Control Standard™. A governance and assurance framework for consequential decisions shaped by technology.
           </p>
-          <p style={{ fontSize: 13, color: '#64748b', marginTop: 16 }}>
+          <p style={{ fontSize: 13, color: '#94a3b8', marginTop: 16 }}>
             Aligned to SOX, NIST AI RMF, and ISO governance standards.
           </p>
         </div>
@@ -56,9 +56,9 @@ export default function Footer() {
           <span style={{ fontSize: 13, color: '#475569' }}>&copy; 2026 IngenuityCo LLC. All rights reserved.</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-          <Link to="/privacy" style={{ fontSize: 13, color: '#64748b' }}>Privacy Policy</Link>
-          <Link to="/terms" style={{ fontSize: 13, color: '#64748b' }}>Terms of Use</Link>
-          <span style={{ fontSize: 13, color: '#64748b' }}>HCCS-2.0</span>
+          <Link to="/privacy" style={{ fontSize: 13, color: '#94a3b8' }}>Privacy Policy</Link>
+          <Link to="/terms" style={{ fontSize: 13, color: '#94a3b8' }}>Terms of Use</Link>
+          <span style={{ fontSize: 13, color: '#94a3b8' }}>HCCS-2.0</span>
         </div>
       </div>
     </footer>

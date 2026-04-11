@@ -61,7 +61,7 @@ export default function Home() {
           <div style={{ maxWidth: 720, margin: '0 auto' }}>
             <div style={{ letterSpacing: '0.15em', fontSize: 12, textTransform: 'uppercase', color: '#2563eb', marginBottom: 16, fontWeight: 600 }}>The problem</div>
             <h2 className='section-title' style={{ fontSize: 32, fontWeight: 700, color: '#0f172a', lineHeight: 1.25, marginBottom: 24 }}>
-              There is no governance layer for decisions shaped by AI.
+              There is no governance layer for decisions shaped by technology.
             </h2>
             <p style={{ fontSize: 17, lineHeight: 1.7, color: '#475569', marginBottom: 20 }}>
               Organizations maintain financial controls, data governance standards, and information security frameworks. But the decisions that most directly affect people, who gets hired, how they are evaluated, what they are paid, operate without equivalent governance, auditability, or accountability structures.
@@ -78,10 +78,10 @@ export default function Home() {
               The introduction of AI into these decisions increases speed and scale, but does not correct underlying control deficiencies. It amplifies them. And it introduces a new risk: the erosion of meaningful human judgment through unchecked algorithmic deference.
             </p>
             <p style={{ fontSize: 17, lineHeight: 1.7, color: '#0f172a', fontWeight: 600, marginBottom: 16 }}>
-              Consequential decisions shaped by AI represent a material, ungoverned risk surface within the enterprise.
+              Consequential decisions shaped by technology represent a material, ungoverned risk surface within the enterprise.
             </p>
             <p style={{ fontSize: 16, lineHeight: 1.7, color: '#475569' }}>
-              HCCS™ is not a hiring standard. It is a governance standard for consequential decisions wherever human judgment is shaped by algorithmic systems. Hiring is where the fracture became impossible to ignore. This gap creates exposure that is often unmeasured, inconsistently managed, and difficult to defend under audit or legal scrutiny.
+              HCCS™ exists because there is a missing layer in how modern institutions make decisions. Organizations govern their finances, their data, and their information security. They do not govern the decisions that most directly affect people. This gap creates exposure that is often unmeasured, inconsistently managed, and difficult to defend under audit or legal scrutiny.
             </p>
           </div>
         </div>
@@ -133,7 +133,7 @@ export default function Home() {
           <div style={{ textAlign: 'center', marginBottom: 16 }}>
             <div style={{ letterSpacing: '0.15em', fontSize: 12, textTransform: 'uppercase', color: '#2563eb', marginBottom: 16, fontWeight: 600 }}>7 control domains</div>
             <h2 className='section-title' style={{ fontSize: 32, fontWeight: 700, color: '#0f172a', marginBottom: 12 }}>Complete coverage. No control gaps.</h2>
-            <p style={{ fontSize: 16, color: '#64748b', maxWidth: 620, margin: '0 auto', lineHeight: 1.6 }}>HCCS™ defines seven control domains that collectively govern the full lifecycle of consequential decisions shaped by AI.</p>
+            <p style={{ fontSize: 16, color: '#64748b', maxWidth: 620, margin: '0 auto', lineHeight: 1.6 }}>HCCS™ defines seven control domains that collectively govern the full lifecycle of consequential decisions shaped by technology.</p>
           </div>
           <div className='grid-cards' style={{ marginTop: 32 }}>
             {[
@@ -265,7 +265,7 @@ export default function Home() {
               "Accountability for an AI-assisted decision attaches to the organization that deployed the system, not to the presence of a human reviewer. Nominal oversight does not constitute governance."
             </p>
           </div>
-          <p style={{ fontSize: 14, color: '#64748b', marginTop: 32, textAlign: 'center', fontWeight: 600 }}>HCCS™ Governing Principles, v2.0</p>
+          <p style={{ fontSize: 14, color: '#94a3b8', marginTop: 32, textAlign: 'center', fontWeight: 600 }}>HCCS™ Governing Principles, v2.0</p>
         </div>
       </section>
 

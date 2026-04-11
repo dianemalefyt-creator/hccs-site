@@ -92,7 +92,7 @@ export default function ChatWidget() {
               <div style={{ fontSize: 15, fontWeight: 700, color: '#fff' }}>HCCS™ Assistant</div>
               <div style={{ fontSize: 12, color: '#5b9bd5' }}>Ask about the standard, controls, or pricing</div>
             </div>
-            <button onClick={() => setOpen(false)} style={{
+            <button aria-label="Close chat" onClick={() => setOpen(false)} style={{
               background: 'none', border: 'none', color: '#94a3b8', fontSize: 20, cursor: 'pointer', padding: 4,
             }}>&times;</button>
           </div>
@@ -138,11 +138,11 @@ export default function ChatWidget() {
 
           {/* Input */}
           <div style={{ padding: '8px 12px 12px', borderTop: '1px solid #f1f5f9', display: 'flex', gap: 8 }}>
-            <input ref={inputRef} type="text" value={input} onChange={e => setInput(e.target.value)}
+            <input ref={inputRef} type="text" aria-label="Type your question" value={input} onChange={e => setInput(e.target.value)}
               placeholder="Ask about HCCS..."
               onKeyDown={e => { if (e.key === 'Enter' && !loading) send(input) }}
               style={{ flex: 1, padding: '10px 14px', borderRadius: 8, border: '1px solid #e2e8f0', fontSize: 14, outline: 'none', fontFamily: 'inherit' }} />
-            <button onClick={() => send(input)} disabled={loading || !input.trim()}
+            <button aria-label="Send message" onClick={() => send(input)} disabled={loading || !input.trim()}
               style={{
                 padding: '10px 16px', borderRadius: 8, border: 'none',
                 background: loading || !input.trim() ? '#e2e8f0' : '#2563eb',

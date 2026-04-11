@@ -45,7 +45,7 @@ function Dropdown({ item, pathname }) {
 
   return (
     <div onMouseEnter={handleEnter} onMouseLeave={handleLeave} style={{ position: 'relative' }}>
-      <button onClick={() => setOpen(!open)} style={{
+      <button aria-label="Toggle navigation menu" onClick={() => setOpen(!open)} style={{
         fontSize: 14, fontWeight: 500, color: childActive ? '#5b9bd5' : '#94a3b8',
         borderBottom: childActive ? '2px solid #5b9bd5' : '2px solid transparent',
         paddingBottom: 4, background: 'none', border: 'none', cursor: 'pointer',
