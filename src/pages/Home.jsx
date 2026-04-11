@@ -87,7 +87,47 @@ export default function Home() {
         </div>
       </section>
 
-            {/* Domains */}
+      {/* Where governance is required */}
+      <section style={{ ...S.section, background: '#fff', borderTop: '1px solid #e2e8f0' }}>
+        <div style={S.wrap}>
+          <div style={{ maxWidth: 720, margin: '0 auto', marginBottom: 32 }}>
+            <div style={{ letterSpacing: '0.15em', fontSize: 12, textTransform: 'uppercase', color: '#993C1D', marginBottom: 16, fontWeight: 600 }}>Scope of application</div>
+            <h2 className='section-title' style={{ fontSize: 32, fontWeight: 700, color: '#0f172a', lineHeight: 1.25, marginBottom: 16 }}>
+              Anywhere human judgment is shaped by algorithmic systems, governance is required.
+            </h2>
+            <p style={{ fontSize: 17, lineHeight: 1.7, color: '#475569' }}>
+              HCCS™ defines the governance architecture for consequential decisions where AI influences outcomes that affect people. The standard applies wherever a human-in-the-loop requirement exists, or should exist, but meaningful oversight has not been verified.
+            </p>
+          </div>
+          <div className='grid-cards'>
+            {[
+              { domain: 'Employment & Workforce', status: 'Active', color: '#185FA5', items: 'Hiring, evaluation, compensation, promotion, termination, workforce planning', desc: 'The origin domain. 70 controls, 7 governance domains, full assessment and tooling available.' },
+              { domain: 'Healthcare', status: 'Planned', color: '#0F6E56', items: 'Diagnosis support, treatment recommendations, triage, prior authorization, clinical decision support', desc: 'AI-assisted clinical decisions where algorithmic recommendations shape patient outcomes and provider judgment.' },
+              { domain: 'Financial Services', status: 'Planned', color: '#534AB7', items: 'Credit decisions, lending, underwriting, fraud detection, claims adjudication, algorithmic trading oversight', desc: 'Automated decisioning in regulated financial environments where human review is legally required but often nominal.' },
+              { domain: 'Criminal Justice', status: 'Planned', color: '#993C1D', items: 'Risk assessment, sentencing recommendations, parole decisions, predictive policing, surveillance', desc: 'The highest-stakes domain. Algorithmic influence on liberty decisions with documented disparate impact.' },
+              { domain: 'Education', status: 'Planned', color: '#854F0B', items: 'Admissions, grading, accommodations, disciplinary actions, learning pathway recommendations', desc: 'AI-shaped decisions that determine access to opportunity, with compounding effects across a lifetime.' },
+              { domain: 'Insurance', status: 'Planned', color: '#3B6D11', items: 'Coverage determinations, claims decisions, pricing models, risk classification, eligibility', desc: 'Algorithmic pricing and eligibility decisions with direct financial impact on individuals and families.' },
+              { domain: 'Social Services', status: 'Planned', color: '#993556', items: 'Benefits eligibility, child welfare risk scoring, housing allocation, disability determinations', desc: 'Government and institutional decisions affecting the most vulnerable populations, often with the least transparency.' },
+            ].map(d => (
+              <div key={d.domain} style={{ background: d.status === 'Active' ? '#fff' : '#fafbfc', border: `1px solid ${d.status === 'Active' ? d.color : '#e2e8f0'}`, borderRadius: 12, padding: 24, borderLeft: `4px solid ${d.color}`, opacity: d.status === 'Active' ? 1 : 0.85 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                  <div style={{ fontSize: 17, fontWeight: 700, color: '#0f172a' }}>{d.domain}</div>
+                  <span style={{ fontSize: 11, fontWeight: 600, padding: '3px 10px', borderRadius: 12, background: d.status === 'Active' ? `${d.color}15` : '#f1f5f9', color: d.status === 'Active' ? d.color : '#94a3b8' }}>{d.status}</span>
+                </div>
+                <p style={{ fontSize: 14, lineHeight: 1.6, color: '#64748b', margin: '0 0 8px' }}>{d.desc}</p>
+                <p style={{ fontSize: 13, color: '#94a3b8', margin: 0 }}>{d.items}</p>
+              </div>
+            ))}
+          </div>
+          <div style={{ maxWidth: 720, margin: '32px auto 0', textAlign: 'center' }}>
+            <p style={{ fontSize: 15, color: '#475569', lineHeight: 1.7 }}>
+              The governance architecture is domain-agnostic. The control framework (role definition, evaluation integrity, decision governance, AI governance, process integrity, resource alignment, evidence and records) applies identically. What changes is the vocabulary, not the structure.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Control domains */}
       <section style={S.section}>
         <div style={S.wrap}>
           <div style={{ textAlign: 'center', marginBottom: 16 }}>
