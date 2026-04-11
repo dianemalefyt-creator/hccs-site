@@ -28,16 +28,16 @@ export default function Home() {
               AI does not remove the need for governance. It makes governance the only defensible position.
             </p>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', maxWidth: 540 }}>
-              <Link to="/assess" style={{ background: '#2563eb', color: '#fff', padding: '14px 28px', borderRadius: 8, fontSize: 15, fontWeight: 600, textAlign: 'center', textDecoration: 'none' }}>
-                Assess your organization
+              <Link to="/domains/employment" style={{ background: '#2563eb', color: '#fff', padding: '14px 28px', borderRadius: 8, fontSize: 15, fontWeight: 600, textAlign: 'center', textDecoration: 'none' }}>
+                Explore the standard
               </Link>
               <Link to="/documents" style={{ border: '1px solid rgba(255,255,255,0.2)', color: '#cbd5e1', padding: '14px 24px', borderRadius: 8, fontSize: 15, fontWeight: 500, textAlign: 'center', textDecoration: 'none' }}>
-                Read the standard
+                Read the documents
               </Link>
             </div>
             <div style={{ display: 'flex', gap: 16, marginTop: 20 }}>
-              <Link to="/rights" style={{ fontSize: 13, color: '#94a3b8', textDecoration: 'none' }}>Applicant's Bill of Rights →</Link>
-              <Link to="/org-rights" style={{ fontSize: 13, color: '#94a3b8', textDecoration: 'none' }}>Organization's Bill of Rights →</Link>
+              <Link to="/research" style={{ fontSize: 13, color: '#94a3b8', textDecoration: 'none' }}>Research findings →</Link>
+              <Link to="/about" style={{ fontSize: 13, color: '#94a3b8', textDecoration: 'none' }}>About HCCS™ →</Link>
             </div>
           </div>
         </div>
@@ -274,14 +274,15 @@ export default function Home() {
         <div style={S.wrap}>
           <h2 className='section-title' style={{ fontSize: 32, fontWeight: 700, color: '#0f172a', marginBottom: 12 }}>Is your organization's decision governance audit-ready?</h2>
           <p style={{ fontSize: 17, color: '#64748b', marginBottom: 32, maxWidth: 520, margin: '0 auto 32px' }}>
-            The HCCS™ Maturity Assessment scores your organization across all 70 controls, identifies governance gaps, and generates a remediation roadmap. Takes 10-15 minutes.
+            HCCS™ provides 70 auditable controls across 7 governance domains. Start with your domain, identify governance gaps, and build a remediation roadmap.
           </p>
-          <Link to="/assess" style={{ background: '#2563eb', color: '#fff', padding: '16px 40px', borderRadius: 8, fontSize: 16, fontWeight: 600, display: 'inline-block' }}>
-            Start your assessment
-          </Link>
-          <div style={{ marginTop: 16, display: 'flex', gap: 20, justifyContent: 'center' }}>
-            <Link to="/rights" style={{ fontSize: 14, color: '#2563eb', fontWeight: 500 }}>Applicant's Bill of Rights →</Link>
-            <Link to="/org-rights" style={{ fontSize: 14, color: '#2563eb', fontWeight: 500 }}>Organization's Bill of Rights →</Link>
+          <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link to="/domains/employment" style={{ background: '#2563eb', color: '#fff', padding: '16px 32px', borderRadius: 8, fontSize: 16, fontWeight: 600, textDecoration: 'none' }}>
+              Employment & Workforce
+            </Link>
+            <Link to="/contact" style={{ background: '#0f172a', color: '#fff', padding: '16px 32px', borderRadius: 8, fontSize: 16, fontWeight: 600, textDecoration: 'none' }}>
+              Other domains: get in touch
+            </Link>
           </div>
         </div>
       </section>
