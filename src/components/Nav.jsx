@@ -8,6 +8,15 @@ const NAV = [
     { label: 'Controls library', desc: 'All 70 controls with definitions', to: '/controls' },
     { label: 'Fillable templates', desc: 'Fill online, generate PDF', to: '/templates' },
   ]},
+  { label: 'Domains', children: [
+    { label: 'Employment & Workforce', desc: 'Hiring, evaluation, compensation, promotion', to: '/domains/employment' },
+    { label: 'Healthcare', desc: 'Diagnosis, treatment, triage, prior authorization', to: '/domains/healthcare' },
+    { label: 'Financial Services', desc: 'Credit, lending, underwriting, fraud detection', to: '/domains/financial-services' },
+    { label: 'Criminal Justice', desc: 'Risk assessment, sentencing, parole decisions', to: '/domains/criminal-justice' },
+    { label: 'Education', desc: 'Admissions, grading, accommodations, discipline', to: '/domains/education' },
+    { label: 'Insurance', desc: 'Coverage, claims, pricing, risk classification', to: '/domains/insurance' },
+    { label: 'Social Services', desc: 'Benefits, child welfare, housing, disability', to: '/domains/social-services' },
+  ]},
   { label: 'Tools', children: [
     { label: 'Quick assessment', desc: 'Free, 10 questions, 3 minutes', to: '/assess' },
     { label: 'Full assessment', desc: '70 controls, gap analysis, roadmap', to: '/assess/full' },

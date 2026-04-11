@@ -16,22 +16,24 @@ export default function Footer() {
         <div>
           <div style={{ fontSize: 12, fontWeight: 600, color: '#5b9bd5', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 16 }}>Standard</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            <Link to="/documents" style={{ fontSize: 14, color: '#94a3b8' }}>Core Standard</Link>
-            <Link to="/documents" style={{ fontSize: 14, color: '#94a3b8' }}>Implementation Guide</Link>
-            <Link to="/documents" style={{ fontSize: 14, color: '#94a3b8' }}>Template Library</Link>
-            <Link to="/templates" style={{ fontSize: 14, color: '#94a3b8' }}>Fillable Templates</Link>
+            <Link to="/documents" style={{ fontSize: 14, color: '#94a3b8' }}>Documents</Link>
             <Link to="/controls" style={{ fontSize: 14, color: '#94a3b8' }}>Controls Library</Link>
+            <Link to="/templates" style={{ fontSize: 14, color: '#94a3b8' }}>Templates</Link>
+            <Link to="/assess" style={{ fontSize: 14, color: '#94a3b8' }}>Assessment</Link>
+            <Link to="/tools" style={{ fontSize: 14, color: '#94a3b8' }}>Tools</Link>
+            <Link to="/pricing" style={{ fontSize: 14, color: '#94a3b8' }}>Pricing</Link>
           </div>
         </div>
         <div>
-          <div style={{ fontSize: 12, fontWeight: 600, color: '#5b9bd5', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 16 }}>Tools</div>
+          <div style={{ fontSize: 12, fontWeight: 600, color: '#5b9bd5', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 16 }}>Domains</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            <Link to="/assess" style={{ fontSize: 14, color: '#94a3b8' }}>Quick Assessment</Link>
-            <Link to="/assess/full" style={{ fontSize: 14, color: '#94a3b8' }}>Full Assessment</Link>
-            <Link to="/tools" style={{ fontSize: 14, color: '#94a3b8' }}>Tools</Link>
-            <Link to="/workflow" style={{ fontSize: 14, color: '#94a3b8' }}>Guided Workflow</Link>
-            <Link to="/business-case" style={{ fontSize: 14, color: '#94a3b8' }}>Business Case &amp; ROI</Link>
-            <Link to="/pricing" style={{ fontSize: 14, color: '#94a3b8' }}>Pricing</Link>
+            <Link to="/domains/employment" style={{ fontSize: 14, color: '#94a3b8' }}>Employment</Link>
+            <Link to="/domains/healthcare" style={{ fontSize: 14, color: '#94a3b8' }}>Healthcare</Link>
+            <Link to="/domains/financial-services" style={{ fontSize: 14, color: '#94a3b8' }}>Financial Services</Link>
+            <Link to="/domains/criminal-justice" style={{ fontSize: 14, color: '#94a3b8' }}>Criminal Justice</Link>
+            <Link to="/domains/education" style={{ fontSize: 14, color: '#94a3b8' }}>Education</Link>
+            <Link to="/domains/insurance" style={{ fontSize: 14, color: '#94a3b8' }}>Insurance</Link>
+            <Link to="/domains/social-services" style={{ fontSize: 14, color: '#94a3b8' }}>Social Services</Link>
           </div>
         </div>
         <div>

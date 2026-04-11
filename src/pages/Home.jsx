@@ -19,13 +19,13 @@ export default function Home() {
               A governance and assurance standard for consequential human decisions.
             </h1>
             <p style={{ fontSize: 17, lineHeight: 1.7, color: '#cbd5e1', margin: '0 0 16px', maxWidth: 560 }}>
-              HCCS™ ensures that trust is warranted, human oversight is meaningful, and accountability remains visible when algorithmic influence shapes outcomes.
+              HCCS™ is a governance and assurance framework for consequential human decisions made by, with, or through AI-assisted systems. Its purpose is to ensure that trust is warranted, human oversight is meaningful, and accountability remains visible when algorithmic influence shapes outcomes.
             </p>
             <p style={{ fontSize: 15, lineHeight: 1.7, color: '#94a3b8', margin: '0 0 16px', maxWidth: 560 }}>
-              The standard begins where the fracture is most visible: human capital decisions. How organizations define roles, evaluate candidates, make hiring decisions, and align compensation to the actual scope of work.
+              Wherever a human-in-the-loop requirement exists, or should exist, HCCS™ provides the governance architecture: structured controls, documented evidence, and auditable accountability. Employment decisions are the first domain. The framework extends to any context where AI shapes decisions about people.
             </p>
             <p style={{ fontSize: 15, lineHeight: 1.7, color: '#94a3b8', margin: '0 0 40px', maxWidth: 560 }}>
-              The introduction of AI into these decisions increases both scale and risk. It does not remove the need for governance. It makes governance the only defensible position.
+              AI does not remove the need for governance. It makes governance the only defensible position.
             </p>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', maxWidth: 540 }}>
               <Link to="/assess" style={{ background: '#2563eb', color: '#fff', padding: '14px 28px', borderRadius: 8, fontSize: 15, fontWeight: 600, textAlign: 'center', textDecoration: 'none' }}>
@@ -67,10 +67,10 @@ export default function Home() {
               Organizations maintain financial controls, data governance standards, and information security frameworks. But the decisions that most directly affect people, who gets hired, how they are evaluated, what they are paid, operate without equivalent governance, auditability, or accountability structures.
             </p>
             <p style={{ fontSize: 17, lineHeight: 1.7, color: '#475569', marginBottom: 16 }}>
-              In human capital decisions alone, most organizations operate without:
+              In most domains where AI influences decisions about people, organizations operate without:
             </p>
             <div style={{ paddingLeft: 20, marginBottom: 20, borderLeft: '3px solid #2563eb' }}>
-              {['Consistent role definition standards', 'Governed evaluation criteria', 'Documented decision frameworks', 'Alignment between role scope and compensation', 'Auditability across hiring processes', 'Distinction between substantive and nominal human oversight'].map(item => (
+              {['Consistent standards for how decisions are defined and scoped', 'Governed evaluation criteria applied uniformly', 'Documented decision frameworks with audit trails', 'Alignment between decision scope and resource allocation', 'Auditability across AI-assisted decision processes', 'Distinction between substantive and nominal human oversight'].map(item => (
                 <div key={item} style={{ fontSize: 16, color: '#334155', marginBottom: 8, lineHeight: 1.5 }}>{item}</div>
               ))}
             </div>
@@ -133,17 +133,17 @@ export default function Home() {
           <div style={{ textAlign: 'center', marginBottom: 16 }}>
             <div style={{ letterSpacing: '0.15em', fontSize: 12, textTransform: 'uppercase', color: '#2563eb', marginBottom: 16, fontWeight: 600 }}>7 control domains</div>
             <h2 className='section-title' style={{ fontSize: 32, fontWeight: 700, color: '#0f172a', marginBottom: 12 }}>Complete coverage. No control gaps.</h2>
-            <p style={{ fontSize: 16, color: '#64748b', maxWidth: 620, margin: '0 auto', lineHeight: 1.6 }}>HCCS™ defines seven control domains that collectively govern the full lifecycle of human capital decisions.</p>
+            <p style={{ fontSize: 16, color: '#64748b', maxWidth: 620, margin: '0 auto', lineHeight: 1.6 }}>HCCS™ defines seven control domains that collectively govern the full lifecycle of consequential decisions shaped by AI.</p>
           </div>
           <div className='grid-cards' style={{ marginTop: 32 }}>
             {[
-              { code: 'RG', name: 'Role Governance', desc: 'Outcome-based role definitions with defined decision rights, scope boundaries, and capability requirements.', color: '#185FA5' },
-              { code: 'EI', name: 'Evaluation Integrity', desc: 'Structured, capability-based assessment with validated constructs, calibration standards, and cognitive load controls.', color: '#0F6E56' },
-              { code: 'DG', name: 'Decision Governance', desc: 'Documented, criteria-referenced decisions with bias detection, approval controls, and post-decision review requirements.', color: '#534AB7' },
-              { code: 'AG', name: 'AI Governance', desc: 'Inventory and classification of AI decision tools, human-in-the-loop authority, explainability requirements, and disparate impact monitoring.', color: '#993C1D' },
-              { code: 'PI', name: 'Process Integrity', desc: 'Transparent, consistently applied processes with procedural justice standards, internal preference controls, and candidate communication requirements.', color: '#854F0B' },
-              { code: 'CG', name: 'Compensation Governance', desc: 'Compensation aligned to defined role scope using structured factor analysis, documented rationale, and pay equity controls.', color: '#3B6D11' },
-              { code: 'ER', name: 'Evidence & Records', desc: 'Contemporaneous records, defined retention periods, classification standards, access controls, and audit reproducibility.', color: '#993556' },
+              { code: 'RG', name: 'Role Governance', desc: 'Outcome-based definitions for every role in a decision pipeline, with defined authority, scope boundaries, and capability requirements.', color: '#185FA5' },
+              { code: 'EI', name: 'Evaluation Integrity', desc: 'Structured, criteria-based assessment with validated constructs, calibration standards, and controls for cognitive bias and evaluator fatigue.', color: '#0F6E56' },
+              { code: 'DG', name: 'Decision Governance', desc: 'Documented, criteria-referenced decisions with bias detection, approval controls, and requirements for AI-assisted decision transparency.', color: '#534AB7' },
+              { code: 'AG', name: 'AI Governance', desc: 'Inventory and classification of algorithmic decision tools, substantive human oversight requirements, trust profile assessment, explainability standards, and deference risk monitoring.', color: '#993C1D' },
+              { code: 'PI', name: 'Process Integrity', desc: 'Transparent, consistently applied processes with procedural justice standards, classification controls, and communication requirements.', color: '#854F0B' },
+              { code: 'CG', name: 'Compensation Governance', desc: 'Resource allocation aligned to defined scope using structured factor analysis, documented rationale, and equity controls.', color: '#3B6D11' },
+              { code: 'ER', name: 'Evidence & Records', desc: 'Contemporaneous records distinguishing substantive from nominal review, defined retention, classification standards, access controls, and audit reproducibility.', color: '#993556' },
             ].map(d => (
               <div key={d.code} style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: 12, padding: 24, borderLeft: `4px solid ${d.color}` }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
@@ -163,7 +163,7 @@ export default function Home() {
           <div style={{ maxWidth: 720, margin: '0 auto', textAlign: 'center', marginBottom: 48 }}>
             <div style={{ letterSpacing: '0.15em', fontSize: 12, textTransform: 'uppercase', color: '#5b9bd5', marginBottom: 16, fontWeight: 600 }}>Maturity model</div>
             <h2 className='section-title' style={{ fontSize: 32, fontWeight: 700, color: '#fff', marginBottom: 16 }}>Five levels. One credibility threshold.</h2>
-            <p style={{ fontSize: 17, color: '#94a3b8', lineHeight: 1.6 }}>HCCS™ defines five levels of control maturity. Level 3 represents the minimum standard for external credibility and is required for organizations making claims of fair, unbiased, or AI-governed hiring practices.</p>
+            <p style={{ fontSize: 17, color: '#94a3b8', lineHeight: 1.6 }}>HCCS™ defines five levels of control maturity. Level 3 represents the minimum standard for external credibility and is required for organizations making claims of governed, accountable, or AI-assisted decision practices.</p>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {[
@@ -196,7 +196,7 @@ export default function Home() {
               Grounded in decades of forensic and organizational psychology
             </h2>
             <p style={{ fontSize: 17, lineHeight: 1.7, color: '#475569', marginBottom: 24 }}>
-              HCCS™ is not opinion-based. It is grounded in replicated research demonstrating that structured, actuarial methods consistently outperform unstructured judgment in personnel selection, risk assessment, and classification decisions.
+              HCCS™ is not opinion-based. It is grounded in replicated research demonstrating that structured, actuarial methods consistently outperform unstructured judgment in consequential decisions: personnel selection, risk assessment, clinical prediction, and classification decisions across domains.
             </p>
             <div className='grid-science'>
               {[
@@ -272,9 +272,9 @@ export default function Home() {
       {/* CTA */}
       <section style={{ ...S.section, textAlign: 'center' }}>
         <div style={S.wrap}>
-          <h2 className='section-title' style={{ fontSize: 32, fontWeight: 700, color: '#0f172a', marginBottom: 12 }}>Is your hiring process audit-ready?</h2>
+          <h2 className='section-title' style={{ fontSize: 32, fontWeight: 700, color: '#0f172a', marginBottom: 12 }}>Is your organization's decision governance audit-ready?</h2>
           <p style={{ fontSize: 17, color: '#64748b', marginBottom: 32, maxWidth: 520, margin: '0 auto 32px' }}>
-            The HCCS™ Maturity Assessment scores your organization across all 70 controls, identifies gaps, and generates a remediation roadmap. Takes 10-15 minutes.
+            The HCCS™ Maturity Assessment scores your organization across all 70 controls, identifies governance gaps, and generates a remediation roadmap. Takes 10-15 minutes.
           </p>
           <Link to="/assess" style={{ background: '#2563eb', color: '#fff', padding: '16px 40px', borderRadius: 8, fontSize: 16, fontWeight: 600, display: 'inline-block' }}>
             Start your assessment

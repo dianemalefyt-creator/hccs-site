@@ -20,6 +20,7 @@ import Terms from './pages/Terms'
 import { PricingPage } from './components/ProGate'
 import Admin from './pages/Admin'
 import Research from './pages/Research'
+import DomainPage from './pages/DomainPage'
 import Documents from './pages/Documents'
 import About from './pages/About'
 
@@ -60,6 +61,7 @@ export default function App() {
         <Route path="/documents" element={<Documents />} />
         <Route path="/about" element={<About />} />
         <Route path="/research" element={<Research />} />
+        <Route path="/domains/:slug" element={<DomainPage />} />
       </Routes>
       </main>
       {!isAdmin && <Footer />}
