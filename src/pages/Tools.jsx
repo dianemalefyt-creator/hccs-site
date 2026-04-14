@@ -13,7 +13,7 @@ export default function Tools() {
     { id: 'scorecard', title: 'Interview Scorecard Generator', desc: 'Build criteria-based scorecards from your role definition. Structured evaluation in 2 minutes.', controls: 'EI-001 to EI-004', color: '#0F6E56', component: <ScorecardGenerator /> },
     { id: 'bias', title: 'Bias Language Checker', desc: 'Paste a job posting or evaluation criteria. Flags proxy language, inflated requirements, and bias patterns.', controls: 'EI-003, DG-005', color: '#534AB7', component: <BiasChecker /> },
     { id: 'comp', title: 'Compensable Factor Calculator', desc: 'Score 5 factors, get a scope-based compensation framework. Replaces title-matching with factor analysis.', controls: 'CG-001 to CG-003', color: '#3B6D11', component: <CompCalculator /> },
-    { id: 'adt', title: 'ADT Audit Checklist', desc: 'Document every AI/automated tool in your hiring pipeline. Generates the inventory AG-001 requires.', controls: 'AG-001, AG-003, AG-007', color: '#993C1D', component: <ADTChecklist /> },
+    { id: 'adt', title: 'ADT Audit Checklist', desc: 'Document every AI/automated tool in your decision pipeline. Generates the inventory AG-001 requires.', controls: 'AG-001, AG-003, AG-007', color: '#993C1D', component: <ADTChecklist /> },
   ]
 
   const t = active ? tools.find(x => x.id === active) : null

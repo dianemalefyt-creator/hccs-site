@@ -22,6 +22,7 @@ import Admin from './pages/Admin'
 import Research from './pages/Research'
 import DomainPage from './pages/DomainPage'
 import OrgAssess from './pages/OrgAssess'
+import NotFound from './pages/NotFound'
 import Documents from './pages/Documents'
 import About from './pages/About'
 
@@ -64,6 +65,7 @@ export default function App() {
         <Route path="/about" element={<About />} />
         <Route path="/research" element={<Research />} />
         <Route path="/domains/:slug" element={<DomainPage />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       </main>
       {!isAdmin && <Footer />}

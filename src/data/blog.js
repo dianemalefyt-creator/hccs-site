@@ -3,6 +3,134 @@
 
 export const POSTS = [
   {
+    slug: 'ai-governance-missing-layer',
+    title: 'The missing layer in AI governance: who governs the decisions?',
+    date: '2026-04-14',
+    author: 'Diane Malefyt',
+    category: 'Governance',
+    readTime: '4 min',
+    excerpt: 'Organizations are racing to govern AI identity, AI data, and AI security. Nobody is governing the decisions those systems produce. That is the layer that matters most.',
+    body: `Organizations are racing to govern AI. Identity providers are governing who has access to AI systems. Data platforms are governing what data AI can see. Security vendors are governing whether AI systems are secure. Model risk frameworks are governing whether the AI is accurate.
+
+But the decisions those systems produce? The consequential outcomes that affect real people? Nobody is governing those.
+
+## The governance stack has a gap
+
+Think about it as layers:
+
+**Identity governance** controls who can access AI systems. Okta, Microsoft Entra, and others are building this.
+
+**Data governance** controls what information AI systems can use. Snowflake, OneTrust, and privacy frameworks handle this.
+
+**Security governance** controls whether AI systems are protected from attack. CrowdStrike, Palo Alto, and the cybersecurity industry own this.
+
+**Model governance** controls whether the AI itself is accurate and fair. NIST AI RMF, the EU AI Act, and model risk frameworks address this.
+
+**Decision governance** controls whether the human-in-the-loop is actually governing. This layer does not exist in most organizations.
+
+## Why the decision layer matters most
+
+Every other governance layer assumes that once the AI produces an output, a competent human will evaluate it, exercise judgment, and make an accountable decision. Our research (N=319) found that this assumption is wrong.
+
+Trust in AI is not something you create through design. It is something people bring with them. People who use AI frequently trust it more, regardless of its accuracy. People with emotional proximity to the domain trust it more, regardless of the tool's quality. And giving people more control over the AI does not increase their trust. It changes their behavior without changing their judgment.
+
+## What this means for governance
+
+If a human reviewer approves 100% of AI recommendations without modification, that is not governance. That is a rubber stamp with a name attached. The decision layer requires structured controls, documented evidence, and verified human oversight.
+
+That is what HCCS\u2122 provides. 70 auditable controls across 7 governance domains. The architecture is domain-agnostic. Employment is the first vertical. Healthcare, financial services, criminal justice, education, insurance, and social services are next.
+
+The question was never whether to govern AI. The question is whether to govern the decisions AI produces.`,
+  },
+  {
+    slug: 'nominal-vs-substantive-oversight',
+    title: 'Nominal oversight is not governance. Here is how to tell the difference.',
+    date: '2026-04-10',
+    author: 'Diane Malefyt',
+    category: 'AI & Hiring',
+    readTime: '4 min',
+    excerpt: 'A human clicked approve. Is that governance? If the reviewer approved 100% of AI recommendations in 12 minutes with no documented rationale, the answer is no.',
+    body: `Most organizations can say "a human reviewed the AI output." Very few can prove that human actually exercised judgment.
+
+This is the difference between nominal oversight and substantive oversight. It is the difference between compliance theater and actual governance. And it is the difference that courts, regulators, and auditors will increasingly demand organizations demonstrate.
+
+## What nominal oversight looks like
+
+Reviewer A receives 47 AI-generated screening recommendations. Approves all 47 in 12 minutes. No modifications. No documented rationale. Override rate: 0%.
+
+The organization can technically claim "human-in-the-loop." A person saw the output and clicked a button. But did governance occur? No. The AI made the decision. The human provided a signature.
+
+## What substantive oversight looks like
+
+Reviewer B receives 15 AI-generated screening recommendations. Reviews each against the defined criteria. Modifies 3 with documented rationale. Accepts 11 with brief notes explaining agreement. Flags 1 for additional review. Override rate: 20%. Average review time: 8 minutes per recommendation.
+
+Same AI tool. Same recommendations. Completely different governance quality.
+
+## Why this matters now
+
+Our research (N=319, IRB-approved) found that trust in AI is a pre-existing trait, not something created by the interface. People who use AI frequently approach tools with higher baseline confidence. This is algorithm appreciation, not calibrated judgment.
+
+The governance implication: your most experienced AI users may be your highest deference risk. They are the most likely to approve without critical engagement, not because they are negligent, but because accumulated positive experience creates unconscious trust.
+
+## Three controls that address this
+
+**AG-012 (Substantive Oversight):** The organization must demonstrate that human review involves genuine judgment. Minimum review times, required documentation of independent assessment, tracked modification rates.
+
+**AG-013 (Deference Risk Monitoring):** Ongoing monitoring detects when reviewers defer to AI outputs without critical engagement. 0% override rates over 90+ days trigger assessment.
+
+**AG-011 (Trust Profile Assessment):** Before deploying AI in consequential decisions, assess the trust disposition of the people who will use it.
+
+The standard is clear: accountability attaches to the organization that deployed the system, not to the presence of a reviewer.`,
+  },
+  {
+    slug: 'trust-cannot-be-designed',
+    title: 'We studied 319 people using an AI tool. Design did not move trust.',
+    date: '2026-04-05',
+    author: 'Diane Malefyt',
+    category: 'Research',
+    readTime: '5 min',
+    excerpt: 'Three experimental conditions. No significant difference in trust. What predicted trust was not the interface. It was who the person already was.',
+    body: `Most AI governance strategies assume a specific causal chain: if you make AI more transparent, more explainable, and give users more control, they will develop appropriate trust. This assumption drives billions of dollars in UX investment, transparency dashboards, and agency-supportive design.
+
+We tested it directly. The result challenges the entire framework.
+
+## The study
+
+319 participants were randomly assigned to one of three conditions in a simulated AI decision scenario:
+
+**Condition 1:** No AI recommendation provided. Participant makes the decision independently.
+
+**Condition 2:** Direct AI recommendation. "The AI recommends X."
+
+**Condition 3:** Agency-supportive AI recommendation. Participant chooses whether to view the AI recommendation.
+
+Trust was measured using a validated 6-item scale with independent trust and distrust subscales.
+
+## The result
+
+The ANOVA was non-significant: F(2, 316) = 0.39, p = .676. The effect size was essentially zero. The way we framed the AI recommendation had no measurable impact on how much people trusted it.
+
+## What did predict trust
+
+**AI usage frequency** was the strongest predictor. Daily AI users scored 12 points higher on trust than people who never use AI. This is algorithm appreciation: familiarity breeds confidence, regardless of whether that confidence is warranted.
+
+**Domain proximity** mattered independently. People with personal connection to the scenario (in this case, dog owners evaluating a veterinary AI) trusted the tool significantly more than those without. Emotional stake drove trust regardless of tool quality.
+
+**Decision confidence** was the strongest predictor in the regression model. People who felt confident in their own judgment trusted the tool more. The AI did not create confidence. It amplified existing confidence.
+
+## The paradox
+
+People who felt they had agency trusted the tool more. But all three groups reported identical levels of felt agency (p = .854). The feeling of agency is something the person brings. It is not something the interface provides.
+
+## The governance implication
+
+If design cannot create warranted trust, then accountability cannot be delegated to design. Organizations that deploy AI in consequential decisions need governance at the decision layer: structured controls, documented evidence, and verified human oversight.
+
+This research directly informed three new controls in the HCCS\u2122 standard: trust profile assessment (AG-011), substantive oversight distinction (AG-012), and deference risk monitoring (AG-013).
+
+The full findings are available at hccsstandard.com/research.`,
+  },
+  {
     slug: 'why-hiring-needs-governance',
     title: 'Why hiring is the largest ungoverned risk surface in your organization',
     date: '2026-03-25',

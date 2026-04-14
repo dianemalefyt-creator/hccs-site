@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://hccsstandard.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://hccsstandard.com/about</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://hccsstandard.com/research</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://hccsstandard.com/documents</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://hccsstandard.com/controls</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://hccsstandard.com/assess</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://hccsstandard.com/assess/employment</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://hccsstandard.com/assess/full</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://hccsstandard.com/pricing</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://hccsstandard.com/contact</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://hccsstandard.com/blog</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://hccsstandard.com/tools</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://hccsstandard.com/templates</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://hccsstandard.com/workflow</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://hccsstandard.com/business-case</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://hccsstandard.com/rights</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://hccsstandard.com/org-rights</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://hccsstandard.com/domains/employment</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://hccsstandard.com/domains/healthcare</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://hccsstandard.com/domains/financial-services</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://hccsstandard.com/domains/criminal-justice</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://hccsstandard.com/domains/education</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://hccsstandard.com/domains/insurance</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://hccsstandard.com/domains/social-services</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://hccsstandard.com/privacy</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://hccsstandard.com/terms</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+</urlset>

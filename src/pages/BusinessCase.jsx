@@ -63,8 +63,8 @@ export default function BusinessCase() {
       {/* Hero */}
       <section style={{ background: 'linear-gradient(165deg, #0a1628, #1a2d4a, #0f3460)', padding: '80px 24px 60px' }}>
         <div style={{ maxWidth: 800, margin: '0 auto', textAlign: 'center' }}>
-          <div style={{ letterSpacing: '0.25em', fontSize: 12, textTransform: 'uppercase', color: '#5b9bd5', marginBottom: 16, fontWeight: 500 }}>HCCS™ Business Case</div>
-          <h1 className='hero-title' style={{ fontSize: 44, fontWeight: 700, color: '#fff', margin: '0 0 20px', lineHeight: 1.15 }}>The ROI of hiring governance</h1>
+          <div style={{ letterSpacing: '0.25em', fontSize: 12, textTransform: 'uppercase', color: '#5b9bd5', marginBottom: 16, fontWeight: 500 }}><span style={{ background: '#185FA520', color: '#185FA5', padding: '3px 10px', borderRadius: 10, fontSize: 11, fontWeight: 600, marginRight: 12 }}>Employment &amp; Workforce</span>HCCS™ Business Case</div>
+          <h1 className='hero-title' style={{ fontSize: 44, fontWeight: 700, color: '#fff', margin: '0 0 20px', lineHeight: 1.15 }}>The ROI of decision governance</h1>
           <p style={{ fontSize: 18, color: '#94a3b8', maxWidth: 600, margin: '0 auto', lineHeight: 1.65 }}>
             Every other consequential business decision has controls. Hiring doesn't. Here's what that costs, and what governance returns.
           </p>
