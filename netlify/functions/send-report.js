@@ -56,7 +56,7 @@ tr:nth-child(even) td{background:#f8fafc}
 <tr><td style="font-weight:600">Assessment Date</td><td>${date}</td></tr>
 <tr><td style="font-weight:600">Overall Maturity Level</td><td><strong>Level ${overallLevel}: ${LEVEL_NAMES[overallLevel]}</strong></td></tr>
 <tr><td style="font-weight:600">Compliance Tier</td><td>${TIER_LABELS[overallLevel]}</td></tr>
-<tr><td style="font-weight:600">Controls In Place</td><td>${allControls.filter(c => answers[c.id] === 'yes').length} of 70</td></tr>
+<tr><td style="font-weight:600">Controls In Place</td><td>${allControls.filter(c => answers[c.id] === 'yes').length} of 74</td></tr>
 <tr><td style="font-weight:600">Controls Partial</td><td>${allControls.filter(c => answers[c.id] === 'partial').length}</td></tr>
 <tr><td style="font-weight:600">Controls Not In Place</td><td>${allControls.filter(c => answers[c.id] === 'no').length}</td></tr>
 <tr><td style="font-weight:600">Critical Gaps (MUST)</td><td style="color:#dc2626;font-weight:600">${mustGaps.length}</td></tr>

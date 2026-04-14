@@ -91,7 +91,7 @@ function Landing({ onStart }) {
         </div>
         <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 12, padding: 24, marginBottom: 40 }}>
           <div style={{ fontSize: 14, color: "#94a3b8", lineHeight: 1.6 }}>
-            This quick assessment samples the most revealing controls from the full 70-control HCCS™ Standard™. Each question includes a definition and example so you know exactly what "in place" means. No login required.
+            This quick assessment samples the most revealing controls from the full 74-control HCCS™ Standard™. Each question includes a definition and example so you know exactly what "in place" means. No login required.
           </div>
         </div>
         <button onClick={onStart} style={{ background: "#2563eb", color: "#fff", border: "none", borderRadius: 8, padding: "16px 40px", fontSize: 16, fontWeight: 600, cursor: "pointer" }}
@@ -101,7 +101,7 @@ function Landing({ onStart }) {
 
         <div style={{ marginTop: 32, display: "flex", flexDirection: "column", gap: 12, alignItems: "flex-start" }}>
           <a href="/assess/full" style={{ fontSize: 14, color: "#5b9bd5", fontWeight: 500 }}>Already have an access code? Take the full assessment →</a>
-          <a href="/assess/full" style={{ fontSize: 14, color: "#64748b" }}>Want the full 70-control assessment? View pricing →</a>
+          <a href="/assess/full" style={{ fontSize: 14, color: "#64748b" }}>Want the full 74-control assessment? View pricing →</a>
         </div>
       </div>
     </div>
@@ -403,11 +403,11 @@ ${gaps.length > 0 ? `<div class="r"><strong style="color:#991b1b">Controls not f
 <h2>Investment options</h2>
 <table>
 <tr><th>Option</th><th>Investment</th><th>What's included</th><th>Best for</th></tr>
-<tr style="background:#eff6ff"><td style="font-weight:700">Self-Assessment</td><td style="font-weight:700">$149</td><td>Full 70-control assessment, gap analysis, remediation roadmap, audit-grade report</td><td>Governance leads assessing independently</td></tr>
+<tr style="background:#eff6ff"><td style="font-weight:700">Self-Assessment</td><td style="font-weight:700">$149</td><td>Full 74-control assessment, gap analysis, remediation roadmap, audit-grade report</td><td>Governance leads assessing independently</td></tr>
 <tr><td style="font-weight:700">Guided Assessment</td><td style="font-weight:700">$2,500</td><td>Everything above + expert-guided walkthrough, executive presentation, 30-day follow-up</td><td>Executives needing validated results for leadership</td></tr>
 <tr><td style="font-weight:700">Enterprise</td><td style="font-weight:700">Custom</td><td>Everything above + third-party validation, attestation letter, board-ready report</td><td>Organizations making public governance claims</td></tr>
 </table>
-<p><strong>Recommended:</strong> ${level <= 1 ? 'Guided Assessment ($2,500). With foundation-level gaps, expert interpretation and executive presentation will accelerate remediation and internal buy-in.' : level <= 2 ? 'Self-Assessment ($149) for initial gap identification, with Guided Assessment if executive presentation is needed.' : 'Self-Assessment ($149) to validate the full 70-control profile and identify remaining gaps.'}</p>
+<p><strong>Recommended:</strong> ${level <= 1 ? 'Guided Assessment ($2,500). With foundation-level gaps, expert interpretation and executive presentation will accelerate remediation and internal buy-in.' : level <= 2 ? 'Self-Assessment ($149) for initial gap identification, with Guided Assessment if executive presentation is needed.' : 'Self-Assessment ($149) to validate the full 74-control profile and identify remaining gaps.'}</p>
 
 <h2>The ask</h2>
 <div class="box">
@@ -440,7 +440,7 @@ ${gaps.length > 0 ? `<div class="r"><strong style="color:#991b1b">Controls not f
             <div style={{ fontSize: 11, fontWeight: 600, color: "#2563eb", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>Self-Assessment</div>
             <div style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", marginBottom: 4 }}>$149</div>
             <div style={{ fontSize: 12, color: "#64748b", marginBottom: 14 }}>One-time payment</div>
-            {["Full 70-control assessment", "Remediation roadmap", "Audit-grade report", "Email delivery"].map(t => (
+            {["Full 74-control assessment", "Remediation roadmap", "Audit-grade report", "Email delivery"].map(t => (
               <div key={t} style={{ fontSize: 12, color: "#475569", marginBottom: 5, display: "flex", gap: 6 }}>
                 <span style={{ color: "#059669", fontWeight: 700 }}>✓</span> {t}
               </div>

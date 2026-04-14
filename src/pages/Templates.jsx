@@ -275,7 +275,7 @@ const TEMPLATES = [
       ]},
     ]},
   { id: 'T-10', title: 'Maturity Self-Assessment Instrument', controls: 'All domains', domain: 'Cross-domain', color: '#993556',
-    desc: 'Quick organizational pulse check across all 7 domains. Not a replacement for the full 70-control assessment.',
+    desc: 'Quick organizational pulse check across all 7 domains. Not a replacement for the full 74-control assessment.',
     sections: [
       { label: 'Organization Information', fields: [
         { key: 'orgName', label: 'Organization', type: 'text' },

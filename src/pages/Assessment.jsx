@@ -671,7 +671,7 @@ return (
 <div style={{textAlign:'center',marginBottom:48}}>
 <div style={{letterSpacing:'0.25em',fontSize:12,textTransform:'uppercase',color:'#5b9bd5',marginBottom:12,fontWeight:500}}>Full HCCS™ Assessment</div>
 <h1 style={{fontSize:40,fontWeight:700,color:'#fff',margin:'0 0 12px'}}>74 controls. 7 domains. Your complete maturity score.</h1>
-<p style={{fontSize:17,color:'#94a3b8',maxWidth:560,margin:'0 auto',lineHeight:1.6}}>Choose the assessment path that fits your organization. Both include the full 70-control assessment, gap analysis, remediation roadmap, and audit-grade report.</p>
+<p style={{fontSize:17,color:'#94a3b8',maxWidth:560,margin:'0 auto',lineHeight:1.6}}>Choose the assessment path that fits your organization. Both include the full 74-control assessment, gap analysis, remediation roadmap, and audit-grade report.</p>
 </div>
 
 {/* Pricing cards */}
@@ -683,7 +683,7 @@ return (
 <div style={{fontSize:36,fontWeight:700,color:'#0f172a',marginBottom:4}}>$149</div>
 <div style={{fontSize:14,color:'#64748b',marginBottom:20}}>One-time payment</div>
 <div style={{flex:1}}>
-{['Full 70-control assessment','Definition, example, remediation per control','Notes capture throughout','Per-domain maturity scoring (L0-L5)','Gap analysis (MUST/SHOULD)','Remediation roadmap to Level 3','Downloadable audit-grade report','Email delivery of results'].map(t=>
+{['Full 74-control assessment','Definition, example, remediation per control','Notes capture throughout','Per-domain maturity scoring (L0-L5)','Gap analysis (MUST/SHOULD)','Remediation roadmap to Level 3','Downloadable audit-grade report','Email delivery of results'].map(t=>
 <div key={t} style={{fontSize:13,color:'#475569',marginBottom:8,display:'flex',gap:8,lineHeight:1.45}}>
 <span style={{color:'#059669',fontWeight:700,marginTop:1,flexShrink:0}}>&#10003;</span><span>{t}</span></div>)}
 </div>

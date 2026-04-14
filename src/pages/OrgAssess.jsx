@@ -147,7 +147,7 @@ export default function OrgAssess() {
                   Employment assessment (10 questions)
                 </Link>
                 <Link to="/assess/full" style={{ background: '#fff', color: '#0f172a', padding: '12px 24px', borderRadius: 8, fontSize: 14, fontWeight: 600, textDecoration: 'none' }}>
-                  Full 70-control assessment
+                  Full 74-control assessment
                 </Link>
               </div>
             </div>
