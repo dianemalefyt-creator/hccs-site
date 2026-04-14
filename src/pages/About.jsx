@@ -88,7 +88,7 @@ export default function About() {
                 Trust in AI is a trait, not a state. And it is a profile, not a score.
               </h3>
               <p style={{ fontSize: 14, lineHeight: 1.7, color: '#94a3b8', marginBottom: 12 }}>
-                A 2026 IRB-approved study with 95 participants across three experimental conditions found that recommendation framing, including agency-supportive AI design, produced no statistically significant change in trust. Pre-existing individual characteristics explained 68.5% of trust variance. The experimental manipulation explained essentially nothing.
+                A 2026 IRB-approved study with 319 participants across three experimental conditions found that recommendation framing, including agency-supportive AI design, produced no statistically significant change in trust. Pre-existing individual characteristics explained 25.8% of trust variance. The experimental manipulation explained essentially nothing.
               </p>
               <p style={{ fontSize: 14, lineHeight: 1.7, color: '#94a3b8', marginBottom: 16 }}>
                 More significantly, trust decomposed into four distinct profiles (blind trusters, conflicted, ambivalent, and skeptical) that carry completely different implications for decision quality and governance risk. This is the empirical basis for three new AG domain controls in HCCS™: trust profile assessment (AG-011), substantive vs. nominal oversight (AG-012), and deference risk monitoring (AG-013).
