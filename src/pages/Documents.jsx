@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { getStaticDocs, fetchDocs } from '../lib/docs'
+import { EmailGate } from './Research'
 
 export default function Documents() {
   const [docs, setDocs] = useState(getStaticDocs())
+  const [gated, setGated] = useState({}) // track which docs have been unlocked
 
   useEffect(() => {
     fetchDocs().then(d => { if (d.length > 0) setDocs(d) }).catch(() => {})
@@ -38,20 +40,28 @@ export default function Documents() {
                       Read online
                     </a>
                   )}
-                  <a href={d.file} download style={{ background: d.color, color: '#fff', padding: '10px 20px', borderRadius: 8, fontSize: 14, fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: 8, whiteSpace: 'nowrap', textDecoration: 'none' }}>
-                    Download {d.format === 'pdf' ? '.pdf' : '.docx'}
-                  </a>
+                  {(d.docId === 'HCCS-RD-Template' || d.docId === 'HCCS-RD-Template') ? (
+                    <a href={d.file} download style={{ background: d.color, color: '#fff', padding: '10px 20px', borderRadius: 8, fontSize: 14, fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: 8, whiteSpace: 'nowrap', textDecoration: 'none' }}>
+                      Download free
+                    </a>
+                  ) : null}
                 </div>
               </div>
               <p style={{ fontSize: 15, lineHeight: 1.65, color: '#475569', marginBottom: 20 }}>{d.desc}</p>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 8 }}>
-                {d.details.map(det => (
+                {(Array.isArray(d.details) ? d.details : []).map(det => (
                   <div key={det} style={{ fontSize: 13, color: '#64748b', padding: '6px 0', display: 'flex', gap: 8, alignItems: 'flex-start' }}>
                     <span style={{ color: d.color, fontWeight: 700, marginTop: 1 }}>&rarr;</span>
                     <span>{det}</span>
                   </div>
                 ))}
               </div>
+              {d.docId !== 'HCCS-RD-Template' && (
+                <div style={{ marginTop: 20, paddingTop: 20, borderTop: '1px solid #e2e8f0' }}>
+                  <div style={{ fontSize: 13, color: '#64748b', marginBottom: 10 }}>Enter your email to download this document:</div>
+                  <EmailGate docName={d.title} docUrl={d.file} color={d.color} />
+                </div>
+              )}
             </div>
           ))}
 
