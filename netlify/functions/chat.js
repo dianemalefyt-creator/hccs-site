@@ -33,9 +33,9 @@ COMPLIANCE TIERS:
 
 PRICING:
 - Quick Assessment: Free, 10 questions, 3 minutes at hccsstandard.com/assess
-- Self-Assessment: $149, full 74 controls, remediation roadmap, audit-grade report
-- Guided Assessment: $2,500, expert-guided with executive presentation
-- Enterprise: Custom pricing, validated audit with attestation letter
+- Self-Assessment: $499, full 74 controls, remediation roadmap, audit-grade report
+- Guided Assessment: $7,500, expert-guided with executive presentation
+- Enterprise: From $25,000 pricing, validated audit with attestation letter
 
 KEY DIFFERENTIATORS:
 - Grounded in 60+ years of forensic and organizational psychology research

@@ -6,7 +6,7 @@ export default function Privacy() {
       <section style={{ background: 'linear-gradient(165deg, #0a1628, #1a2d4a)', padding: '80px 24px 60px' }}>
         <div style={{ maxWidth: 720, margin: '0 auto' }}>
           <h1 style={{ fontSize: 36, fontWeight: 700, color: '#fff', margin: 0 }}>Privacy Policy</h1>
-          <p style={{ fontSize: 14, color: '#94a3b8', marginTop: 8 }}>Last updated: March 25, 2026</p>
+          <p style={{ fontSize: 14, color: '#94a3b8', marginTop: 8 }}>Last updated: April 14, 2026</p>
         </div>
       </section>
       <section style={{ padding: '48px 24px 80px' }}>

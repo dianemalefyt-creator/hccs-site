@@ -403,15 +403,15 @@ ${gaps.length > 0 ? `<div class="r"><strong style="color:#991b1b">Controls not f
 <h2>Investment options</h2>
 <table>
 <tr><th>Option</th><th>Investment</th><th>What's included</th><th>Best for</th></tr>
-<tr style="background:#eff6ff"><td style="font-weight:700">Self-Assessment</td><td style="font-weight:700">$149</td><td>Full 74-control assessment, gap analysis, remediation roadmap, audit-grade report</td><td>Governance leads assessing independently</td></tr>
-<tr><td style="font-weight:700">Guided Assessment</td><td style="font-weight:700">$2,500</td><td>Everything above + expert-guided walkthrough, executive presentation, 30-day follow-up</td><td>Executives needing validated results for leadership</td></tr>
-<tr><td style="font-weight:700">Enterprise</td><td style="font-weight:700">Custom</td><td>Everything above + third-party validation, attestation letter, board-ready report</td><td>Organizations making public governance claims</td></tr>
+<tr style="background:#eff6ff"><td style="font-weight:700">Self-Assessment</td><td style="font-weight:700">$499</td><td>Full 74-control assessment, gap analysis, remediation roadmap, audit-grade report</td><td>Governance leads assessing independently</td></tr>
+<tr><td style="font-weight:700">Guided Assessment</td><td style="font-weight:700">$7,500</td><td>Everything above + expert-guided walkthrough, executive presentation, 30-day follow-up</td><td>Executives needing validated results for leadership</td></tr>
+<tr><td style="font-weight:700">Enterprise</td><td style="font-weight:700">From $25,000</td><td>Everything above + third-party validation, attestation letter, board-ready report</td><td>Organizations making public governance claims</td></tr>
 </table>
-<p><strong>Recommended:</strong> ${level <= 1 ? 'Guided Assessment ($2,500). With foundation-level gaps, expert interpretation and executive presentation will accelerate remediation and internal buy-in.' : level <= 2 ? 'Self-Assessment ($149) for initial gap identification, with Guided Assessment if executive presentation is needed.' : 'Self-Assessment ($149) to validate the full 74-control profile and identify remaining gaps.'}</p>
+<p><strong>Recommended:</strong> ${level <= 1 ? 'Guided Assessment ($7,500). With foundation-level gaps, expert interpretation and executive presentation will accelerate remediation and internal buy-in.' : level <= 2 ? 'Self-Assessment ($499) for initial gap identification, with Guided Assessment if executive presentation is needed.' : 'Self-Assessment ($499) to validate the full 74-control profile and identify remaining gaps.'}</p>
 
 <h2>The ask</h2>
 <div class="box">
-<p style="margin:0;font-size:14px"><strong>We are requesting approval for ${level <= 1 ? 'a Guided HCCS™ Assessment ($2,500)' : 'an HCCS™ Self-Assessment ($149)'}.</strong></p>
+<p style="margin:0;font-size:14px"><strong>We are requesting approval for ${level <= 1 ? 'a Guided HCCS™ Assessment ($7,500)' : 'an HCCS™ Self-Assessment ($499)'}.</strong></p>
 <p style="margin:8px 0 0">This is a one-time investment that produces: a complete governance gap analysis, a prioritized remediation roadmap, an audit-grade report, and a defensible record that we assessed our practices proactively. The alternative is discovering our gaps when a regulator, litigator, or journalist finds them first.</p>
 </div>
 
@@ -438,8 +438,8 @@ ${gaps.length > 0 ? `<div class="r"><strong style="color:#991b1b">Controls not f
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 14, marginBottom: 32 }}>
           <div style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 12, padding: 20 }}>
             <div style={{ fontSize: 11, fontWeight: 600, color: "#2563eb", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>Self-Assessment</div>
-            <div style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", marginBottom: 4 }}>$149</div>
-            <div style={{ fontSize: 12, color: "#64748b", marginBottom: 14 }}>One-time payment</div>
+            <div style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", marginBottom: 4 }}>$499</div>
+            <div style={{ fontSize: 12, color: "#64748b", marginBottom: 14 }}>Single domain, single unit</div>
             {["Full 74-control assessment", "Remediation roadmap", "Audit-grade report", "Email delivery"].map(t => (
               <div key={t} style={{ fontSize: 12, color: "#475569", marginBottom: 5, display: "flex", gap: 6 }}>
                 <span style={{ color: "#059669", fontWeight: 700 }}>✓</span> {t}
@@ -450,7 +450,7 @@ ${gaps.length > 0 ? `<div class="r"><strong style="color:#991b1b">Controls not f
           <div style={{ background: "#fff", border: "2px solid #2563eb", borderRadius: 12, padding: 20, position: "relative" }}>
             <div style={{ position: "absolute", top: -10, left: "50%", transform: "translateX(-50%)", background: "#2563eb", color: "#fff", padding: "3px 12px", borderRadius: 10, fontSize: 10, fontWeight: 600 }}>Recommended</div>
             <div style={{ fontSize: 11, fontWeight: 600, color: "#2563eb", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>Guided Assessment</div>
-            <div style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", marginBottom: 4 }}>$2,500</div>
+            <div style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", marginBottom: 4 }}>$7,500</div>
             <div style={{ fontSize: 12, color: "#64748b", marginBottom: 14 }}>Expert-guided</div>
             {["Everything in Self-Assessment", "Expert-guided walkthrough", "Executive presentation", "30-day follow-up"].map(t => (
               <div key={t} style={{ fontSize: 12, color: "#475569", marginBottom: 5, display: "flex", gap: 6 }}>
@@ -461,7 +461,7 @@ ${gaps.length > 0 ? `<div class="r"><strong style="color:#991b1b">Controls not f
           </div>
           <div style={{ background: "#fff", border: "2px solid #0f172a", borderRadius: 12, padding: 20 }}>
             <div style={{ fontSize: 11, fontWeight: 600, color: "#0f172a", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>Enterprise</div>
-            <div style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", marginBottom: 4 }}>Custom</div>
+            <div style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", marginBottom: 4 }}>From $25,000</div>
             <div style={{ fontSize: 12, color: "#64748b", marginBottom: 14 }}>Validated audit</div>
             {["Everything in Guided", "Third-party validation", "Attestation letter", "Board-ready report"].map(t => (
               <div key={t} style={{ fontSize: 12, color: "#475569", marginBottom: 5, display: "flex", gap: 6 }}>

@@ -38,7 +38,7 @@ const followUpHtml = (name, level, gaps) => `
 
     <div style="text-align:center;margin:0 0 24px">
       <a href="https://hccsstandard.com/assess/full" style="display:inline-block;background:#2563eb;color:#fff;padding:14px 32px;border-radius:8px;font-size:16px;font-weight:600;text-decoration:none">See pricing and get started</a>
-      <div style="font-size:13px;color:#94a3b8;margin-top:8px">Starting at $149 for the full self-assessment</div>
+      <div style="font-size:13px;color:#94a3b8;margin-top:8px">Starting at $499 for the full self-assessment</div>
     </div>
 
     <div style="border-top:1px solid #e2e8f0;padding-top:20px;margin-top:24px">

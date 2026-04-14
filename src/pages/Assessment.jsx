@@ -421,11 +421,11 @@ ${riskRows}
 <h2>5. Recommended Investment</h2>
 <table>
 <tr><th>Option</th><th>Investment</th><th>Best For</th></tr>
-<tr><td style="font-weight:600">Self-Assessment</td><td>$149</td><td>Initial gap identification, internal use</td></tr>
-<tr style="background:#eff6ff"><td style="font-weight:600">Guided Assessment ★</td><td>$2,500</td><td>Expert-guided, executive presentation, 30-day follow-up</td></tr>
-<tr><td style="font-weight:600">Enterprise / Validated</td><td>Custom</td><td>Third-party validation, attestation letter, board-ready report</td></tr>
+<tr><td style="font-weight:600">Self-Assessment</td><td>$499</td><td>Initial gap identification, internal use</td></tr>
+<tr style="background:#eff6ff"><td style="font-weight:600">Guided Assessment ★</td><td>$7,500</td><td>Expert-guided, executive presentation, 30-day follow-up</td></tr>
+<tr><td style="font-weight:600">Enterprise / Validated</td><td>From $25,000</td><td>Third-party validation, attestation letter, board-ready report</td></tr>
 </table>
-${ov<3?`<p><strong>Recommendation:</strong> Based on Level ${ov} maturity with ${mustGapCount} critical gaps, the <strong>Guided Assessment ($2,500)</strong> is recommended. It includes expert interpretation, executive-ready deliverables, and a 30-day follow-up to verify remediation progress.</p>`:'<p><strong>Recommendation:</strong> The organization has achieved the credibility threshold. Consider the Enterprise option for third-party validation and formal attestation.</p>'}
+${ov<3?`<p><strong>Recommendation:</strong> Based on Level ${ov} maturity with ${mustGapCount} critical gaps, the <strong>Guided Assessment ($7,500)</strong> is recommended. It includes expert interpretation, executive-ready deliverables, and a 30-day follow-up to verify remediation progress.</p>`:'<p><strong>Recommendation:</strong> The organization has achieved the credibility threshold. Consider the Enterprise option for third-party validation and formal attestation.</p>'}
 
 <h2>6. Implementation Roadmap</h2>
 ${ov<3?`
@@ -436,8 +436,8 @@ ${ov<3?`
 
 <h2>7. Stakeholder Talking Points</h2>
 <div class="stakeholder"><strong>For the CEO / Board:</strong> We govern every financial decision with SOX controls. We govern data with GDPR/CCPA. But the decisions that most directly affect people have no equivalent governance. This closes that gap before regulators force it. Current gap: ${mustGapCount} critical controls missing.</div>
-<div class="stakeholder"><strong>For General Counsel:</strong> We have ${mustGapCount} undocumented decision points that represent litigation exposure. Current AI governance legislation (NYC LL144, EU AI Act) requires governance we do not yet have. HCCS exceeds all current requirements. Assessment cost: $149-$2,500. Average discrimination settlement: $40K-$165K.</div>
-<div class="stakeholder"><strong>For the CFO:</strong> Bad hires cost 1.5-3× salary. We currently have no structured method to prevent them. Governance investment: $149-$2,500. One prevented bad hire at mid-level: $180K+ saved. ROI is measured in multiples, not percentages.</div>
+<div class="stakeholder"><strong>For General Counsel:</strong> We have ${mustGapCount} undocumented decision points that represent litigation exposure. Current AI governance legislation (NYC LL144, EU AI Act) requires governance we do not yet have. HCCS exceeds all current requirements. Assessment cost: $499-$7,500. Average discrimination settlement: $40K-$165K.</div>
+<div class="stakeholder"><strong>For the CFO:</strong> Bad hires cost 1.5-3× salary. We currently have no structured method to prevent them. Governance investment: $499-$7,500. One prevented bad hire at mid-level: $180K+ saved. ROI is measured in multiples, not percentages.</div>
 <div class="stakeholder"><strong>For the CHRO:</strong> This assessment identified ${gaps} control gaps across ${ds.filter(d=>d.level<3).length} domains below the credibility threshold. HCCS gives us a framework to prove our practices are structured, fair, and auditable. It turns "we think our process is good" into documented evidence.</div>
 
 <div class="footer">
@@ -680,8 +680,8 @@ return (
 {/* Self-Assessment */}
 <div style={{background:'#fff',borderRadius:16,padding:'32px 24px',border:'2px solid #e2e8f0',display:'flex',flexDirection:'column'}}>
 <div style={{fontSize:13,fontWeight:600,color:'#2563eb',textTransform:'uppercase',letterSpacing:'0.1em',marginBottom:8}}>Self-Assessment</div>
-<div style={{fontSize:36,fontWeight:700,color:'#0f172a',marginBottom:4}}>$149</div>
-<div style={{fontSize:14,color:'#64748b',marginBottom:20}}>One-time payment</div>
+<div style={{fontSize:36,fontWeight:700,color:'#0f172a',marginBottom:4}}>$499</div>
+<div style={{fontSize:14,color:'#64748b',marginBottom:20}}>Single domain, single business unit</div>
 <div style={{flex:1}}>
 {['Full 74-control assessment','Definition, example, remediation per control','Notes capture throughout','Per-domain maturity scoring (L0-L5)','Gap analysis (MUST/SHOULD)','Remediation roadmap to Level 3','Downloadable audit-grade report','Email delivery of results'].map(t=>
 <div key={t} style={{fontSize:13,color:'#475569',marginBottom:8,display:'flex',gap:8,lineHeight:1.45}}>
@@ -695,8 +695,8 @@ return (
 <div style={{background:'#fff',borderRadius:16,padding:'32px 24px',border:'2px solid #2563eb',position:'relative',display:'flex',flexDirection:'column'}}>
 <div style={{position:'absolute',top:-12,left:'50%',transform:'translateX(-50%)',background:'#2563eb',color:'#fff',padding:'4px 16px',borderRadius:12,fontSize:12,fontWeight:600}}>Recommended</div>
 <div style={{fontSize:13,fontWeight:600,color:'#2563eb',textTransform:'uppercase',letterSpacing:'0.1em',marginBottom:8}}>Guided Assessment</div>
-<div style={{fontSize:36,fontWeight:700,color:'#0f172a',marginBottom:4}}>$2,500</div>
-<div style={{fontSize:14,color:'#64748b',marginBottom:20}}>Expert-guided engagement</div>
+<div style={{fontSize:36,fontWeight:700,color:'#0f172a',marginBottom:4}}>$7,500</div>
+<div style={{fontSize:14,color:'#64748b',marginBottom:20}}>Single domain, organization-wide</div>
 <div style={{flex:1}}>
 {['Everything in Self-Assessment, plus:','Expert-guided walkthrough of all 74 controls','Scoring based on evidence review','Interpreted findings for executives','Executive presentation deck','Strategic remediation prioritization','30-day follow-up review','Direct access to HCCS™ author'].map((t,i)=>
 <div key={t} style={{fontSize:13,color:i===0?'#0f172a':'#475569',fontWeight:i===0?600:400,marginBottom:8,display:'flex',gap:8,lineHeight:1.45}}>
@@ -709,8 +709,8 @@ return (
 {/* Enterprise */}
 <div style={{background:'#fff',borderRadius:16,padding:'32px 24px',border:'2px solid #0f172a',display:'flex',flexDirection:'column'}}>
 <div style={{fontSize:13,fontWeight:600,color:'#0f172a',textTransform:'uppercase',letterSpacing:'0.1em',marginBottom:8}}>Enterprise</div>
-<div style={{fontSize:36,fontWeight:700,color:'#0f172a',marginBottom:4}}>Custom</div>
-<div style={{fontSize:14,color:'#64748b',marginBottom:20}}>Validated audit engagement</div>
+<div style={{fontSize:36,fontWeight:700,color:'#0f172a',marginBottom:4}}>From $25,000</div>
+<div style={{fontSize:14,color:'#64748b',marginBottom:20}}>Multi-domain or multi-business-unit</div>
 <div style={{flex:1}}>
 {['Everything in Guided, plus:','Third-party validated assessment','Full evidence review and verification','Formal attestation letter','Board-ready compliance report','Multi-department or org-wide scope','Ongoing compliance monitoring plan','Priority support and advisory'].map((t,i)=>
 <div key={t} style={{fontSize:13,color:i===0?'#0f172a':'#475569',fontWeight:i===0?600:400,marginBottom:8,display:'flex',gap:8,lineHeight:1.45}}>

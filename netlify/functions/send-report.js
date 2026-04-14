@@ -245,7 +245,7 @@ function buildTeaserEmailHTML(user, domainScores, overallLevel, answers, gaps) {
     '<td style="width:33%;vertical-align:top;padding:8px">' +
     '<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:16px">' +
     '<div style="font-size:11px;color:#5b9bd5;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px">Self-Assessment</div>' +
-    '<div style="font-size:24px;font-weight:700;color:#fff;margin-bottom:6px">$149</div>' +
+    '<div style="font-size:24px;font-weight:700;color:#fff;margin-bottom:6px">$499</div>' +
     '<div style="font-size:12px;color:#94a3b8;margin-bottom:12px;line-height:1.4">74 controls, remediation roadmap, full report.</div>' +
     '<a href="' + STRIPE_SELF + '" style="display:block;text-align:center;background:#2563eb;color:#fff;padding:8px 16px;border-radius:6px;font-weight:600;font-size:13px;text-decoration:none">Get started</a>' +
     '</div></td>' +
@@ -253,7 +253,7 @@ function buildTeaserEmailHTML(user, domainScores, overallLevel, answers, gaps) {
     '<td style="width:33%;vertical-align:top;padding:8px">' +
     '<div style="background:rgba(255,255,255,0.05);border:2px solid #2563eb;border-radius:12px;padding:16px">' +
     '<div style="font-size:11px;color:#2563eb;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px">Guided</div>' +
-    '<div style="font-size:24px;font-weight:700;color:#fff;margin-bottom:6px">$2,500</div>' +
+    '<div style="font-size:24px;font-weight:700;color:#fff;margin-bottom:6px">$7,500</div>' +
     '<div style="font-size:12px;color:#94a3b8;margin-bottom:12px;line-height:1.4">Expert-guided with exec presentation.</div>' +
     '<a href="' + STRIPE_GUIDED + '" style="display:block;text-align:center;background:#fff;color:#0f172a;padding:8px 16px;border-radius:6px;font-weight:600;font-size:13px;text-decoration:none">Book guided</a>' +
     '</div></td>' +

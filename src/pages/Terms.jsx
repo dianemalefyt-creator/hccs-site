@@ -6,7 +6,7 @@ export default function Terms() {
       <section style={{ background: 'linear-gradient(165deg, #0a1628, #1a2d4a)', padding: '80px 24px 60px' }}>
         <div style={{ maxWidth: 720, margin: '0 auto' }}>
           <h1 style={{ fontSize: 36, fontWeight: 700, color: '#fff', margin: 0 }}>Terms of Use</h1>
-          <p style={{ fontSize: 14, color: '#94a3b8', marginTop: 8 }}>Last updated: March 25, 2026</p>
+          <p style={{ fontSize: 14, color: '#94a3b8', marginTop: 8 }}>Last updated: April 14, 2026</p>
         </div>
       </section>
       <section style={{ padding: '48px 24px 80px' }}>
@@ -20,11 +20,45 @@ You may not reproduce, distribute, modify, create derivative works from, or comm
 • Downloading documents for your organization's internal use
 • Generating and sharing assessment reports and business case documents for internal decision-making
 • Referencing the standard with proper attribution`],
-            ['Assessment services', `Self-Assessment and Guided Assessment services are provided as-is. Assessment results reflect the information you provide and do not constitute legal advice, certified compliance, or third-party validation unless explicitly stated.
+            ['Assessment services and scope', `HCCS™ assessments are governance readiness evaluations. They are not legal advice, compliance certifications, regulatory filings, or guarantees of any kind.
 
-Self-Assessment results are generated from your self-reported answers. They are intended for internal planning and gap identification. They do not represent a validated audit.
+Self-Assessment ($499): Scope is limited to a single domain (e.g., Employment & Workforce) within a single department or business unit. Results are generated from your self-reported answers. They are intended for internal planning and gap identification. They do not represent a validated audit, legal opinion, or compliance certification. The report is licensed to the purchasing organization for internal use only and may not be shared publicly or represented as an independent assessment.
 
-Guided Assessment and Enterprise engagements are subject to separate agreements executed at the time of purchase.`],
+Guided Assessment ($7,500): Scope covers a single domain, organization-wide (all departments within one domain). Includes expert-led walkthrough, evidence review, executive presentation, and 30-day follow-up. Guided Assessment reports are licensed to the purchasing organization for internal and board-level use. They do not constitute third-party certification.
+
+Enterprise Assessment (from $25,000): Scope covers multi-domain or multi-business-unit engagements, including third-party validation, formal attestation letter, and board-ready compliance report. Scope, timeline, and deliverables are defined in a separate Statement of Work executed prior to engagement.
+
+All assessments are point-in-time evaluations reflecting governance posture as of the assessment date. They are valid for 12 months. Annual reassessment is recommended and priced separately. Organizations with multiple business units operating under different governance structures require separate assessments per unit.`],
+            ['No certification or compliance guarantee', `No HCCS™ assessment, at any tier, constitutes a certification of compliance with any law, regulation, or standard, including but not limited to Title VII, the EU AI Act, NYC LL144, GDPR, CCPA, EEOC guidelines, OFCCP requirements, or any other federal, state, local, or international regulation.
+
+The HCCS™ Standard is an independently developed governance framework. It is not endorsed by, affiliated with, or approved by any government agency, regulatory body, or standards organization. Alignment with SOX, NIST AI RMF, ISO, or other frameworks is architectural, not certified.
+
+Assessment results identify governance gaps and provide remediation guidance. Implementing the recommendations does not guarantee regulatory compliance, litigation protection, or immunity from enforcement action. Organizations are responsible for obtaining their own legal counsel regarding compliance obligations.`],
+            ['Limitation of liability', `TO THE MAXIMUM EXTENT PERMITTED BY LAW, INGENUITYCOLLC AND ITS OFFICERS, DIRECTORS, EMPLOYEES, AGENTS, AND AFFILIATES SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES ARISING FROM OR RELATED TO:
+
+(a) Your use of or inability to use the Website, assessments, tools, reports, or any other services;
+(b) Any decisions made or actions taken based on assessment results, recommendations, remediation guidance, or any other content provided through the services;
+(c) Any errors, omissions, or inaccuracies in assessment results or reports;
+(d) Any third-party claims arising from your use of assessment results;
+(e) Any regulatory action, litigation, audit finding, or enforcement proceeding, regardless of whether the organization used HCCS™ assessments or followed HCCS™ recommendations;
+(f) Any loss of revenue, profits, data, or business opportunities.
+
+Our total aggregate liability for all claims related to the services shall not exceed the amount you paid for the specific service giving rise to the claim. This limitation applies regardless of the theory of liability (contract, tort, negligence, strict liability, or otherwise).
+
+You acknowledge that governance assessments involve professional judgment, that no assessment can identify every risk or guarantee any outcome, and that IngenuityCo LLC provides tools and frameworks, not legal advice or compliance guarantees.`],
+            ['Disclaimer of warranties', `THE WEBSITE AND ALL SERVICES ARE PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, ACCURACY, COMPLETENESS, OR RELIABILITY.
+
+IngenuityCo LLC does not warrant that assessment results will be accurate, complete, or suitable for any particular regulatory or legal purpose. We do not warrant that using the HCCS™ Standard will prevent litigation, regulatory action, or adverse business outcomes.
+
+The AI-powered chat assistant provides general information only and may produce inaccurate or incomplete responses. It does not provide legal, financial, or professional advice.`],
+            ['Indemnification', 'You agree to indemnify, defend, and hold harmless IngenuityCo LLC, its officers, directors, employees, and agents from any and all claims, damages, losses, liabilities, costs, and expenses (including reasonable attorneys\' fees) arising from: (a) your use of the Website or services, (b) your violation of these terms, (c) any third-party claims related to your use of assessment results or reports, or (d) any representation you make regarding HCCS™ compliance or certification status that is not authorized in writing by IngenuityCo LLC.'],
+            ['Assessment report usage restrictions', `Assessment reports are licensed to the purchasing organization for internal use. You may not:
+(a) Share Self-Assessment or Guided Assessment reports publicly or with parties outside your organization without written permission;
+(b) Represent Self-Assessment results as independently validated, audited, or certified;
+(c) Use the HCCS™ name, logo, or control framework in marketing materials, public statements, or regulatory filings without prior written authorization;
+(d) Claim "HCCS Certified" or "HCCS Compliant" status based on a Self-Assessment or Guided Assessment. Only Enterprise engagements with third-party validation may produce attestation letters.
+
+Organizations that publicly claim HCCS™ compliance without an authorized attestation letter may be required to retract those claims and may be subject to trademark enforcement.`],
             ['User conduct', `When using our services, you agree to:
 • Provide accurate information in assessments and forms
 • Use the services for their intended purpose (organizational governance assessment)
@@ -33,9 +67,6 @@ Guided Assessment and Enterprise engagements are subject to separate agreements 
 • Not scrape, crawl, or automated-extract content from the Website`],
             ['Payments and refunds', 'Payments for assessments are processed through Stripe. All sales are final. If you experience a technical issue that prevents you from completing a purchased assessment, contact us and we will work to resolve it or provide a replacement access code.'],
             ['AI chat assistant', 'The AI-powered chat assistant provides general information about the HCCS™ Standard. It does not provide legal, financial, or professional advice. Responses are generated by a third-party AI model and may occasionally be incomplete or imperfect. Do not rely on chat responses as a substitute for professional consultation.'],
-            ['Limitation of liability', 'To the maximum extent permitted by law, IngenuityCo LLC shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the Website or services. Our total liability for any claim related to the services shall not exceed the amount you paid for the specific service giving rise to the claim.'],
-            ['Disclaimer of warranties', 'The Website and services are provided "as is" and "as available" without warranties of any kind, either express or implied, including but not limited to implied warranties of merchantability, fitness for a particular purpose, and non-infringement.'],
-            ['Indemnification', 'You agree to indemnify and hold harmless IngenuityCo LLC, its officers, directors, and agents from any claims, damages, or expenses arising from your use of the Website or violation of these terms.'],
             ['Governing law', 'These terms are governed by the laws of the State of Arizona, without regard to conflict of law principles. Any disputes shall be resolved in the courts of Maricopa County, Arizona.'],
             ['Changes to terms', 'We may update these terms from time to time. Continued use of the Website after changes are posted constitutes acceptance of the updated terms.'],
             ['Contact', 'For questions about these terms, contact us via the contact form at hccsstandard.com/contact.'],
