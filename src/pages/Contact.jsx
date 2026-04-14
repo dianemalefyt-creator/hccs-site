@@ -17,7 +17,7 @@ const INTERESTS = [
 ]
 
 export default function Contact() {
-  const [form, setForm] = useState({ name: '', email: '', org: '', interest: '', message: '' })
+  const [form, setForm] = useState({ name: '', email: '', org: '', interest: '', message: '', website: '' })
   const [sent, setSent] = useState(false)
   const [sending, setSending] = useState(false)
   const [err, setErr] = useState('')
@@ -26,6 +26,7 @@ export default function Contact() {
   const isSub = form.interest.startsWith('Subscribe')
 
   const handleSubmit = async () => {
+    if (form.website) return // honeypot triggered - silently succeed
     if (!form.name || !form.email) { setErr('Please fill in name and email.'); return }
     if (!isSub && !form.message) { setErr('Please fill in your message.'); return }
     setSending(true); setErr('')
@@ -101,6 +102,10 @@ export default function Contact() {
                 </div>
 
                 {err && <div style={{ fontSize: 13, color: '#dc2626', marginBottom: 12 }}>{err}</div>}
+
+                {/* Honeypot - hidden from humans, catches bots */}
+                <input type="text" value={form.website} onChange={e => set('website', e.target.value)} tabIndex={-1} autoComplete="off" aria-hidden="true"
+                  style={{ position: 'absolute', left: '-9999px', opacity: 0, height: 0 }} />
 
                 <button onClick={handleSubmit} disabled={sending}
                   style={{ width: '100%', padding: '14px', borderRadius: 8, border: 'none', background: sending ? '#94a3b8' : '#2563eb', color: '#fff', fontSize: 15, fontWeight: 600, cursor: sending ? 'default' : 'pointer' }}>

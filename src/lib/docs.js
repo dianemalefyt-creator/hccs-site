@@ -90,28 +90,28 @@ export function getStaticDocs() {
 
 export function clearDocsCache() { cache = null; cacheTime = 0 }
 
-export async function createDoc(doc) {
+export async function createDoc(doc, adminKey) {
   clearDocsCache()
   const res = await fetch('/.netlify/functions/docs-api', {
-    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    method: 'POST', headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey || '' },
     body: JSON.stringify({ action: 'create', doc }),
   })
   return res.json()
 }
 
-export async function updateDoc(recordId, doc) {
+export async function updateDoc(recordId, doc, adminKey) {
   clearDocsCache()
   const res = await fetch('/.netlify/functions/docs-api', {
-    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    method: 'POST', headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey || '' },
     body: JSON.stringify({ action: 'update', recordId, doc }),
   })
   return res.json()
 }
 
-export async function deleteDocApi(recordId) {
+export async function deleteDocApi(recordId, adminKey) {
   clearDocsCache()
   const res = await fetch('/.netlify/functions/docs-api', {
-    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    method: 'POST', headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey || '' },
     body: JSON.stringify({ action: 'delete', recordId }),
   })
   return res.json()

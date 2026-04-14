@@ -2,7 +2,12 @@ import { useState, useEffect } from 'react'
 import { fetchPosts, createPost, updatePost, deletePostApi, togglePostStatus, STATIC_POSTS } from '../lib/blog'
 import { fetchDocs, createDoc, updateDoc, deleteDocApi, STATIC_DOCS } from '../lib/docs'
 
-const ADMIN_PASS = 'hccsadmin2026'
+// Password checked via SHA-256 hash - actual password not stored in source
+const ADMIN_HASH = '1c332aa95ebca407af243b2365f811ba6e723bad264b26425adfc67690f10274'
+async function hashPass(p) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(p))
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('')
+}
 
 const CATEGORIES = ['Governance', 'AI & Hiring', 'Research', 'Compliance', 'Tools', 'Case Studies', 'Opinion']
 
@@ -18,6 +23,7 @@ function renderBold(text) {
 
 export default function Admin() {
   const [authed, setAuthed] = useState(false)
+  const [adminKey, setAdminKey] = useState('')
   const [pass, setPass] = useState('')
   const [passErr, setPassErr] = useState('')
   const [posts, setPosts] = useState([])
@@ -51,8 +57,9 @@ export default function Admin() {
     if (authed) { refreshPosts(); refreshDocs() }
   }, [authed])
 
-  const login = () => {
-    if (pass === ADMIN_PASS) { setAuthed(true); setPassErr('') }
+  const login = async () => {
+    const h = await hashPass(pass)
+    if (h === ADMIN_HASH) { setAuthed(true); setAdminKey(h); setPassErr('') }
     else setPassErr('Wrong password')
   }
 
@@ -100,11 +107,11 @@ export default function Admin() {
     try {
       let result
       if (editing === 'new') {
-        result = await createPost(post)
+        result = await createPost(post, adminKey)
       } else if (form._recordId) {
-        result = await updatePost(form._recordId, post)
+        result = await updatePost(form._recordId, post, adminKey)
       } else {
-        result = await createPost(post)
+        result = await createPost(post, adminKey)
       }
       if (result.error) throw new Error(result.error)
       setSaveMsg('')
@@ -123,7 +130,7 @@ export default function Admin() {
       return
     }
     setLoading(true)
-    await togglePostStatus(post.id)
+    await togglePostStatus(post.id, adminKey)
     await refreshPosts()
   }
 
@@ -134,7 +141,7 @@ export default function Admin() {
       return
     }
     setLoading(true)
-    await deletePostApi(post.id)
+    await deletePostApi(post.id, adminKey)
     await refreshPosts()
   }
 
@@ -361,7 +368,7 @@ export default function Admin() {
                     body: sp.body || sp.content || '', date: sp.date, author: sp.author || 'Diane Malefyt',
                     authorTitle: sp.authorTitle || 'Author, HCCS™ Standard', status: 'published',
                     readTime: sp.readTime || '4 min read',
-                  })
+                  }, adminKey)
                   added++
                 }
                 await refreshPosts()
@@ -403,7 +410,7 @@ export default function Admin() {
             <div style={{ display: 'flex', gap: 8, flexShrink: 0, marginLeft: 16 }}>
               <button onClick={() => { setDocForm({ ...doc, details: Array.isArray(doc.details) ? doc.details.join('\n') : doc.details || '', _recordId: doc.id }); setEditingDoc(doc.docId || doc.id) }}
                 style={{ padding: '6px 14px', borderRadius: 6, border: '1px solid #e2e8f0', background: '#fff', color: '#2563eb', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>Edit</button>
-              {doc.id && <button onClick={async () => { if (!confirm(`Delete "${doc.title}"?`)) return; setLoading(true); await deleteDocApi(doc.id); await refreshDocs(); setLoading(false) }} disabled={loading}
+              {doc.id && <button onClick={async () => { if (!confirm(`Delete "${doc.title}"?`)) return; setLoading(true); await deleteDocApi(doc.id, adminKey); await refreshDocs(); setLoading(false) }} disabled={loading}
                 style={{ padding: '6px 14px', borderRadius: 6, border: '1px solid #fecaca', background: '#fff', color: '#dc2626', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>Delete</button>}
               {doc.file && <a href={doc.file} target="_blank" style={{ padding: '6px 14px', borderRadius: 6, border: '1px solid #e2e8f0', background: '#f8fafc', color: '#475569', fontSize: 12, fontWeight: 600, textDecoration: 'none' }}>View</a>}
             </div>
@@ -422,7 +429,7 @@ export default function Admin() {
             let added = 0
             for (const sd of STATIC_DOCS) {
               if (existingIds.has(sd.docId)) continue
-              await createDoc(sd)
+              await createDoc(sd, adminKey)
               added++
             }
             await refreshDocs()
@@ -511,11 +518,11 @@ export default function Admin() {
               const doc = { ...docForm, details: docForm.details.split('\n').filter(Boolean) }
               try {
                 if (editingDoc === 'new') {
-                  await createDoc(doc)
+                  await createDoc(doc, adminKey)
                 } else if (docForm._recordId) {
-                  await updateDoc(docForm._recordId, doc)
+                  await updateDoc(docForm._recordId, doc, adminKey)
                 } else {
-                  await createDoc(doc)
+                  await createDoc(doc, adminKey)
                 }
                 await refreshDocs()
                 setEditingDoc(null)

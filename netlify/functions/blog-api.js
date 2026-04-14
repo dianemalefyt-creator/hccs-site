@@ -5,7 +5,7 @@ const BASE_URL = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${TABLE_NAME}`
 
 const HEADERS = {
   'Content-Type': 'application/json',
-  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Origin': process.env.URL || 'https://hccsstandard.com',
   'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type',
 }
@@ -79,6 +79,12 @@ exports.handler = async function(event) {
   }
 
   if (event.httpMethod === 'POST') {
+    // Auth required for write operations
+    const authHeader = event.headers['x-admin-key'] || event.headers['X-Admin-Key']
+    const ADMIN_SECRET = process.env.ADMIN_API_SECRET
+    if (!ADMIN_SECRET || authHeader !== ADMIN_SECRET) {
+      return { statusCode: 401, headers, body: JSON.stringify({ error: 'Unauthorized' }) }
+    }
     try {
       const { action, post, recordId } = JSON.parse(event.body)
 

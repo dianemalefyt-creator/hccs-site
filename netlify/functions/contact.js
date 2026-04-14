@@ -9,10 +9,20 @@ exports.handler = async function(event) {
   }
 
   try {
-    const { name, email, org, interest, message } = JSON.parse(event.body);
+    const { name, email, org, interest, message, website } = JSON.parse(event.body);
 
-    if (!name || !email || !message) {
-      return { statusCode: 400, body: JSON.stringify({ error: 'Name, email, and message required' }) };
+    // Honeypot check - bots fill hidden fields
+    if (website) {
+      return { statusCode: 200, body: JSON.stringify({ ok: true }) };
+    }
+
+    if (!name || !email) {
+      return { statusCode: 400, body: JSON.stringify({ error: 'Name and email required' }) };
+    }
+
+    // Message optional for subscribe requests
+    if (!message && !interest?.startsWith('Subscribe')) {
+      return { statusCode: 400, body: JSON.stringify({ error: 'Message required' }) };
     }
 
     const html = '<!DOCTYPE html><html><head><style>' +

@@ -73,6 +73,16 @@ exports.handler = async function(event) {
     return { statusCode: 405, body: 'Method not allowed' };
   }
 
+  // Input validation
+  try {
+    const body = JSON.parse(event.body);
+    if (!body.message || typeof body.message !== 'string' || body.message.length > 2000) {
+      return { statusCode: 400, body: JSON.stringify({ response: 'Invalid request.' }) };
+    }
+  } catch {
+    return { statusCode: 400, body: JSON.stringify({ response: 'Invalid request.' }) };
+  }
+
   const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
   if (!ANTHROPIC_API_KEY) {
     return {

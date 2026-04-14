@@ -46,37 +46,37 @@ export function getAllPosts(showAll = false) {
 
 export function clearCache() { cache = null; cacheTime = 0 }
 
-export async function createPost(post) {
+export async function createPost(post, adminKey) {
   clearCache()
   const res = await fetch('/.netlify/functions/blog-api', {
-    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    method: 'POST', headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey || '' },
     body: JSON.stringify({ action: 'create', post }),
   })
   return res.json()
 }
 
-export async function updatePost(recordId, post) {
+export async function updatePost(recordId, post, adminKey) {
   clearCache()
   const res = await fetch('/.netlify/functions/blog-api', {
-    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    method: 'POST', headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey || '' },
     body: JSON.stringify({ action: 'update', recordId, post }),
   })
   return res.json()
 }
 
-export async function deletePostApi(recordId) {
+export async function deletePostApi(recordId, adminKey) {
   clearCache()
   const res = await fetch('/.netlify/functions/blog-api', {
-    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    method: 'POST', headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey || '' },
     body: JSON.stringify({ action: 'delete', recordId }),
   })
   return res.json()
 }
 
-export async function togglePostStatus(recordId) {
+export async function togglePostStatus(recordId, adminKey) {
   clearCache()
   const res = await fetch('/.netlify/functions/blog-api', {
-    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    method: 'POST', headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey || '' },
     body: JSON.stringify({ action: 'toggleStatus', recordId }),
   })
   return res.json()
