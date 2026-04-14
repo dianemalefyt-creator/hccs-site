@@ -22,7 +22,7 @@ You may not reproduce, distribute, modify, create derivative works from, or comm
 • Referencing the standard with proper attribution`],
             ['Assessment services and scope', `HCCS™ assessments are governance readiness evaluations. They are not legal advice, compliance certifications, regulatory filings, or guarantees of any kind.
 
-Self-Assessment ($499): Scope is limited to a single domain (e.g., Employment & Workforce) within a single department or business unit. Results are generated from your self-reported answers. They are intended for internal planning and gap identification. They do not represent a validated audit, legal opinion, or compliance certification. The report is licensed to the purchasing organization for internal use only and may not be shared publicly or represented as an independent assessment.
+Self-Assessment ($500): Scope is limited to a single domain (e.g., Employment & Workforce) within a single department or business unit. Results are generated from your self-reported answers. They are intended for internal planning and gap identification. They do not represent a validated audit, legal opinion, or compliance certification. The report is licensed to the purchasing organization for internal use only and may not be shared publicly or represented as an independent assessment.
 
 Guided Assessment ($7,500): Scope covers a single domain, organization-wide (all departments within one domain). Includes expert-led walkthrough, evidence review, executive presentation, and 30-day follow-up. Guided Assessment reports are licensed to the purchasing organization for internal and board-level use. They do not constitute third-party certification.
 

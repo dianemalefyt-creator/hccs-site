@@ -230,7 +230,7 @@ export function PricingPage() {
             <p style={{ fontSize: 14, color: '#94a3b8', marginBottom: 20 }}>Pro unlocks the tools. The assessment scores all 74 controls.</p>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
               <Link to="/assess" style={{ background: '#2563eb', color: '#fff', padding: '10px 24px', borderRadius: 8, fontSize: 14, fontWeight: 600, textDecoration: 'none' }}>Quick assessment (free)</Link>
-              <Link to="/assess/full" style={{ border: '1px solid rgba(255,255,255,0.2)', color: '#cbd5e1', padding: '10px 24px', borderRadius: 8, fontSize: 14, fontWeight: 500, textDecoration: 'none' }}>Full assessment ($499+)</Link>
+              <Link to="/assess/full" style={{ border: '1px solid rgba(255,255,255,0.2)', color: '#cbd5e1', padding: '10px 24px', borderRadius: 8, fontSize: 14, fontWeight: 500, textDecoration: 'none' }}>Full assessment ($500+)</Link>
             </div>
           </div>
         </div>

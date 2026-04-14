@@ -7,7 +7,7 @@ const INTERESTS = [
   'Subscribe: Blog & thought leadership',
   'Pro Monthly ($29/mo)',
   'Pro Annual ($249/yr)',
-  'Self-Assessment ($499)',
+  'Self-Assessment ($500)',
   'Guided Assessment ($7,500)',
   'Enterprise / Validated Audit',
   'Licensing the HCCS™ Standard',

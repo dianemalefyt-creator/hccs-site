@@ -33,7 +33,7 @@ COMPLIANCE TIERS:
 
 PRICING:
 - Quick Assessment: Free, 10 questions, 3 minutes at hccsstandard.com/assess
-- Self-Assessment: $499, full 74 controls, remediation roadmap, audit-grade report
+- Self-Assessment: $500, full 74 controls, remediation roadmap, audit-grade report
 - Guided Assessment: $7,500, expert-guided with executive presentation
 - Enterprise: From $25,000 pricing, validated audit with attestation letter
 

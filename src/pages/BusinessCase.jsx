@@ -290,7 +290,7 @@ export default function BusinessCase() {
               </div>
 
               <div style={{ textAlign: 'center', marginTop: 24 }}>
-                <div style={{ fontSize: 14, color: '#64748b' }}>HCCS™ Self-Assessment: $499 | ROI: <strong style={{ color: '#059669' }}>{Math.round(totalSavings / 499)}x return</strong></div>
+                <div style={{ fontSize: 14, color: '#64748b' }}>HCCS™ Self-Assessment: $500 | ROI: <strong style={{ color: '#059669' }}>{Math.round(totalSavings / 500)}x return</strong></div>
               </div>
             </div>
           </section>

@@ -421,7 +421,7 @@ ${riskRows}
 <h2>5. Recommended Investment</h2>
 <table>
 <tr><th>Option</th><th>Investment</th><th>Best For</th></tr>
-<tr><td style="font-weight:600">Self-Assessment</td><td>$499</td><td>Initial gap identification, internal use</td></tr>
+<tr><td style="font-weight:600">Self-Assessment</td><td>$500</td><td>Initial gap identification, internal use</td></tr>
 <tr style="background:#eff6ff"><td style="font-weight:600">Guided Assessment ★</td><td>$7,500</td><td>Expert-guided, executive presentation, 30-day follow-up</td></tr>
 <tr><td style="font-weight:600">Enterprise / Validated</td><td>From $25,000</td><td>Third-party validation, attestation letter, board-ready report</td></tr>
 </table>
@@ -436,8 +436,8 @@ ${ov<3?`
 
 <h2>7. Stakeholder Talking Points</h2>
 <div class="stakeholder"><strong>For the CEO / Board:</strong> We govern every financial decision with SOX controls. We govern data with GDPR/CCPA. But the decisions that most directly affect people have no equivalent governance. This closes that gap before regulators force it. Current gap: ${mustGapCount} critical controls missing.</div>
-<div class="stakeholder"><strong>For General Counsel:</strong> We have ${mustGapCount} undocumented decision points that represent litigation exposure. Current AI governance legislation (NYC LL144, EU AI Act) requires governance we do not yet have. HCCS exceeds all current requirements. Assessment cost: $499-$7,500. Average discrimination settlement: $40K-$165K.</div>
-<div class="stakeholder"><strong>For the CFO:</strong> Bad hires cost 1.5-3× salary. We currently have no structured method to prevent them. Governance investment: $499-$7,500. One prevented bad hire at mid-level: $180K+ saved. ROI is measured in multiples, not percentages.</div>
+<div class="stakeholder"><strong>For General Counsel:</strong> We have ${mustGapCount} undocumented decision points that represent litigation exposure. Current AI governance legislation (NYC LL144, EU AI Act) requires governance we do not yet have. HCCS exceeds all current requirements. Assessment cost: $500-$7,500. Average discrimination settlement: $40K-$165K.</div>
+<div class="stakeholder"><strong>For the CFO:</strong> Bad hires cost 1.5-3× salary. We currently have no structured method to prevent them. Governance investment: $500-$7,500. One prevented bad hire at mid-level: $180K+ saved. ROI is measured in multiples, not percentages.</div>
 <div class="stakeholder"><strong>For the CHRO:</strong> This assessment identified ${gaps} control gaps across ${ds.filter(d=>d.level<3).length} domains below the credibility threshold. HCCS gives us a framework to prove our practices are structured, fair, and auditable. It turns "we think our process is good" into documented evidence.</div>
 
 <div class="footer">
@@ -656,8 +656,8 @@ style={{width:'100%',padding:'14px',borderRadius:8,border:'none',background:sub?
 // Access codes - add new codes here as needed
 const ACCESS_CODES = ['HCCS2026', 'LAUNCH', 'PILOT', 'DIMALEFYT', 'PURCHASED'];
 
-const STRIPE_SELF = 'https://buy.stripe.com/fZu6oI8BXb7herYgNucIE01';
-const STRIPE_GUIDED = 'https://buy.stripe.com/9B65kEf0lcbl5Vs9l2cIE00';
+const STRIPE_SELF = 'https://buy.stripe.com/bJecN6cSdcbl4Ro8gYcIE06';
+const STRIPE_GUIDED = 'https://buy.stripe.com/3cIbJ2aK57V5gA67cUcIE05';
 
 function CodeGate({onUnlock}) {
 const [code, setCode] = useState('');
@@ -680,7 +680,7 @@ return (
 {/* Self-Assessment */}
 <div style={{background:'#fff',borderRadius:16,padding:'32px 24px',border:'2px solid #e2e8f0',display:'flex',flexDirection:'column'}}>
 <div style={{fontSize:13,fontWeight:600,color:'#2563eb',textTransform:'uppercase',letterSpacing:'0.1em',marginBottom:8}}>Self-Assessment</div>
-<div style={{fontSize:36,fontWeight:700,color:'#0f172a',marginBottom:4}}>$499</div>
+<div style={{fontSize:36,fontWeight:700,color:'#0f172a',marginBottom:4}}>$500</div>
 <div style={{fontSize:14,color:'#64748b',marginBottom:20}}>Single domain, single business unit</div>
 <div style={{flex:1}}>
 {['Full 74-control assessment','Definition, example, remediation per control','Notes capture throughout','Per-domain maturity scoring (L0-L5)','Gap analysis (MUST/SHOULD)','Remediation roadmap to Level 3','Downloadable audit-grade report','Email delivery of results'].map(t=>
