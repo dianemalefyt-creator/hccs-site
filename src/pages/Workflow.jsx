@@ -94,7 +94,7 @@ export function GuidedWorkflow() {
       <section style={{ background: 'linear-gradient(165deg, #0a1628, #1a2d4a)', padding: '60px 24px 40px' }}>
         <div style={{ maxWidth: 860, margin: '0 auto' }}>
           <Link to="/tools" style={{ fontSize: 13, color: '#5b9bd5', display: 'inline-block', marginBottom: 12 }}>← Tools</Link>
-          <h1 style={{ fontSize: 28, fontWeight: 700, color: '#fff', margin: '0 0 8px' }}>Guided hiring workflow</h1>
+          <h1 style={{ fontSize: 28, fontWeight: 700, color: '#fff', margin: '0 0 8px' }}>Guided governance workflow</h1>
           <p style={{ fontSize: 15, color: '#94a3b8', margin: '0 0 20px' }}>Five steps from role definition to audit-ready documentation. AI assists at every step.</p>
           {/* Progress */}
           <div style={{ display: 'flex', gap: 4, marginBottom: 8 }}>

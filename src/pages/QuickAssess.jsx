@@ -77,7 +77,7 @@ function Landing({ onStart }) {
     <div style={{ minHeight: "80vh", background: "linear-gradient(165deg, #0a1628 0%, #1a2d4a 40%, #0f3460 100%)", color: "#e2e8f0", display: "flex", alignItems: "center" }}>
       <div style={{ maxWidth: 700, margin: "0 auto", padding: "80px 24px 60px" }}>
         <div style={{ letterSpacing: "0.25em", fontSize: 12, textTransform: "uppercase", color: "#5b9bd5", marginBottom: 16, fontWeight: 500 }}>Quick Assessment</div>
-        <h1 className="hero-title" style={{ fontSize: 40, fontWeight: 700, lineHeight: 1.15, margin: "0 0 20px", color: "#fff" }}>How audit-ready is your hiring process?</h1>
+        <h1 className="hero-title" style={{ fontSize: 40, fontWeight: 700, lineHeight: 1.15, margin: "0 0 20px", color: "#fff" }}>How audit-ready is your decision governance?</h1>
         <p style={{ fontSize: 18, lineHeight: 1.65, color: "#94a3b8", maxWidth: 540, margin: "0 0 32px" }}>
           10 questions. 3 minutes. Find out where your organization stands across the 7 HCCS™ governance domains.
         </p>
@@ -91,7 +91,7 @@ function Landing({ onStart }) {
         </div>
         <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 12, padding: 24, marginBottom: 40 }}>
           <div style={{ fontSize: 14, color: "#94a3b8", lineHeight: 1.6 }}>
-            This quick assessment samples the most revealing controls from the full 67-control HCCS™ Standard™. Each question includes a definition and example so you know exactly what "in place" means. No login required.
+            This quick assessment samples the most revealing controls from the full 70-control HCCS™ Standard™. Each question includes a definition and example so you know exactly what "in place" means. No login required.
           </div>
         </div>
         <button onClick={onStart} style={{ background: "#2563eb", color: "#fff", border: "none", borderRadius: 8, padding: "16px 40px", fontSize: 16, fontWeight: 600, cursor: "pointer" }}
@@ -101,7 +101,7 @@ function Landing({ onStart }) {
 
         <div style={{ marginTop: 32, display: "flex", flexDirection: "column", gap: 12, alignItems: "flex-start" }}>
           <a href="/assess/full" style={{ fontSize: 14, color: "#5b9bd5", fontWeight: 500 }}>Already have an access code? Take the full assessment →</a>
-          <a href="/assess/full" style={{ fontSize: 14, color: "#64748b" }}>Want the full 67-control assessment? View pricing →</a>
+          <a href="/assess/full" style={{ fontSize: 14, color: "#64748b" }}>Want the full 70-control assessment? View pricing →</a>
         </div>
       </div>
     </div>
@@ -366,7 +366,7 @@ else{document.getElementById('sent-msg').textContent='Failed. Try Save as PDF in
 </div>
 
 <h2>The situation</h2>
-<p>${orgName} currently scores at an estimated <strong>HCCS™ Maturity Level ${level} (${['Not Established','Initial','Developing','Defined','Managed','Optimizing'][level]})</strong> based on a sample of 10 critical controls. ${level < 3 ? `This is ${3-level} level${3-level>1?'s':''} below the credibility threshold, the minimum for organizations making defensible claims about hiring fairness or AI governance.` : 'This meets the credibility threshold based on the sample.'}</p>
+<p>${orgName} currently scores at an estimated <strong>HCCS™ Maturity Level ${level} (${['Not Established','Initial','Developing','Defined','Managed','Optimizing'][level]})</strong> based on a sample of 10 critical controls. ${level < 3 ? `This is ${3-level} level${3-level>1?'s':''} below the credibility threshold, the minimum for organizations making defensible claims about governed, accountable decision practices.` : 'This meets the credibility threshold based on the sample.'}</p>
 <p><strong>${yes}</strong> of 10 sampled controls are in place. <strong>${no}</strong> are not in place. <strong>${partial}</strong> are partial. This is a <strong>${score}% readiness score</strong> on a sample that deliberately targets the highest-risk controls.</p>
 <p>These 10 controls represent the foundation. The full HCCS™ Standard covers <strong>70 controls across 7 governance domains</strong>. If foundation controls have gaps, deeper controls almost certainly do as well.</p>
 
@@ -403,11 +403,11 @@ ${gaps.length > 0 ? `<div class="r"><strong style="color:#991b1b">Controls not f
 <h2>Investment options</h2>
 <table>
 <tr><th>Option</th><th>Investment</th><th>What's included</th><th>Best for</th></tr>
-<tr style="background:#eff6ff"><td style="font-weight:700">Self-Assessment</td><td style="font-weight:700">$149</td><td>Full 67-control assessment, gap analysis, remediation roadmap, audit-grade report</td><td>HR/TA leaders assessing independently</td></tr>
-<tr><td style="font-weight:700">Guided Assessment</td><td style="font-weight:700">$2,500</td><td>Everything above + expert-guided walkthrough, executive presentation, 30-day follow-up</td><td>CHROs needing validated results for leadership</td></tr>
-<tr><td style="font-weight:700">Enterprise</td><td style="font-weight:700">Custom</td><td>Everything above + third-party validation, attestation letter, board-ready report</td><td>Organizations making public hiring claims</td></tr>
+<tr style="background:#eff6ff"><td style="font-weight:700">Self-Assessment</td><td style="font-weight:700">$149</td><td>Full 70-control assessment, gap analysis, remediation roadmap, audit-grade report</td><td>Governance leads assessing independently</td></tr>
+<tr><td style="font-weight:700">Guided Assessment</td><td style="font-weight:700">$2,500</td><td>Everything above + expert-guided walkthrough, executive presentation, 30-day follow-up</td><td>Executives needing validated results for leadership</td></tr>
+<tr><td style="font-weight:700">Enterprise</td><td style="font-weight:700">Custom</td><td>Everything above + third-party validation, attestation letter, board-ready report</td><td>Organizations making public governance claims</td></tr>
 </table>
-<p><strong>Recommended:</strong> ${level <= 1 ? 'Guided Assessment ($2,500). With foundation-level gaps, expert interpretation and executive presentation will accelerate remediation and internal buy-in.' : level <= 2 ? 'Self-Assessment ($149) for initial gap identification, with Guided Assessment if executive presentation is needed.' : 'Self-Assessment ($149) to validate the full 67-control profile and identify remaining gaps.'}</p>
+<p><strong>Recommended:</strong> ${level <= 1 ? 'Guided Assessment ($2,500). With foundation-level gaps, expert interpretation and executive presentation will accelerate remediation and internal buy-in.' : level <= 2 ? 'Self-Assessment ($149) for initial gap identification, with Guided Assessment if executive presentation is needed.' : 'Self-Assessment ($149) to validate the full 70-control profile and identify remaining gaps.'}</p>
 
 <h2>The ask</h2>
 <div class="box">
@@ -440,7 +440,7 @@ ${gaps.length > 0 ? `<div class="r"><strong style="color:#991b1b">Controls not f
             <div style={{ fontSize: 11, fontWeight: 600, color: "#2563eb", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>Self-Assessment</div>
             <div style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", marginBottom: 4 }}>$149</div>
             <div style={{ fontSize: 12, color: "#64748b", marginBottom: 14 }}>One-time payment</div>
-            {["Full 67-control assessment", "Remediation roadmap", "Audit-grade report", "Email delivery"].map(t => (
+            {["Full 70-control assessment", "Remediation roadmap", "Audit-grade report", "Email delivery"].map(t => (
               <div key={t} style={{ fontSize: 12, color: "#475569", marginBottom: 5, display: "flex", gap: 6 }}>
                 <span style={{ color: "#059669", fontWeight: 700 }}>✓</span> {t}
               </div>

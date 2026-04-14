@@ -4,9 +4,9 @@ import { DOMAINS } from '../data/controls'
 const DOMAIN_META = {
   RG: { icon: '◈', purpose: 'Ensures roles are defined by outcomes, not tasks, with clear decision rights and scope before any candidate is evaluated.' },
   EI: { icon: '◉', purpose: 'Ensures every candidate is assessed with the same structured, capability-based methods grounded in construct validity.' },
-  DG: { icon: '⬡', purpose: 'Ensures every hiring decision is documented, criteria-referenced, contemporaneous, and free from detectable bias patterns.' },
-  AG: { icon: '⬢', purpose: 'Ensures every automated tool in the hiring pipeline is inventoried, explainable, bias-tested, and human-supervised.' },
-  PI: { icon: '◇', purpose: 'Ensures hiring processes are genuinely open, consistently applied, and transparent to candidates regardless of source.' },
+  DG: { icon: '⬡', purpose: 'Ensures every consequential decision is documented, criteria-referenced, contemporaneous, and free from detectable bias patterns.' },
+  AG: { icon: '⬢', purpose: 'Ensures every automated tool in the decision pipeline is inventoried, explainable, bias-tested, and human-supervised.' },
+  PI: { icon: '◇', purpose: 'Ensures decision processes are genuinely open, consistently applied, consistently applied, and transparent to candidates regardless of source.' },
   CG: { icon: '⊞', purpose: 'Ensures compensation is derived from compensable factors tied to role scope, not titles, history, or negotiation leverage.' },
   ER: { icon: '▣', purpose: 'Ensures every control-relevant decision produces contemporaneous, classified, retrievable, and tamper-resistant evidence.' },
 }

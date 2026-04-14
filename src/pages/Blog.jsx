@@ -129,7 +129,7 @@ function BlogList() {
           <div style={{ letterSpacing: '0.25em', fontSize: 12, textTransform: 'uppercase', color: '#5b9bd5', marginBottom: 16, fontWeight: 500 }}>HCCS™ Blog</div>
           <h1 className='hero-title' style={{ fontSize: 40, fontWeight: 700, color: '#fff', margin: '0 0 16px' }}>Insights on hiring governance</h1>
           <p style={{ fontSize: 17, color: '#94a3b8', maxWidth: 560, margin: '0 auto', lineHeight: 1.6 }}>
-            Research, analysis, and practical guidance on building audit-ready hiring practices.
+            Research, analysis, and practical guidance on building governed decision practices.
           </p>
         </div>
       </section>

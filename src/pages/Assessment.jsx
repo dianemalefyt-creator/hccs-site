@@ -18,8 +18,8 @@ function Landing({onStart}){return(
 <div style={{minHeight:"100vh",background:"linear-gradient(165deg,#0a1628 0%,#1a2d4a 40%,#0f3460 100%)",color:"#e2e8f0",fontFamily:"'IBM Plex Sans',system-ui,sans-serif"}}>
 <div style={{maxWidth:760,margin:"0 auto",padding:"80px 24px 60px"}}>
 <div style={{letterSpacing:"0.25em",fontSize:12,textTransform:"uppercase",color:"#5b9bd5",marginBottom:16,fontWeight:500}}>Human Capital Control Standard™</div>
-<h1 style={{fontSize:44,fontWeight:700,lineHeight:1.15,margin:"0 0 20px",color:"#fff"}}>Is your hiring process<br/>audit-ready?</h1>
-<p style={{fontSize:18,lineHeight:1.65,color:"#94a3b8",maxWidth:560,margin:"0 0 40px"}}>Most organizations have process steps for hiring. Few have enforceable controls. HCCS™ is the first governance and audit standard for human capital decisions.</p>
+<h1 style={{fontSize:44,fontWeight:700,lineHeight:1.15,margin:"0 0 20px",color:"#fff"}}>Is your decision governance<br/>audit-ready?</h1>
+<p style={{fontSize:18,lineHeight:1.65,color:"#94a3b8",maxWidth:560,margin:"0 0 40px"}}>Most organizations have process steps. Few have enforceable controls. HCCS™ provides the governance and assurance framework for consequential decisions shaped by technology.</p>
 <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:16,marginBottom:48}}>
 {[["70","auditable controls"],["7","governance domains"],["5","maturity levels"]].map(([n,l])=>(
 <div key={l} style={{background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:10,padding:"20px 16px",textAlign:"center"}}>
@@ -265,7 +265,7 @@ ${ov<3?`
 <div class="page-break"></div>
 <div class="section">
 <h2>Remediation Roadmap to Level 3</h2>
-<p>Level 3 (Defined) is the minimum maturity level for external credibility and for organizations making public claims of fair, unbiased, or AI-governed hiring practices.</p>
+<p>Level 3 (Defined) is the minimum maturity level for external credibility and for organizations making public claims of governed, accountable, or technology-assisted decision practices.</p>
 ${ph.map((x,i)=>{
 const pg=ag.filter(g=>g.tier<=i+1&&g.level==='MUST');
 const ps=i===2?sg:[];
@@ -377,7 +377,7 @@ catch(x){document.getElementById('bc-msg').textContent='Failed. Try Save as PDF.
 </div>
 
 <h2>1. Executive Summary</h2>
-<p><strong>${user?.org||'The organization'}</strong> currently operates at <strong>HCCS™ Maturity Level ${ov}: ${Lv[ov]}</strong>. ${ov<3?`This is ${3-ov} level${3-ov>1?'s':''} below the credibility threshold (Level 3), the minimum required for organizations making public claims about fair, unbiased, or AI-governed hiring practices.`:'The organization meets or exceeds the credibility threshold.'}</p>
+<p><strong>${user?.org||'The organization'}</strong> currently operates at <strong>HCCS™ Maturity Level ${ov}: ${Lv[ov]}</strong>. ${ov<3?`This is ${3-ov} level${3-ov>1?'s':''} below the credibility threshold (Level 3), the minimum required for organizations making public claims about governed, accountable, or technology-assisted decision practices.`:'The organization meets or exceeds the credibility threshold.'}</p>
 <p>Of 70 auditable controls, <strong>${inPlace} are in place</strong> (${compliancePct}%). There are <strong>${mustGapCount} critical (MUST) gaps</strong> and <strong>${shouldGapCount} significant (SHOULD) gaps</strong> requiring remediation.</p>
 
 <div style="display:flex;flex-wrap:wrap;gap:12px;margin:20px 0">
@@ -396,7 +396,7 @@ ${riskRows}
 
 <h2>3. Cost of Inaction</h2>
 <div class="risk-box">
-<h3 style="color:#991b1b;margin-top:0">What ungoverned hiring costs</h3>
+<h3 style="color:#991b1b;margin-top:0">What ungoverned decisions cost</h3>
 <table>
 <tr><td style="font-weight:600">Bad hire costs (15% rate × 2× salary)</td><td style="text-align:right;font-weight:700;color:#dc2626">$180,000 - $360,000 per occurrence</td></tr>
 <tr><td style="font-weight:600">Discrimination settlement (average)</td><td style="text-align:right;font-weight:700;color:#dc2626">$40,000 - $165,000</td></tr>
@@ -435,8 +435,8 @@ ${ov<3?`
 `:`<div class="phase"><strong>Ongoing:</strong> Maintain Level ${ov} controls. Activate remaining MAY controls. Consider post-hire validation studies and published metrics for Level 5.</div>`}
 
 <h2>7. Stakeholder Talking Points</h2>
-<div class="stakeholder"><strong>For the CEO / Board:</strong> We govern every financial decision with SOX controls. We govern data with GDPR/CCPA. But hiring and compensation, our largest operational cost, has no equivalent governance. This closes that gap before regulators force it. Current gap: ${mustGapCount} critical controls missing.</div>
-<div class="stakeholder"><strong>For General Counsel:</strong> We have ${mustGapCount} undocumented decision points that represent litigation exposure. Current AI hiring legislation (NYC LL144, EU AI Act) requires governance we do not yet have. HCCS exceeds all current requirements. Assessment cost: $149-$2,500. Average discrimination settlement: $40K-$165K.</div>
+<div class="stakeholder"><strong>For the CEO / Board:</strong> We govern every financial decision with SOX controls. We govern data with GDPR/CCPA. But the decisions that most directly affect people have no equivalent governance. This closes that gap before regulators force it. Current gap: ${mustGapCount} critical controls missing.</div>
+<div class="stakeholder"><strong>For General Counsel:</strong> We have ${mustGapCount} undocumented decision points that represent litigation exposure. Current AI governance legislation (NYC LL144, EU AI Act) requires governance we do not yet have. HCCS exceeds all current requirements. Assessment cost: $149-$2,500. Average discrimination settlement: $40K-$165K.</div>
 <div class="stakeholder"><strong>For the CFO:</strong> Bad hires cost 1.5-3× salary. We currently have no structured method to prevent them. Governance investment: $149-$2,500. One prevented bad hire at mid-level: $180K+ saved. ROI is measured in multiples, not percentages.</div>
 <div class="stakeholder"><strong>For the CHRO:</strong> This assessment identified ${gaps} control gaps across ${ds.filter(d=>d.level<3).length} domains below the credibility threshold. HCCS gives us a framework to prove our practices are structured, fair, and auditable. It turns "we think our process is good" into documented evidence.</div>
 
@@ -671,7 +671,7 @@ return (
 <div style={{textAlign:'center',marginBottom:48}}>
 <div style={{letterSpacing:'0.25em',fontSize:12,textTransform:'uppercase',color:'#5b9bd5',marginBottom:12,fontWeight:500}}>Full HCCS™ Assessment</div>
 <h1 style={{fontSize:40,fontWeight:700,color:'#fff',margin:'0 0 12px'}}>70 controls. 7 domains. Your complete maturity score.</h1>
-<p style={{fontSize:17,color:'#94a3b8',maxWidth:560,margin:'0 auto',lineHeight:1.6}}>Choose the assessment path that fits your organization. Both include the full 67-control assessment, gap analysis, remediation roadmap, and audit-grade report.</p>
+<p style={{fontSize:17,color:'#94a3b8',maxWidth:560,margin:'0 auto',lineHeight:1.6}}>Choose the assessment path that fits your organization. Both include the full 70-control assessment, gap analysis, remediation roadmap, and audit-grade report.</p>
 </div>
 
 {/* Pricing cards */}
@@ -683,11 +683,11 @@ return (
 <div style={{fontSize:36,fontWeight:700,color:'#0f172a',marginBottom:4}}>$149</div>
 <div style={{fontSize:14,color:'#64748b',marginBottom:20}}>One-time payment</div>
 <div style={{flex:1}}>
-{['Full 67-control assessment','Definition, example, remediation per control','Notes capture throughout','Per-domain maturity scoring (L0-L5)','Gap analysis (MUST/SHOULD)','Remediation roadmap to Level 3','Downloadable audit-grade report','Email delivery of results'].map(t=>
+{['Full 70-control assessment','Definition, example, remediation per control','Notes capture throughout','Per-domain maturity scoring (L0-L5)','Gap analysis (MUST/SHOULD)','Remediation roadmap to Level 3','Downloadable audit-grade report','Email delivery of results'].map(t=>
 <div key={t} style={{fontSize:13,color:'#475569',marginBottom:8,display:'flex',gap:8,lineHeight:1.45}}>
 <span style={{color:'#059669',fontWeight:700,marginTop:1,flexShrink:0}}>&#10003;</span><span>{t}</span></div>)}
 </div>
-<div style={{fontSize:12,color:'#64748b',fontStyle:'italic',marginBottom:16}}>Best for: HR leaders, TA managers, People Ops assessing independently.</div>
+<div style={{fontSize:12,color:'#64748b',fontStyle:'italic',marginBottom:16}}>Best for: Governance leads, compliance officers, department heads assessing independently.</div>
 <a href={STRIPE_SELF} style={{display:'block',textAlign:'center',background:'#2563eb',color:'#fff',padding:'14px 20px',borderRadius:8,fontSize:15,fontWeight:600,textDecoration:'none'}}>Get started</a>
 </div>
 
@@ -702,7 +702,7 @@ return (
 <div key={t} style={{fontSize:13,color:i===0?'#0f172a':'#475569',fontWeight:i===0?600:400,marginBottom:8,display:'flex',gap:8,lineHeight:1.45}}>
 {i>0&&<span style={{color:'#2563eb',fontWeight:700,marginTop:1,flexShrink:0}}>&#10003;</span>}<span>{t}</span></div>)}
 </div>
-<div style={{fontSize:12,color:'#64748b',fontStyle:'italic',marginBottom:16}}>Best for: CHROs, VPs of People needing validated results for leadership.</div>
+<div style={{fontSize:12,color:'#64748b',fontStyle:'italic',marginBottom:16}}>Best for: Executives needing validated results for leadership and board reporting.</div>
 <a href={STRIPE_GUIDED} style={{display:'block',textAlign:'center',background:'#0f172a',color:'#fff',padding:'14px 20px',borderRadius:8,fontSize:15,fontWeight:600,textDecoration:'none'}}>Book guided assessment</a>
 </div>
 
@@ -716,7 +716,7 @@ return (
 <div key={t} style={{fontSize:13,color:i===0?'#0f172a':'#475569',fontWeight:i===0?600:400,marginBottom:8,display:'flex',gap:8,lineHeight:1.45}}>
 {i>0&&<span style={{color:'#0f172a',fontWeight:700,marginTop:1,flexShrink:0}}>&#10003;</span>}<span>{t}</span></div>)}
 </div>
-<div style={{fontSize:12,color:'#64748b',fontStyle:'italic',marginBottom:16}}>Best for: General Counsel, boards, orgs making public claims about hiring practices.</div>
+<div style={{fontSize:12,color:'#64748b',fontStyle:'italic',marginBottom:16}}>Best for: General Counsel, boards, organizations making public governance claims.</div>
 <a href="/contact" style={{display:'block',textAlign:'center',background:'#0f172a',color:'#fff',padding:'14px 20px',borderRadius:8,fontSize:15,fontWeight:600,textDecoration:'none'}}>Book a consultation</a>
 </div>
 </div>
