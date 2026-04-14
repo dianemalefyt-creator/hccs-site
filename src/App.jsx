@@ -21,6 +21,7 @@ import { PricingPage } from './components/ProGate'
 import Admin from './pages/Admin'
 import Research from './pages/Research'
 import DomainPage from './pages/DomainPage'
+import OrgAssess from './pages/OrgAssess'
 import Documents from './pages/Documents'
 import About from './pages/About'
 
@@ -41,7 +42,8 @@ export default function App() {
       <main id="main-content">
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/assess" element={<QuickAssess />} />
+        <Route path="/assess" element={<OrgAssess />} />
+        <Route path="/assess/employment" element={<QuickAssess />} />
         <Route path="/assess/full" element={<Assessment />} />
         <Route path="/controls" element={<Controls />} />
         <Route path="/contact" element={<Contact />} />

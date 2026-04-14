@@ -28,8 +28,8 @@ export default function Home() {
               AI does not remove the need for governance. It makes governance the only defensible position.
             </p>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', maxWidth: 540 }}>
-              <Link to="/domains/employment" style={{ background: '#2563eb', color: '#fff', padding: '14px 28px', borderRadius: 8, fontSize: 15, fontWeight: 600, textAlign: 'center', textDecoration: 'none' }}>
-                Explore the standard
+              <Link to="/assess" style={{ background: '#2563eb', color: '#fff', padding: '14px 28px', borderRadius: 8, fontSize: 15, fontWeight: 600, textAlign: 'center', textDecoration: 'none' }}>
+                Assess your governance
               </Link>
               <Link to="/documents" style={{ border: '1px solid rgba(255,255,255,0.2)', color: '#cbd5e1', padding: '14px 24px', borderRadius: 8, fontSize: 15, fontWeight: 500, textAlign: 'center', textDecoration: 'none' }}>
                 Read the documents
@@ -132,18 +132,18 @@ export default function Home() {
         <div style={S.wrap}>
           <div style={{ textAlign: 'center', marginBottom: 16 }}>
             <div style={{ letterSpacing: '0.15em', fontSize: 12, textTransform: 'uppercase', color: '#2563eb', marginBottom: 16, fontWeight: 600 }}>7 control domains</div>
-            <h2 className='section-title' style={{ fontSize: 32, fontWeight: 700, color: '#0f172a', marginBottom: 12 }}>Complete coverage. No control gaps.</h2>
-            <p style={{ fontSize: 16, color: '#64748b', maxWidth: 620, margin: '0 auto', lineHeight: 1.6 }}>HCCS™ defines seven control domains that collectively govern the full lifecycle of consequential decisions shaped by technology.</p>
+            <h2 className='section-title' style={{ fontSize: 32, fontWeight: 700, color: '#0f172a', marginBottom: 12 }}>One governance architecture. Any domain.</h2>
+            <p style={{ fontSize: 16, color: '#64748b', maxWidth: 640, margin: '0 auto', lineHeight: 1.6 }}>HCCS™ defines seven control domains that collectively govern the full lifecycle of consequential decisions shaped by technology. The architecture is domain-agnostic. What changes across verticals is the vocabulary, not the structure.</p>
           </div>
           <div className='grid-cards' style={{ marginTop: 32 }}>
             {[
-              { code: 'RG', name: 'Role Governance', desc: 'Outcome-based definitions for every role in a decision pipeline, with defined authority, scope boundaries, and capability requirements.', color: '#185FA5' },
-              { code: 'EI', name: 'Evaluation Integrity', desc: 'Structured, criteria-based assessment with validated constructs, calibration standards, and controls for cognitive bias and evaluator fatigue.', color: '#0F6E56' },
-              { code: 'DG', name: 'Decision Governance', desc: 'Documented, criteria-referenced decisions with bias detection, approval controls, and requirements for AI-assisted decision transparency.', color: '#534AB7' },
-              { code: 'AG', name: 'AI Governance', desc: 'Inventory and classification of algorithmic decision tools, substantive human oversight requirements, trust profile assessment, explainability standards, and deference risk monitoring.', color: '#993C1D' },
-              { code: 'PI', name: 'Process Integrity', desc: 'Transparent, consistently applied processes with procedural justice standards, classification controls, and communication requirements.', color: '#854F0B' },
-              { code: 'CG', name: 'Compensation Governance', desc: 'Resource allocation aligned to defined scope using structured factor analysis, documented rationale, and equity controls.', color: '#3B6D11' },
-              { code: 'ER', name: 'Evidence & Records', desc: 'Contemporaneous records distinguishing substantive from nominal review, defined retention, classification standards, access controls, and audit reproducibility.', color: '#993556' },
+              { code: 'RG', name: 'Role & Scope Governance', desc: 'Every consequential decision begins with a defined scope: what is being decided, by whom, under what authority, and within what boundaries. Without this, evaluation criteria are arbitrary and accountability is impossible.', color: '#185FA5' },
+              { code: 'EI', name: 'Evaluation Integrity', desc: 'Structured, criteria-based assessment with validated constructs, calibration standards, and controls for cognitive bias. Ensures that the method of evaluation is defensible, not just the outcome.', color: '#0F6E56' },
+              { code: 'DG', name: 'Decision Governance', desc: 'Every consequential decision documented with criteria, evidence, rationale, and named accountability. For technology-assisted decisions, records must show what the system recommended and what the human changed.', color: '#534AB7' },
+              { code: 'AG', name: 'AI & Technology Governance', desc: 'Inventory of every algorithmic tool in the decision pipeline. Substantive human oversight verified, not assumed. Trust profiles assessed. Deference risk monitored. Explainability required.', color: '#993C1D' },
+              { code: 'PI', name: 'Process Integrity', desc: 'Processes applied consistently regardless of who executes them. Procedural justice standards enforced. Classification controls documented. Affected parties informed of how decisions are made.', color: '#854F0B' },
+              { code: 'CG', name: 'Resource & Outcome Governance', desc: 'Resources, compensation, and outcomes aligned to defined scope through structured factor analysis. Documented rationale required. Equity monitored across demographic groups.', color: '#3B6D11' },
+              { code: 'ER', name: 'Evidence & Records', desc: 'Contemporaneous records for every consequential decision. Substantive review distinguished from pass-through approval. Defined retention, classification, access controls, and audit reproducibility.', color: '#993556' },
             ].map(d => (
               <div key={d.code} style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: 12, padding: 24, borderLeft: `4px solid ${d.color}` }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>

@@ -18,7 +18,8 @@ const NAV = [
     { label: 'Social Services', desc: 'Benefits, child welfare, housing, disability', to: '/domains/social-services' },
   ]},
   { label: 'Tools', children: [
-    { label: 'Quick assessment', desc: 'Free, 10 questions, 3 minutes', to: '/assess' },
+    { label: 'Governance assessment', desc: 'Organizational readiness, 10 questions, 3 minutes', to: '/assess' },
+    { label: 'Employment assessment', desc: 'Hiring-specific, 10 controls, quick score', to: '/assess/employment' },
     { label: 'Full assessment', desc: '70 controls, gap analysis, roadmap', to: '/assess/full' },
     { label: 'Governance tools', desc: 'Role definition, scorecard, bias checker, more', to: '/tools' },
     { label: 'Guided workflow', desc: 'Step-by-step with AI suggestions', to: '/workflow' },

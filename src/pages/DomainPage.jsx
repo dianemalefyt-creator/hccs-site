@@ -27,8 +27,8 @@ const DOMAINS = {
       { id: 'ER', name: 'Evidence & Records', count: 9, example: 'Records distinguish substantive review from pass-through approval. 3-year minimum retention.' },
     ],
     regulations: ['Title VII of the Civil Rights Act', 'EU AI Act (high-risk classification)', 'NYC Local Law 144 (automated employment decisions)', 'OFCCP compliance requirements', 'EEOC Uniform Guidelines on Employee Selection', 'State-level AI hiring laws (IL, CO, MD, others)'],
-    cta: 'Start your assessment',
-    ctaLink: '/assess',
+    cta: 'Start employment assessment',
+    ctaLink: '/assess/employment',
   },
   'healthcare': {
     name: 'Healthcare',
