@@ -38,7 +38,7 @@ Trust in AI is not something you create through design. It is something people b
 
 If a human reviewer approves 100% of AI recommendations without modification, that is not governance. That is a rubber stamp with a name attached. The decision layer requires structured controls, documented evidence, and verified human oversight.
 
-That is what HCCS\u2122 provides. 70 auditable controls across 7 governance domains. The architecture is domain-agnostic. Employment is the first vertical. Healthcare, financial services, criminal justice, education, insurance, and social services are next.
+That is what HCCS\u2122 provides. 74 auditable controls across 7 governance domains. The architecture is domain-agnostic. Employment is the first vertical. Healthcare, financial services, criminal justice, education, insurance, and social services are next.
 
 The question was never whether to govern AI. The question is whether to govern the decisions AI produces.`,
   },
@@ -152,7 +152,7 @@ The result is a unified decision system that governs who enters the organization
 
 ## What governance actually looks like
 
-The HCCS™ Standard defines 70 auditable controls across 7 governance domains. It is not an HR framework. It does not prescribe processes. It governs decision integrity.
+The HCCS™ Standard defines 74 auditable controls across 7 governance domains. It is not an HR framework. It does not prescribe processes. It governs decision integrity.
 
 That means every role definition specifies outcomes, not tasks. Every evaluation uses pre-defined, criteria-based methods. Every decision is documented with contemporaneous rationale. Every AI tool is inventoried, explainable, and bias-tested. Every compensation decision ties to compensable factors, not negotiation leverage.
 

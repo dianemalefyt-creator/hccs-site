@@ -229,7 +229,7 @@ function Results({ answers }) {
           <h1 style={{ fontSize: 36, fontWeight: 700, color: "#0f172a", margin: "0 0 8px" }}>Estimated Maturity: Level {level}</h1>
           <div style={{ display: "inline-block", padding: "6px 20px", borderRadius: 20, background: LC[level] + "15", color: LC[level], fontWeight: 600, fontSize: 16, border: `1px solid ${LC[level]}30` }}>{LN[level]}</div>
           <div style={{ fontSize: 14, color: "#64748b", marginTop: 12 }}>{yes}/10 in place | {partial} partial | {no} gaps</div>
-          <div style={{ fontSize: 13, color: "#94a3b8", marginTop: 8 }}>Based on 10 of 70 controls. Full assessment required for validated score.</div>
+          <div style={{ fontSize: 13, color: "#94a3b8", marginTop: 8 }}>Based on 10 of 74 controls. Full assessment required for validated score.</div>
         </div>
 
         {/* Score bar */}
@@ -279,11 +279,11 @@ function Results({ answers }) {
 
         {/* What you're missing */}
         <div style={{ background: "#0f172a", borderRadius: 12, padding: 28, marginBottom: 32, textAlign: "center" }}>
-          <div style={{ fontSize: 13, color: "#5b9bd5", textTransform: "uppercase", letterSpacing: "0.15em", marginBottom: 12, fontWeight: 600 }}>This was 10 of 70 controls</div>
+          <div style={{ fontSize: 13, color: "#5b9bd5", textTransform: "uppercase", letterSpacing: "0.15em", marginBottom: 12, fontWeight: 600 }}>This was 10 of 74 controls</div>
           <h3 style={{ fontSize: 22, fontWeight: 700, color: "#fff", margin: "0 0 12px" }}>The full HCCS™ assessment covers:</h3>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, maxWidth: 480, margin: "0 auto", textAlign: "left" }}>
             {[
-              "70 auditable controls across 7 domains",
+              "74 auditable controls across 7 domains",
               "Per-control remediation recommendations",
               "Phased roadmap to Level 3 compliance",
               "Full report with gap analysis and notes",
@@ -362,22 +362,22 @@ else{document.getElementById('sent-msg').textContent='Failed. Try Save as PDF in
 <div style="font-size:11px;color:#5b9bd5;letter-spacing:0.15em;margin-bottom:4px">HCCS™ BUDGET REQUEST</div>
 <h1>The Case for a Human Capital Governance Assessment</h1>
 <div class="s">Prepared for: ${orgName} leadership | ${date}</div>
-<div class="s">Based on HCCS™ Quick Assessment (10 of 70 controls sampled)</div>
+<div class="s">Based on HCCS™ Quick Assessment (10 of 74 controls sampled)</div>
 </div>
 
 <h2>The situation</h2>
 <p>${orgName} currently scores at an estimated <strong>HCCS™ Maturity Level ${level} (${['Not Established','Initial','Developing','Defined','Managed','Optimizing'][level]})</strong> based on a sample of 10 critical controls. ${level < 3 ? `This is ${3-level} level${3-level>1?'s':''} below the credibility threshold, the minimum for organizations making defensible claims about governed, accountable decision practices.` : 'This meets the credibility threshold based on the sample.'}</p>
 <p><strong>${yes}</strong> of 10 sampled controls are in place. <strong>${no}</strong> are not in place. <strong>${partial}</strong> are partial. This is a <strong>${score}% readiness score</strong> on a sample that deliberately targets the highest-risk controls.</p>
-<p>These 10 controls represent the foundation. The full HCCS™ Standard covers <strong>70 controls across 7 governance domains</strong>. If foundation controls have gaps, deeper controls almost certainly do as well.</p>
+<p>These 10 controls represent the foundation. The full HCCS™ Standard covers <strong>74 controls across 7 governance domains</strong>. If foundation controls have gaps, deeper controls almost certainly do as well.</p>
 
 <h2>What we found</h2>
 ${gaps.length > 0 ? `<div class="r"><strong style="color:#991b1b">Controls not fully in place (${gaps.length} of 10):</strong>
 <table><tr><th>Control</th><th>Requirement</th><th>Level</th></tr>${gapList}</table>
-<p style="font-size:12px;color:#7f1d1d;margin:8px 0 0">Each gap represents a potential compliance, legal, or operational exposure.</p></div>` : '<p>All sampled controls are in place. A full assessment would validate this across all 70 controls.</p>'}
+<p style="font-size:12px;color:#7f1d1d;margin:8px 0 0">Each gap represents a potential compliance, legal, or operational exposure.</p></div>` : '<p>All sampled controls are in place. A full assessment would validate this across all 74 controls.</p>'}
 
 <h2>The cost of not knowing</h2>
 <div class="r">
-<p style="margin:0 0 8px"><strong>We sampled 10 of 70 controls. We do not know the state of the other 57.</strong></p>
+<p style="margin:0 0 8px"><strong>We sampled 10 of 74 controls. We do not know the state of the other 57.</strong></p>
 <table>
 <tr><td style="font-weight:600">Average cost of one bad hire (mid-level)</td><td style="text-align:right;font-weight:700;color:#dc2626">$180,000 - $360,000</td></tr>
 <tr><td style="font-weight:600">Average employment discrimination settlement</td><td style="text-align:right;font-weight:700;color:#dc2626">$40,000 - $165,000</td></tr>
@@ -390,7 +390,7 @@ ${gaps.length > 0 ? `<div class="r"><strong style="color:#991b1b">Controls not f
 <h2>What the full assessment delivers</h2>
 <div class="g">
 <table>
-<tr><td style="font-weight:600">Scope</td><td>All 70 controls across 7 governance domains</td></tr>
+<tr><td style="font-weight:600">Scope</td><td>All 74 controls across 7 governance domains</td></tr>
 <tr><td style="font-weight:600">Per-control detail</td><td>Definition, example, your status, remediation recommendation, your notes</td></tr>
 <tr><td style="font-weight:600">Maturity scoring</td><td>Validated level (L0-L5) per domain and overall</td></tr>
 <tr><td style="font-weight:600">Gap analysis</td><td>Prioritized by MUST/SHOULD/MAY with specific action steps</td></tr>

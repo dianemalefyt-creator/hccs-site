@@ -46,7 +46,7 @@ export default function Home() {
       {/* Stats bar */}
       <section style={{ background: '#fff', borderBottom: '1px solid #e2e8f0', padding: '40px 24px' }}>
         <div className='grid-4' style={{ ...S.wrap, textAlign: 'center' }}>
-          {[['70', 'Auditable controls'], ['7', 'Governance domains'], ['5', 'Maturity levels'], ['3', 'Document system']].map(([n, l]) => (
+          {[['74', 'Auditable controls'], ['7', 'Governance domains'], ['5', 'Maturity levels'], ['3', 'Document system']].map(([n, l]) => (
             <div key={l}>
               <div className='stat-number' style={{ fontSize: 40, fontWeight: 700, color: '#1e3a5f' }}>{n}</div>
               <div style={{ fontSize: 14, color: '#64748b', marginTop: 4 }}>{l}</div>
@@ -101,7 +101,7 @@ export default function Home() {
           </div>
           <div className='grid-cards'>
             {[
-              { domain: 'Employment & Workforce', status: 'Active', color: '#185FA5', items: 'Hiring, evaluation, compensation, promotion, termination, workforce planning', desc: 'The origin domain. 70 controls, 7 governance domains, full assessment and tooling available.' },
+              { domain: 'Employment & Workforce', status: 'Active', color: '#185FA5', items: 'Hiring, evaluation, compensation, promotion, termination, workforce planning', desc: 'The origin domain. 74 controls, 7 governance domains, full assessment and tooling available.' },
               { domain: 'Healthcare', status: 'Planned', color: '#0F6E56', items: 'Diagnosis support, treatment recommendations, triage, prior authorization, clinical decision support', desc: 'AI-assisted clinical decisions where algorithmic recommendations shape patient outcomes and provider judgment.' },
               { domain: 'Financial Services', status: 'Planned', color: '#534AB7', items: 'Credit decisions, lending, underwriting, fraud detection, claims adjudication, algorithmic trading oversight', desc: 'Automated decisioning in regulated financial environments where human review is legally required but often nominal.' },
               { domain: 'Criminal Justice', status: 'Planned', color: '#993C1D', items: 'Risk assessment, sentencing recommendations, parole decisions, predictive policing, surveillance', desc: 'The highest-stakes domain. Algorithmic influence on liberty decisions with documented disparate impact.' },
@@ -167,7 +167,7 @@ export default function Home() {
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {[
-              { l: 5, n: 'Optimizing', d: 'All controls implemented, continuously improved, independently audited.', c: '70 controls', t: 'Audited', col: '#993C1D' },
+              { l: 5, n: 'Optimizing', d: 'All controls implemented, continuously improved, independently audited.', c: '74 controls', t: 'Audited', col: '#993C1D' },
               { l: 4, n: 'Managed', d: 'Controls consistently applied, measured, and subject to internal audit.', c: '63 controls', t: 'Audited', col: '#534AB7' },
               { l: 3, n: 'Defined', d: 'Controls formally established, documented, and validated. Minimum threshold for external credibility.', c: '51 controls', t: 'Validated', col: '#0F6E56', threshold: true },
               { l: 2, n: 'Developing', d: 'Controls partially implemented, inconsistently applied, self-attested.', c: '26 controls', t: 'Self-Attest', col: '#185FA5' },
@@ -279,7 +279,7 @@ export default function Home() {
         <div style={S.wrap}>
           <h2 className='section-title' style={{ fontSize: 32, fontWeight: 700, color: '#0f172a', marginBottom: 12 }}>Is your organization's decision governance audit-ready?</h2>
           <p style={{ fontSize: 17, color: '#64748b', marginBottom: 32, maxWidth: 520, margin: '0 auto 32px' }}>
-            HCCS™ provides 70 auditable controls across 7 governance domains. Start with your domain, identify governance gaps, and build a remediation roadmap.
+            HCCS™ provides 74 auditable controls across 7 governance domains. Start with your domain, identify governance gaps, and build a remediation roadmap.
           </p>
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link to="/domains/employment" style={{ background: '#2563eb', color: '#fff', padding: '16px 32px', borderRadius: 8, fontSize: 16, fontWeight: 600, textDecoration: 'none' }}>

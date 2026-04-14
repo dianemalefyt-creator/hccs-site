@@ -16,7 +16,7 @@ const DOMAINS = {
       'Compensation set by salary history and title matching rather than structured factor analysis',
       'Human reviewers who approve 100% of AI recommendations without substantive engagement',
     ],
-    governance: 'HCCS™ provides the complete governance architecture for employment decisions. 70 auditable controls across 7 domains cover every stage: how roles are defined, how candidates are evaluated, how decisions are made and documented, how AI tools are governed, how processes maintain integrity, how compensation aligns to scope, and how evidence is retained for audit.',
+    governance: 'HCCS™ provides the complete governance architecture for employment decisions. 74 auditable controls across 7 domains cover every stage: how roles are defined, how candidates are evaluated, how decisions are made and documented, how AI tools are governed, how processes maintain integrity, how compensation aligns to scope, and how evidence is retained for audit.',
     controls: [
       { id: 'RG', name: 'Role Governance', count: 9, example: 'Role definitions must specify business outcomes, not task lists. Required vs. learnable capabilities must be distinguished.' },
       { id: 'EI', name: 'Evaluation Integrity', count: 13, example: 'Every candidate evaluated with identical criteria. Evaluators calibrated to .70+ inter-rater reliability.' },

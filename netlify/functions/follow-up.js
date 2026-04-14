@@ -20,7 +20,7 @@ const followUpHtml = (name, level, gaps) => `
     </p>
 
     ${gaps > 0 ? `<p style="font-size:15px;line-height:1.7;color:#475569;margin:0 0 16px">
-      You had <strong>${gaps} control gaps</strong> out of the 10 we sampled. But here\u2019s the thing: we only tested 10 of 70 controls. The full assessment covers the other 60, and most organizations discover significantly more gaps than the teaser suggests.
+      You had <strong>${gaps} control gaps</strong> out of the 10 we sampled. But here\u2019s the thing: we only tested 10 of 74 controls. The full assessment covers the other 64, and most organizations discover significantly more gaps than the teaser suggests.
     </p>` : ''}
 
     <p style="font-size:15px;line-height:1.7;color:#475569;margin:0 0 24px">
@@ -28,7 +28,7 @@ const followUpHtml = (name, level, gaps) => `
     </p>
     
     <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:20px;margin:0 0 24px">
-      <div style="font-size:14px;color:#334155;margin-bottom:8px"><strong>\u2713</strong> All 70 controls scored with definition, example, and remediation</div>
+      <div style="font-size:14px;color:#334155;margin-bottom:8px"><strong>\u2713</strong> All 74 controls scored with definition, example, and remediation</div>
       <div style="font-size:14px;color:#334155;margin-bottom:8px"><strong>\u2713</strong> Validated maturity level per domain (not estimated)</div>
       <div style="font-size:14px;color:#334155;margin-bottom:8px"><strong>\u2713</strong> Prioritized gap analysis (MUST before SHOULD before MAY)</div>
       <div style="font-size:14px;color:#334155;margin-bottom:8px"><strong>\u2713</strong> Phased remediation roadmap to Level 3</div>

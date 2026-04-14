@@ -5,7 +5,7 @@ const NAV = [
   { label: 'Home', to: '/' },
   { label: 'Standard', children: [
     { label: 'Documents', desc: 'Core Standard, Implementation Guide, Templates', to: '/documents' },
-    { label: 'Controls library', desc: 'All 70 controls with definitions', to: '/controls' },
+    { label: 'Controls library', desc: 'All 74 controls with definitions', to: '/controls' },
     { label: 'Fillable templates', desc: 'Fill online, generate PDF', to: '/templates' },
   ]},
   { label: 'Domains', children: [
@@ -20,7 +20,7 @@ const NAV = [
   { label: 'Tools', children: [
     { label: 'Governance assessment', desc: 'Organizational readiness, 10 questions, 3 minutes', to: '/assess' },
     { label: 'Employment assessment', desc: 'Hiring-specific, 10 controls, quick score', to: '/assess/employment' },
-    { label: 'Full assessment', desc: '70 controls, gap analysis, roadmap', to: '/assess/full' },
+    { label: 'Full assessment', desc: '74 controls, gap analysis, roadmap', to: '/assess/full' },
     { label: 'Governance tools', desc: 'Role definition, scorecard, bias checker, more', to: '/tools' },
     { label: 'Guided workflow', desc: 'Step-by-step with AI suggestions', to: '/workflow' },
     { label: 'Business case & ROI', desc: 'Cost of inaction, stakeholder talking points', to: '/business-case' },

@@ -79,7 +79,7 @@ exports.handler = async function(event) {
       '<p>In the meantime, you can:</p>' +
       '<ul style="color:#475569">' +
       '<li><a href="https://hccsstandard.com/assess" style="color:#2563eb">Take the free governance assessment</a> (10 questions, 3 minutes)</li>' +
-      '<li><a href="https://hccsstandard.com/controls" style="color:#2563eb">Browse the 70 controls</a></li>' +
+      '<li><a href="https://hccsstandard.com/controls" style="color:#2563eb">Browse the 74 controls</a></li>' +
       '<li><a href="https://hccsstandard.com/documents" style="color:#2563eb">Read the standard online</a></li>' +
       '</ul>' +
       '<p style="margin-top:24px">Best,<br><strong>Diane Malefyt</strong><br>HCCS\u2122 Standard<br><a href="https://www.linkedin.com/in/dianemalefyt/" style="color:#2563eb">LinkedIn</a></p>' +

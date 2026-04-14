@@ -137,7 +137,7 @@ export default function Contact() {
                 </a>
                 <a href="/controls" style={{ display: 'block', padding: '14px 16px', borderRadius: 8, border: '1px solid #e2e8f0', textDecoration: 'none' }}>
                   <div style={{ fontSize: 14, fontWeight: 600, color: '#0f172a' }}>Browse Controls</div>
-                  <div style={{ fontSize: 13, color: '#64748b' }}>See all 70 controls with definitions and examples.</div>
+                  <div style={{ fontSize: 13, color: '#64748b' }}>See all 74 controls with definitions and examples.</div>
                 </a>
                 <a href="/documents" style={{ display: 'block', padding: '14px 16px', borderRadius: 8, border: '1px solid #e2e8f0', textDecoration: 'none' }}>
                   <div style={{ fontSize: 14, fontWeight: 600, color: '#0f172a' }}>Read the Standard</div>

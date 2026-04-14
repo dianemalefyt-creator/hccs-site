@@ -25,7 +25,7 @@ export default function About() {
               The standard begins with human capital decisions, where the market pain is immediate and the legal exposure is obvious: how organizations define roles, evaluate candidates, make hiring decisions, and align compensation to the actual scope of work. The same governance architecture extends to any domain where consequential decisions about people are shaped by algorithmic systems.
             </p>
             <p style={{ fontSize: 16, lineHeight: 1.7, color: '#475569', marginBottom: 12 }}>
-              The standard defines 70 auditable controls across 7 governance domains, a 5-level maturity model, and a tiered compliance framework that scales from self-attestation to third-party audit.
+              The standard defines 74 auditable controls across 7 governance domains, a 5-level maturity model, and a tiered compliance framework that scales from self-attestation to third-party audit.
             </p>
             <p style={{ fontSize: 16, lineHeight: 1.7, color: '#475569' }}>
               HCCS™ is designed to exceed the requirements of current employment and AI regulations, including Title VII, the EU AI Act, NYC Local Law 144, and OFCCP compliance requirements. It is built to be future-proof because it governs the decision layer, not any specific technology.

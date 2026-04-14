@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const WELCOME = "Hi! I'm the HCCS\u2122 assistant. I can help you understand the standard, its 70 controls, the assessment process, or pricing. What can I help with?"
+const WELCOME = "Hi! I'm the HCCS\u2122 assistant. I can help you understand the standard, its 74 controls, the assessment process, or pricing. What can I help with?"
 
 const QUICK_ACTIONS = [
   { label: 'What is HCCS?', msg: 'What is the HCCS Standard and why does it matter?' },
