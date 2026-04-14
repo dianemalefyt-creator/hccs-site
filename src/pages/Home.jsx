@@ -223,8 +223,13 @@ export default function Home() {
             You cannot fix trust with a design change.
           </h2>
           <p style={{ fontSize: 17, lineHeight: 1.7, color: '#475569', marginBottom: 20 }}>
-            We studied how people actually form trust in AI decision tools. 319 participants. Three experimental conditions. The finding: giving people more transparency, more control, or better design did not change how much they trusted the tool. Not even a little.
+            We studied how people actually form trust in AI decision tools. 319 participants. Three experimental conditions.
           </p>
+          <div style={{ background: '#0f172a', borderRadius: 12, padding: '28px 32px', marginBottom: 24 }}>
+            <p style={{ fontSize: 20, lineHeight: 1.5, color: '#fff', margin: 0, fontWeight: 600 }}>
+              The finding: giving people more transparency, more control, or better design did not change how much they trusted the tool. <span style={{ color: '#f59e0b' }}>Not even a little.</span>
+            </p>
+          </div>
           <p style={{ fontSize: 17, lineHeight: 1.7, color: '#475569', marginBottom: 24 }}>
             What predicted trust was who the person already was: how often they use AI, how connected they felt to the decision, and how confident they were in their own judgment. Trust is something people bring with them. It is not something an interface creates. That means governance cannot be delegated to better UX. It requires structured controls, documented evidence, and verified human oversight.
           </p>
