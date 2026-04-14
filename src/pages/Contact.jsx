@@ -1,6 +1,10 @@
 import { useState } from 'react'
 
 const INTERESTS = [
+  'Subscribe: All updates',
+  'Subscribe: Research & findings',
+  'Subscribe: New domains & controls',
+  'Subscribe: Blog & thought leadership',
   'Pro Monthly ($29/mo)',
   'Pro Annual ($249/yr)',
   'Self-Assessment ($149)',
@@ -19,15 +23,18 @@ export default function Contact() {
   const [err, setErr] = useState('')
 
   const set = (k, v) => setForm(p => ({ ...p, [k]: v }))
+  const isSub = form.interest.startsWith('Subscribe')
 
   const handleSubmit = async () => {
-    if (!form.name || !form.email || !form.message) { setErr('Please fill in name, email, and message.'); return }
+    if (!form.name || !form.email) { setErr('Please fill in name and email.'); return }
+    if (!isSub && !form.message) { setErr('Please fill in your message.'); return }
     setSending(true); setErr('')
+    const payload = { ...form, message: isSub ? `Subscribed: ${form.interest}` : form.message }
     try {
       const res = await fetch('/.netlify/functions/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify(payload),
       })
       if (res.ok) setSent(true)
       else setErr('Something went wrong. Try emailing info@hccsstandard.com directly.')
@@ -54,7 +61,7 @@ export default function Contact() {
           <div>
             {!sent ? (
               <div style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: 14, padding: 32 }}>
-                <h2 style={{ fontSize: 22, fontWeight: 700, color: '#0f172a', margin: '0 0 24px' }}>Send us a message</h2>
+                <h2 style={{ fontSize: 22, fontWeight: 700, color: '#0f172a', margin: '0 0 24px' }}>{isSub ? 'Subscribe to updates' : 'Send us a message'}</h2>
 
                 <div style={{ marginBottom: 16 }}>
                   <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#334155', marginBottom: 6 }}>Name <span style={{ color: '#dc2626' }}>*</span></label>
@@ -84,25 +91,29 @@ export default function Contact() {
                 </div>
 
                 <div style={{ marginBottom: 20 }}>
-                  <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#334155', marginBottom: 6 }}>Message <span style={{ color: '#dc2626' }}>*</span></label>
+                  <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#334155', marginBottom: 6 }}>Message {!isSub && <span style={{ color: '#dc2626' }}>*</span>}</label>
+                  {isSub ? (
+                    <p style={{ fontSize: 14, color: '#059669', margin: '0 0 16px', lineHeight: 1.5 }}>You will receive updates on: <strong>{form.interest.replace('Subscribe: ', '')}</strong>. No spam, unsubscribe anytime.</p>
+                  ) : (
                   <textarea value={form.message} onChange={e => set('message', e.target.value)} placeholder="Tell us about your organization, what you're looking for, and any questions you have."
                     rows={5} style={{ width: '100%', padding: '12px 14px', borderRadius: 8, border: '1px solid #e2e8f0', fontSize: 14, outline: 'none', boxSizing: 'border-box', fontFamily: 'inherit', resize: 'vertical', lineHeight: 1.5 }} />
+                  )}
                 </div>
 
                 {err && <div style={{ fontSize: 13, color: '#dc2626', marginBottom: 12 }}>{err}</div>}
 
                 <button onClick={handleSubmit} disabled={sending}
                   style={{ width: '100%', padding: '14px', borderRadius: 8, border: 'none', background: sending ? '#94a3b8' : '#2563eb', color: '#fff', fontSize: 15, fontWeight: 600, cursor: sending ? 'default' : 'pointer' }}>
-                  {sending ? 'Sending...' : 'Send message'}
+                  {sending ? 'Sending...' : isSub ? 'Subscribe' : 'Send message'}
                 </button>
-                <div style={{ fontSize: 12, color: '#94a3b8', marginTop: 10, textAlign: 'center' }}>We respond within one business day.</div>
+                <div style={{ fontSize: 12, color: '#94a3b8', marginTop: 10, textAlign: 'center' }}>{isSub ? 'No spam. Unsubscribe anytime.' : 'We respond within one business day.'}</div>
               </div>
             ) : (
               <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 14, padding: 40, textAlign: 'center' }}>
                 <div style={{ fontSize: 32, marginBottom: 12 }}>✓</div>
-                <h2 style={{ fontSize: 22, fontWeight: 700, color: '#166534', margin: '0 0 8px' }}>Message sent</h2>
+                <h2 style={{ fontSize: 22, fontWeight: 700, color: '#166534', margin: '0 0 8px' }}>{form.interest.startsWith('Subscribe') ? 'Subscribed!' : 'Message sent'}</h2>
                 <p style={{ fontSize: 15, color: '#15803d', margin: '0 0 12px', lineHeight: 1.5 }}>
-                  We've received your inquiry and sent a confirmation to {form.email}. We'll get back to you within one business day.
+                  {form.interest.startsWith('Subscribe') ? `You're subscribed to ${form.interest.replace('Subscribe: ', '')} updates at ${form.email}.` : `We've received your inquiry and sent a confirmation to ${form.email}. We'll get back to you within one business day.`}
                 </p>
                 <a href="/assess" style={{ fontSize: 14, color: '#2563eb', fontWeight: 500 }}>Take the quick assessment while you wait →</a>
               </div>

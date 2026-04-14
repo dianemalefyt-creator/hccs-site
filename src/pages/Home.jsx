@@ -223,17 +223,17 @@ export default function Home() {
             You cannot fix trust with a design change.
           </h2>
           <p style={{ fontSize: 17, lineHeight: 1.7, color: '#475569', marginBottom: 20 }}>
-            HCCS™ is backed by original empirical research on how humans form trust in AI decision systems. A 2026 study with 319 participants across three experimental conditions found that recommendation framing, including agency-supportive design, produced no statistically significant change in trust in an AI tool, F(2, 316) = 0.39, p = .676. Pre-existing individual characteristics explained 25.8% of the variance. The experimental manipulation explained essentially nothing.
+            We studied how people actually form trust in AI decision tools. 319 participants. Three experimental conditions. The finding: giving people more transparency, more control, or better design did not change how much they trusted the tool. Not even a little.
           </p>
           <p style={{ fontSize: 17, lineHeight: 1.7, color: '#475569', marginBottom: 24 }}>
-            The deeper finding: trust in AI is not a single score. It is a profile. Four profiles emerged (blind trusters, conflicted, ambivalent, and skeptical) and they carry completely different implications for decision quality and organizational risk. A composite trust score of 48 looks identical whether someone is genuinely calibrated or deferring entirely.
+            What predicted trust was who the person already was: how often they use AI, how connected they felt to the decision, and how confident they were in their own judgment. Trust is something people bring with them. It is not something an interface creates. That means governance cannot be delegated to better UX. It requires structured controls, documented evidence, and verified human oversight.
           </p>
           <div className='grid-science' style={{ marginBottom: 32 }}>
             {[
-              ['Blind trust is measurable', 'Organizations can identify workforce trust profiles before deployment, and before a liability event.'],
-              ['Nominal oversight is documentable', 'The research distinguishes substantive from nominal human review. Courts will too.'],
-              ['Design cannot manufacture trust', 'Warranted trust is built through demonstrated accuracy and accountable governance. Not UX.'],
-              ['Accountability attaches to deployment', 'The organization that deployed the AI owns the outcomes. Governance is the only durable defense.'],
+              ['Your most experienced AI users may be your highest risk', 'Daily AI users trusted the tool significantly more. Familiarity breeds confidence, and unchecked confidence in a consequential decision tool is a liability.'],
+              ['A human in the loop is not governance', 'If the reviewer approves 100% of AI recommendations without critical engagement, that is a rubber stamp, not oversight. The research makes this measurable.'],
+              ['Better design changes behavior, not trust', 'Agency-supportive design led to more moderate decisions, but did not change trust scores. Design is worth doing, but not for the reason most organizations think.'],
+              ['Accountability attaches to the deployment decision', 'If design cannot create warranted trust, then the organization that deployed the AI owns the outcomes. Governance is the only durable defense.'],
             ].map(([title, desc]) => (
               <div key={title} style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: 10, padding: 20 }}>
                 <div style={{ fontSize: 15, fontWeight: 600, color: '#0f172a', marginBottom: 8 }}>{title}</div>
@@ -242,7 +242,7 @@ export default function Home() {
             ))}
           </div>
           <Link to="/research" style={{ display: 'inline-block', background: '#0f172a', color: '#fff', padding: '13px 28px', borderRadius: 8, fontSize: 14, fontWeight: 600, textDecoration: 'none' }}>
-            Read the research findings →
+            See the full research findings →
           </Link>
         </div>
       </section>

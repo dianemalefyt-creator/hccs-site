@@ -1,6 +1,19 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 export default function Footer() {
+  const [subEmail, setSubEmail] = useState('')
+  const [subDone, setSubDone] = useState(false)
+  const subscribe = async () => {
+    if (!subEmail || !subEmail.includes('@')) return
+    try {
+      await fetch('/.netlify/functions/contact', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: 'Subscriber', email: subEmail, org: '', interest: 'Subscribe: All updates', message: 'Footer subscribe' }),
+      })
+    } catch {}
+    setSubDone(true)
+  }
   return (
     <footer aria-label="Site footer" style={{ background: '#0a1628', borderTop: '1px solid rgba(255,255,255,0.06)', padding: '48px 24px' }}>
       <div style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 40 }}>
@@ -50,7 +63,28 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div className='footer-bottom' style={{ maxWidth: 1100, margin: '40px auto 0', paddingTop: 24, borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
+      <div style={{ maxWidth: 1100, margin: '32px auto 0', paddingTop: 32, borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
+          <div>
+            <div style={{ fontSize: 15, fontWeight: 600, color: '#fff', marginBottom: 4 }}>Stay informed</div>
+            <div style={{ fontSize: 13, color: '#94a3b8' }}>Research updates, new domains, and governance insights. No spam.</div>
+          </div>
+          {subDone ? (
+            <div style={{ fontSize: 14, color: '#059669', fontWeight: 600 }}>Subscribed!</div>
+          ) : (
+            <div style={{ display: 'flex', gap: 8 }}>
+              <input type="email" value={subEmail} onChange={e => setSubEmail(e.target.value)} placeholder="your@email.com" aria-label="Subscribe email"
+                onKeyDown={e => e.key === 'Enter' && subscribe()}
+                style={{ padding: '10px 14px', borderRadius: 8, border: '1px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.05)', color: '#fff', fontSize: 14, outline: 'none', minWidth: 220 }} />
+              <button onClick={subscribe}
+                style={{ background: '#2563eb', color: '#fff', padding: '10px 20px', borderRadius: 8, border: 'none', fontSize: 14, fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                Subscribe
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+      <div className='footer-bottom' style={{ maxWidth: 1100, margin: '24px auto 0', paddingTop: 24, borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <img src="/ingenuityco-logo.jpg" alt="IngenuityCo" style={{ height: 28, borderRadius: 4 }} />
           <span style={{ fontSize: 13, color: '#475569' }}>&copy; 2026 IngenuityCo LLC. All rights reserved.</span>
