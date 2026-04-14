@@ -457,14 +457,14 @@ export default function Admin() {
             </div>
             <div>
               <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#334155', marginBottom: 4 }}>Subtitle / Version</label>
-              <input value={docForm.subtitle} onChange={e => setDocForm(p => ({ ...p, subtitle: e.target.value }))} placeholder="e.g. HCCS-1.0"
+              <input value={docForm.subtitle} onChange={e => setDocForm(p => ({ ...p, subtitle: e.target.value }))} placeholder="e.g. HCCS-2.0"
                 style={{ width: '100%', padding: '10px 12px', borderRadius: 8, border: '1px solid #e2e8f0', fontSize: 14, outline: 'none', boxSizing: 'border-box' }} />
             </div>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 12, marginBottom: 16 }}>
             <div>
               <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#334155', marginBottom: 4 }}>Doc ID</label>
-              <input value={docForm.docId} onChange={e => setDocForm(p => ({ ...p, docId: e.target.value }))} placeholder="HCCS-1.0"
+              <input value={docForm.docId} onChange={e => setDocForm(p => ({ ...p, docId: e.target.value }))} placeholder="HCCS-2.0"
                 style={{ width: '100%', padding: '10px 12px', borderRadius: 8, border: '1px solid #e2e8f0', fontSize: 13, fontFamily: 'monospace', outline: 'none', boxSizing: 'border-box' }} />
             </div>
             <div>

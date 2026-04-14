@@ -4,7 +4,7 @@ const STATIC_DOCS = [
   {
     docId: 'HCCS-1.0',
     title: 'Core Standard',
-    subtitle: 'HCCS-1.0',
+    subtitle: 'HCCS-2.0',
     desc: 'The complete governance and assurance standard. 70 controls across 7 domains, with maturity levels, control classifications (MUST/SHOULD/MAY), and the governing principles that anchor every requirement.',
     details: ['7 governance domains with 70 auditable controls', 'Three-tier classification: MUST (26), SHOULD (25), MAY (19)', '5-level maturity model with Level 3 credibility threshold', 'Governing principles and standard interpretation guidance', 'Control cross-reference matrix', 'Glossary of defined terms'],
     file: '/docs/HCCS-1.0-Core-Standard.pdf',

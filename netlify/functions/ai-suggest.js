@@ -10,7 +10,7 @@ exports.handler = async function(event) {
     const { step, context } = JSON.parse(event.body)
 
     const PROMPTS = {
-      outcomes: `You are an HCCS™ hiring governance expert. Based on the role title and department, suggest 3 measurable business outcomes for a role definition. These must be outcomes (what the person delivers or changes), NOT tasks (activities they perform).
+      outcomes: `You are an HCCS™ decision governance expert. Based on the role title and department, suggest 3 measurable business outcomes for a role definition. These must be outcomes (what the person delivers or changes), NOT tasks (activities they perform).
 
 Role: ${context.title || 'Unknown'}
 Department: ${context.dept || 'Unknown'}
@@ -21,7 +21,7 @@ Reduce production incidents by 40% within 12 months
 Own and execute the migration from monolith to microservices architecture
 Establish cross-team code review standards achieving 95% coverage`,
 
-      decisions: `You are an HCCS™ hiring governance expert. Based on this role, suggest decision rights in three categories.
+      decisions: `You are an HCCS™ decision governance expert. Based on this role, suggest decision rights in three categories.
 
 Role: ${context.title || 'Unknown'}
 Department: ${context.dept || 'Unknown'}
@@ -38,7 +38,7 @@ APPROVAL:
 [decision 1]
 [decision 2]`,
 
-      capabilities: `You are an HCCS™ hiring governance expert. Based on this role and its outcomes, suggest required capabilities (must have at hire) and learnable capabilities (can develop in 6-12 months). Also suggest things to explicitly NOT require.
+      capabilities: `You are an HCCS™ decision governance expert. Based on this role and its outcomes, suggest required capabilities (must have at hire) and learnable capabilities (can develop in 6-12 months). Also suggest things to explicitly NOT require.
 
 Role: ${context.title || 'Unknown'}
 Outcomes: ${context.outcome1 || ''}, ${context.outcome2 || ''}
@@ -55,7 +55,7 @@ NOT_REQUIRED:
 [anti-requirement 1]
 [anti-requirement 2]`,
 
-      criteria: `You are an HCCS™ hiring governance expert. Based on the role definition, suggest 4-5 evaluation criteria that are derived from the outcomes and required capabilities. Each criterion must assess capability, not proxies like years of experience or company names.
+      criteria: `You are an HCCS™ decision governance expert. Based on the role definition, suggest 4-5 evaluation criteria that are derived from the outcomes and required capabilities. Each criterion must assess capability, not proxies like years of experience or company names.
 
 Role: ${context.title || 'Unknown'}
 Outcomes: ${context.outcome1 || ''}, ${context.outcome2 || ''}
@@ -63,7 +63,7 @@ Required: ${context.required || ''}
 
 Respond with 4-5 criteria, one per line, no numbering. Each should be a capability that can be assessed in an interview.`,
 
-      general: `You are an HCCS™ hiring governance expert. Help with this step of building a governed hiring process.
+      general: `You are an HCCS™ decision governance expert. Help with this step of building a governed decision process.
 
 Context: ${JSON.stringify(context).slice(0, 500)}
 

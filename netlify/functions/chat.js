@@ -42,7 +42,7 @@ KEY DIFFERENTIATORS:
 - Aligned to SOX (financial controls), NIST AI RMF (system risk), ISO (operational consistency)
 - Exceeds Title VII, EU AI Act, NYC LL144, OFCCP requirements
 - Role-type agnostic (executive through hourly)
-- Governs both hiring AND compensation as unified decision system
+- Governs employment decisions including hiring, evaluation, and compensation as unified decision system
 
 CREATED BY: Diane Malefyt, senior B2B SaaS executive pursuing M.S. in Forensic and Organizational Psychology at ASU. Owned by IngenuityCo LLC.
 

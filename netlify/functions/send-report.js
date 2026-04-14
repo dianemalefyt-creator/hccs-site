@@ -56,7 +56,7 @@ tr:nth-child(even) td{background:#f8fafc}
 <tr><td style="font-weight:600">Assessment Date</td><td>${date}</td></tr>
 <tr><td style="font-weight:600">Overall Maturity Level</td><td><strong>Level ${overallLevel}: ${LEVEL_NAMES[overallLevel]}</strong></td></tr>
 <tr><td style="font-weight:600">Compliance Tier</td><td>${TIER_LABELS[overallLevel]}</td></tr>
-<tr><td style="font-weight:600">Controls In Place</td><td>${allControls.filter(c => answers[c.id] === 'yes').length} of 67</td></tr>
+<tr><td style="font-weight:600">Controls In Place</td><td>${allControls.filter(c => answers[c.id] === 'yes').length} of 70</td></tr>
 <tr><td style="font-weight:600">Controls Partial</td><td>${allControls.filter(c => answers[c.id] === 'partial').length}</td></tr>
 <tr><td style="font-weight:600">Controls Not In Place</td><td>${allControls.filter(c => answers[c.id] === 'no').length}</td></tr>
 <tr><td style="font-weight:600">Critical Gaps (MUST)</td><td style="color:#dc2626;font-weight:600">${mustGaps.length}</td></tr>
@@ -78,7 +78,7 @@ ${[1,2,3,4,5].map(l => `<td style="width:20%;height:8px;background:${l <= overal
 
 <div class="quote">
 "If the organization cannot reconstruct how a decision was made, what evidence it relied on, and whether standards were applied consistently, the process must be treated as unreliable."
-<div style="margin-top:8px;font-style:normal;color:#475569;font-size:12px">HCCS-1.0, Governing Principle</div>
+<div style="margin-top:8px;font-style:normal;color:#475569;font-size:12px">HCCS-2.0, Governing Principle</div>
 </div>
 
 <h1>Domain Maturity Scores</h1>
@@ -203,7 +203,7 @@ function buildTeaserEmailHTML(user, domainScores, overallLevel, answers, gaps) {
     '</div>' +
 
     '<h1>Estimated Maturity: Level ' + overallLevel + ' - ' + LEVEL_NAMES[overallLevel] + '</h1>' +
-    '<p style="color:#64748b">Based on 10 of 67 HCCS controls. This is an estimate, not a validated score.</p>' +
+    '<p style="color:#64748b">Based on 10 of 70 HCCS controls. This is an estimate, not a validated score.</p>' +
 
     '<div style="text-align:center;padding:20px;background:#f8fafc;border-radius:12px;border:1px solid #e2e8f0;margin:16px 0">' +
     '<div style="font-size:48px;font-weight:700;color:' + (overallLevel === 0 ? '#dc2626' : overallLevel <= 2 ? '#185FA5' : '#0F6E56') + '">' + score + '%</div>' +
@@ -238,7 +238,7 @@ function buildTeaserEmailHTML(user, domainScores, overallLevel, answers, gaps) {
       '</table>' : '') +
 
     '<div style="background:#0f172a;border-radius:12px;padding:32px;margin:32px 0;text-align:center;color:#fff">' +
-    '<div style="font-size:13px;color:#5b9bd5;text-transform:uppercase;letter-spacing:0.15em;margin-bottom:8px">This was 10 of 67 controls</div>' +
+    '<div style="font-size:13px;color:#5b9bd5;text-transform:uppercase;letter-spacing:0.15em;margin-bottom:8px">This was 10 of 70 controls</div>' +
     '<div style="font-size:22px;font-weight:700;margin-bottom:16px">Get your complete maturity assessment</div>' +
 
     '<table style="width:100%;border-collapse:collapse;margin:16px 0"><tr>' +
@@ -246,7 +246,7 @@ function buildTeaserEmailHTML(user, domainScores, overallLevel, answers, gaps) {
     '<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:16px">' +
     '<div style="font-size:11px;color:#5b9bd5;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px">Self-Assessment</div>' +
     '<div style="font-size:24px;font-weight:700;color:#fff;margin-bottom:6px">$149</div>' +
-    '<div style="font-size:12px;color:#94a3b8;margin-bottom:12px;line-height:1.4">67 controls, remediation roadmap, full report.</div>' +
+    '<div style="font-size:12px;color:#94a3b8;margin-bottom:12px;line-height:1.4">70 controls, remediation roadmap, full report.</div>' +
     '<a href="' + STRIPE_SELF + '" style="display:block;text-align:center;background:#2563eb;color:#fff;padding:8px 16px;border-radius:6px;font-weight:600;font-size:13px;text-decoration:none">Get started</a>' +
     '</div></td>' +
 

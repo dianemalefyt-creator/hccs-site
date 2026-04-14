@@ -160,7 +160,7 @@ tr:nth-child(even) td{background:#f8fafc}
 <div class="meta">
 <div>Prepared for: ${user?.name||'Assessment User'}${user?.title?', '+user.title:''}</div>
 <div>${user?.email||''}</div>
-<div style="margin-top:16px">HCCS-1.0 | hccsstandard.com</div>
+<div style="margin-top:16px">HCCS-2.0 | hccsstandard.com</div>
 </div>
 </div>
 

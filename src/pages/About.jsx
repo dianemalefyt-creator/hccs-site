@@ -39,7 +39,7 @@ export default function About() {
               {[
                 ['Not an HR framework', 'HCCS™ does not prescribe HR processes. It governs decision integrity.'],
                 ['Not a DEI program', 'Bias controls are one domain of seven. HCCS™ is about governance, not advocacy.'],
-                ['Not an AI ethics guideline', 'AI governance is one domain. The standard covers all human capital decisions, with or without AI.'],
+                ['Not an AI ethics guideline', 'AI governance is one domain. The standard covers all consequential decisions about people, with or without AI.'],
                 ['Not a hiring tool', 'HCCS™ does not prescribe specific tools or technologies. It requires that controls are satisfied.'],
               ].map(([title, desc]) => (
                 <div key={title}>
@@ -58,8 +58,8 @@ export default function About() {
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
               {[
-                ['SOX', 'Financial decision controls', 'Like SOX governs financial reporting integrity, HCCS™ governs human capital decision integrity.'],
-                ['NIST AI RMF', 'System risk governance', 'Like NIST governs AI system risk, HCCS™ governs AI usage in human capital decisions alongside non-AI processes.'],
+                ['SOX', 'Financial decision controls', 'Like SOX governs financial reporting integrity, HCCS™ governs decision integrity for consequential outcomes.'],
+                ['NIST AI RMF', 'System risk governance', 'Like NIST governs AI system risk, HCCS™ governs the decisions those systems produce, alongside non-AI processes.'],
                 ['ISO Standards', 'Operational consistency', 'Like ISO ensures repeatable quality systems, HCCS™ ensures repeatable, auditable hiring and compensation processes.'],
               ].map(([name, cat, desc]) => (
                 <div key={name} style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: 10, padding: 20 }}>
