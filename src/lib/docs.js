@@ -2,7 +2,7 @@
 
 const STATIC_DOCS = [
   {
-    docId: 'HCCS-1.0',
+    docId: 'HCCS-2.0',
     title: 'Core Standard',
     subtitle: 'HCCS-2.0',
     desc: 'The complete governance and assurance standard. 74 controls across 7 domains, with maturity levels, control classifications (MUST/SHOULD/MAY), and the governing principles that anchor every requirement.',
