@@ -55,6 +55,75 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Governing Principle — most-seen sentence on the site */}
+      <section style={{ background: '#0f172a', padding: '56px 24px' }}>
+        <div style={{ maxWidth: 680, margin: '0 auto', textAlign: 'center' }}>
+          <p style={{ fontSize: 24, fontWeight: 600, color: '#fff', lineHeight: 1.5, margin: '0 0 16px', fontStyle: 'italic' }}>
+            "If an organization cannot reconstruct how a decision was made, what evidence it relied on, and whether standards were applied consistently, the process must be treated as unreliable."
+          </p>
+          <p style={{ fontSize: 13, color: '#5b9bd5', fontWeight: 600, letterSpacing: '0.08em', margin: 0 }}>— HCCS™ GOVERNING PRINCIPLE 1: RECONSTRUCTABILITY</p>
+        </div>
+      </section>
+
+      {/* What HCCS governs */}
+      <section style={{ padding: '72px 24px', background: '#fff', borderBottom: '1px solid #e2e8f0' }}>
+        <div style={{ maxWidth: 800, margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: 40 }}>
+            <div style={{ letterSpacing: '0.15em', fontSize: 12, textTransform: 'uppercase', color: '#2563eb', marginBottom: 12, fontWeight: 600 }}>Seven governance domains</div>
+            <h2 className='section-title' style={{ fontSize: 32, fontWeight: 700, color: '#0f172a', lineHeight: 1.25, margin: 0 }}>
+              What HCCS™ governs
+            </h2>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+            {[
+              { code: 'RG', name: 'Role & Scope Governance', desc: 'How roles are defined', color: '#185FA5' },
+              { code: 'EI', name: 'Evaluation Integrity', desc: 'How candidates are evaluated', color: '#0F6E56' },
+              { code: 'DG', name: 'Decision Governance', desc: 'How decisions are made and documented', color: '#534AB7' },
+              { code: 'AG', name: 'AI & Technology Governance', desc: 'How AI tools are governed throughout', color: '#993C1D' },
+              { code: 'PI', name: 'Process Integrity', desc: 'How processes maintain consistency and fairness', color: '#854F0B' },
+              { code: 'CG', name: 'Resource & Outcome Governance', desc: 'How compensation aligns to scope', color: '#3B6D11' },
+              { code: 'ER', name: 'Evidence & Records', desc: 'How evidence is created, classified, and retained', color: '#993556' },
+            ].map((d, i) => (
+              <div key={d.code} style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '16px 0', borderBottom: i < 6 ? '1px solid #f1f5f9' : 'none' }}>
+                <div style={{ width: 44, height: 44, borderRadius: 8, background: d.color, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: 13, flexShrink: 0 }}>{d.code}</div>
+                <div style={{ flex: 1 }}>
+                  <span style={{ fontWeight: 600, color: '#0f172a', fontSize: 15 }}>{d.name}</span>
+                  <span style={{ color: '#94a3b8', fontSize: 15 }}> — {d.desc}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div style={{ textAlign: 'center', marginTop: 32 }}>
+            <Link to="/controls" style={{ fontSize: 14, color: '#2563eb', fontWeight: 600, textDecoration: 'none' }}>Browse all 74 controls →</Link>
+          </div>
+        </div>
+      </section>
+
+      {/* SOX / NIST / ISO positioning */}
+      <section style={{ padding: '64px 24px', background: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
+        <div style={{ maxWidth: 860, margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: 32 }}>
+            <div style={{ letterSpacing: '0.15em', fontSize: 12, textTransform: 'uppercase', color: '#64748b', marginBottom: 12, fontWeight: 600 }}>Structural analogs</div>
+            <h2 className='section-title' style={{ fontSize: 28, fontWeight: 700, color: '#0f172a', lineHeight: 1.25, margin: '0 0 8px' }}>
+              HCCS™ sits across three established governance frameworks.
+            </h2>
+          </div>
+          <div className='grid-3' style={{ gap: 16 }}>
+            {[
+              ['SOX', 'Financial decision controls', 'Like SOX governs financial reporting integrity, HCCS™ governs decision integrity for consequential outcomes about people.'],
+              ['NIST AI RMF', 'System risk governance', 'Like NIST governs AI system risk, HCCS™ governs the decisions those systems produce — including non-AI processes.'],
+              ['ISO Standards', 'Operational consistency', 'Like ISO ensures repeatable quality systems, HCCS™ ensures repeatable, auditable decision processes at every level.'],
+            ].map(([name, cat, desc]) => (
+              <div key={name} style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: 10, padding: 24, textAlign: 'center' }}>
+                <div style={{ fontSize: 22, fontWeight: 700, color: '#1e3a5f', marginBottom: 4 }}>{name}</div>
+                <div style={{ fontSize: 13, color: '#2563eb', fontWeight: 500, marginBottom: 10 }}>{cat}</div>
+                <p style={{ fontSize: 14, lineHeight: 1.6, color: '#64748b', margin: 0 }}>{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Problem */}
       <section style={{ ...S.section, background: '#f8fafc' }}>
         <div style={S.wrap}>

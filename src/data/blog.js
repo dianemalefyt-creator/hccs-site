@@ -3,6 +3,66 @@
 
 export const POSTS = [
   {
+    slug: 'kistler-eightfold-ag002',
+    title: 'How HCCS AG-002 addresses the Eightfold AI fact pattern',
+    date: '2026-04-22',
+    author: 'Diane Malefyt',
+    category: 'Controls',
+    readTime: '5 min',
+    excerpt: 'The Kistler v. Eightfold AI class action alleges that an AI screening tool made automated adverse decisions without human oversight, disclosure, or dispute rights. HCCS control AG-002 was designed to prevent exactly this pattern.',
+    body: `In January 2026, a class action was filed against Eightfold AI alleging that its talent screening platform functions as a consumer reporting agency under the Fair Credit Reporting Act without providing required disclosures, consent procedures, or dispute rights.
+
+The legal theory is still being tested. But the fact pattern it describes is not unusual. It is the default operating model for most AI-assisted hiring tools deployed today.
+
+## The fact pattern
+
+The Kistler complaint describes an AI screening system that scores and ranks candidates, filters them before human review, and produces adverse outcomes (rejections) without the affected individual knowing that AI was involved, what criteria were applied, or how to challenge the result.
+
+Three governance failures are embedded in that description.
+
+## Failure 1: Automated adverse decisions without human oversight
+
+The core allegation is that the AI tool made consequential decisions without meaningful human review. Candidates were screened out by the algorithm before a human ever saw their application.
+
+**HCCS Control AG-002** directly addresses this: "No automated decision tool shall be the sole decision-maker. A human with context, authority, and demonstrated override behavior is required for every consequential output before it takes effect."
+
+The key phrase is "demonstrated override behavior." AG-002 does not merely require a human in the loop. It requires evidence that the human is actually exercising judgment. A 0% override rate over 90 days triggers a review. Batch-approving AI recommendations fails this control. The presence of a human who never overrides is not oversight. It is a rubber stamp.
+
+## Failure 2: Opaque decision logic
+
+The complaint alleges that neither candidates nor employers could explain how the AI tool arrived at its scores. This is the black box problem.
+
+**HCCS Control AG-003** requires that organizations "can explain in plain language how each automated decision tool works: what data goes in, what rules are applied, and what comes out." The standard explicitly states that "vendor proprietary algorithm" fails this control.
+
+If you cannot explain how a tool works in plain language, you cannot govern it. And if you cannot govern it, you cannot defend it.
+
+## Failure 3: No dispute rights or adverse action procedures
+
+FCRA requires that when a consumer report leads to an adverse action, the affected person must be notified and given an opportunity to dispute the findings. The complaint alleges that none of this occurred.
+
+**HCCS Control PI-010** (new in v2.0) requires that "affected parties can challenge consequential decisions through a defined process." The challenge must be reviewed by an independent evaluator, responded to within a defined timeline, and documented.
+
+**HCCS Control DG-006** requires that "rejection decisions include substantive rationale" referencing evaluation criteria. "Not the best fit" or silence both fail this control.
+
+## The governance gap
+
+The Eightfold fact pattern is not exotic. It is what happens when organizations deploy AI tools without governance controls. The tool screens, scores, and filters. Humans approve the outputs without critical engagement. No one documents why specific candidates were rejected. No one monitors for patterns. No one can reconstruct the decision when asked.
+
+HCCS calls this the Accountability Gap. Three conditions define it: criteria documented but not visible in the workflow, decisions made but not reconstructable, and patterns present but not auditable.
+
+## What organizations should do now
+
+Regardless of how Kistler v. Eightfold AI is resolved, the governance requirements it highlights are not going away. The EU AI Act, EEOC guidance, Colorado AI Act, and NYC LL144 all require some combination of human oversight, transparency, bias testing, and audit trails.
+
+Three immediate actions:
+
+1. **Inventory every AI tool** in your decision pipeline (AG-001). If you do not have a complete list, you cannot govern what you do not know about.
+2. **Verify human oversight is substantive** (AG-002, AG-012). Check override rates. If any reviewer has a 0% override rate over 90+ days, that is a red flag, not a green light.
+3. **Confirm you can reconstruct individual decisions** (AG-006). Pick five candidates rejected by AI tools. Can you explain, specifically, why each was rejected? If not, you have the same exposure the Eightfold complaint describes.
+
+HCCS provides 74 auditable controls across 7 governance domains. The standard was designed to exceed the requirements of every current and pending regulation, including the FCRA theory being tested in Kistler. Organizations that implement these controls are positioned to defend their decision processes regardless of how the litigation landscape evolves.`,
+  },
+  {
     slug: 'regulatory-pressure-map',
     title: 'The regulatory floor is rising. Here is what is already in effect.',
     date: '2026-04-20',
