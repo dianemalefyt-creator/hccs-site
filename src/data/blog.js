@@ -3,6 +3,52 @@
 
 export const POSTS = [
   {
+    slug: 'regulatory-pressure-map',
+    title: 'The regulatory floor is rising. Here is what is already in effect.',
+    date: '2026-04-20',
+    author: 'Diane Malefyt',
+    category: 'Compliance',
+    readTime: '4 min',
+    excerpt: 'NYC LL144, EU AI Act, EEOC guidance, Colorado AI Act, Illinois AIVI Act, and active class action litigation. The regulatory landscape for AI-assisted decisions is not emerging. It has arrived.',
+    body: `If your organization uses AI, algorithms, or automated tools in any consequential decision process, the regulatory landscape is no longer theoretical. Here is what is already in effect, what is pending, and what it means for governance.
+
+## Already in effect
+
+**NYC Local Law 144 (2023):** Requires annual bias audits for automated employment decision tools (AEDTs) used in hiring or promotion in New York City. Employers must publish audit results and notify candidates. Penalties: $500-$1,500 per violation, per day.
+
+**Illinois AI Video Interview Act (2020):** Requires consent before using AI to analyze video interviews. Employers must explain how AI is used and offer alternatives. Applies to any employer interviewing Illinois residents.
+
+**EEOC AI Guidance (2023):** The EEOC has stated that employers are responsible for disparate impact caused by AI tools, even when those tools are provided by third-party vendors. "The employer is always responsible for the consequences of its use of AI."
+
+**Maryland HB 1202 (2020):** Requires consent before using facial recognition in employment interviews.
+
+## Active litigation
+
+**Mobley v. Workday (2023, ongoing):** Class action alleging that Workday's AI screening tools discriminate based on race, age, and disability. The case is testing whether AI vendors can be held liable as agents of the employer. If it succeeds, every organization using third-party AI screening is exposed.
+
+## Enacted, taking effect
+
+**EU AI Act (2024, phased implementation through 2026):** Classifies employment as a high-risk AI use case. Requires risk assessments, human oversight, transparency, and record-keeping for AI systems used in hiring, evaluation, and workforce management. Fines up to 3% of global annual revenue.
+
+**Colorado AI Act (SB 24-205, effective 2026):** Requires deployers of high-risk AI systems to implement risk management policies, conduct impact assessments, and notify consumers. Employment decisions are classified as high-risk.
+
+## Pending
+
+**California AB 2930 / SB 7:** Would require impact assessments for automated decision systems, including employment. California's market size makes this de facto national policy if enacted.
+
+**Federal AI legislation:** Multiple bills proposed. No comprehensive federal framework yet, but EEOC enforcement is active and expanding.
+
+## What this means for governance
+
+Every regulation listed above requires some combination of: documented criteria, human oversight verification, bias testing, audit trails, and incident response. No single regulation requires all of these. HCCS\u2122 does.
+
+The standard was designed to exceed the requirements of every current and pending regulation. Organizations that implement HCCS\u2122 governance controls are positioned to satisfy LL144 bias audit requirements, EU AI Act human oversight mandates, EEOC disparate impact documentation, and Colorado risk management obligations simultaneously.
+
+The alternative is waiting for each regulation to take effect and retrofitting compliance one jurisdiction at a time. That is more expensive, more disruptive, and less defensible than implementing governance once.
+
+The regulatory floor is rising. HCCS\u2122 is how you get ahead of it.`,
+  },
+  {
     slug: 'ai-governance-missing-layer',
     title: 'The missing layer in AI governance: who governs the decisions?',
     date: '2026-04-14',

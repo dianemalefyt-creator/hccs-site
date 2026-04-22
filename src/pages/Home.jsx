@@ -252,6 +252,16 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Pull quote */}
+      <section style={{ background: '#0f172a', padding: '48px 24px' }}>
+        <div style={{ maxWidth: 640, margin: '0 auto', textAlign: 'center' }}>
+          <p style={{ fontSize: 22, fontWeight: 600, color: '#fff', lineHeight: 1.5, margin: '0 0 12px', fontStyle: 'italic' }}>
+            "A human clicking reject inside a black box is still a black box."
+          </p>
+          <p style={{ fontSize: 14, color: '#64748b', margin: 0 }}>Diane Malefyt, HCCS™ Standard</p>
+        </div>
+      </section>
+
       {/* Governing principles */}
       <section style={{ background: '#0f172a', padding: '72px 24px' }}>
         <div style={{ maxWidth: 720, margin: '0 auto' }}>

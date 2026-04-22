@@ -216,6 +216,45 @@ export default function Research() {
         </div>
       </section>
 
+      {/* Voices from inside the system */}
+      <section style={{ padding: '64px 24px', background: '#fff', borderTop: '1px solid #e2e8f0' }}>
+        <div style={{ maxWidth: 720, margin: '0 auto' }}>
+          <div style={{ letterSpacing: '0.15em', fontSize: 12, textTransform: 'uppercase', color: '#993C1D', marginBottom: 12, fontWeight: 600 }}>Voices from inside the system</div>
+          <h2 style={{ fontSize: 28, fontWeight: 700, color: '#0f172a', marginBottom: 8, lineHeight: 1.25 }}>
+            The people operating the system are already telling us what is broken.
+          </h2>
+          <p style={{ fontSize: 15, color: '#64748b', marginBottom: 32, lineHeight: 1.6 }}>
+            These are anonymized statements from hiring practitioners, talent leaders, and decision-makers. Collected from public industry discussions. Each one describes a governance failure in their own words.
+          </p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 32 }}>
+            {[
+              { quote: 'Too many teams hide behind process instead of owning the decision.', role: 'Talent Acquisition Leader, Fortune 500', gap: 'DG-001: Decision rationale not documented. If no one "owns the decision," no one is accountable for it.' },
+              { quote: 'Feedback invites argument and legal exposure.', role: 'Global Talent Leader', gap: 'If feedback invites legal exposure, that means the decisions being made cannot withstand scrutiny. That is a governance tell.' },
+              { quote: 'We do not have time.', role: 'Senior TA Specialist, Fortune 500', gap: 'PI-009: Decision-makers not trained. Volume does not break the governance model. Opacity does.' },
+              { quote: 'I randomly picked some.', role: 'Hiring Manager, Financial Services', gap: 'EI-001, EI-002: No evaluation criteria, no consistent method. Arbitrary selection disguised as process.' },
+              { quote: 'Candidates are owed closure, not feedback.', role: 'Senior TA Specialist', gap: 'PI-010: No challenge mechanism. DG-006: No substantive rejection rationale. "Closure" without substance is opacity rebranded.' },
+              { quote: 'We have never in the history of hiring given applicants reasons they were screened out.', role: 'Global Talent Leader', gap: 'ER-001: No contemporaneous records. DG-006: No rejection rationale. If you have never explained a decision, you have never been required to defend one.' },
+            ].map((v, i) => (
+              <div key={i} style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: 12, padding: 24 }}>
+                <div style={{ fontSize: 18, fontWeight: 600, color: '#0f172a', lineHeight: 1.4, marginBottom: 8 }}>
+                  "{v.quote}"
+                </div>
+                <div style={{ fontSize: 13, color: '#993C1D', fontWeight: 600, marginBottom: 12 }}>{v.role}</div>
+                <div style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: 8, padding: '12px 16px', borderLeft: '3px solid #2563eb' }}>
+                  <div style={{ fontSize: 11, fontWeight: 600, color: '#2563eb', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 4 }}>Governance gap</div>
+                  <p style={{ fontSize: 13, color: '#475569', lineHeight: 1.5, margin: 0 }}>{v.gap}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div style={{ background: '#0f172a', borderRadius: 12, padding: '20px 24px', textAlign: 'center' }}>
+            <p style={{ fontSize: 15, color: '#94a3b8', margin: 0, lineHeight: 1.6 }}>
+              HCCS™ exists because the people inside the system are already telling us what is broken. The standard makes it governable.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Download whitepaper */}
       <section style={{ padding: '64px 24px', background: '#fff' }}>
         <div style={{ maxWidth: 600, margin: '0 auto' }}>

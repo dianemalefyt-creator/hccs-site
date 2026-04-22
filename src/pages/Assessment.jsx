@@ -38,8 +38,13 @@ onMouseOver={e=>e.target.style.background="#1d4ed8"} onMouseOut={e=>e.target.sty
 <div>HCCS-2.0 | Aligned to SOX, NIST AI RMF, and ISO governance standards</div>
 <div style={{marginTop:4}}>© 2026 IngenuityCo LLC. All rights reserved.</div></div></div></div>);}
 
-function Assess({onComplete}){
-const[di,setDi]=useState(0);const[ans,setAns]=useState({});const[notes,setNotes]=useState({});const[exp,setExp]=useState({});const ref=useRef(null);
+function Assess({onComplete,savedAnswers,savedNotes}){
+const[di,setDi]=useState(0);const[ans,setAns]=useState(savedAnswers||{});const[notes,setNotes]=useState(savedNotes||{});const[exp,setExp]=useState({});const ref=useRef(null);
+
+// Auto-save progress to localStorage
+useEffect(()=>{
+try{localStorage.setItem('hccs-assess-answers',JSON.stringify(ans));localStorage.setItem('hccs-assess-notes',JSON.stringify(notes));localStorage.setItem('hccs-assess-domain',String(di));localStorage.setItem('hccs-assess-ts',new Date().toISOString());}catch{}
+},[ans,notes,di]);
 const d=D[di];const prog=(di/D.length)*100;const dp=d.controls.filter(c=>ans[c.id]!==undefined).length/d.controls.length*100;
 const ok=d.controls.every(c=>ans[c.id]!==undefined);
 const badge=lv=>{const c={MUST:{bg:"#fef2f2",t:"#991b1b",b:"#fecaca"},SHOULD:{bg:"#fefce8",t:"#854d0e",b:"#fde68a"},MAY:{bg:"#f0fdf4",t:"#166534",b:"#bbf7d0"}}[lv];
@@ -448,7 +453,7 @@ ${ov<3?`
 </body></html>`;
 const w=window.open('','_blank');w.document.write(html);w.document.close();}
 
-function Results({answers,notes,user,onRestart}){
+function Results({answers,notes,user,onRestart,paid,onPay}){
 const[done,setDone]=useState(false);const[sending,setSending]=useState(false);const[emailErr,setEmailErr]=useState('');const[resent,setResent]=useState(false);
 const ds=D.map(d=>({domain:d.code,name:d.name,color:d.color,level:calcLv(answers,d),total:d.controls.length,met:d.controls.filter(c=>answers[c.id]==="yes").length,partial:d.controls.filter(c=>answers[c.id]==="partial").length,gaps:getGaps(answers,d)}));
 const ov=Math.min(...ds.map(d=>d.level));const ag=sortG(ds.flatMap(d=>d.gaps));const mg=ag.filter(g=>g.level==="MUST"),sg=ag.filter(g=>g.level==="SHOULD");
@@ -476,6 +481,33 @@ return(
 <h3 style={{fontSize:18,fontWeight:600,marginBottom:16}}>Domain detail</h3>
 <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:40}}>
 {ds.map(d=>(<div key={d.domain} style={{background:"#fff",borderRadius:10,border:"1px solid #e2e8f0",padding:20,borderLeft:`4px solid ${d.color}`}}><div style={{display:"flex",justifyContent:"space-between",marginBottom:8}}><span style={{fontWeight:600,fontSize:14}}>{d.domain}: {d.name}</span><span style={{fontSize:13,fontWeight:600,color:d.color}}>L{d.level}</span></div><div style={{fontSize:13,color:"#64748b",marginBottom:8}}>{d.met}/{d.total} in place{d.partial>0?`, ${d.partial} partial`:""}</div><div style={{height:6,background:"#f1f5f9",borderRadius:3,overflow:"hidden"}}><div style={{height:6,background:d.color,borderRadius:3,width:`${(d.met/d.total)*100}%`}}/></div></div>))}</div>
+
+{/* PAYMENT GATE */}
+{!paid ? (
+<div style={{marginBottom:40}}>
+<div style={{background:'linear-gradient(165deg, #0a1628, #1a2d4a)',borderRadius:16,padding:'48px 32px',textAlign:'center',marginBottom:24}}>
+<div style={{fontSize:13,fontWeight:600,color:'#5b9bd5',textTransform:'uppercase',letterSpacing:'0.15em',marginBottom:12}}>Unlock your full report</div>
+<h2 style={{fontSize:28,fontWeight:700,color:'#fff',margin:'0 0 16px'}}>Your assessment is complete. Your report is ready.</h2>
+<p style={{fontSize:16,color:'#94a3b8',maxWidth:480,margin:'0 auto 24px',lineHeight:1.6}}>
+You scored <strong style={{color:'#fff'}}>Level {ov}: {LN[ov]}</strong> with {mg.length} critical gaps and {sg.length} significant gaps. The full report includes:
+</p>
+<div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12,maxWidth:440,margin:'0 auto 28px',textAlign:'left'}}>
+{['Priority gap analysis with remediation','Remediation roadmap to Level 3','Per-control assessor notes','Downloadable audit-grade report','Business case generator for leadership','Email delivery of complete results'].map(t=>
+<div key={t} style={{fontSize:13,color:'#94a3b8',display:'flex',gap:8,alignItems:'flex-start'}}><span style={{color:'#059669',fontWeight:700,marginTop:1}}>✓</span>{t}</div>)}
+</div>
+<a href={STRIPE_SELF} style={{display:'inline-block',background:'#2563eb',color:'#fff',padding:'16px 40px',borderRadius:8,fontSize:17,fontWeight:700,textDecoration:'none',marginBottom:12}}>
+Unlock full report — $500
+</a>
+<div style={{fontSize:13,color:'#64748b',marginTop:8}}>Single domain, single business unit. One-time payment. Report valid for 12 months.</div>
+</div>
+<div style={{textAlign:'center'}}>
+<p style={{fontSize:14,color:'#64748b'}}>Already purchased? <button onClick={onPay} style={{background:'none',border:'none',color:'#2563eb',fontWeight:600,cursor:'pointer',fontSize:14}}>Enter access code</button></p>
+</div>
+</div>
+) : (
+<>
+
+{/* === PAID CONTENT BELOW === */}
 
 {(()=>{const dn=D.flatMap(d=>d.controls.filter(c=>notes[c.id]&&notes[c.id].trim()));if(!dn.length)return null;return(<>
 <h3 style={{fontSize:18,fontWeight:600,marginBottom:4}}>Assessment notes</h3>
@@ -570,6 +602,7 @@ disabled={sending} style={{padding:"10px 24px",borderRadius:6,border:"none",back
 <div style={{display:"flex",justifyContent:"space-between",marginTop:48,paddingTop:24,borderTop:"1px solid #e2e8f0"}}>
 <span style={{fontSize:12,color:"#94a3b8"}}>HCCS-2.0 | © 2026 IngenuityCo LLC</span>
 <button onClick={onRestart} style={{padding:"8px 20px",borderRadius:6,border:"1px solid #e2e8f0",background:"#fff",color:"#64748b",fontSize:13,cursor:"pointer"}}>Retake assessment</button></div>
+</>)}
 </div></div>);}
 
 const FREE_DOMAINS = ['gmail.com','yahoo.com','hotmail.com','outlook.com','aol.com','icloud.com','mail.com','protonmail.com','zoho.com','yandex.com','gmx.com','live.com','msn.com','me.com','inbox.com','fastmail.com','hushmail.com','mailfence.com','tutanota.com','proton.me'];
@@ -577,7 +610,7 @@ const ADMIN_EMAILS = ['info@hccsstandard.com'];
 const SIZES = ['1-50','51-200','201-500','501-1,000','1,001-5,000','5,001-10,000','10,000+'];
 
 function Gate({onComplete}){
-const[f,setF]=useState({name:'',email:'',org:'',title:'',size:'',linkedin:'',website:''});
+const[f,setF]=useState({name:'',email:'',org:'',title:'',size:'',department:'',domain:'employment',linkedin:'',website:''});
 const[err,setErr]=useState({});
 const[sub,setSub]=useState(false);
 const loadTime=useRef(Date.now());
@@ -591,6 +624,7 @@ if(!domain||!domain.includes('.'))e.email='Enter a valid email';
 else if(FREE_DOMAINS.includes(domain)&&!ADMIN_EMAILS.includes(f.email.toLowerCase()))e.email='Please use your work email';}
 if(!f.org.trim())e.org='Required';
 if(!f.title.trim())e.title='Required';
+if(!f.department.trim())e.department='Required';
 if(!f.size)e.size='Required';
 if(f.website)e.bot=true;
 if(Date.now()-loadTime.current<3000)e.bot=true;
@@ -621,6 +655,21 @@ return(
 {inp('email','Work Email','jane@company.com','email')}
 {inp('org','Organization','Acme Corp')}
 {inp('title','Title / Role','VP People Operations')}
+{inp('department','Department / Business Unit','e.g. Corporate HR, Engineering, North America Division')}
+
+<div style={{marginBottom:16}}>
+<label style={{display:'block',fontSize:13,fontWeight:600,color:'#334155',marginBottom:6}}>Assessment Domain <span style={{color:'#dc2626'}}>*</span></label>
+<select value={f.domain} onChange={e=>setF(p=>({...p,domain:e.target.value}))}
+style={{width:'100%',padding:'10px 14px',borderRadius:8,border:'1px solid #e2e8f0',fontSize:14,outline:'none',background:'#fff',boxSizing:'border-box',appearance:'auto'}}>
+<option value="employment">Employment & Workforce</option>
+</select>
+<div style={{fontSize:12,color:'#94a3b8',marginTop:4}}>Additional domains (Healthcare, Financial Services, etc.) coming soon.</div>
+</div>
+
+<div style={{background:'#eff6ff',border:'1px solid #bfdbfe',borderRadius:10,padding:'14px 16px',marginBottom:16}}>
+<div style={{fontSize:13,fontWeight:600,color:'#1e40af',marginBottom:4}}>Scope of this assessment</div>
+<div style={{fontSize:13,color:'#334155',lineHeight:1.5}}>This assessment covers <strong>one domain</strong> within <strong>one department or business unit</strong>. Organizations with multiple departments operating under different governance structures should assess each separately. Results are valid for 12 months.</div>
+</div>
 
 <div style={{marginBottom:16}}>
 <label style={{display:'block',fontSize:13,fontWeight:600,color:'#334155',marginBottom:6}}>Company Size <span style={{color:'#dc2626'}}>*</span></label>
@@ -765,12 +814,15 @@ style={{width:'100%',marginTop:12,padding:'12px',borderRadius:8,border:'1px soli
 
 export default function HCCSAssessment(){
 const[phase,setPhase]=useState("code");const[answers,setAnswers]=useState({});const[notes,setNotes]=useState({});const[user,setUser]=useState(null);
+const[savedAnswers,setSavedAnswers]=useState(null);const[savedNotes,setSavedNotes]=useState(null);
+const[paid,setPaid]=useState(false);
 
-// Admin test mode: add ?test=1 to URL to skip everything and go straight to results
+// Check for saved progress and payment status
 useEffect(()=>{
 const params=new URLSearchParams(window.location.search);
+// Admin test mode
 if(params.get('test')==='1'){
-const testUser={name:'Diane Malefyt (Test)',email:'info@hccsstandard.com',org:'HCCS™ Test',title:'Admin',size:'1-50',linkedin:'https://www.linkedin.com/in/dianemalefyt/'};
+const testUser={name:'Diane Malefyt (Test)',email:'info@hccsstandard.com',org:'HCCS™ Test',title:'Admin',department:'All',domain:'employment',size:'1-50',linkedin:'https://www.linkedin.com/in/dianemalefyt/'};
 const testAnswers={};const testNotes={};
 const options=['yes','partial','no'];
 D.forEach(d=>{d.controls.forEach((c,i)=>{
@@ -779,16 +831,47 @@ else if(c.level==='SHOULD')testAnswers[c.id]=options[i%3];
 else testAnswers[c.id]=i%2===0?'no':'partial';
 if(testAnswers[c.id]!=='yes')testNotes[c.id]='Test note for '+c.id;
 });});
-setUser(testUser);setAnswers(testAnswers);setNotes(testNotes);setPhase("results");
+setUser(testUser);setAnswers(testAnswers);setNotes(testNotes);setPhase("results");setPaid(true);
 }
-// Allow code in URL: ?code=HCCS2026
+// Payment return from Stripe
+if(params.get('session_id')||params.get('paid')==='true'){setPaid(true);}
+// Access code in URL
 const urlCode = params.get('code');
 if(urlCode && ACCESS_CODES.includes(urlCode.toUpperCase())) setPhase("landing");
+// Check for saved progress
+try{
+const sa=localStorage.getItem('hccs-assess-answers');
+const sn=localStorage.getItem('hccs-assess-notes');
+const su=localStorage.getItem('hccs-assess-user');
+const ts=localStorage.getItem('hccs-assess-ts');
+if(sa&&ts){
+const age=(Date.now()-new Date(ts).getTime())/(1000*60*60*24);
+if(age<30){setSavedAnswers(JSON.parse(sa));setSavedNotes(sn?JSON.parse(sn):{});
+if(su)setUser(JSON.parse(su));}
+else{localStorage.removeItem('hccs-assess-answers');localStorage.removeItem('hccs-assess-notes');localStorage.removeItem('hccs-assess-user');localStorage.removeItem('hccs-assess-ts');}
+}}catch{}
 },[]);
 
-if(phase==="code")return<CodeGate onUnlock={()=>setPhase("landing")}/>;
+const startFresh=()=>{setSavedAnswers(null);setSavedNotes(null);try{localStorage.removeItem('hccs-assess-answers');localStorage.removeItem('hccs-assess-notes');localStorage.removeItem('hccs-assess-user');localStorage.removeItem('hccs-assess-ts');localStorage.removeItem('hccs-assess-domain');}catch{};setPhase("gate");};
+const resumeAssess=()=>{setPhase("assess");};
+
+if(phase==="code"){
+// If saved progress exists, show resume option
+if(savedAnswers&&Object.keys(savedAnswers).length>0){
+const answered=Object.keys(savedAnswers).length;const total=D.reduce((s,d)=>s+d.controls.length,0);
+return(<div style={{minHeight:'100vh',background:'#f8fafc',display:'flex',alignItems:'center',justifyContent:'center',padding:24}}>
+<div style={{maxWidth:480,textAlign:'center'}}>
+<div style={{fontSize:48,marginBottom:16}}>📋</div>
+<h2 style={{fontSize:24,fontWeight:700,color:'#0f172a',marginBottom:8}}>You have a saved assessment</h2>
+<p style={{fontSize:15,color:'#64748b',marginBottom:8}}>{answered} of {total} controls answered ({Math.round(answered/total*100)}% complete)</p>
+{user&&<p style={{fontSize:14,color:'#94a3b8',marginBottom:24}}>{user.org} — {user.department||'All departments'}</p>}
+<div style={{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap'}}>
+<button onClick={resumeAssess} style={{background:'#2563eb',color:'#fff',padding:'14px 28px',borderRadius:8,fontSize:15,fontWeight:600,border:'none',cursor:'pointer'}}>Resume assessment</button>
+<button onClick={startFresh} style={{background:'#fff',color:'#64748b',padding:'14px 28px',borderRadius:8,fontSize:15,fontWeight:600,border:'1px solid #e2e8f0',cursor:'pointer'}}>Start over</button>
+</div></div></div>);}
+return<CodeGate onUnlock={()=>setPhase("landing")}/>;}
 if(phase==="landing")return<Landing onStart={()=>setPhase("gate")}/>;
-if(phase==="gate")return<><Landing onStart={()=>{}}/><Gate onComplete={(u)=>{setUser(u);setPhase("assess");}}/></>;
-if(phase==="assess")return<Assess onComplete={(a,n)=>{setAnswers(a);setNotes(n);setPhase("results");window.scrollTo(0,0);}}/>;
-return<Results answers={answers} notes={notes} user={user} onRestart={()=>{setAnswers({});setNotes({});setPhase("landing");window.scrollTo(0,0);}}/>;
+if(phase==="gate")return<><Landing onStart={()=>{}}/><Gate onComplete={(u)=>{setUser(u);try{localStorage.setItem('hccs-assess-user',JSON.stringify(u));}catch{};setPhase("assess");}}/></>;
+if(phase==="assess")return<Assess savedAnswers={savedAnswers} savedNotes={savedNotes} onComplete={(a,n)=>{setAnswers(a);setNotes(n);setPhase("results");window.scrollTo(0,0);}}/>;
+return<Results answers={answers} notes={notes} user={user} paid={paid} onPay={()=>setPaid(true)} onRestart={()=>{setAnswers({});setNotes({});startFresh();setPhase("landing");window.scrollTo(0,0);}}/>;
 }
