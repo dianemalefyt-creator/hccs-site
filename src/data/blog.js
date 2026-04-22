@@ -22,7 +22,11 @@ export const POSTS = [
 
 **Maryland HB 1202 (2020):** Requires consent before using facial recognition in employment interviews.
 
+**Fair Credit Reporting Act (FCRA, 1970):** Federal law requiring disclosure, consent, and dispute rights when consumer reports are used in employment decisions. The theory being tested in Kistler v. Eightfold AI (2026) is that AI screening tools that score and rank candidates function as consumer reporting agencies under FCRA. If this theory holds, every AI hiring tool operating without FCRA-compliant disclosure, consent, and adverse action procedures is already non-compliant under law that has been in force for 55 years. This is not emerging regulation. It is existing federal law with a private right of action and statutory damages.
+
 ## Active litigation
+
+**Kistler v. Eightfold AI (January 2026, active):** Class action alleging that Eightfold AI's talent screening platform functions as a consumer reporting agency under FCRA without providing required disclosures, consent procedures, or dispute rights. The case shifts the legal question from "is the model biased?" to "can the system reconstruct and defend its decisions when subpoenaed?" If the FCRA theory succeeds, the implications extend to every AI screening tool that scores, ranks, or filters candidates without FCRA-compliant procedures.
 
 **Mobley v. Workday (2023, ongoing):** Class action alleging that Workday's AI screening tools discriminate based on race, age, and disability. The case is testing whether AI vendors can be held liable as agents of the employer. If it succeeds, every organization using third-party AI screening is exposed.
 
@@ -42,7 +46,9 @@ export const POSTS = [
 
 Every regulation listed above requires some combination of: documented criteria, human oversight verification, bias testing, audit trails, and incident response. No single regulation requires all of these. HCCS\u2122 does.
 
-The standard was designed to exceed the requirements of every current and pending regulation. Organizations that implement HCCS\u2122 governance controls are positioned to satisfy LL144 bias audit requirements, EU AI Act human oversight mandates, EEOC disparate impact documentation, and Colorado risk management obligations simultaneously.
+The FCRA theory in Kistler v. Eightfold AI is particularly significant because it reframes the risk. The question is no longer whether future regulation will require governance. The question is whether you are already non-compliant under existing federal law. Three HCCS\u2122 controls directly address the Eightfold fact pattern: AG-003 (explainability, no black boxes), AG-002 (human oversight for every consequential output), and AG-006 (individual decision reconstruction on demand).
+
+The standard was designed to exceed the requirements of every current and pending regulation. Organizations that implement HCCS\u2122 governance controls are positioned to satisfy FCRA disclosure and dispute requirements, LL144 bias audit requirements, EU AI Act human oversight mandates, EEOC disparate impact documentation, and Colorado risk management obligations simultaneously.
 
 The alternative is waiting for each regulation to take effect and retrofitting compliance one jurisdiction at a time. That is more expensive, more disruptive, and less defensible than implementing governance once.
 
